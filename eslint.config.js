@@ -5,9 +5,22 @@ import reactHooks from "eslint-plugin-react-hooks";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
+import { noComments } from "./eslint-rules/noComments.js";
 
 export default defineConfig([
   globalIgnores(["dist", "coverage"]),
+  {
+    files: ["**/*.{ts,tsx,js,mjs}"],
+    linterOptions: {
+      noInlineConfig: true,
+    },
+    plugins: {
+      local: { rules: { "no-comments": noComments } },
+    },
+    rules: {
+      "local/no-comments": "error",
+    },
+  },
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
