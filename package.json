@@ -11,9 +11,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint . && prettier --check \"**/*.{ts,tsx,js,mjs,json,css,html,yml,yaml}\"",
     "typecheck": "node node_modules/@typescript/native/bin/tsc -b",
-    "test": "vitest"
+    "test": "vitest",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,css,html,yml,yaml}\""
   },
   "dependencies": {
     "react": "19.3.0",
@@ -35,6 +36,8 @@
     "eslint-plugin-react-hooks": "7.1.1",
     "globals": "17.12.0",
     "jsdom": "30.1.1",
+    "prettier": "3.9.9",
+    "prettier-plugin-tailwindcss": "0.8.1",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "typescript-eslint": "8.71.0",
     "vite": "8.3.1",
