@@ -112,7 +112,7 @@ export function selectScanner(path) {
   if (extension === ".css") {
     return findCssComments;
   }
-  if (extension === ".html") {
+  if (extension === ".html" || extension === ".svg") {
     return findHtmlComments;
   }
   if (extension === ".yml" || extension === ".yaml") {

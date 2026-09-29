@@ -66,6 +66,7 @@ describe("selectScanner", () => {
     expect(selectScanner("tsconfig.app.json")).toBe(findJsonComments);
     expect(selectScanner(".github/workflows/ci.yml")).toBe(findYamlComments);
     expect(selectScanner("index.html")).toBe(findHtmlComments);
+    expect(selectScanner("public/favicon.svg")).toBe(findHtmlComments);
     expect(selectScanner(".gitignore")).toBe(findHashLineComments);
     expect(selectScanner("src/main.tsx")).toBeNull();
   });
