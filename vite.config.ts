@@ -15,5 +15,10 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
     restoreMocks: true,
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.{ts,tsx}", "scripts/**/*.mjs", "eslint-rules/**/*.js"],
+      reporter: ["text", ["text", { file: "coverage.txt" }]],
+    },
   },
 });
