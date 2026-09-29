@@ -14,7 +14,8 @@
     "lint": "eslint . && prettier --check \"**/*.{ts,tsx,js,mjs,json,css,html,yml,yaml}\"",
     "typecheck": "node node_modules/@typescript/native/bin/tsc -b",
     "test": "vitest",
-    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,css,html,yml,yaml}\""
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,css,html,yml,yaml}\"",
+    "check:comments": "node scripts/check-no-comments.mjs"
   },
   "dependencies": {
     "react": "19.3.0",
