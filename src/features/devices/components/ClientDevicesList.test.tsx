@@ -6,10 +6,10 @@ import { MemoryRouter } from "react-router";
 import { ClientDevicesList } from "@/features/devices";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
-import { createDeviceResponse } from "@/test/deviceFixtures";
+import { createDeviceListItem } from "@/test/deviceFixtures";
 import { server } from "@/test/server";
 
-type DevicePage = components["schemas"]["PagedResponseOfDeviceResponse"];
+type DevicePage = components["schemas"]["PagedResponseOfDeviceListItemResponse"];
 type ProblemDetails = components["schemas"]["ProblemDetails"];
 
 const devicesUrl = `${apiBaseUrl}/api/v1/devices`;
@@ -39,7 +39,7 @@ function mockDevices(devicePage: DevicePage) {
 
 describe("ClientDevicesList", () => {
   it("shows the devices with the installation date on the same calendar day", async () => {
-    mockDevices({ items: [createDeviceResponse()], page: 1, pageSize: 10, totalCount: 1 });
+    mockDevices({ items: [createDeviceListItem()], page: 1, pageSize: 10, totalCount: 1 });
     renderList();
 
     expect(await screen.findByRole("cell", { name: "SN-2024-0001" })).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe("ClientDevicesList", () => {
 
   it("asks only for the devices of the client and the page from the address", async () => {
     const requests = mockDevices({
-      items: [createDeviceResponse()],
+      items: [createDeviceListItem()],
       page: 2,
       pageSize: 10,
       totalCount: 11,
@@ -79,7 +79,7 @@ describe("ClientDevicesList", () => {
     renderList();
 
     await screen.findByRole("alert");
-    mockDevices({ items: [createDeviceResponse()], page: 1, pageSize: 10, totalCount: 1 });
+    mockDevices({ items: [createDeviceListItem()], page: 1, pageSize: 10, totalCount: 1 });
     await userEvent.setup().click(screen.getByRole("button", { name: "Spróbuj ponownie" }));
 
     expect(await screen.findByRole("cell", { name: "SN-2024-0001" })).toBeInTheDocument();

@@ -537,6 +537,17 @@ export type components = {
       dueDate: string;
       priority?: components["schemas"]["WorkOrderPriority"];
     };
+    DeviceListItemResponse: {
+      id: string;
+      clientId: string;
+      clientName: string;
+      serialNumber: string;
+      model: string;
+      manufacturer: string;
+      installationDate: string;
+      createdAt: string;
+      archivedAt: null | string;
+    };
     DeviceResponse: {
       id: string;
       clientId: string;
@@ -570,8 +581,8 @@ export type components = {
       pageSize: number;
       totalCount: number;
     };
-    PagedResponseOfDeviceResponse: {
-      items: components["schemas"]["DeviceResponse"][];
+    PagedResponseOfDeviceListItemResponse: {
+      items: components["schemas"]["DeviceListItemResponse"][];
       page: number;
       pageSize: number;
       totalCount: number;
@@ -1477,7 +1488,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["PagedResponseOfDeviceResponse"];
+          "application/json": components["schemas"]["PagedResponseOfDeviceListItemResponse"];
         };
       };
       400: {

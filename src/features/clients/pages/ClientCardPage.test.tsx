@@ -5,7 +5,7 @@ import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { endSession } from "@/shared/session/sessionStore";
 import { createClientResponse } from "@/test/clientFixtures";
-import { createDeviceResponse } from "@/test/deviceFixtures";
+import { createDeviceListItem } from "@/test/deviceFixtures";
 import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
 import { signInAs } from "@/test/signedInUser";
@@ -13,7 +13,7 @@ import { createWorkOrderListItem } from "@/test/workOrderFixtures";
 
 type ClientResponse = components["schemas"]["ClientResponse"];
 type ClientPage = components["schemas"]["PagedResponseOfClientResponse"];
-type DevicePage = components["schemas"]["PagedResponseOfDeviceResponse"];
+type DevicePage = components["schemas"]["PagedResponseOfDeviceListItemResponse"];
 type WorkOrderPage = components["schemas"]["PagedResponseOfWorkOrderListItemResponse"];
 type ProblemDetails = components["schemas"]["ProblemDetails"];
 
@@ -23,7 +23,7 @@ const cardPath = `/clients/${client.id}`;
 
 function mockCard(cardClient: ClientResponse = client) {
   const devicePage: DevicePage = {
-    items: [createDeviceResponse()],
+    items: [createDeviceListItem()],
     page: 1,
     pageSize: 10,
     totalCount: 1,

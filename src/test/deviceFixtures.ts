@@ -1,6 +1,7 @@
 import type { components } from "@/shared/api/schema";
 
 type DeviceResponse = components["schemas"]["DeviceResponse"];
+type DeviceListItem = components["schemas"]["DeviceListItemResponse"];
 
 export function createDeviceResponse(overrides: Partial<DeviceResponse> = {}): DeviceResponse {
   return {
@@ -14,4 +15,8 @@ export function createDeviceResponse(overrides: Partial<DeviceResponse> = {}): D
     archivedAt: null,
     ...overrides,
   };
+}
+
+export function createDeviceListItem(overrides: Partial<DeviceListItem> = {}): DeviceListItem {
+  return { ...createDeviceResponse(), clientName: "Piekarnia Kowalski", ...overrides };
 }

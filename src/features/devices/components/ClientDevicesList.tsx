@@ -18,10 +18,10 @@ import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 import { DataTable } from "@/shared/ui/DataTable";
 
-type DeviceResponse = components["schemas"]["DeviceResponse"];
+type DeviceListItem = components["schemas"]["DeviceListItemResponse"];
 
 const features = tableFeatures({});
-const columnHelper = createColumnHelper<typeof features, DeviceResponse>();
+const columnHelper = createColumnHelper<typeof features, DeviceListItem>();
 
 export type ClientDevicesListProps = {
   clientId: string;
