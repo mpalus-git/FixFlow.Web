@@ -201,10 +201,54 @@
       "cancel": "Anuluj",
       "confirm": "Archiwizuj",
       "archived": "Zarchiwizowano klienta {{name}}."
+    },
+    "card": {
+      "archived": "Zarchiwizowany",
+      "email": "E-mail",
+      "noEmail": "Nie podano",
+      "createdAt": "Klient od",
+      "archivedAt": "Zarchiwizowano",
+      "devices": "Urządzenia",
+      "workOrders": "Historia zleceń",
+      "archivedDevices": "Urządzenia klienta zostały zarchiwizowane razem z nim i nie są już wyświetlane."
     }
   },
   "apiErrors": {
     "clientArchived": "Klient jest zarchiwizowany i nie można go zmieniać.",
     "clientNotFound": "Nie znaleziono klienta."
+  },
+  "devices": {
+    "columns": {
+      "serialNumber": "Numer seryjny",
+      "model": "Urządzenie",
+      "installationDate": "Data instalacji"
+    },
+    "clientEmpty": "Klient nie ma jeszcze urządzeń"
+  },
+  "workOrders": {
+    "status": {
+      "New": "Nowe",
+      "Assigned": "Przypisane",
+      "InProgress": "W realizacji",
+      "Completed": "Zakończone",
+      "Invoiced": "Zafakturowane"
+    },
+    "priority": {
+      "Low": "Niski",
+      "Normal": "Normalny",
+      "High": "Wysoki",
+      "Critical": "Krytyczny"
+    },
+    "columns": {
+      "dueDate": "Termin",
+      "device": "Urządzenie",
+      "description": "Opis usterki",
+      "priority": "Priorytet",
+      "status": "Status",
+      "technician": "Technik"
+    },
+    "overdue": "Po terminie",
+    "unassigned": "Nieprzypisane",
+    "clientHistoryEmpty": "Klient nie ma jeszcze zleceń"
   }
 }

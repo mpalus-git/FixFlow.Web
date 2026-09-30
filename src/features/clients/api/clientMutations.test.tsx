@@ -9,6 +9,7 @@ import {
 import { clientKeys } from "@/features/clients/api/clientQueries";
 import { toClientFormValues, toClientRequest } from "@/features/clients/schemas/clientSchema";
 import { apiBaseUrl } from "@/shared/api/baseClient";
+import { queryKeyRoots } from "@/shared/api/queryKeyRoots";
 import type { components } from "@/shared/api/schema";
 import { createClientResponse } from "@/test/clientFixtures";
 import { server } from "@/test/server";
@@ -99,6 +100,17 @@ describe("useArchiveClientMutation", () => {
     });
     answerArchive();
     await archiving;
+  });
+
+  it("marks the device lists as outdated because the client devices are archived too", async () => {
+    server.use(http.post(`${clientUrl}/archive`, () => new HttpResponse(null, { status: 204 })));
+    const { queryClient, result } = renderWithQueryClient(() => useArchiveClientMutation());
+    const deviceListKey = [...queryKeyRoots.devices, "list", { clientId: client.id }];
+    queryClient.setQueryData(deviceListKey, { items: [], page: 1, pageSize: 20, totalCount: 0 });
+
+    await result.current.mutateAsync(client.id);
+
+    expect(queryClient.getQueryState(deviceListKey)?.isInvalidated).toBe(true);
   });
 
   it("restores the list when the API rejects the archiving", async () => {

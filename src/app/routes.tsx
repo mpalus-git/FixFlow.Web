@@ -70,6 +70,17 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
               },
             },
             {
+              path: ":clientId",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/clients/api/clientLoader")).createClientLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/clients/pages/ClientCardPage")).ClientCardPage,
+              },
+            },
+            {
               path: ":clientId/edit",
               lazy: {
                 loader: async () =>

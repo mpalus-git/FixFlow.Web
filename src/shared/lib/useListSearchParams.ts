@@ -5,7 +5,7 @@ export function readPageParam(value: string | null): number {
   return Number.isSafeInteger(page) && page >= 1 ? page : 1;
 }
 
-export function useListSearchParams() {
+function useSearchParamsUpdate() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   function update(changes: Record<string, string | null>) {
@@ -25,11 +25,32 @@ export function useListSearchParams() {
     );
   }
 
+  return [searchParams, update] as const;
+}
+
+function pageValue(page: number): string | null {
+  return page <= 1 ? null : String(page);
+}
+
+export function usePageSearchParam(name: string) {
+  const [searchParams, update] = useSearchParamsUpdate();
+
+  return {
+    page: readPageParam(searchParams.get(name)),
+    setPage: (page: number) => {
+      update({ [name]: pageValue(page) });
+    },
+  };
+}
+
+export function useListSearchParams() {
+  const [searchParams, update] = useSearchParamsUpdate();
+
   return {
     page: readPageParam(searchParams.get("page")),
     search: searchParams.get("search") ?? "",
     setPage: (page: number) => {
-      update({ page: page <= 1 ? null : String(page) });
+      update({ page: pageValue(page) });
     },
     setSearch: (search: string) => {
       update({ search, page: null });

@@ -199,10 +199,54 @@
       "cancel": "Cancel",
       "confirm": "Archive",
       "archived": "Client {{name}} has been archived."
+    },
+    "card": {
+      "archived": "Archived",
+      "email": "Email",
+      "noEmail": "Not provided",
+      "createdAt": "Client since",
+      "archivedAt": "Archived on",
+      "devices": "Devices",
+      "workOrders": "Work order history",
+      "archivedDevices": "The client devices were archived together with the client and are no longer listed."
     }
   },
   "apiErrors": {
     "clientArchived": "The client is archived and cannot be changed.",
     "clientNotFound": "The client was not found."
+  },
+  "devices": {
+    "columns": {
+      "serialNumber": "Serial number",
+      "model": "Device",
+      "installationDate": "Installation date"
+    },
+    "clientEmpty": "The client has no devices yet"
+  },
+  "workOrders": {
+    "status": {
+      "New": "New",
+      "Assigned": "Assigned",
+      "InProgress": "In progress",
+      "Completed": "Completed",
+      "Invoiced": "Invoiced"
+    },
+    "priority": {
+      "Low": "Low",
+      "Normal": "Normal",
+      "High": "High",
+      "Critical": "Critical"
+    },
+    "columns": {
+      "dueDate": "Due",
+      "device": "Device",
+      "description": "Fault description",
+      "priority": "Priority",
+      "status": "Status",
+      "technician": "Technician"
+    },
+    "overdue": "Overdue",
+    "unassigned": "Unassigned",
+    "clientHistoryEmpty": "The client has no work orders yet"
   }
 }

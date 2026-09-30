@@ -1,10 +1,11 @@
 import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import { ClientRowActions } from "@/features/clients/components/ClientRowActions";
 import { formatAddress } from "@/features/clients/formatAddress";
 import type { components } from "@/shared/api/schema";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table";
+import { DataTable } from "@/shared/ui/DataTable";
 
 type ClientResponse = components["schemas"]["ClientResponse"];
 
@@ -30,7 +31,14 @@ export function ClientsTable({ clients, isUpdating, onArchive }: ClientsTablePro
       columnHelper.columns([
         columnHelper.accessor("name", {
           header: t("clients.columns.name"),
-          cell: (info) => <span className="font-medium">{info.getValue()}</span>,
+          cell: ({ row }) => (
+            <Link
+              to={`/clients/${row.original.id}`}
+              className="font-medium underline-offset-4 hover:underline"
+            >
+              {row.original.name}
+            </Link>
+          ),
         }),
         columnHelper.accessor((client) => formatAddress(client.address), {
           id: "address",
@@ -64,32 +72,5 @@ export function ClientsTable({ clients, isUpdating, onArchive }: ClientsTablePro
     getRowId: (client) => client.id,
   });
 
-  return (
-    <div className="rounded-xl border" aria-busy={isUpdating}>
-      <Table className={isUpdating ? "opacity-60 transition-opacity" : undefined}>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className={cellClassName(header.column.id)}>
-                  {header.isPlaceholder ? null : <table.FlexRender header={header} />}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
-              {row.getAllCells().map((cell) => (
-                <TableCell key={cell.id} className={cellClassName(cell.column.id)}>
-                  <table.FlexRender cell={cell} />
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  );
+  return <DataTable table={table} isUpdating={isUpdating} cellClassName={cellClassName} />;
 }

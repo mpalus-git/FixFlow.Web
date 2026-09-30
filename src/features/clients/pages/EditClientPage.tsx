@@ -60,7 +60,7 @@ export function EditClientPage() {
             key={editedVersion.etag}
             defaultValues={toClientFormValues(client)}
             submitLabel={t("clients.edit.submit")}
-            cancelTo="/clients"
+            cancelTo={`/clients/${clientId}`}
             disabled={isArchived}
             onSubmit={async (values) => {
               await updateClientMutation.mutateAsync({
@@ -69,7 +69,7 @@ export function EditClientPage() {
                 request: toClientRequest(values),
               });
               toast.success(t("clients.edit.saved"));
-              await navigate("/clients");
+              await navigate(`/clients/${clientId}`);
             }}
             onVersionConflict={() => {
               setIsConflictOpen(true);

@@ -23,7 +23,7 @@ export function CreateClientPage() {
             onSubmit={async (values) => {
               const client = await createClientMutation.mutateAsync(toClientRequest(values));
               toast.success(t("clients.create.created", { name: client.name }));
-              await navigate("/clients");
+              await navigate(`/clients/${client.id}`);
             }}
           />
         </CardContent>

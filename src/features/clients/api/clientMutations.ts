@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { clientKeys } from "@/features/clients/api/clientQueries";
 import { apiClient } from "@/shared/api/apiClient";
 import { unwrap, unwrapVersioned } from "@/shared/api/baseClient";
+import { queryKeyRoots } from "@/shared/api/queryKeyRoots";
 import type { components } from "@/shared/api/schema";
 
 type ClientRequest = components["schemas"]["CreateClientRequest"];
@@ -80,6 +81,7 @@ export function useArchiveClientMutation() {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: clientKeys.lists() }),
         queryClient.invalidateQueries({ queryKey: clientKeys.detail(clientId) }),
+        queryClient.invalidateQueries({ queryKey: queryKeyRoots.devices }),
       ]);
     },
   });
