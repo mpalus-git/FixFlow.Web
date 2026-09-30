@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { act, screen } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import { refreshTokenStorageKey } from "@/shared/session/refreshTokenStorage";
@@ -61,5 +61,18 @@ describe("session middleware", () => {
 
     expect(await screen.findByRole("heading", { name: "Moje zlecenia" })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe("/my-work-orders");
+  });
+
+  it("returns to the login page when the session ends", async () => {
+    signInAs("Dispatcher");
+    const router = renderApp("/");
+    await screen.findByRole("heading", { name: "Pulpit" });
+
+    act(() => {
+      endSession();
+    });
+
+    expect(await screen.findByRole("heading", { name: "Zaloguj się" })).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe("/login");
   });
 });

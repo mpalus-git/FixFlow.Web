@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/shared/api/apiClient";
 import { unwrap } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
@@ -7,10 +7,13 @@ import { startSession } from "@/shared/session/sessionStore";
 type LoginRequest = components["schemas"]["LoginRequest"];
 
 export function useLoginMutation() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async (credentials: LoginRequest) =>
       unwrap(await apiClient.POST("/api/v1/auth/login", { body: credentials })),
     onSuccess: (tokens) => {
+      queryClient.clear();
       startSession(tokens);
     },
   });

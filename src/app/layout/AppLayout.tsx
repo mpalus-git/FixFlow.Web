@@ -6,6 +6,7 @@ import { AppBrand } from "@/app/layout/AppBrand";
 import { LanguageSwitcher } from "@/app/layout/LanguageSwitcher";
 import { SidebarNav } from "@/app/layout/SidebarNav";
 import { ThemeSwitcher } from "@/app/layout/ThemeSwitcher";
+import { useRedirectOnSessionEnd } from "@/app/layout/useRedirectOnSessionEnd";
 import { Button } from "@/shared/ui/button";
 import {
   Sheet,
@@ -19,6 +20,7 @@ import {
 export function AppLayout() {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useRedirectOnSessionEnd();
 
   return (
     <div className="flex min-h-svh">
