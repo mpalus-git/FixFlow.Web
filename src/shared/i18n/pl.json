@@ -5,6 +5,12 @@
   "common": {
     "close": "Zamknij"
   },
+  "nav": {
+    "label": "Nawigacja główna",
+    "dashboard": "Pulpit",
+    "openMenu": "Otwórz menu",
+    "skipToContent": "Przejdź do treści"
+  },
   "language": {
     "label": "Język",
     "pl": "Polski",

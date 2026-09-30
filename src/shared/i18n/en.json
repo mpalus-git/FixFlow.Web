@@ -5,6 +5,12 @@
   "common": {
     "close": "Close"
   },
+  "nav": {
+    "label": "Main navigation",
+    "dashboard": "Dashboard",
+    "openMenu": "Open menu",
+    "skipToContent": "Skip to content"
+  },
   "language": {
     "label": "Language",
     "pl": "Polski",
