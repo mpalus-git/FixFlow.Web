@@ -14,3 +14,11 @@ export function writeStorage(key: string, value: string): boolean {
     return false;
   }
 }
+
+export function removeStorage(key: string): void {
+  try {
+    localStorage.removeItem(key);
+  } catch {
+    return;
+  }
+}
