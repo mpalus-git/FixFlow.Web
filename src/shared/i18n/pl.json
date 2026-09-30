@@ -122,5 +122,21 @@
       "rateLimitedWithDelay": "Zbyt wiele prób. Spróbuj ponownie za {{seconds}} s.",
       "demoAccountLocked": "Hasła kont demo nie można zmienić, żeby pozostały dostępne dla wszystkich odwiedzających."
     }
+  },
+  "pagination": {
+    "label": "Paginacja",
+    "previous": "Poprzednia strona",
+    "next": "Następna strona",
+    "page": "Strona {{page}} z {{pageCount}}",
+    "total_one": "{{count}} pozycja",
+    "total_few": "{{count}} pozycje",
+    "total_many": "{{count}} pozycji",
+    "total_other": "{{count}} pozycji"
+  },
+  "versionConflict": {
+    "title": "Dane zmieniły się w międzyczasie",
+    "description": "Ktoś zapisał nowszą wersję tych danych. Wczytanie aktualnej wersji zastąpi Twoje niezapisane zmiany.",
+    "keepEditing": "Wróć do edycji",
+    "reload": "Wczytaj aktualną wersję"
   }
 }

@@ -122,5 +122,19 @@
       "rateLimitedWithDelay": "Too many attempts. Try again in {{seconds}} s.",
       "demoAccountLocked": "Demo account passwords cannot be changed so that they stay available to every visitor."
     }
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {{page}} of {{pageCount}}",
+    "total_one": "{{count}} item",
+    "total_other": "{{count}} items"
+  },
+  "versionConflict": {
+    "title": "The data has changed in the meantime",
+    "description": "Someone saved a newer version of this data. Loading the current version will replace your unsaved changes.",
+    "keepEditing": "Back to editing",
+    "reload": "Load current version"
   }
 }
