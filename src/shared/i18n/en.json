@@ -211,7 +211,8 @@
       "archivedAt": "Archived on",
       "devices": "Devices",
       "workOrders": "Work order history",
-      "archivedDevices": "The client devices were archived together with the client and are no longer listed."
+      "archivedDevices": "The client devices were archived together with the client and are no longer listed.",
+      "openClient": "Open the client"
     }
   },
   "apiErrors": {
@@ -239,6 +240,16 @@
     "noResults": {
       "title": "No results",
       "description": "No device matches “{{search}}”."
+    },
+    "fields": {
+      "manufacturer": "Manufacturer",
+      "model": "Model"
+    },
+    "card": {
+      "archived": "Archived",
+      "createdAt": "Added on",
+      "archivedAt": "Archived on",
+      "workOrders": "Work order history"
     }
   },
   "workOrders": {

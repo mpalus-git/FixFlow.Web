@@ -3,6 +3,7 @@ import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-tab
 import { CpuIcon } from "lucide-react";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import {
   clientDeviceListQueryOptions,
   devicesPageSize,
@@ -45,7 +46,14 @@ export function ClientDevicesList({ clientId }: ClientDevicesListProps) {
       columnHelper.columns([
         columnHelper.accessor("serialNumber", {
           header: t("devices.columns.serialNumber"),
-          cell: (info) => <span className="font-medium">{info.getValue()}</span>,
+          cell: ({ row }) => (
+            <Link
+              to={`/devices/${row.original.id}`}
+              className="font-medium underline-offset-4 hover:underline"
+            >
+              {row.original.serialNumber}
+            </Link>
+          ),
         }),
         columnHelper.accessor((device) => `${device.manufacturer} ${device.model}`, {
           id: "model",

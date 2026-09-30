@@ -25,7 +25,14 @@ export function DevicesTable({ devices, isUpdating }: DevicesTableProps) {
       columnHelper.columns([
         columnHelper.accessor("serialNumber", {
           header: t("devices.columns.serialNumber"),
-          cell: (info) => <span className="font-medium">{info.getValue()}</span>,
+          cell: ({ row }) => (
+            <Link
+              to={`/devices/${row.original.id}`}
+              className="font-medium underline-offset-4 hover:underline"
+            >
+              {row.original.serialNumber}
+            </Link>
+          ),
         }),
         columnHelper.accessor((device) => `${device.manufacturer} ${device.model}`, {
           id: "model",

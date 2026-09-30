@@ -105,6 +105,17 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                   (await import("@/features/devices/pages/DevicesPage")).DevicesPage,
               },
             },
+            {
+              path: ":deviceId",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/devices/api/deviceLoader")).createDeviceLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/devices/pages/DeviceCardPage")).DeviceCardPage,
+              },
+            },
           ],
         },
         {
