@@ -190,7 +190,15 @@
     },
     "actions": {
       "label": "Actions for client {{name}}",
-      "edit": "Edit"
+      "edit": "Edit",
+      "archive": "Archive"
+    },
+    "archive": {
+      "title": "Archive client {{name}}?",
+      "description": "The client and their devices will disappear from lists. The work order history is kept, but no new devices or work orders can be added.",
+      "cancel": "Cancel",
+      "confirm": "Archive",
+      "archived": "Client {{name}} has been archived."
     }
   },
   "apiErrors": {

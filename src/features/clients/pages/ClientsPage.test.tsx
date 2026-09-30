@@ -22,7 +22,7 @@ const allClients: ClientResponse[] = Array.from({ length: 25 }, (_, index) =>
   }),
 );
 
-function mockClientList() {
+function mockClientList(archivedIds: readonly string[] = []) {
   const requests: URLSearchParams[] = [];
   server.use(
     http.get(clientsUrl, ({ request }) => {
@@ -31,7 +31,9 @@ function mockClientList() {
       const page = Number(params.get("page"));
       const pageSize = Number(params.get("pageSize"));
       const search = params.get("search")?.toLowerCase() ?? "";
-      const matching = allClients.filter((client) => client.name.toLowerCase().includes(search));
+      const matching = allClients.filter(
+        (client) => client.name.toLowerCase().includes(search) && !archivedIds.includes(client.id),
+      );
       const clientPage: ClientPage = {
         items: matching.slice((page - 1) * pageSize, page * pageSize),
         page,
@@ -137,6 +139,67 @@ describe("ClientsPage", () => {
     await userEvent.setup().click(screen.getByRole("button", { name: "Spróbuj ponownie" }));
 
     expect(await screen.findByRole("cell", { name: "Klient 01" })).toBeInTheDocument();
+  });
+
+  it("archives a client after confirmation and removes it from the list", async () => {
+    const archivedIds: string[] = [];
+    mockClientList(archivedIds);
+    server.use(
+      http.post(`${clientsUrl}/:clientId/archive`, ({ params }) => {
+        archivedIds.push(String(params.clientId));
+        return new HttpResponse(null, { status: 204 });
+      }),
+    );
+    const user = userEvent.setup();
+    renderApp("/clients");
+
+    await user.click(await screen.findByRole("button", { name: "Akcje klienta Klient 01" }));
+    await user.click(screen.getByRole("menuitem", { name: "Archiwizuj" }));
+    const dialog = screen.getByRole("alertdialog", { name: "Zarchiwizować klienta Klient 01?" });
+    await user.click(within(dialog).getByRole("button", { name: "Archiwizuj" }));
+
+    expect(await screen.findByText("Zarchiwizowano klienta Klient 01.")).toBeInTheDocument();
+    expect(screen.queryByRole("cell", { name: "Klient 01" })).toBeNull();
+    expect(screen.getByText("24 pozycje")).toBeInTheDocument();
+    expect(archivedIds).toEqual([allClients[0]?.id]);
+  });
+
+  it("does not archive when the user cancels", async () => {
+    mockClientList();
+    const user = userEvent.setup();
+    renderApp("/clients");
+
+    await user.click(await screen.findByRole("button", { name: "Akcje klienta Klient 02" }));
+    await user.click(screen.getByRole("menuitem", { name: "Archiwizuj" }));
+    await user.click(screen.getByRole("button", { name: "Anuluj" }));
+
+    expect(screen.queryByRole("alertdialog")).toBeNull();
+    expect(screen.getByRole("cell", { name: "Klient 02" })).toBeInTheDocument();
+  });
+
+  it("brings the client back and explains why when archiving fails", async () => {
+    mockClientList();
+    const problem: ProblemDetails = {
+      status: 409,
+      title: "Conflict",
+      detail: "The client was changed by another request.",
+    };
+    server.use(
+      http.post(`${clientsUrl}/:clientId/archive`, () =>
+        HttpResponse.json(problem, { status: 409 }),
+      ),
+    );
+    const user = userEvent.setup();
+    renderApp("/clients");
+
+    await user.click(await screen.findByRole("button", { name: "Akcje klienta Klient 03" }));
+    await user.click(screen.getByRole("menuitem", { name: "Archiwizuj" }));
+    await user.click(screen.getByRole("button", { name: "Archiwizuj" }));
+
+    expect(
+      await screen.findByText("The client was changed by another request."),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("cell", { name: "Klient 03" })).toBeInTheDocument();
   });
 
   it("sends a technician back to their own work orders", async () => {

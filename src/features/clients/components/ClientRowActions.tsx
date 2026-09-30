@@ -1,4 +1,4 @@
-import { EllipsisIcon, PencilIcon } from "lucide-react";
+import { ArchiveIcon, EllipsisIcon, PencilIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { components } from "@/shared/api/schema";
@@ -14,9 +14,10 @@ type ClientResponse = components["schemas"]["ClientResponse"];
 
 export type ClientRowActionsProps = {
   client: ClientResponse;
+  onArchive: (client: ClientResponse) => void;
 };
 
-export function ClientRowActions({ client }: ClientRowActionsProps) {
+export function ClientRowActions({ client, onArchive }: ClientRowActionsProps) {
   const { t } = useTranslation();
 
   return (
@@ -36,6 +37,15 @@ export function ClientRowActions({ client }: ClientRowActionsProps) {
             <PencilIcon aria-hidden="true" />
             {t("clients.actions.edit")}
           </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          variant="destructive"
+          onSelect={() => {
+            onArchive(client);
+          }}
+        >
+          <ArchiveIcon aria-hidden="true" />
+          {t("clients.actions.archive")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

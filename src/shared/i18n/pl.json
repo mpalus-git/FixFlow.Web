@@ -192,7 +192,15 @@
     },
     "actions": {
       "label": "Akcje klienta {{name}}",
-      "edit": "Edytuj"
+      "edit": "Edytuj",
+      "archive": "Archiwizuj"
+    },
+    "archive": {
+      "title": "Zarchiwizować klienta {{name}}?",
+      "description": "Klient i jego urządzenia znikną z list. Historia zleceń zostanie zachowana, ale nie będzie można dodawać nowych urządzeń ani zleceń.",
+      "cancel": "Anuluj",
+      "confirm": "Archiwizuj",
+      "archived": "Zarchiwizowano klienta {{name}}."
     }
   },
   "apiErrors": {

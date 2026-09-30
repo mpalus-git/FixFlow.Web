@@ -14,9 +14,10 @@ const columnHelper = createColumnHelper<typeof features, ClientResponse>();
 export type ClientsTableProps = {
   clients: ClientResponse[];
   isUpdating: boolean;
+  onArchive: (client: ClientResponse) => void;
 };
 
-export function ClientsTable({ clients, isUpdating }: ClientsTableProps) {
+export function ClientsTable({ clients, isUpdating, onArchive }: ClientsTableProps) {
   const { t } = useTranslation();
   const columns = useMemo(
     () =>
@@ -43,12 +44,12 @@ export function ClientsTable({ clients, isUpdating }: ClientsTableProps) {
           header: () => <span className="sr-only">{t("clients.columns.actions")}</span>,
           cell: ({ row }) => (
             <div className="flex justify-end">
-              <ClientRowActions client={row.original} />
+              <ClientRowActions client={row.original} onArchive={onArchive} />
             </div>
           ),
         }),
       ]),
-    [t],
+    [t, onArchive],
   );
   const table = useTable({
     features,
