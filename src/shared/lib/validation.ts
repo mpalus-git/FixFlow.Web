@@ -9,6 +9,8 @@ export const validationMessages = {
   passwordSymbol: "validation.passwordSymbol",
   passwordUnchanged: "validation.passwordUnchanged",
   passwordConfirmation: "validation.passwordConfirmation",
+  postalCode: "validation.postalCode",
+  phone: "validation.phone",
 } as const;
 
 export type ValidationMessageKey = (typeof validationMessages)[keyof typeof validationMessages];

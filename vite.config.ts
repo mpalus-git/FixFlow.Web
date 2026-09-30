@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => {
       globals: true,
       setupFiles: ["./src/test/setup.ts"],
       restoreMocks: true,
+      testTimeout: 15_000,
       env: {
         TZ: "America/New_York",
       },

@@ -10,7 +10,8 @@
     "dashboard": "Dashboard",
     "openMenu": "Open menu",
     "skipToContent": "Skip to content",
-    "myWorkOrders": "My work orders"
+    "myWorkOrders": "My work orders",
+    "clients": "Clients"
   },
   "language": {
     "label": "Language",
@@ -61,7 +62,9 @@
     "passwordDigit": "The password must contain a digit",
     "passwordSymbol": "The password must contain a character other than a letter or digit",
     "passwordUnchanged": "The new password must differ from the current one",
-    "passwordConfirmation": "The passwords do not match"
+    "passwordConfirmation": "The passwords do not match",
+    "postalCode": "Enter the postal code in the NN-NNN format",
+    "phone": "Enter 9 to 20 digits, spaces or dashes, optionally starting with +"
   },
   "auth": {
     "login": {
@@ -122,5 +125,84 @@
       "rateLimitedWithDelay": "Too many attempts. Try again in {{seconds}} s.",
       "demoAccountLocked": "Demo account passwords cannot be changed so that they stay available to every visitor."
     }
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {{page}} of {{pageCount}}",
+    "total_one": "{{count}} item",
+    "total_other": "{{count}} items"
+  },
+  "versionConflict": {
+    "title": "The data has changed in the meantime",
+    "description": "Someone saved a newer version of this data. Loading the current version will replace your unsaved changes.",
+    "keepEditing": "Back to editing",
+    "reload": "Load current version"
+  },
+  "clients": {
+    "title": "Clients",
+    "columns": {
+      "name": "Name",
+      "address": "Address",
+      "contactPerson": "Contact person",
+      "phone": "Phone",
+      "actions": "Actions"
+    },
+    "search": {
+      "label": "Search clients",
+      "placeholder": "Search by name"
+    },
+    "empty": {
+      "title": "No clients",
+      "description": "Add the first client to create work orders for them."
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No client name contains “{{search}}”."
+    },
+    "fields": {
+      "name": "Name",
+      "address": "Address",
+      "street": "Street",
+      "buildingNumber": "Building number",
+      "postalCode": "Postal code",
+      "city": "City",
+      "contact": "Contact",
+      "contactPerson": "Contact person",
+      "phone": "Phone",
+      "email": "Email (optional)"
+    },
+    "form": {
+      "saving": "Saving…",
+      "cancel": "Cancel"
+    },
+    "create": {
+      "link": "Add client",
+      "title": "New client",
+      "submit": "Add client",
+      "created": "Client {{name}} has been added."
+    },
+    "edit": {
+      "title": "Edit client",
+      "submit": "Save changes",
+      "saved": "The client changes have been saved."
+    },
+    "actions": {
+      "label": "Actions for client {{name}}",
+      "edit": "Edit",
+      "archive": "Archive"
+    },
+    "archive": {
+      "title": "Archive client {{name}}?",
+      "description": "The client and their devices will disappear from lists. The work order history is kept, but no new devices or work orders can be added.",
+      "cancel": "Cancel",
+      "confirm": "Archive",
+      "archived": "Client {{name}} has been archived."
+    }
+  },
+  "apiErrors": {
+    "clientArchived": "The client is archived and cannot be changed.",
+    "clientNotFound": "The client was not found."
   }
 }

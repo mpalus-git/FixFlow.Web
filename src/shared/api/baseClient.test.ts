@@ -1,7 +1,14 @@
 import { http, HttpResponse } from "msw";
-import { apiBaseUrl, createApiClient, resolveApiBaseUrl, unwrap } from "@/shared/api/baseClient";
+import {
+  apiBaseUrl,
+  createApiClient,
+  resolveApiBaseUrl,
+  unwrap,
+  unwrapVersioned,
+} from "@/shared/api/baseClient";
 import { ApiError } from "@/shared/api/apiError";
 import type { components } from "@/shared/api/schema";
+import { createClientResponse } from "@/test/clientFixtures";
 import { server } from "@/test/server";
 
 type UserResponse = components["schemas"]["UserResponse"];
@@ -79,5 +86,31 @@ describe("createApiClient", () => {
     server.use(http.get(currentUserUrl, () => HttpResponse.error()));
 
     expect(await getCurrentUserError()).toMatchObject({ kind: "network", status: null });
+  });
+});
+
+describe("unwrapVersioned", () => {
+  const clientId = createClientResponse().id;
+  const clientUrl = `${apiBaseUrl}/api/v1/clients/${clientId}`;
+
+  it("returns the body together with the ETag of the resource", async () => {
+    const client = createClientResponse();
+    server.use(http.get(clientUrl, () => HttpResponse.json(client, { headers: { ETag: '"42"' } })));
+
+    const result = unwrapVersioned(
+      await apiClient.GET("/api/v1/clients/{clientId}", { params: { path: { clientId } } }),
+    );
+
+    expect(result).toEqual({ data: client, etag: '"42"' });
+  });
+
+  it("fails when the response has no ETag header", async () => {
+    server.use(http.get(clientUrl, () => HttpResponse.json(createClientResponse())));
+
+    const response = await apiClient.GET("/api/v1/clients/{clientId}", {
+      params: { path: { clientId } },
+    });
+
+    expect(() => unwrapVersioned(response)).toThrow(ApiError);
   });
 });

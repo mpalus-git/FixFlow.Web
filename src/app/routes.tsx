@@ -51,6 +51,38 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           },
         },
         {
+          path: "clients",
+          ErrorBoundary: RouteErrorBoundary,
+          middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
+          children: [
+            {
+              index: true,
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/clients/pages/ClientsPage")).ClientsPage,
+              },
+            },
+            {
+              path: "new",
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/clients/pages/CreateClientPage")).CreateClientPage,
+              },
+            },
+            {
+              path: ":clientId/edit",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/clients/api/clientLoader")).createClientLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/clients/pages/EditClientPage")).EditClientPage,
+              },
+            },
+          ],
+        },
+        {
           path: "profile",
           lazy: {
             Component: async () =>

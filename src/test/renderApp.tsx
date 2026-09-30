@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import { createMemoryRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { createRoutes } from "@/app/routes";
+import { Toaster } from "@/shared/ui/sonner";
 
 export function renderApp(path: string) {
   const queryClient = new QueryClient({
@@ -12,6 +13,7 @@ export function renderApp(path: string) {
   render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <Toaster />
     </QueryClientProvider>,
   );
   return router;

@@ -10,7 +10,8 @@
     "dashboard": "Pulpit",
     "openMenu": "Otwórz menu",
     "skipToContent": "Przejdź do treści",
-    "myWorkOrders": "Moje zlecenia"
+    "myWorkOrders": "Moje zlecenia",
+    "clients": "Klienci"
   },
   "language": {
     "label": "Język",
@@ -61,7 +62,9 @@
     "passwordDigit": "Hasło musi zawierać cyfrę",
     "passwordSymbol": "Hasło musi zawierać znak inny niż litera i cyfra",
     "passwordUnchanged": "Nowe hasło musi różnić się od obecnego",
-    "passwordConfirmation": "Hasła nie są takie same"
+    "passwordConfirmation": "Hasła nie są takie same",
+    "postalCode": "Podaj kod pocztowy w formacie NN-NNN",
+    "phone": "Podaj od 9 do 20 cyfr, spacji lub myślników, opcjonalnie z + na początku"
   },
   "auth": {
     "login": {
@@ -122,5 +125,86 @@
       "rateLimitedWithDelay": "Zbyt wiele prób. Spróbuj ponownie za {{seconds}} s.",
       "demoAccountLocked": "Hasła kont demo nie można zmienić, żeby pozostały dostępne dla wszystkich odwiedzających."
     }
+  },
+  "pagination": {
+    "label": "Paginacja",
+    "previous": "Poprzednia strona",
+    "next": "Następna strona",
+    "page": "Strona {{page}} z {{pageCount}}",
+    "total_one": "{{count}} pozycja",
+    "total_few": "{{count}} pozycje",
+    "total_many": "{{count}} pozycji",
+    "total_other": "{{count}} pozycji"
+  },
+  "versionConflict": {
+    "title": "Dane zmieniły się w międzyczasie",
+    "description": "Ktoś zapisał nowszą wersję tych danych. Wczytanie aktualnej wersji zastąpi Twoje niezapisane zmiany.",
+    "keepEditing": "Wróć do edycji",
+    "reload": "Wczytaj aktualną wersję"
+  },
+  "clients": {
+    "title": "Klienci",
+    "columns": {
+      "name": "Nazwa",
+      "address": "Adres",
+      "contactPerson": "Osoba kontaktowa",
+      "phone": "Telefon",
+      "actions": "Akcje"
+    },
+    "search": {
+      "label": "Szukaj klientów",
+      "placeholder": "Szukaj po nazwie"
+    },
+    "empty": {
+      "title": "Brak klientów",
+      "description": "Dodaj pierwszego klienta, aby zakładać dla niego zlecenia."
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żaden klient nie ma w nazwie „{{search}}”."
+    },
+    "fields": {
+      "name": "Nazwa",
+      "address": "Adres",
+      "street": "Ulica",
+      "buildingNumber": "Numer budynku",
+      "postalCode": "Kod pocztowy",
+      "city": "Miejscowość",
+      "contact": "Kontakt",
+      "contactPerson": "Osoba kontaktowa",
+      "phone": "Telefon",
+      "email": "E-mail (opcjonalnie)"
+    },
+    "form": {
+      "saving": "Zapisywanie…",
+      "cancel": "Anuluj"
+    },
+    "create": {
+      "link": "Dodaj klienta",
+      "title": "Nowy klient",
+      "submit": "Dodaj klienta",
+      "created": "Dodano klienta {{name}}."
+    },
+    "edit": {
+      "title": "Edycja klienta",
+      "submit": "Zapisz zmiany",
+      "saved": "Zapisano zmiany klienta."
+    },
+    "actions": {
+      "label": "Akcje klienta {{name}}",
+      "edit": "Edytuj",
+      "archive": "Archiwizuj"
+    },
+    "archive": {
+      "title": "Zarchiwizować klienta {{name}}?",
+      "description": "Klient i jego urządzenia znikną z list. Historia zleceń zostanie zachowana, ale nie będzie można dodawać nowych urządzeń ani zleceń.",
+      "cancel": "Anuluj",
+      "confirm": "Archiwizuj",
+      "archived": "Zarchiwizowano klienta {{name}}."
+    }
+  },
+  "apiErrors": {
+    "clientArchived": "Klient jest zarchiwizowany i nie można go zmieniać.",
+    "clientNotFound": "Nie znaleziono klienta."
   }
 }

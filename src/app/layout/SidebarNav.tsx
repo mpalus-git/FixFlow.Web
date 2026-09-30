@@ -1,12 +1,12 @@
 import { cn } from "cn";
-import { ClipboardListIcon, LayoutDashboardIcon } from "lucide-react";
+import { Building2Icon, ClipboardListIcon, LayoutDashboardIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 import { type Role, useCurrentUser } from "@/shared/session/currentUser";
 
 const navItems: readonly {
   to: string;
-  labelKey: "nav.dashboard" | "nav.myWorkOrders";
+  labelKey: "nav.dashboard" | "nav.myWorkOrders" | "nav.clients";
   icon: typeof LayoutDashboardIcon;
   end: boolean;
   roles: readonly Role[];
@@ -16,6 +16,13 @@ const navItems: readonly {
     labelKey: "nav.dashboard",
     icon: LayoutDashboardIcon,
     end: true,
+    roles: ["Admin", "Dispatcher"],
+  },
+  {
+    to: "/clients",
+    labelKey: "nav.clients",
+    icon: Building2Icon,
+    end: false,
     roles: ["Admin", "Dispatcher"],
   },
   {

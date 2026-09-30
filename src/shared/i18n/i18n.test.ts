@@ -12,6 +12,12 @@ function collectKeys(value: unknown, prefix = ""): string[] {
   );
 }
 
+const pluralSuffix = /_(zero|one|two|few|many|other)$/;
+
+function withoutPluralForms(keys: string[]): string[] {
+  return [...new Set(keys.map((key) => key.replace(pluralSuffix, "")))].sort();
+}
+
 describe("i18n", () => {
   afterEach(async () => {
     await changeLanguage("pl");
@@ -19,7 +25,22 @@ describe("i18n", () => {
   });
 
   it("keeps Polish and English translations with the same keys", () => {
-    expect(collectKeys(en).sort()).toEqual(collectKeys(pl).sort());
+    expect(withoutPluralForms(collectKeys(en))).toEqual(withoutPluralForms(collectKeys(pl)));
+  });
+
+  it.each([
+    ["pl", pl],
+    ["en", en],
+  ])("provides every plural form required by the %s language", (language, resource) => {
+    const keys = collectKeys(resource);
+    const pluralKeys = withoutPluralForms(keys.filter((key) => pluralSuffix.test(key)));
+    const categories = new Intl.PluralRules(language).resolvedOptions().pluralCategories;
+
+    const missingKeys = pluralKeys.flatMap((key) =>
+      categories.map((category) => `${key}_${category}`).filter((form) => !keys.includes(form)),
+    );
+
+    expect(missingKeys).toEqual([]);
   });
 
   it("uses Polish by default", () => {
