@@ -2,6 +2,9 @@
   "app": {
     "name": "FixFlow"
   },
+  "common": {
+    "close": "Zamknij"
+  },
   "language": {
     "label": "Język",
     "pl": "Polski",
