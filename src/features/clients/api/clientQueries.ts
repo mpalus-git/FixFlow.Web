@@ -1,6 +1,7 @@
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/shared/api/apiClient";
 import { unwrap, unwrapVersioned } from "@/shared/api/baseClient";
+import { queryKeyRoots } from "@/shared/api/queryKeyRoots";
 
 export const clientsPageSize = 20;
 
@@ -10,7 +11,7 @@ export type ClientListParams = {
 };
 
 export const clientKeys = {
-  all: ["clients"] as const,
+  all: queryKeyRoots.clients,
   lists: () => [...clientKeys.all, "list"] as const,
   list: (params: ClientListParams) => [...clientKeys.lists(), params] as const,
   details: () => [...clientKeys.all, "detail"] as const,
