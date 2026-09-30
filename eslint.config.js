@@ -76,7 +76,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["src/shared/i18n/i18next.d.ts"],
+    files: ["src/shared/i18n/i18next.d.ts", "src/env.d.ts"],
     rules: {
       "@typescript-eslint/consistent-type-definitions": "off",
     },
