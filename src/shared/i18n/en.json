@@ -40,5 +40,14 @@
   "routeError": {
     "title": "Something went wrong",
     "description": "Reload the page. If the problem persists, try again later."
+  },
+  "serverWake": {
+    "checking": "Connecting to the server…",
+    "wakingTitle": "The demo server is starting",
+    "wakingDescription": "The free server sleeps after 15 minutes of inactivity. Starting it takes up to a minute.",
+    "progressLabel": "Server startup progress",
+    "elapsed": "{{seconds}} s elapsed",
+    "unavailableTitle": "The server is not responding",
+    "unavailableDescription": "Could not connect to the server within 90 seconds. Check your connection and try again."
   }
 }
