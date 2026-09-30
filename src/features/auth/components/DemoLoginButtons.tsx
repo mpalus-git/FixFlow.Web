@@ -26,7 +26,7 @@ export function DemoLoginButtons({ accounts, disabled, onSelect }: DemoLoginButt
       <h2 id="demo-login-heading" className="text-center text-sm text-muted-foreground">
         {t("auth.demo.heading")}
       </h2>
-      <div className="grid gap-2 sm:grid-cols-2">
+      <div className="grid gap-2">
         {accounts.map((account) => (
           <Button
             key={account.role}

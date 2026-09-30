@@ -9,7 +9,7 @@ export function PublicLayout() {
         <LanguageSwitcher />
         <ThemeSwitcher />
       </header>
-      <main className="flex flex-1 justify-center px-4 pt-4 pb-12 sm:items-center sm:pt-0">
+      <main className="flex flex-1 items-start justify-center px-4 pt-4 pb-12 sm:items-center sm:pt-0">
         <Outlet />
       </main>
     </div>
