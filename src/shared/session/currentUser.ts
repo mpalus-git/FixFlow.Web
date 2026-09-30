@@ -1,8 +1,9 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/shared/api/apiClient";
 import { ApiError } from "@/shared/api/apiError";
 import { unwrap } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
+import { useSessionStore } from "@/shared/session/sessionStore";
 
 export const roles = ["Admin", "Dispatcher", "Technician"] as const;
 
@@ -39,6 +40,7 @@ export function currentUserQueryOptions() {
   });
 }
 
-export function useCurrentUser(): CurrentUser {
-  return useSuspenseQuery(currentUserQueryOptions()).data;
+export function useCurrentUser(): CurrentUser | undefined {
+  const isAuthenticated = useSessionStore((state) => state.status === "authenticated");
+  return useQuery({ ...currentUserQueryOptions(), enabled: isAuthenticated }).data;
 }

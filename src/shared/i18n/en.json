@@ -9,7 +9,8 @@
     "label": "Main navigation",
     "dashboard": "Dashboard",
     "openMenu": "Open menu",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "myWorkOrders": "My work orders"
   },
   "language": {
     "label": "Language",
@@ -35,7 +36,7 @@
   "notFound": {
     "title": "Page not found",
     "description": "The page you are looking for does not exist or has been moved.",
-    "backHome": "Back to dashboard"
+    "backHome": "Back to the home page"
   },
   "routeError": {
     "title": "Something went wrong",
@@ -82,5 +83,14 @@
   "myWorkOrders": {
     "title": "My work orders",
     "comingSoon": "Work orders assigned to you will appear here"
+  },
+  "userMenu": {
+    "label": "User account",
+    "logout": "Sign out"
+  },
+  "roles": {
+    "Admin": "Administrator",
+    "Dispatcher": "Dispatcher",
+    "Technician": "Technician"
   }
 }

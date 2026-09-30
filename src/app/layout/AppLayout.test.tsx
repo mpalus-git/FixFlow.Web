@@ -1,7 +1,10 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { http, HttpResponse } from "msw";
+import { apiBaseUrl } from "@/shared/api/baseClient";
 import { endSession } from "@/shared/session/sessionStore";
 import { renderApp } from "@/test/renderApp";
+import { server } from "@/test/server";
 import { signInAs } from "@/test/signedInUser";
 
 describe("AppLayout", () => {
@@ -44,5 +47,35 @@ describe("AppLayout", () => {
     await user.click(within(menu).getByRole("link", { name: "Pulpit" }));
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("shows only the navigation of the technician role", async () => {
+    signInAs("Technician");
+    renderApp("/my-work-orders");
+
+    const navigation = await screen.findByRole("navigation", { name: "Nawigacja główna" });
+
+    expect(within(navigation).getByRole("link", { name: "Moje zlecenia" })).toBeInTheDocument();
+    expect(within(navigation).queryByRole("link", { name: "Pulpit" })).toBeNull();
+  });
+
+  it("shows the account and signs out from the user menu", async () => {
+    let isRevoked = false;
+    server.use(
+      http.post(`${apiBaseUrl}/api/v1/auth/logout`, () => {
+        isRevoked = true;
+        return new HttpResponse(null, { status: 204 });
+      }),
+    );
+    const user = userEvent.setup();
+    renderApp("/");
+
+    await user.click(await screen.findByRole("button", { name: "Konto użytkownika" }));
+    expect(screen.getByText("dispatcher@fixflow.test")).toBeInTheDocument();
+    expect(screen.getByText("Dyspozytor")).toBeInTheDocument();
+    await user.click(screen.getByRole("menuitem", { name: "Wyloguj" }));
+
+    expect(await screen.findByRole("heading", { name: "Zaloguj się" })).toBeInTheDocument();
+    expect(isRevoked).toBe(true);
   });
 });

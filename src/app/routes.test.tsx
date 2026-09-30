@@ -28,7 +28,10 @@ describe("routes", () => {
     expect(
       await screen.findByRole("heading", { name: "Nie znaleziono strony" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Wróć do pulpitu" })).toHaveAttribute("href", "/");
+    expect(screen.getByRole("link", { name: "Wróć na stronę główną" })).toHaveAttribute(
+      "href",
+      "/",
+    );
   });
 
   it("returns to the requested page after logging in", async () => {

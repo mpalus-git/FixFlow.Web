@@ -7,6 +7,7 @@ import { LanguageSwitcher } from "@/app/layout/LanguageSwitcher";
 import { SidebarNav } from "@/app/layout/SidebarNav";
 import { ThemeSwitcher } from "@/app/layout/ThemeSwitcher";
 import { useRedirectOnSessionEnd } from "@/app/layout/useRedirectOnSessionEnd";
+import { UserMenu } from "@/app/layout/UserMenu";
 import { Button } from "@/shared/ui/button";
 import {
   Sheet,
@@ -69,6 +70,7 @@ export function AppLayout() {
           <div className="ml-auto flex items-center gap-1">
             <LanguageSwitcher />
             <ThemeSwitcher />
+            <UserMenu />
           </div>
         </header>
         <main id="main-content" tabIndex={-1} className="flex-1 p-4 outline-none md:p-6">

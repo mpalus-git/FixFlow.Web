@@ -9,7 +9,8 @@
     "label": "Nawigacja główna",
     "dashboard": "Pulpit",
     "openMenu": "Otwórz menu",
-    "skipToContent": "Przejdź do treści"
+    "skipToContent": "Przejdź do treści",
+    "myWorkOrders": "Moje zlecenia"
   },
   "language": {
     "label": "Język",
@@ -35,7 +36,7 @@
   "notFound": {
     "title": "Nie znaleziono strony",
     "description": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
-    "backHome": "Wróć do pulpitu"
+    "backHome": "Wróć na stronę główną"
   },
   "routeError": {
     "title": "Coś poszło nie tak",
@@ -82,5 +83,14 @@
   "myWorkOrders": {
     "title": "Moje zlecenia",
     "comingSoon": "Tu pojawią się zlecenia przypisane do Ciebie"
+  },
+  "userMenu": {
+    "label": "Konto użytkownika",
+    "logout": "Wyloguj"
+  },
+  "roles": {
+    "Admin": "Administrator",
+    "Dispatcher": "Dyspozytor",
+    "Technician": "Technik"
   }
 }
