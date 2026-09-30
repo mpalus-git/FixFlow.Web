@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { Building2Icon, SearchXIcon } from "lucide-react";
+import { Building2Icon, PlusIcon, SearchXIcon } from "lucide-react";
 import { useEffect, useEffectEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import { clientListQueryOptions, clientsPageSize } from "@/features/clients/api/clientQueries";
 import { ClientsTable } from "@/features/clients/components/ClientsTable";
 import { useListSearchParams } from "@/shared/lib/useListSearchParams";
+import { Button } from "@/shared/ui/button";
 import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
@@ -28,6 +30,15 @@ export function ClientsPage() {
     }
   }, [page, lastPage]);
 
+  const addClientButton = (
+    <Button asChild>
+      <Link to="/clients/new">
+        <PlusIcon aria-hidden="true" />
+        {t("clients.create.link")}
+      </Link>
+    </Button>
+  );
+
   function renderContent() {
     if (clientsQuery.isError) {
       return <ErrorState onRetry={() => void clientsQuery.refetch()} />;
@@ -41,6 +52,7 @@ export function ClientsPage() {
           icon={Building2Icon}
           title={t("clients.empty.title")}
           description={t("clients.empty.description")}
+          action={addClientButton}
         />
       ) : (
         <EmptyState
@@ -65,7 +77,10 @@ export function ClientsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold tracking-tight">{t("clients.title")}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-semibold tracking-tight">{t("clients.title")}</h1>
+        {addClientButton}
+      </div>
       <SearchInput
         label={t("clients.search.label")}
         placeholder={t("clients.search.placeholder")}

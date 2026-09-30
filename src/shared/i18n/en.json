@@ -175,6 +175,12 @@
     "form": {
       "saving": "Saving…",
       "cancel": "Cancel"
+    },
+    "create": {
+      "link": "Add client",
+      "title": "New client",
+      "submit": "Add client",
+      "created": "Client {{name}} has been added."
     }
   },
   "apiErrors": {

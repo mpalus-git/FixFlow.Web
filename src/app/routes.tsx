@@ -52,6 +52,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
         },
         {
           path: "clients",
+          ErrorBoundary: RouteErrorBoundary,
           middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
           children: [
             {
@@ -59,6 +60,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
               lazy: {
                 Component: async () =>
                   (await import("@/features/clients/pages/ClientsPage")).ClientsPage,
+              },
+            },
+            {
+              path: "new",
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/clients/pages/CreateClientPage")).CreateClientPage,
               },
             },
           ],

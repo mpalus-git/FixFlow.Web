@@ -177,6 +177,12 @@
     "form": {
       "saving": "Zapisywanie…",
       "cancel": "Anuluj"
+    },
+    "create": {
+      "link": "Dodaj klienta",
+      "title": "Nowy klient",
+      "submit": "Dodaj klienta",
+      "created": "Dodano klienta {{name}}."
     }
   },
   "apiErrors": {
