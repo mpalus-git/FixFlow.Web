@@ -93,6 +93,7 @@
   },
   "userMenu": {
     "label": "User account",
+    "profile": "Profile",
     "logout": "Sign out"
   },
   "roles": {
@@ -101,7 +102,15 @@
     "Technician": "Technician"
   },
   "profile": {
+    "title": "Profile",
+    "account": {
+      "title": "Account details",
+      "email": "Email",
+      "role": "Role"
+    },
     "password": {
+      "title": "Change password",
+      "description": "After the change, your other devices will be signed out.",
       "currentPassword": "Current password",
       "newPassword": "New password",
       "confirmNewPassword": "Repeat new password",

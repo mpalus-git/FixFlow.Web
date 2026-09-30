@@ -93,6 +93,7 @@
   },
   "userMenu": {
     "label": "Konto użytkownika",
+    "profile": "Profil",
     "logout": "Wyloguj"
   },
   "roles": {
@@ -101,7 +102,15 @@
     "Technician": "Technik"
   },
   "profile": {
+    "title": "Profil",
+    "account": {
+      "title": "Dane konta",
+      "email": "E-mail",
+      "role": "Rola"
+    },
     "password": {
+      "title": "Zmiana hasła",
+      "description": "Po zmianie hasła pozostałe urządzenia zostaną wylogowane.",
       "currentPassword": "Obecne hasło",
       "newPassword": "Nowe hasło",
       "confirmNewPassword": "Powtórz nowe hasło",
