@@ -1743,10 +1743,13 @@ export interface operations {
         status?: components["schemas"]["WorkOrderStatus"];
         technicianId?: string;
         deviceId?: string;
+        clientId?: string;
         isOverdue?: boolean;
         dueFrom?: string;
         dueTo?: string;
         search?: string;
+        sortBy?: "DueDate" | "CreatedAt" | "Priority" | "Status" | "ClientName";
+        sortDirection?: "Asc" | "Desc";
       };
       header?: never;
       path?: never;
