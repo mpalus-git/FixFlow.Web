@@ -61,7 +61,9 @@
     "passwordDigit": "Hasło musi zawierać cyfrę",
     "passwordSymbol": "Hasło musi zawierać znak inny niż litera i cyfra",
     "passwordUnchanged": "Nowe hasło musi różnić się od obecnego",
-    "passwordConfirmation": "Hasła nie są takie same"
+    "passwordConfirmation": "Hasła nie są takie same",
+    "postalCode": "Podaj kod pocztowy w formacie NN-NNN",
+    "phone": "Podaj od 9 do 20 cyfr, spacji lub myślników, opcjonalnie z + na początku"
   },
   "auth": {
     "login": {

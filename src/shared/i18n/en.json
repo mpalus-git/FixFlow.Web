@@ -61,7 +61,9 @@
     "passwordDigit": "The password must contain a digit",
     "passwordSymbol": "The password must contain a character other than a letter or digit",
     "passwordUnchanged": "The new password must differ from the current one",
-    "passwordConfirmation": "The passwords do not match"
+    "passwordConfirmation": "The passwords do not match",
+    "postalCode": "Enter the postal code in the NN-NNN format",
+    "phone": "Enter 9 to 20 digits, spaces or dashes, optionally starting with +"
   },
   "auth": {
     "login": {
