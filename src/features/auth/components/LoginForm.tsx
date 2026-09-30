@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useLoginMutation } from "@/features/auth/api/useLoginMutation";
 import { DemoLoginButtons } from "@/features/auth/components/DemoLoginButtons";
-import type { DemoAccount } from "@/features/auth/demoAccounts";
+import type { DemoAccount } from "@/shared/lib/demoAccounts";
 import {
   loginFields,
   type LoginFormValues,

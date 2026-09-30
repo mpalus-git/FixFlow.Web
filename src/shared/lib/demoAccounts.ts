@@ -33,3 +33,11 @@ export function readDemoAccounts(env: DemoAccountEnv = import.meta.env): DemoAcc
     email && password ? [{ role, email, password }] : [],
   );
 }
+
+export function isDemoAccountEmail(
+  email: string,
+  accounts: readonly DemoAccount[] = readDemoAccounts(),
+): boolean {
+  const normalizedEmail = email.trim().toLowerCase();
+  return accounts.some((account) => account.email.trim().toLowerCase() === normalizedEmail);
+}
