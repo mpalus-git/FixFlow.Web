@@ -3,7 +3,9 @@
     "name": "FixFlow"
   },
   "common": {
-    "close": "Close"
+    "close": "Close",
+    "saving": "Saving…",
+    "cancel": "Cancel"
   },
   "nav": {
     "label": "Main navigation",
@@ -11,7 +13,8 @@
     "openMenu": "Open menu",
     "skipToContent": "Skip to content",
     "myWorkOrders": "My work orders",
-    "clients": "Clients"
+    "clients": "Clients",
+    "devices": "Devices"
   },
   "language": {
     "label": "Language",
@@ -64,7 +67,9 @@
     "passwordUnchanged": "The new password must differ from the current one",
     "passwordConfirmation": "The passwords do not match",
     "postalCode": "Enter the postal code in the NN-NNN format",
-    "phone": "Enter 9 to 20 digits, spaces or dashes, optionally starting with +"
+    "phone": "Enter 9 to 20 digits, spaces or dashes, optionally starting with +",
+    "calendarDate": "Enter a valid date",
+    "dateInFuture": "The date cannot be in the future"
   },
   "auth": {
     "login": {
@@ -173,10 +178,6 @@
       "phone": "Phone",
       "email": "Email (optional)"
     },
-    "form": {
-      "saving": "Saving…",
-      "cancel": "Cancel"
-    },
     "create": {
       "link": "Add client",
       "title": "New client",
@@ -208,20 +209,77 @@
       "archivedAt": "Archived on",
       "devices": "Devices",
       "workOrders": "Work order history",
-      "archivedDevices": "The client devices were archived together with the client and are no longer listed."
+      "archivedDevices": "The client devices were archived together with the client and are no longer listed.",
+      "openClient": "Open the client",
+      "addDevice": "Add device"
     }
   },
   "apiErrors": {
     "clientArchived": "The client is archived and cannot be changed.",
-    "clientNotFound": "The client was not found."
+    "clientNotFound": "The client was not found.",
+    "deviceArchived": "The device is archived and cannot be changed.",
+    "deviceClientArchived": "Devices cannot be added to an archived client.",
+    "deviceDuplicateSerialNumber": "A device with this serial number already exists (also among archived ones).",
+    "deviceNotFound": "The device was not found."
   },
   "devices": {
     "columns": {
       "serialNumber": "Serial number",
       "model": "Device",
-      "installationDate": "Installation date"
+      "installationDate": "Installation date",
+      "client": "Client",
+      "actions": "Actions"
     },
-    "clientEmpty": "The client has no devices yet"
+    "clientEmpty": "The client has no devices yet",
+    "title": "Devices",
+    "search": {
+      "label": "Search devices",
+      "placeholder": "Serial number, model or manufacturer"
+    },
+    "empty": {
+      "title": "No devices",
+      "description": "Devices are added on the client card.",
+      "goToClients": "Go to clients"
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No device matches “{{search}}”."
+    },
+    "fields": {
+      "manufacturer": "Manufacturer",
+      "model": "Model"
+    },
+    "card": {
+      "archived": "Archived",
+      "createdAt": "Added on",
+      "archivedAt": "Archived on",
+      "workOrders": "Work order history"
+    },
+    "form": {
+      "serialNumberHint": "Stored in upper case, without leading or trailing spaces."
+    },
+    "create": {
+      "title": "New device",
+      "forClient": "Client:",
+      "submit": "Add device",
+      "created": "Device {{serialNumber}} has been added."
+    },
+    "edit": {
+      "title": "Edit device",
+      "submit": "Save changes",
+      "saved": "The device changes have been saved."
+    },
+    "actions": {
+      "label": "Actions for device {{serialNumber}}",
+      "edit": "Edit",
+      "archive": "Archive"
+    },
+    "archive": {
+      "title": "Archive device {{serialNumber}}?",
+      "description": "The device will disappear from lists and its work order history is kept. No new work orders can be created for it and its serial number stays reserved.",
+      "confirm": "Archive",
+      "archived": "Device {{serialNumber}} has been archived."
+    }
   },
   "workOrders": {
     "status": {
@@ -247,6 +305,7 @@
     },
     "overdue": "Overdue",
     "unassigned": "Unassigned",
-    "clientHistoryEmpty": "The client has no work orders yet"
+    "clientHistoryEmpty": "The client has no work orders yet",
+    "deviceHistoryEmpty": "The device has no work orders yet"
   }
 }

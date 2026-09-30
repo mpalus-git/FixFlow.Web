@@ -17,7 +17,7 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
   cellClassName = defaultCellClassName,
 }: DataTableProps<TFeatures, TData>) {
   return (
-    <div className="rounded-xl border" aria-busy={isUpdating}>
+    <div className="overflow-hidden rounded-xl border" aria-busy={isUpdating}>
       <Table className={isUpdating ? "opacity-60 transition-opacity" : undefined}>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

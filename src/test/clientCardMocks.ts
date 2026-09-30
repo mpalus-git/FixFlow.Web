@@ -3,7 +3,7 @@ import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { server } from "@/test/server";
 
-type DevicePage = components["schemas"]["PagedResponseOfDeviceResponse"];
+type DevicePage = components["schemas"]["PagedResponseOfDeviceListItemResponse"];
 type WorkOrderPage = components["schemas"]["PagedResponseOfWorkOrderListItemResponse"];
 
 export function mockEmptyClientCardLists() {

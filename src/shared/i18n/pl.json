@@ -3,7 +3,9 @@
     "name": "FixFlow"
   },
   "common": {
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "saving": "Zapisywanie…",
+    "cancel": "Anuluj"
   },
   "nav": {
     "label": "Nawigacja główna",
@@ -11,7 +13,8 @@
     "openMenu": "Otwórz menu",
     "skipToContent": "Przejdź do treści",
     "myWorkOrders": "Moje zlecenia",
-    "clients": "Klienci"
+    "clients": "Klienci",
+    "devices": "Urządzenia"
   },
   "language": {
     "label": "Język",
@@ -64,7 +67,9 @@
     "passwordUnchanged": "Nowe hasło musi różnić się od obecnego",
     "passwordConfirmation": "Hasła nie są takie same",
     "postalCode": "Podaj kod pocztowy w formacie NN-NNN",
-    "phone": "Podaj od 9 do 20 cyfr, spacji lub myślników, opcjonalnie z + na początku"
+    "phone": "Podaj od 9 do 20 cyfr, spacji lub myślników, opcjonalnie z + na początku",
+    "calendarDate": "Podaj poprawną datę",
+    "dateInFuture": "Data nie może być z przyszłości"
   },
   "auth": {
     "login": {
@@ -175,10 +180,6 @@
       "phone": "Telefon",
       "email": "E-mail (opcjonalnie)"
     },
-    "form": {
-      "saving": "Zapisywanie…",
-      "cancel": "Anuluj"
-    },
     "create": {
       "link": "Dodaj klienta",
       "title": "Nowy klient",
@@ -210,20 +211,77 @@
       "archivedAt": "Zarchiwizowano",
       "devices": "Urządzenia",
       "workOrders": "Historia zleceń",
-      "archivedDevices": "Urządzenia klienta zostały zarchiwizowane razem z nim i nie są już wyświetlane."
+      "archivedDevices": "Urządzenia klienta zostały zarchiwizowane razem z nim i nie są już wyświetlane.",
+      "openClient": "Przejdź do klienta",
+      "addDevice": "Dodaj urządzenie"
     }
   },
   "apiErrors": {
     "clientArchived": "Klient jest zarchiwizowany i nie można go zmieniać.",
-    "clientNotFound": "Nie znaleziono klienta."
+    "clientNotFound": "Nie znaleziono klienta.",
+    "deviceArchived": "Urządzenie jest zarchiwizowane i nie można go zmieniać.",
+    "deviceClientArchived": "Nie można dodać urządzenia do zarchiwizowanego klienta.",
+    "deviceDuplicateSerialNumber": "Urządzenie o tym numerze seryjnym już istnieje (także wśród zarchiwizowanych).",
+    "deviceNotFound": "Nie znaleziono urządzenia."
   },
   "devices": {
     "columns": {
       "serialNumber": "Numer seryjny",
       "model": "Urządzenie",
-      "installationDate": "Data instalacji"
+      "installationDate": "Data instalacji",
+      "client": "Klient",
+      "actions": "Akcje"
     },
-    "clientEmpty": "Klient nie ma jeszcze urządzeń"
+    "clientEmpty": "Klient nie ma jeszcze urządzeń",
+    "title": "Urządzenia",
+    "search": {
+      "label": "Szukaj urządzeń",
+      "placeholder": "Numer seryjny, model lub producent"
+    },
+    "empty": {
+      "title": "Brak urządzeń",
+      "description": "Urządzenia dodaje się na karcie klienta.",
+      "goToClients": "Przejdź do klientów"
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żadne urządzenie nie pasuje do „{{search}}”."
+    },
+    "fields": {
+      "manufacturer": "Producent",
+      "model": "Model"
+    },
+    "card": {
+      "archived": "Zarchiwizowane",
+      "createdAt": "Dodano",
+      "archivedAt": "Zarchiwizowano",
+      "workOrders": "Historia zleceń"
+    },
+    "form": {
+      "serialNumberHint": "Zapisywany wielkimi literami, bez spacji na początku i końcu."
+    },
+    "create": {
+      "title": "Nowe urządzenie",
+      "forClient": "Klient:",
+      "submit": "Dodaj urządzenie",
+      "created": "Dodano urządzenie {{serialNumber}}."
+    },
+    "edit": {
+      "title": "Edycja urządzenia",
+      "submit": "Zapisz zmiany",
+      "saved": "Zapisano zmiany urządzenia."
+    },
+    "actions": {
+      "label": "Akcje urządzenia {{serialNumber}}",
+      "edit": "Edytuj",
+      "archive": "Archiwizuj"
+    },
+    "archive": {
+      "title": "Zarchiwizować urządzenie {{serialNumber}}?",
+      "description": "Urządzenie zniknie z list, a historia zleceń zostanie zachowana. Nie będzie można zakładać dla niego nowych zleceń, a jego numer seryjny pozostanie zajęty.",
+      "confirm": "Archiwizuj",
+      "archived": "Zarchiwizowano urządzenie {{serialNumber}}."
+    }
   },
   "workOrders": {
     "status": {
@@ -249,6 +307,7 @@
     },
     "overdue": "Po terminie",
     "unassigned": "Nieprzypisane",
-    "clientHistoryEmpty": "Klient nie ma jeszcze zleceń"
+    "clientHistoryEmpty": "Klient nie ma jeszcze zleceń",
+    "deviceHistoryEmpty": "Urządzenie nie ma jeszcze zleceń"
   }
 }

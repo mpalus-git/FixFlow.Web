@@ -81,6 +81,17 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
               },
             },
             {
+              path: ":clientId/devices/new",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/clients/api/clientLoader")).createClientLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/devices/pages/CreateDevicePage")).CreateDevicePage,
+              },
+            },
+            {
               path: ":clientId/edit",
               lazy: {
                 loader: async () =>
@@ -89,6 +100,42 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                   ),
                 Component: async () =>
                   (await import("@/features/clients/pages/EditClientPage")).EditClientPage,
+              },
+            },
+          ],
+        },
+        {
+          path: "devices",
+          ErrorBoundary: RouteErrorBoundary,
+          middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
+          children: [
+            {
+              index: true,
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/devices/pages/DevicesPage")).DevicesPage,
+              },
+            },
+            {
+              path: ":deviceId",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/devices/api/deviceLoader")).createDeviceLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/devices/pages/DeviceCardPage")).DeviceCardPage,
+              },
+            },
+            {
+              path: ":deviceId/edit",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/devices/api/deviceLoader")).createDeviceLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/devices/pages/EditDevicePage")).EditDevicePage,
               },
             },
           ],

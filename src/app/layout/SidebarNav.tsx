@@ -1,12 +1,12 @@
 import { cn } from "cn";
-import { Building2Icon, ClipboardListIcon, LayoutDashboardIcon } from "lucide-react";
+import { Building2Icon, ClipboardListIcon, CpuIcon, LayoutDashboardIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 import { type Role, useCurrentUser } from "@/shared/session/currentUser";
 
 const navItems: readonly {
   to: string;
-  labelKey: "nav.dashboard" | "nav.myWorkOrders" | "nav.clients";
+  labelKey: "nav.dashboard" | "nav.myWorkOrders" | "nav.clients" | "nav.devices";
   icon: typeof LayoutDashboardIcon;
   end: boolean;
   roles: readonly Role[];
@@ -22,6 +22,13 @@ const navItems: readonly {
     to: "/clients",
     labelKey: "nav.clients",
     icon: Building2Icon,
+    end: false,
+    roles: ["Admin", "Dispatcher"],
+  },
+  {
+    to: "/devices",
+    labelKey: "nav.devices",
+    icon: CpuIcon,
     end: false,
     roles: ["Admin", "Dispatcher"],
   },

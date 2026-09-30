@@ -114,10 +114,10 @@ export function ClientForm({
         </fieldset>
         <div className="flex flex-wrap gap-2">
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? t("clients.form.saving") : submitLabel}
+            {isSubmitting ? t("common.saving") : submitLabel}
           </Button>
           <Button variant="outline" asChild>
-            <Link to={cancelTo}>{t("clients.form.cancel")}</Link>
+            <Link to={cancelTo}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </fieldset>
