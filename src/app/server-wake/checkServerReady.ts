@@ -1,4 +1,4 @@
-import { apiBaseUrl } from "@/shared/api/apiClient";
+import { apiBaseUrl } from "@/shared/api/baseClient";
 
 export type ServerReadyCheck = (signal: AbortSignal) => Promise<boolean>;
 
