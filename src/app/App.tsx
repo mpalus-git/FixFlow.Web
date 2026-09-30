@@ -7,7 +7,7 @@ import { createQueryClient } from "@/shared/api/queryClient";
 import { Toaster } from "@/shared/ui/sonner";
 
 const queryClient = createQueryClient();
-const router = createBrowserRouter(createRoutes());
+const router = createBrowserRouter(createRoutes(queryClient));
 
 export function App() {
   return (

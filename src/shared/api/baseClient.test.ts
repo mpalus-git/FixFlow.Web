@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { apiBaseUrl, apiClient, resolveApiBaseUrl, unwrap } from "@/shared/api/apiClient";
+import { apiBaseUrl, createApiClient, resolveApiBaseUrl, unwrap } from "@/shared/api/baseClient";
 import { ApiError } from "@/shared/api/apiError";
 import type { components } from "@/shared/api/schema";
 import { server } from "@/test/server";
@@ -7,6 +7,7 @@ import { server } from "@/test/server";
 type UserResponse = components["schemas"]["UserResponse"];
 type ProblemDetails = components["schemas"]["ProblemDetails"];
 
+const apiClient = createApiClient();
 const currentUserUrl = `${apiBaseUrl}/api/v1/users/me`;
 
 async function getCurrentUserError(): Promise<unknown> {
@@ -30,7 +31,7 @@ describe("resolveApiBaseUrl", () => {
   });
 });
 
-describe("apiClient", () => {
+describe("createApiClient", () => {
   it("returns the response body of a successful request", async () => {
     const user: UserResponse = {
       id: "0b6f0c9e-0d6e-4a57-9d55-6a1f3f0f2a10",

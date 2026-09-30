@@ -1,4 +1,4 @@
-import { readStorage, writeStorage } from "@/shared/lib/storage";
+import { readStorage, removeStorage, writeStorage } from "@/shared/lib/storage";
 
 describe("storage", () => {
   afterEach(() => {
@@ -25,5 +25,23 @@ describe("storage", () => {
     });
 
     expect(writeStorage("key", "value")).toBe(false);
+  });
+
+  it("removes a stored value", () => {
+    writeStorage("key", "value");
+
+    removeStorage("key");
+
+    expect(readStorage("key")).toBeNull();
+  });
+
+  it("ignores removal from unavailable storage", () => {
+    vi.spyOn(Storage.prototype, "removeItem").mockImplementation(() => {
+      throw new DOMException("Access denied", "SecurityError");
+    });
+
+    expect(() => {
+      removeStorage("key");
+    }).not.toThrow();
   });
 });

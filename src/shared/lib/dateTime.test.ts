@@ -1,4 +1,10 @@
-import { formatCalendarDate, formatDate, formatDateTime, toUtcIso } from "@/shared/lib/dateTime";
+import {
+  formatCalendarDate,
+  formatDate,
+  formatDateTime,
+  formatTime,
+  toUtcIso,
+} from "@/shared/lib/dateTime";
 
 describe("dateTime", () => {
   it("runs tests in a browser time zone different from Warsaw", () => {
@@ -24,6 +30,13 @@ describe("dateTime", () => {
 
     it("throws on an invalid timestamp", () => {
       expect(() => formatDateTime("not a date", "pl")).toThrow(RangeError);
+    });
+  });
+
+  describe("formatTime", () => {
+    it("shows the Warsaw time of a UTC timestamp", () => {
+      expect(formatTime("2026-07-15T02:00:00Z", "pl")).toBe("04:00");
+      expect(formatTime("2026-01-15T02:00:00Z", "en")).toBe("3:00 AM");
     });
   });
 

@@ -9,7 +9,8 @@
     "label": "Main navigation",
     "dashboard": "Dashboard",
     "openMenu": "Open menu",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "myWorkOrders": "My work orders"
   },
   "language": {
     "label": "Language",
@@ -35,7 +36,7 @@
   "notFound": {
     "title": "Page not found",
     "description": "The page you are looking for does not exist or has been moved.",
-    "backHome": "Back to dashboard"
+    "backHome": "Back to the home page"
   },
   "routeError": {
     "title": "Something went wrong",
@@ -49,5 +50,47 @@
     "elapsed": "{{seconds}} s elapsed",
     "unavailableTitle": "The server is not responding",
     "unavailableDescription": "Could not connect to the server within 90 seconds. Check your connection and try again."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email address",
+    "tooLong": "The value is too long"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "description": "FixFlow dispatcher panel",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "invalidCredentials": "Invalid email or password.",
+      "rateLimited": "Too many sign-in attempts. Try again in a moment.",
+      "rateLimitedWithDelay": "Too many sign-in attempts. Try again in {{seconds}} s."
+    },
+    "demo": {
+      "heading": "Try it without an account",
+      "dispatcher": "Sign in as dispatcher",
+      "technician": "Sign in as technician",
+      "resetNotice": "Demo data is restored every day at {{time}}."
+    }
+  },
+  "errors": {
+    "server": "The server returned an error. Try again.",
+    "network": "Cannot connect to the server.",
+    "unexpected": "An unexpected error occurred."
+  },
+  "myWorkOrders": {
+    "title": "My work orders",
+    "comingSoon": "Work orders assigned to you will appear here"
+  },
+  "userMenu": {
+    "label": "User account",
+    "logout": "Sign out"
+  },
+  "roles": {
+    "Admin": "Administrator",
+    "Dispatcher": "Dispatcher",
+    "Technician": "Technician"
   }
 }

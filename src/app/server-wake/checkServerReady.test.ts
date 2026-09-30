@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { checkServerReady } from "@/app/server-wake/checkServerReady";
-import { apiBaseUrl } from "@/shared/api/apiClient";
+import { apiBaseUrl } from "@/shared/api/baseClient";
 import { server } from "@/test/server";
 
 const readinessUrl = `${apiBaseUrl}/health/ready`;

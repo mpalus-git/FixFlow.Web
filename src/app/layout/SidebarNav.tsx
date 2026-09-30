@@ -1,11 +1,31 @@
 import { cn } from "cn";
-import { LayoutDashboardIcon } from "lucide-react";
+import { ClipboardListIcon, LayoutDashboardIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
+import { type Role, useCurrentUser } from "@/shared/session/currentUser";
 
-const navItems = [
-  { to: "/", labelKey: "nav.dashboard", icon: LayoutDashboardIcon, end: true },
-] as const;
+const navItems: readonly {
+  to: string;
+  labelKey: "nav.dashboard" | "nav.myWorkOrders";
+  icon: typeof LayoutDashboardIcon;
+  end: boolean;
+  roles: readonly Role[];
+}[] = [
+  {
+    to: "/",
+    labelKey: "nav.dashboard",
+    icon: LayoutDashboardIcon,
+    end: true,
+    roles: ["Admin", "Dispatcher"],
+  },
+  {
+    to: "/my-work-orders",
+    labelKey: "nav.myWorkOrders",
+    icon: ClipboardListIcon,
+    end: false,
+    roles: ["Technician"],
+  },
+];
 
 export type SidebarNavProps = {
   onNavigate?: () => void;
@@ -13,11 +33,15 @@ export type SidebarNavProps = {
 
 export function SidebarNav({ onNavigate }: SidebarNavProps) {
   const { t } = useTranslation();
+  const user = useCurrentUser();
+  const visibleItems = navItems.filter(
+    (item) => user !== undefined && item.roles.includes(user.role),
+  );
 
   return (
     <nav aria-label={t("nav.label")}>
       <ul className="flex flex-col gap-1">
-        {navItems.map(({ to, labelKey, icon: Icon, end }) => (
+        {visibleItems.map(({ to, labelKey, icon: Icon, end }) => (
           <li key={to}>
             <NavLink
               to={to}

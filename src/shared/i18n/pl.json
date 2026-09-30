@@ -9,7 +9,8 @@
     "label": "Nawigacja główna",
     "dashboard": "Pulpit",
     "openMenu": "Otwórz menu",
-    "skipToContent": "Przejdź do treści"
+    "skipToContent": "Przejdź do treści",
+    "myWorkOrders": "Moje zlecenia"
   },
   "language": {
     "label": "Język",
@@ -35,7 +36,7 @@
   "notFound": {
     "title": "Nie znaleziono strony",
     "description": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
-    "backHome": "Wróć do pulpitu"
+    "backHome": "Wróć na stronę główną"
   },
   "routeError": {
     "title": "Coś poszło nie tak",
@@ -49,5 +50,47 @@
     "elapsed": "Minęło {{seconds}} s",
     "unavailableTitle": "Serwer nie odpowiada",
     "unavailableDescription": "Nie udało się połączyć z serwerem w ciągu 90 sekund. Sprawdź połączenie i spróbuj ponownie."
+  },
+  "validation": {
+    "required": "To pole jest wymagane",
+    "email": "Podaj poprawny adres e-mail",
+    "tooLong": "Wartość jest za długa"
+  },
+  "auth": {
+    "login": {
+      "title": "Zaloguj się",
+      "description": "Panel dyspozytora systemu FixFlow",
+      "email": "E-mail",
+      "password": "Hasło",
+      "submit": "Zaloguj się",
+      "submitting": "Logowanie…",
+      "invalidCredentials": "Nieprawidłowy e-mail lub hasło.",
+      "rateLimited": "Zbyt wiele prób logowania. Spróbuj ponownie za chwilę.",
+      "rateLimitedWithDelay": "Zbyt wiele prób logowania. Spróbuj ponownie za {{seconds}} s."
+    },
+    "demo": {
+      "heading": "Wypróbuj bez zakładania konta",
+      "dispatcher": "Zaloguj jako dyspozytor",
+      "technician": "Zaloguj jako technik",
+      "resetNotice": "Dane demo są przywracane codziennie o {{time}}."
+    }
+  },
+  "errors": {
+    "server": "Serwer zwrócił błąd. Spróbuj ponownie.",
+    "network": "Brak połączenia z serwerem.",
+    "unexpected": "Wystąpił nieoczekiwany błąd."
+  },
+  "myWorkOrders": {
+    "title": "Moje zlecenia",
+    "comingSoon": "Tu pojawią się zlecenia przypisane do Ciebie"
+  },
+  "userMenu": {
+    "label": "Konto użytkownika",
+    "logout": "Wyloguj"
+  },
+  "roles": {
+    "Admin": "Administrator",
+    "Dispatcher": "Dyspozytor",
+    "Technician": "Technik"
   }
 }
