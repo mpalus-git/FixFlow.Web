@@ -1,2 +1,9 @@
 import "@testing-library/jest-dom/vitest";
 import "@/shared/i18n/i18n";
+import { mockColorScheme } from "@/test/mockColorScheme";
+
+mockColorScheme(false);
+
+beforeEach(() => {
+  mockColorScheme(false);
+});
