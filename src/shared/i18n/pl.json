@@ -40,5 +40,14 @@
   "routeError": {
     "title": "Coś poszło nie tak",
     "description": "Odśwież stronę. Jeśli problem się powtarza, spróbuj ponownie później."
+  },
+  "serverWake": {
+    "checking": "Łączenie z serwerem…",
+    "wakingTitle": "Serwer demo się uruchamia",
+    "wakingDescription": "Darmowy serwer usypia po 15 minutach bezczynności. Uruchomienie potrwa do minuty.",
+    "progressLabel": "Postęp uruchamiania serwera",
+    "elapsed": "Minęło {{seconds}} s",
+    "unavailableTitle": "Serwer nie odpowiada",
+    "unavailableDescription": "Nie udało się połączyć z serwerem w ciągu 90 sekund. Sprawdź połączenie i spróbuj ponownie."
   }
 }

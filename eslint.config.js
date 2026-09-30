@@ -23,6 +23,7 @@ export default defineConfig([
   },
   {
     files: ["**/*.{ts,tsx}"],
+    ignores: ["src/shared/api/schema.ts"],
     extends: [
       js.configs.recommended,
       tseslint.configs.strictTypeChecked,
@@ -69,7 +70,13 @@ export default defineConfig([
     },
   },
   {
-    files: ["src/shared/i18n/i18next.d.ts"],
+    files: ["src/shared/api/schema.ts"],
+    languageOptions: {
+      parser: tseslint.parser,
+    },
+  },
+  {
+    files: ["src/shared/i18n/i18next.d.ts", "src/env.d.ts"],
     rules: {
       "@typescript-eslint/consistent-type-definitions": "off",
     },

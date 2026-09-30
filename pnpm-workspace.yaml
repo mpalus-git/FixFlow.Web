@@ -13,3 +13,5 @@ minimumReleaseAgeExclude:
 peerDependencyRules:
   allowedVersions:
     eslint-plugin-jsx-a11y>eslint: "10"
+    openapi-typescript>typescript: "6"
+    "@vitest/mocker>msw": "3"

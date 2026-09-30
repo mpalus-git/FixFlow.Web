@@ -1,7 +1,8 @@
-import { MenuIcon, WrenchIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router";
+import { AppBrand } from "@/app/layout/AppBrand";
 import { LanguageSwitcher } from "@/app/layout/LanguageSwitcher";
 import { SidebarNav } from "@/app/layout/SidebarNav";
 import { ThemeSwitcher } from "@/app/layout/ThemeSwitcher";
@@ -14,17 +15,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/shared/ui/sheet";
-
-function AppBrand() {
-  const { t } = useTranslation();
-
-  return (
-    <span className="flex items-center gap-2 text-base font-semibold">
-      <WrenchIcon aria-hidden="true" className="size-5 text-primary" />
-      {t("app.name")}
-    </span>
-  );
-}
 
 export function AppLayout() {
   const { t } = useTranslation();
