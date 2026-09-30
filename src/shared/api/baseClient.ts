@@ -51,3 +51,17 @@ export function unwrap<T>(result: { data?: T }): T {
   }
   return result.data;
 }
+
+export type Versioned<T> = {
+  data: T;
+  etag: string;
+};
+
+export function unwrapVersioned<T>(result: { data?: T; response: Response }): Versioned<T> {
+  const data = unwrap(result);
+  const etag = result.response.headers.get("ETag");
+  if (etag === null) {
+    throw new ApiError({ kind: "unexpected", detail: "ETag header is missing" });
+  }
+  return { data, etag };
+}
