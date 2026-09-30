@@ -204,5 +204,13 @@
   "apiErrors": {
     "clientArchived": "The client is archived and cannot be changed.",
     "clientNotFound": "The client was not found."
+  },
+  "devices": {
+    "columns": {
+      "serialNumber": "Serial number",
+      "model": "Device",
+      "installationDate": "Installation date"
+    },
+    "clientEmpty": "The client has no devices yet"
   }
 }

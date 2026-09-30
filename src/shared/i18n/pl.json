@@ -206,5 +206,13 @@
   "apiErrors": {
     "clientArchived": "Klient jest zarchiwizowany i nie można go zmieniać.",
     "clientNotFound": "Nie znaleziono klienta."
+  },
+  "devices": {
+    "columns": {
+      "serialNumber": "Numer seryjny",
+      "model": "Urządzenie",
+      "installationDate": "Data instalacji"
+    },
+    "clientEmpty": "Klient nie ma jeszcze urządzeń"
   }
 }
