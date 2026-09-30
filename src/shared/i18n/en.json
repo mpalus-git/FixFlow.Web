@@ -64,7 +64,9 @@
     "passwordUnchanged": "The new password must differ from the current one",
     "passwordConfirmation": "The passwords do not match",
     "postalCode": "Enter the postal code in the NN-NNN format",
-    "phone": "Enter 9 to 20 digits, spaces or dashes, optionally starting with +"
+    "phone": "Enter 9 to 20 digits, spaces or dashes, optionally starting with +",
+    "calendarDate": "Enter a valid date",
+    "dateInFuture": "The date cannot be in the future"
   },
   "auth": {
     "login": {

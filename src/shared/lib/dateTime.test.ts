@@ -3,6 +3,8 @@ import {
   formatDate,
   formatDateTime,
   formatTime,
+  isCalendarDate,
+  todayCalendarDate,
   toUtcIso,
 } from "@/shared/lib/dateTime";
 
@@ -76,5 +78,29 @@ describe("dateTime", () => {
     it("throws on a value without time", () => {
       expect(() => toUtcIso("2026-01-15")).toThrow(RangeError);
     });
+  });
+});
+
+describe("todayCalendarDate", () => {
+  it("already returns the next day in Warsaw late on a summer evening in UTC", () => {
+    expect(todayCalendarDate(new Date("2026-07-15T22:30:00Z"))).toBe("2026-07-16");
+  });
+
+  it("already returns the next day in Warsaw late on a winter evening in UTC", () => {
+    expect(todayCalendarDate(new Date("2026-01-15T23:30:00Z"))).toBe("2026-01-16");
+  });
+
+  it("returns the same day while it is still that day in Warsaw", () => {
+    expect(todayCalendarDate(new Date("2026-07-15T21:30:00Z"))).toBe("2026-07-15");
+  });
+});
+
+describe("isCalendarDate", () => {
+  it("accepts an existing calendar date", () => {
+    expect(isCalendarDate("2024-02-29")).toBe(true);
+  });
+
+  it.each(["2026-02-29", "2026-13-01", "2026-1-5", "15.07.2026", ""])("rejects %s", (value) => {
+    expect(isCalendarDate(value)).toBe(false);
   });
 });

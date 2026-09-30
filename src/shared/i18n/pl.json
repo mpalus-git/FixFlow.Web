@@ -64,7 +64,9 @@
     "passwordUnchanged": "Nowe hasło musi różnić się od obecnego",
     "passwordConfirmation": "Hasła nie są takie same",
     "postalCode": "Podaj kod pocztowy w formacie NN-NNN",
-    "phone": "Podaj od 9 do 20 cyfr, spacji lub myślników, opcjonalnie z + na początku"
+    "phone": "Podaj od 9 do 20 cyfr, spacji lub myślników, opcjonalnie z + na początku",
+    "calendarDate": "Podaj poprawną datę",
+    "dateInFuture": "Data nie może być z przyszłości"
   },
   "auth": {
     "login": {

@@ -47,6 +47,20 @@ export function formatCalendarDate(value: string, language: Language): string {
   return format(date, "P", { locale: dateFnsLocales[language] });
 }
 
+export function isCalendarDate(value: string): boolean {
+  const match = calendarDatePattern.exec(value);
+  if (!match) {
+    return false;
+  }
+  const [, year, month, day] = match;
+  const date = new TZDate(Number(year), Number(month) - 1, Number(day), appTimeZone);
+  return format(date, "yyyy-MM-dd") === value;
+}
+
+export function todayCalendarDate(now: Date = new Date()): string {
+  return format(now, "yyyy-MM-dd", { in: tz(appTimeZone) });
+}
+
 export function toUtcIso(localDateTime: string): string {
   const match = localDateTimePattern.exec(localDateTime);
   if (!match) {

@@ -1,17 +1,9 @@
 import type { Path } from "react-hook-form";
 import { z } from "zod";
 import type { components } from "@/shared/api/schema";
-import { validationMessages } from "@/shared/lib/validation";
+import { requiredText, validationMessages } from "@/shared/lib/validation";
 
 type ClientRequest = components["schemas"]["CreateClientRequest"];
-
-function requiredText(maxLength: number) {
-  return z
-    .string()
-    .trim()
-    .min(1, { error: validationMessages.required })
-    .max(maxLength, { error: validationMessages.tooLong });
-}
 
 export const clientSchema = z.object({
   name: requiredText(200),
