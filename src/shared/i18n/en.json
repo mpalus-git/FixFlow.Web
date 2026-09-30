@@ -159,6 +159,22 @@
     "noResults": {
       "title": "No results",
       "description": "No client name contains “{{search}}”."
+    },
+    "fields": {
+      "name": "Name",
+      "address": "Address",
+      "street": "Street",
+      "buildingNumber": "Building number",
+      "postalCode": "Postal code",
+      "city": "City",
+      "contact": "Contact",
+      "contactPerson": "Contact person",
+      "phone": "Phone",
+      "email": "Email (optional)"
+    },
+    "form": {
+      "saving": "Saving…",
+      "cancel": "Cancel"
     }
   },
   "apiErrors": {

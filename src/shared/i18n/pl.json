@@ -161,6 +161,22 @@
     "noResults": {
       "title": "Brak wyników",
       "description": "Żaden klient nie ma w nazwie „{{search}}”."
+    },
+    "fields": {
+      "name": "Nazwa",
+      "address": "Adres",
+      "street": "Ulica",
+      "buildingNumber": "Numer budynku",
+      "postalCode": "Kod pocztowy",
+      "city": "Miejscowość",
+      "contact": "Kontakt",
+      "contactPerson": "Osoba kontaktowa",
+      "phone": "Telefon",
+      "email": "E-mail (opcjonalnie)"
+    },
+    "form": {
+      "saving": "Zapisywanie…",
+      "cancel": "Anuluj"
     }
   },
   "apiErrors": {
