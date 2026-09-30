@@ -10,7 +10,8 @@
     "dashboard": "Dashboard",
     "openMenu": "Open menu",
     "skipToContent": "Skip to content",
-    "myWorkOrders": "My work orders"
+    "myWorkOrders": "My work orders",
+    "clients": "Clients"
   },
   "language": {
     "label": "Language",
@@ -138,5 +139,26 @@
     "description": "Someone saved a newer version of this data. Loading the current version will replace your unsaved changes.",
     "keepEditing": "Back to editing",
     "reload": "Load current version"
+  },
+  "clients": {
+    "title": "Clients",
+    "columns": {
+      "name": "Name",
+      "address": "Address",
+      "contactPerson": "Contact person",
+      "phone": "Phone"
+    },
+    "search": {
+      "label": "Search clients",
+      "placeholder": "Search by name"
+    },
+    "empty": {
+      "title": "No clients",
+      "description": "Add the first client to create work orders for them."
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No client name contains “{{search}}”."
+    }
   }
 }

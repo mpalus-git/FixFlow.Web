@@ -10,7 +10,8 @@
     "dashboard": "Pulpit",
     "openMenu": "Otwórz menu",
     "skipToContent": "Przejdź do treści",
-    "myWorkOrders": "Moje zlecenia"
+    "myWorkOrders": "Moje zlecenia",
+    "clients": "Klienci"
   },
   "language": {
     "label": "Język",
@@ -140,5 +141,26 @@
     "description": "Ktoś zapisał nowszą wersję tych danych. Wczytanie aktualnej wersji zastąpi Twoje niezapisane zmiany.",
     "keepEditing": "Wróć do edycji",
     "reload": "Wczytaj aktualną wersję"
+  },
+  "clients": {
+    "title": "Klienci",
+    "columns": {
+      "name": "Nazwa",
+      "address": "Adres",
+      "contactPerson": "Osoba kontaktowa",
+      "phone": "Telefon"
+    },
+    "search": {
+      "label": "Szukaj klientów",
+      "placeholder": "Szukaj po nazwie"
+    },
+    "empty": {
+      "title": "Brak klientów",
+      "description": "Dodaj pierwszego klienta, aby zakładać dla niego zlecenia."
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żaden klient nie ma w nazwie „{{search}}”."
+    }
   }
 }
