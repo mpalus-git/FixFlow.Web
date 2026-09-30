@@ -162,5 +162,9 @@
       "title": "Brak wyników",
       "description": "Żaden klient nie ma w nazwie „{{search}}”."
     }
+  },
+  "apiErrors": {
+    "clientArchived": "Klient jest zarchiwizowany i nie można go zmieniać.",
+    "clientNotFound": "Nie znaleziono klienta."
   }
 }

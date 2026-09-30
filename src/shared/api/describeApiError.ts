@@ -1,0 +1,26 @@
+import type { TFunction } from "i18next";
+import type { ApiError } from "@/shared/api/apiError";
+
+const errorCodeMessageKeys = {
+  "Client.Archived": "apiErrors.clientArchived",
+  "Client.NotFound": "apiErrors.clientNotFound",
+} as const;
+
+type KnownErrorCode = keyof typeof errorCodeMessageKeys;
+
+function isKnownErrorCode(errorCode: string): errorCode is KnownErrorCode {
+  return Object.keys(errorCodeMessageKeys).includes(errorCode);
+}
+
+export function describeApiError(error: ApiError, t: TFunction): string {
+  if (error.errorCode !== null && isKnownErrorCode(error.errorCode)) {
+    return t(errorCodeMessageKeys[error.errorCode]);
+  }
+  if (error.kind === "server") {
+    return t("errors.server");
+  }
+  if (error.kind === "network") {
+    return t("errors.network");
+  }
+  return error.detail ?? t("errors.unexpected");
+}

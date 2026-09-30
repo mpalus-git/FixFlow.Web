@@ -160,5 +160,9 @@
       "title": "No results",
       "description": "No client name contains “{{search}}”."
     }
+  },
+  "apiErrors": {
+    "clientArchived": "The client is archived and cannot be changed.",
+    "clientNotFound": "The client was not found."
   }
 }
