@@ -1,1 +1,1 @@
-export { ClientWorkOrderHistory } from "@/features/work-orders/components/ClientWorkOrderHistory";
+export { WorkOrderHistory } from "@/features/work-orders/components/WorkOrderHistory";

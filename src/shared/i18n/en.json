@@ -265,6 +265,7 @@
     },
     "overdue": "Overdue",
     "unassigned": "Unassigned",
-    "clientHistoryEmpty": "The client has no work orders yet"
+    "clientHistoryEmpty": "The client has no work orders yet",
+    "deviceHistoryEmpty": "The device has no work orders yet"
   }
 }

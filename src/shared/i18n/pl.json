@@ -267,6 +267,7 @@
     },
     "overdue": "Po terminie",
     "unassigned": "Nieprzypisane",
-    "clientHistoryEmpty": "Klient nie ma jeszcze zleceń"
+    "clientHistoryEmpty": "Klient nie ma jeszcze zleceń",
+    "deviceHistoryEmpty": "Urządzenie nie ma jeszcze zleceń"
   }
 }

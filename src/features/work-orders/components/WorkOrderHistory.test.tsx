@@ -2,7 +2,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, within } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { MemoryRouter } from "react-router";
-import { ClientWorkOrderHistory } from "@/features/work-orders";
+import { WorkOrderHistory } from "@/features/work-orders";
+import type { WorkOrderHistoryFilter } from "@/features/work-orders/api/workOrderQueries";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { server } from "@/test/server";
@@ -13,12 +14,15 @@ type WorkOrderPage = components["schemas"]["PagedResponseOfWorkOrderListItemResp
 const workOrdersUrl = `${apiBaseUrl}/api/v1/work-orders`;
 const clientId = "3f1d2c4b-5a69-4e7d-8c1b-2a3b4c5d6e7f";
 
-function renderHistory(initialEntry = `/clients/${clientId}`) {
+function renderHistory(
+  initialEntry = `/clients/${clientId}`,
+  filter: WorkOrderHistoryFilter = { clientId },
+) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[initialEntry]}>
-        <ClientWorkOrderHistory clientId={clientId} />
+        <WorkOrderHistory filter={filter} />
       </MemoryRouter>
     </QueryClientProvider>,
   );
@@ -35,7 +39,7 @@ function mockHistory(workOrderPage: WorkOrderPage) {
   return requests;
 }
 
-describe("ClientWorkOrderHistory", () => {
+describe("WorkOrderHistory", () => {
   it("asks for the work orders of the client, newest due date first", async () => {
     const requests = mockHistory({
       items: [createWorkOrderListItem()],
@@ -97,6 +101,31 @@ describe("ClientWorkOrderHistory", () => {
 
     expect(
       await screen.findByRole("heading", { name: "Klient nie ma jeszcze zleceń" }),
+    ).toBeInTheDocument();
+  });
+
+  it("shows the history of one device without repeating the device column", async () => {
+    const deviceId = "7c1e5b2a-3d4f-4a6b-8c9d-0e1f2a3b4c5d";
+    const requests = mockHistory({
+      items: [createWorkOrderListItem()],
+      page: 1,
+      pageSize: 10,
+      totalCount: 1,
+    });
+    renderHistory(`/devices/${deviceId}`, { deviceId });
+
+    expect(await screen.findByText("16.07.2026 00:30")).toBeInTheDocument();
+    expect(screen.queryByRole("columnheader", { name: "Urządzenie" })).toBeNull();
+    expect(requests[0]?.get("deviceId")).toBe(deviceId);
+    expect(requests[0]?.has("clientId")).toBe(false);
+  });
+
+  it("says when the device has no work orders", async () => {
+    mockHistory({ items: [], page: 1, pageSize: 10, totalCount: 0 });
+    renderHistory("/devices/1", { deviceId: "7c1e5b2a-3d4f-4a6b-8c9d-0e1f2a3b4c5d" });
+
+    expect(
+      await screen.findByRole("heading", { name: "Urządzenie nie ma jeszcze zleceń" }),
     ).toBeInTheDocument();
   });
 });

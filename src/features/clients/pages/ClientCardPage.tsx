@@ -7,7 +7,7 @@ import { clientQueryOptions } from "@/features/clients/api/clientQueries";
 import { ArchiveClientDialog } from "@/features/clients/components/ArchiveClientDialog";
 import { formatAddress } from "@/features/clients/formatAddress";
 import { ClientDevicesList } from "@/features/devices";
-import { ClientWorkOrderHistory } from "@/features/work-orders";
+import { WorkOrderHistory } from "@/features/work-orders";
 import type { components } from "@/shared/api/schema";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatDate } from "@/shared/lib/dateTime";
@@ -117,7 +117,7 @@ export function ClientCardPage() {
         <h2 id="client-work-orders-heading" className="text-lg font-semibold">
           {t("clients.card.workOrders")}
         </h2>
-        <ClientWorkOrderHistory clientId={client.id} />
+        <WorkOrderHistory filter={{ clientId: client.id }} />
       </section>
       <ArchiveClientDialog
         client={clientToArchive}
