@@ -9,6 +9,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 type ClientResponse = components["schemas"]["ClientResponse"];
 
 const features = tableFeatures({});
+
+const actionsColumnId = "actions";
+
+function cellClassName(columnId: string): string {
+  return columnId === actionsColumnId ? "sticky right-0 bg-background px-3" : "px-3";
+}
 const columnHelper = createColumnHelper<typeof features, ClientResponse>();
 
 export type ClientsTableProps = {
@@ -40,7 +46,7 @@ export function ClientsTable({ clients, isUpdating, onArchive }: ClientsTablePro
           ),
         }),
         columnHelper.display({
-          id: "actions",
+          id: actionsColumnId,
           header: () => <span className="sr-only">{t("clients.columns.actions")}</span>,
           cell: ({ row }) => (
             <div className="flex justify-end">
@@ -65,7 +71,7 @@ export function ClientsTable({ clients, isUpdating, onArchive }: ClientsTablePro
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className="px-3">
+                <TableHead key={header.id} className={cellClassName(header.column.id)}>
                   {header.isPlaceholder ? null : <table.FlexRender header={header} />}
                 </TableHead>
               ))}
@@ -76,7 +82,7 @@ export function ClientsTable({ clients, isUpdating, onArchive }: ClientsTablePro
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
               {row.getAllCells().map((cell) => (
-                <TableCell key={cell.id} className="px-3">
+                <TableCell key={cell.id} className={cellClassName(cell.column.id)}>
                   <table.FlexRender cell={cell} />
                 </TableCell>
               ))}
