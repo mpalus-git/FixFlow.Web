@@ -273,7 +273,14 @@
     },
     "actions": {
       "label": "Akcje urządzenia {{serialNumber}}",
-      "edit": "Edytuj"
+      "edit": "Edytuj",
+      "archive": "Archiwizuj"
+    },
+    "archive": {
+      "title": "Zarchiwizować urządzenie {{serialNumber}}?",
+      "description": "Urządzenie zniknie z list, a historia zleceń zostanie zachowana. Nie będzie można zakładać dla niego nowych zleceń, a jego numer seryjny pozostanie zajęty.",
+      "confirm": "Archiwizuj",
+      "archived": "Zarchiwizowano urządzenie {{serialNumber}}."
     }
   },
   "workOrders": {

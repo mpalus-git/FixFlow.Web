@@ -271,7 +271,14 @@
     },
     "actions": {
       "label": "Actions for device {{serialNumber}}",
-      "edit": "Edit"
+      "edit": "Edit",
+      "archive": "Archive"
+    },
+    "archive": {
+      "title": "Archive device {{serialNumber}}?",
+      "description": "The device will disappear from lists and its work order history is kept. No new work orders can be created for it and its serial number stays reserved.",
+      "confirm": "Archive",
+      "archived": "Device {{serialNumber}} has been archived."
     }
   },
   "workOrders": {

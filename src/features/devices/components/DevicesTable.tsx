@@ -22,9 +22,10 @@ function cellClassName(columnId: string): string {
 export type DevicesTableProps = {
   devices: DeviceListItem[];
   isUpdating: boolean;
+  onArchive: (device: DeviceListItem) => void;
 };
 
-export function DevicesTable({ devices, isUpdating }: DevicesTableProps) {
+export function DevicesTable({ devices, isUpdating, onArchive }: DevicesTableProps) {
   const { t } = useTranslation();
   const language = useLanguage();
   const columns = useMemo(
@@ -65,12 +66,12 @@ export function DevicesTable({ devices, isUpdating }: DevicesTableProps) {
           header: () => <span className="sr-only">{t("devices.columns.actions")}</span>,
           cell: ({ row }) => (
             <div className="flex justify-end">
-              <DeviceRowActions device={row.original} />
+              <DeviceRowActions device={row.original} onArchive={onArchive} />
             </div>
           ),
         }),
       ]),
-    [t, language],
+    [t, language, onArchive],
   );
   const table = useTable({
     features,

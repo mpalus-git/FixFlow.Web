@@ -1,9 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { PencilIcon } from "lucide-react";
+import { ArchiveIcon, PencilIcon } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { ClientNameLink } from "@/features/clients";
 import { deviceQueryOptions } from "@/features/devices/api/deviceQueries";
+import {
+  type ArchivableDevice,
+  ArchiveDeviceDialog,
+} from "@/features/devices/components/ArchiveDeviceDialog";
 import { WorkOrderHistory } from "@/features/work-orders";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatCalendarDate, formatDate } from "@/shared/lib/dateTime";
@@ -17,7 +22,9 @@ export function DeviceCardPage() {
   const { t } = useTranslation();
   const language = useLanguage();
   const { deviceId = "" } = useParams();
+  const navigate = useNavigate();
   const deviceQuery = useQuery(deviceQueryOptions(deviceId));
+  const [deviceToArchive, setDeviceToArchive] = useState<ArchivableDevice | null>(null);
 
   if (deviceQuery.data === undefined) {
     return deviceQuery.isError ? (
@@ -48,6 +55,16 @@ export function DeviceCardPage() {
                 <PencilIcon aria-hidden="true" />
                 {t("devices.actions.edit")}
               </Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="text-destructive"
+              onClick={() => {
+                setDeviceToArchive(device);
+              }}
+            >
+              <ArchiveIcon aria-hidden="true" />
+              {t("devices.actions.archive")}
             </Button>
           </div>
         ) : null}
@@ -82,6 +99,13 @@ export function DeviceCardPage() {
         </h2>
         <WorkOrderHistory filter={{ deviceId: device.id }} />
       </section>
+      <ArchiveDeviceDialog
+        device={deviceToArchive}
+        onClose={() => {
+          setDeviceToArchive(null);
+        }}
+        onArchived={() => void navigate(`/clients/${device.clientId}`)}
+      />
     </div>
   );
 }

@@ -1,8 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { CpuIcon, SearchXIcon } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { deviceListPageSize, deviceListQueryOptions } from "@/features/devices/api/deviceQueries";
+import {
+  type ArchivableDevice,
+  ArchiveDeviceDialog,
+} from "@/features/devices/components/ArchiveDeviceDialog";
 import { DevicesTable } from "@/features/devices/components/DevicesTable";
 import { useKeepPageInRange } from "@/shared/lib/useKeepPageInRange";
 import { useListSearchParams } from "@/shared/lib/useListSearchParams";
@@ -17,6 +22,7 @@ export function DevicesPage() {
   const { t } = useTranslation();
   const { page, search, setPage, setSearch } = useListSearchParams();
   const devicesQuery = useQuery(deviceListQueryOptions({ page, search }));
+  const [deviceToArchive, setDeviceToArchive] = useState<ArchivableDevice | null>(null);
   const devicePage = devicesQuery.data;
   useKeepPageInRange({
     page,
@@ -55,7 +61,11 @@ export function DevicesPage() {
     }
     return (
       <>
-        <DevicesTable devices={devicePage.items} isUpdating={devicesQuery.isPlaceholderData} />
+        <DevicesTable
+          devices={devicePage.items}
+          isUpdating={devicesQuery.isPlaceholderData}
+          onArchive={setDeviceToArchive}
+        />
         <PaginationControls
           page={page}
           pageSize={deviceListPageSize}
@@ -77,6 +87,12 @@ export function DevicesPage() {
         onSearch={setSearch}
       />
       {renderContent()}
+      <ArchiveDeviceDialog
+        device={deviceToArchive}
+        onClose={() => {
+          setDeviceToArchive(null);
+        }}
+      />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { EllipsisIcon, PencilIcon } from "lucide-react";
+import { ArchiveIcon, EllipsisIcon, PencilIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { components } from "@/shared/api/schema";
@@ -14,9 +14,10 @@ type DeviceListItem = components["schemas"]["DeviceListItemResponse"];
 
 export type DeviceRowActionsProps = {
   device: DeviceListItem;
+  onArchive: (device: DeviceListItem) => void;
 };
 
-export function DeviceRowActions({ device }: DeviceRowActionsProps) {
+export function DeviceRowActions({ device, onArchive }: DeviceRowActionsProps) {
   const { t } = useTranslation();
 
   return (
@@ -36,6 +37,15 @@ export function DeviceRowActions({ device }: DeviceRowActionsProps) {
             <PencilIcon aria-hidden="true" />
             {t("devices.actions.edit")}
           </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          variant="destructive"
+          onSelect={() => {
+            onArchive(device);
+          }}
+        >
+          <ArchiveIcon aria-hidden="true" />
+          {t("devices.actions.archive")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
