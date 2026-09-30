@@ -3,7 +3,9 @@
     "name": "FixFlow"
   },
   "common": {
-    "close": "Close"
+    "close": "Close",
+    "saving": "Saving…",
+    "cancel": "Cancel"
   },
   "nav": {
     "label": "Main navigation",
@@ -176,10 +178,6 @@
       "phone": "Phone",
       "email": "Email (optional)"
     },
-    "form": {
-      "saving": "Saving…",
-      "cancel": "Cancel"
-    },
     "create": {
       "link": "Add client",
       "title": "New client",
@@ -217,7 +215,11 @@
   },
   "apiErrors": {
     "clientArchived": "The client is archived and cannot be changed.",
-    "clientNotFound": "The client was not found."
+    "clientNotFound": "The client was not found.",
+    "deviceArchived": "The device is archived and cannot be changed.",
+    "deviceClientArchived": "Devices cannot be added to an archived client.",
+    "deviceDuplicateSerialNumber": "A device with this serial number already exists (also among archived ones).",
+    "deviceNotFound": "The device was not found."
   },
   "devices": {
     "columns": {
@@ -250,6 +252,9 @@
       "createdAt": "Added on",
       "archivedAt": "Archived on",
       "workOrders": "Work order history"
+    },
+    "form": {
+      "serialNumberHint": "Stored in upper case, without leading or trailing spaces."
     }
   },
   "workOrders": {

@@ -3,7 +3,9 @@
     "name": "FixFlow"
   },
   "common": {
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "saving": "Zapisywanie…",
+    "cancel": "Anuluj"
   },
   "nav": {
     "label": "Nawigacja główna",
@@ -178,10 +180,6 @@
       "phone": "Telefon",
       "email": "E-mail (opcjonalnie)"
     },
-    "form": {
-      "saving": "Zapisywanie…",
-      "cancel": "Anuluj"
-    },
     "create": {
       "link": "Dodaj klienta",
       "title": "Nowy klient",
@@ -219,7 +217,11 @@
   },
   "apiErrors": {
     "clientArchived": "Klient jest zarchiwizowany i nie można go zmieniać.",
-    "clientNotFound": "Nie znaleziono klienta."
+    "clientNotFound": "Nie znaleziono klienta.",
+    "deviceArchived": "Urządzenie jest zarchiwizowane i nie można go zmieniać.",
+    "deviceClientArchived": "Nie można dodać urządzenia do zarchiwizowanego klienta.",
+    "deviceDuplicateSerialNumber": "Urządzenie o tym numerze seryjnym już istnieje (także wśród zarchiwizowanych).",
+    "deviceNotFound": "Nie znaleziono urządzenia."
   },
   "devices": {
     "columns": {
@@ -252,6 +254,9 @@
       "createdAt": "Dodano",
       "archivedAt": "Zarchiwizowano",
       "workOrders": "Historia zleceń"
+    },
+    "form": {
+      "serialNumberHint": "Zapisywany wielkimi literami, bez spacji na początku i końcu."
     }
   },
   "workOrders": {

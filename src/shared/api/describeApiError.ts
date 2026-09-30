@@ -4,6 +4,10 @@ import type { ApiError } from "@/shared/api/apiError";
 const errorCodeMessageKeys = {
   "Client.Archived": "apiErrors.clientArchived",
   "Client.NotFound": "apiErrors.clientNotFound",
+  "Device.Archived": "apiErrors.deviceArchived",
+  "Device.ClientArchived": "apiErrors.deviceClientArchived",
+  "Device.DuplicateSerialNumber": "apiErrors.deviceDuplicateSerialNumber",
+  "Device.NotFound": "apiErrors.deviceNotFound",
 } as const;
 
 type KnownErrorCode = keyof typeof errorCodeMessageKeys;
