@@ -226,6 +226,17 @@
       "Normal": "Normal",
       "High": "High",
       "Critical": "Critical"
-    }
+    },
+    "columns": {
+      "dueDate": "Due",
+      "device": "Device",
+      "description": "Fault description",
+      "priority": "Priority",
+      "status": "Status",
+      "technician": "Technician"
+    },
+    "overdue": "Overdue",
+    "unassigned": "Unassigned",
+    "clientHistoryEmpty": "The client has no work orders yet"
   }
 }

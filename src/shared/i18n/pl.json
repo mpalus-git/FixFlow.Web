@@ -228,6 +228,17 @@
       "Normal": "Normalny",
       "High": "Wysoki",
       "Critical": "Krytyczny"
-    }
+    },
+    "columns": {
+      "dueDate": "Termin",
+      "device": "Urządzenie",
+      "description": "Opis usterki",
+      "priority": "Priorytet",
+      "status": "Status",
+      "technician": "Technik"
+    },
+    "overdue": "Po terminie",
+    "unassigned": "Nieprzypisane",
+    "clientHistoryEmpty": "Klient nie ma jeszcze zleceń"
   }
 }
