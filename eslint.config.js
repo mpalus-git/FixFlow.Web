@@ -45,6 +45,12 @@ export default defineConfig([
       "@typescript-eslint/consistent-type-assertions": ["error", { assertionStyle: "never" }],
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/only-throw-error": [
+        "error",
+        {
+          allow: [{ from: "package", package: "react-router", name: "DataWithResponseInit" }],
+        },
+      ],
       "no-restricted-syntax": [
         "error",
         {

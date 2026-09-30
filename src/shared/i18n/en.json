@@ -12,5 +12,18 @@
     "retry": "Try again",
     "errorTitle": "Could not load data",
     "errorDescription": "Check your connection and try again."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "comingSoon": "Work order statistics will appear here"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to dashboard"
+  },
+  "routeError": {
+    "title": "Something went wrong",
+    "description": "Reload the page. If the problem persists, try again later."
   }
 }

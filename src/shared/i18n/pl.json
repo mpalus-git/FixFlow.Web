@@ -12,5 +12,18 @@
     "retry": "Spróbuj ponownie",
     "errorTitle": "Nie udało się wczytać danych",
     "errorDescription": "Sprawdź połączenie i spróbuj ponownie."
+  },
+  "dashboard": {
+    "title": "Pulpit",
+    "comingSoon": "Tu pojawią się statystyki zleceń"
+  },
+  "notFound": {
+    "title": "Nie znaleziono strony",
+    "description": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
+    "backHome": "Wróć do pulpitu"
+  },
+  "routeError": {
+    "title": "Coś poszło nie tak",
+    "description": "Odśwież stronę. Jeśli problem się powtarza, spróbuj ponownie później."
   }
 }
