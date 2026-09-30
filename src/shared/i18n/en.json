@@ -212,5 +212,20 @@
       "installationDate": "Installation date"
     },
     "clientEmpty": "The client has no devices yet"
+  },
+  "workOrders": {
+    "status": {
+      "New": "New",
+      "Assigned": "Assigned",
+      "InProgress": "In progress",
+      "Completed": "Completed",
+      "Invoiced": "Invoiced"
+    },
+    "priority": {
+      "Low": "Low",
+      "Normal": "Normal",
+      "High": "High",
+      "Critical": "Critical"
+    }
   }
 }

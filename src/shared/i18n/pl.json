@@ -214,5 +214,20 @@
       "installationDate": "Data instalacji"
     },
     "clientEmpty": "Klient nie ma jeszcze urządzeń"
+  },
+  "workOrders": {
+    "status": {
+      "New": "Nowe",
+      "Assigned": "Przypisane",
+      "InProgress": "W realizacji",
+      "Completed": "Zakończone",
+      "Invoiced": "Zafakturowane"
+    },
+    "priority": {
+      "Low": "Niski",
+      "Normal": "Normalny",
+      "High": "Wysoki",
+      "Critical": "Krytyczny"
+    }
   }
 }
