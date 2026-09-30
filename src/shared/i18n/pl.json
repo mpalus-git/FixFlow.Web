@@ -229,7 +229,8 @@
       "serialNumber": "Numer seryjny",
       "model": "Urządzenie",
       "installationDate": "Data instalacji",
-      "client": "Klient"
+      "client": "Klient",
+      "actions": "Akcje"
     },
     "clientEmpty": "Klient nie ma jeszcze urządzeń",
     "title": "Urządzenia",
@@ -264,6 +265,15 @@
       "forClient": "Klient:",
       "submit": "Dodaj urządzenie",
       "created": "Dodano urządzenie {{serialNumber}}."
+    },
+    "edit": {
+      "title": "Edycja urządzenia",
+      "submit": "Zapisz zmiany",
+      "saved": "Zapisano zmiany urządzenia."
+    },
+    "actions": {
+      "label": "Akcje urządzenia {{serialNumber}}",
+      "edit": "Edytuj"
     }
   },
   "workOrders": {

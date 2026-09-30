@@ -2,6 +2,7 @@ import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-tab
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { DeviceRowActions } from "@/features/devices/components/DeviceRowActions";
 import type { components } from "@/shared/api/schema";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatCalendarDate } from "@/shared/lib/dateTime";
@@ -11,6 +12,12 @@ type DeviceListItem = components["schemas"]["DeviceListItemResponse"];
 
 const features = tableFeatures({});
 const columnHelper = createColumnHelper<typeof features, DeviceListItem>();
+
+const actionsColumnId = "actions";
+
+function cellClassName(columnId: string): string {
+  return columnId === actionsColumnId ? "sticky right-0 bg-background px-3" : "px-3";
+}
 
 export type DevicesTableProps = {
   devices: DeviceListItem[];
@@ -53,6 +60,15 @@ export function DevicesTable({ devices, isUpdating }: DevicesTableProps) {
           header: t("devices.columns.installationDate"),
           cell: (info) => formatCalendarDate(info.getValue(), language),
         }),
+        columnHelper.display({
+          id: actionsColumnId,
+          header: () => <span className="sr-only">{t("devices.columns.actions")}</span>,
+          cell: ({ row }) => (
+            <div className="flex justify-end">
+              <DeviceRowActions device={row.original} />
+            </div>
+          ),
+        }),
       ]),
     [t, language],
   );
@@ -63,5 +79,5 @@ export function DevicesTable({ devices, isUpdating }: DevicesTableProps) {
     getRowId: (device) => device.id,
   });
 
-  return <DataTable table={table} isUpdating={isUpdating} />;
+  return <DataTable table={table} isUpdating={isUpdating} cellClassName={cellClassName} />;
 }

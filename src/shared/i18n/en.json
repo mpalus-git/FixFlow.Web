@@ -227,7 +227,8 @@
       "serialNumber": "Serial number",
       "model": "Device",
       "installationDate": "Installation date",
-      "client": "Client"
+      "client": "Client",
+      "actions": "Actions"
     },
     "clientEmpty": "The client has no devices yet",
     "title": "Devices",
@@ -262,6 +263,15 @@
       "forClient": "Client:",
       "submit": "Add device",
       "created": "Device {{serialNumber}} has been added."
+    },
+    "edit": {
+      "title": "Edit device",
+      "submit": "Save changes",
+      "saved": "The device changes have been saved."
+    },
+    "actions": {
+      "label": "Actions for device {{serialNumber}}",
+      "edit": "Edit"
     }
   },
   "workOrders": {

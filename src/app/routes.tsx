@@ -127,6 +127,17 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                   (await import("@/features/devices/pages/DeviceCardPage")).DeviceCardPage,
               },
             },
+            {
+              path: ":deviceId/edit",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/devices/api/deviceLoader")).createDeviceLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/devices/pages/EditDevicePage")).EditDevicePage,
+              },
+            },
           ],
         },
         {

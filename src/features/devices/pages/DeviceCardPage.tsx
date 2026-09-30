@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
+import { PencilIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { ClientNameLink } from "@/features/clients";
 import { deviceQueryOptions } from "@/features/devices/api/deviceQueries";
 import { WorkOrderHistory } from "@/features/work-orders";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatCalendarDate, formatDate } from "@/shared/lib/dateTime";
 import { Badge } from "@/shared/ui/badge";
+import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
@@ -29,14 +31,26 @@ export function DeviceCardPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold tracking-tight">{device.serialNumber}</h1>
-        <p className="text-muted-foreground">
-          {device.manufacturer} {device.model}
-        </p>
-        {device.archivedAt === null ? null : (
-          <Badge variant="secondary">{t("devices.card.archived")}</Badge>
-        )}
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-2xl font-semibold tracking-tight">{device.serialNumber}</h1>
+          <p className="text-muted-foreground">
+            {device.manufacturer} {device.model}
+          </p>
+          {device.archivedAt === null ? null : (
+            <Badge variant="secondary">{t("devices.card.archived")}</Badge>
+          )}
+        </div>
+        {device.archivedAt === null ? (
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" asChild>
+              <Link to={`/devices/${device.id}/edit`}>
+                <PencilIcon aria-hidden="true" />
+                {t("devices.actions.edit")}
+              </Link>
+            </Button>
+          </div>
+        ) : null}
       </div>
       <Card>
         <CardContent>
