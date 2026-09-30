@@ -66,9 +66,9 @@ describe("DevicesPage", () => {
     await userEvent.setup().type(await screen.findByLabelText("Szukaj urządzeń"), "vitodens");
 
     await vi.waitFor(() => {
-      expect(router.state.location.search).toBe("?search=vitodens");
+      expect(requests.at(-1)?.get("search")).toBe("vitodens");
     });
-    expect(requests.at(-1)?.get("search")).toBe("vitodens");
+    expect(router.state.location.search).toBe("?search=vitodens");
     expect(requests.at(-1)?.get("pageSize")).toBe("20");
   });
 
