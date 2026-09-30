@@ -1,17 +1,21 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { createMemoryRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
-import { createRoutes } from "@/app/routes";
-
-function renderApp() {
-  const router = createMemoryRouter(createRoutes(), { initialEntries: ["/"] });
-  render(<RouterProvider router={router} />);
-}
+import { endSession } from "@/shared/session/sessionStore";
+import { renderApp } from "@/test/renderApp";
+import { signInAs } from "@/test/signedInUser";
 
 describe("AppLayout", () => {
+  beforeEach(() => {
+    signInAs("Dispatcher");
+  });
+
+  afterEach(() => {
+    endSession();
+    localStorage.clear();
+  });
+
   it("marks the dashboard link as the current page", async () => {
-    renderApp();
+    renderApp("/");
 
     const navigation = await screen.findByRole("navigation", { name: "Nawigacja główna" });
 
@@ -22,7 +26,7 @@ describe("AppLayout", () => {
   });
 
   it("offers a link that skips to the main content", async () => {
-    renderApp();
+    renderApp("/");
 
     expect(await screen.findByRole("link", { name: "Przejdź do treści" })).toHaveAttribute(
       "href",
@@ -33,7 +37,7 @@ describe("AppLayout", () => {
 
   it("closes the mobile menu after choosing a link", async () => {
     const user = userEvent.setup();
-    renderApp();
+    renderApp("/");
 
     await user.click(await screen.findByRole("button", { name: "Otwórz menu" }));
     const menu = screen.getByRole("dialog");

@@ -78,5 +78,9 @@
     "server": "Serwer zwrócił błąd. Spróbuj ponownie.",
     "network": "Brak połączenia z serwerem.",
     "unexpected": "Wystąpił nieoczekiwany błąd."
+  },
+  "myWorkOrders": {
+    "title": "Moje zlecenia",
+    "comingSoon": "Tu pojawią się zlecenia przypisane do Ciebie"
   }
 }

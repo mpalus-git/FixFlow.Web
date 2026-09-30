@@ -49,7 +49,10 @@ export default defineConfig([
       "@typescript-eslint/only-throw-error": [
         "error",
         {
-          allow: [{ from: "package", package: "react-router", name: "DataWithResponseInit" }],
+          allow: [
+            { from: "package", package: "react-router", name: "DataWithResponseInit" },
+            { from: "lib", name: "Response" },
+          ],
         },
       ],
       "no-restricted-syntax": [

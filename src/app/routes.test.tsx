@@ -1,33 +1,29 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
-import { createMemoryRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
-import { createRoutes } from "@/app/routes";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import { endSession } from "@/shared/session/sessionStore";
 import { createAuthTokens } from "@/test/authTokens";
+import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
-
-function renderAt(path: string) {
-  const router = createMemoryRouter(createRoutes(), { initialEntries: [path] });
-  render(
-    <QueryClientProvider client={new QueryClient()}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>,
-  );
-}
+import { mockCurrentUser, signInAs } from "@/test/signedInUser";
 
 describe("routes", () => {
+  afterEach(() => {
+    endSession();
+    localStorage.clear();
+  });
+
   it("shows the lazily loaded dashboard at the root path", async () => {
-    renderAt("/");
+    signInAs("Dispatcher");
+    renderApp("/");
 
     expect(await screen.findByRole("heading", { name: "Pulpit" })).toBeInTheDocument();
   });
 
   it("shows the not found page with a link home for an unknown path", async () => {
-    renderAt("/does-not-exist");
+    signInAs("Dispatcher");
+    renderApp("/does-not-exist");
 
     expect(
       await screen.findByRole("heading", { name: "Nie znaleziono strony" }),
@@ -41,8 +37,9 @@ describe("routes", () => {
         HttpResponse.json(createAuthTokens("login")),
       ),
     );
+    mockCurrentUser("Dispatcher");
     const user = userEvent.setup();
-    renderAt("/login?returnTo=%2Fmissing-page");
+    const router = renderApp("/login?returnTo=%2Fmissing-page");
 
     await user.type(await screen.findByLabelText("E-mail"), "dispatcher@fixflow.test");
     await user.type(screen.getByLabelText("Hasło"), "Password-1");
@@ -51,6 +48,6 @@ describe("routes", () => {
     expect(
       await screen.findByRole("heading", { name: "Nie znaleziono strony" }),
     ).toBeInTheDocument();
-    endSession();
+    expect(router.state.location.pathname).toBe("/missing-page");
   });
 });

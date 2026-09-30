@@ -78,5 +78,9 @@
     "server": "The server returned an error. Try again.",
     "network": "Cannot connect to the server.",
     "unexpected": "An unexpected error occurred."
+  },
+  "myWorkOrders": {
+    "title": "My work orders",
+    "comingSoon": "Work orders assigned to you will appear here"
   }
 }
