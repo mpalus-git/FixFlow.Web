@@ -201,6 +201,16 @@
       "cancel": "Anuluj",
       "confirm": "Archiwizuj",
       "archived": "Zarchiwizowano klienta {{name}}."
+    },
+    "card": {
+      "archived": "Zarchiwizowany",
+      "email": "E-mail",
+      "noEmail": "Nie podano",
+      "createdAt": "Klient od",
+      "archivedAt": "Zarchiwizowano",
+      "devices": "Urządzenia",
+      "workOrders": "Historia zleceń",
+      "archivedDevices": "Urządzenia klienta zostały zarchiwizowane razem z nim i nie są już wyświetlane."
     }
   },
   "apiErrors": {

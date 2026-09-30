@@ -199,6 +199,16 @@
       "cancel": "Cancel",
       "confirm": "Archive",
       "archived": "Client {{name}} has been archived."
+    },
+    "card": {
+      "archived": "Archived",
+      "email": "Email",
+      "noEmail": "Not provided",
+      "createdAt": "Client since",
+      "archivedAt": "Archived on",
+      "devices": "Devices",
+      "workOrders": "Work order history",
+      "archivedDevices": "The client devices were archived together with the client and are no longer listed."
     }
   },
   "apiErrors": {

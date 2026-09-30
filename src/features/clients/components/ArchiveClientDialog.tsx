@@ -20,9 +20,10 @@ type ClientResponse = components["schemas"]["ClientResponse"];
 export type ArchiveClientDialogProps = {
   client: ClientResponse | null;
   onClose: () => void;
+  onArchived?: () => void;
 };
 
-export function ArchiveClientDialog({ client, onClose }: ArchiveClientDialogProps) {
+export function ArchiveClientDialog({ client, onClose, onArchived }: ArchiveClientDialogProps) {
   const { t } = useTranslation();
   const archiveClientMutation = useArchiveClientMutation();
 
@@ -30,6 +31,7 @@ export function ArchiveClientDialog({ client, onClose }: ArchiveClientDialogProp
     archiveClientMutation.mutate(clientToArchive.id, {
       onSuccess: () => {
         toast.success(t("clients.archive.archived", { name: clientToArchive.name }));
+        onArchived?.();
       },
       onError: (error) => {
         toast.error(
