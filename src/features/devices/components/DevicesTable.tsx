@@ -1,0 +1,60 @@
+import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-table";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
+import type { components } from "@/shared/api/schema";
+import { useLanguage } from "@/shared/i18n/useLanguage";
+import { formatCalendarDate } from "@/shared/lib/dateTime";
+import { DataTable } from "@/shared/ui/DataTable";
+
+type DeviceListItem = components["schemas"]["DeviceListItemResponse"];
+
+const features = tableFeatures({});
+const columnHelper = createColumnHelper<typeof features, DeviceListItem>();
+
+export type DevicesTableProps = {
+  devices: DeviceListItem[];
+  isUpdating: boolean;
+};
+
+export function DevicesTable({ devices, isUpdating }: DevicesTableProps) {
+  const { t } = useTranslation();
+  const language = useLanguage();
+  const columns = useMemo(
+    () =>
+      columnHelper.columns([
+        columnHelper.accessor("serialNumber", {
+          header: t("devices.columns.serialNumber"),
+          cell: (info) => <span className="font-medium">{info.getValue()}</span>,
+        }),
+        columnHelper.accessor((device) => `${device.manufacturer} ${device.model}`, {
+          id: "model",
+          header: t("devices.columns.model"),
+        }),
+        columnHelper.accessor("clientName", {
+          header: t("devices.columns.client"),
+          cell: ({ row }) => (
+            <Link
+              to={`/clients/${row.original.clientId}`}
+              className="underline-offset-4 hover:underline"
+            >
+              {row.original.clientName}
+            </Link>
+          ),
+        }),
+        columnHelper.accessor("installationDate", {
+          header: t("devices.columns.installationDate"),
+          cell: (info) => formatCalendarDate(info.getValue(), language),
+        }),
+      ]),
+    [t, language],
+  );
+  const table = useTable({
+    features,
+    columns,
+    data: devices,
+    getRowId: (device) => device.id,
+  });
+
+  return <DataTable table={table} isUpdating={isUpdating} />;
+}

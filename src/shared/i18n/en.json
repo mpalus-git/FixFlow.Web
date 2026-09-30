@@ -11,7 +11,8 @@
     "openMenu": "Open menu",
     "skipToContent": "Skip to content",
     "myWorkOrders": "My work orders",
-    "clients": "Clients"
+    "clients": "Clients",
+    "devices": "Devices"
   },
   "language": {
     "label": "Language",
@@ -221,9 +222,24 @@
     "columns": {
       "serialNumber": "Serial number",
       "model": "Device",
-      "installationDate": "Installation date"
+      "installationDate": "Installation date",
+      "client": "Client"
     },
-    "clientEmpty": "The client has no devices yet"
+    "clientEmpty": "The client has no devices yet",
+    "title": "Devices",
+    "search": {
+      "label": "Search devices",
+      "placeholder": "Serial number, model or manufacturer"
+    },
+    "empty": {
+      "title": "No devices",
+      "description": "Devices are added on the client card.",
+      "goToClients": "Go to clients"
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No device matches “{{search}}”."
+    }
   },
   "workOrders": {
     "status": {

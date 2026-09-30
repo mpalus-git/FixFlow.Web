@@ -94,6 +94,20 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           ],
         },
         {
+          path: "devices",
+          ErrorBoundary: RouteErrorBoundary,
+          middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
+          children: [
+            {
+              index: true,
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/devices/pages/DevicesPage")).DevicesPage,
+              },
+            },
+          ],
+        },
+        {
           path: "profile",
           lazy: {
             Component: async () =>

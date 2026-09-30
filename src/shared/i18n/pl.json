@@ -11,7 +11,8 @@
     "openMenu": "Otwórz menu",
     "skipToContent": "Przejdź do treści",
     "myWorkOrders": "Moje zlecenia",
-    "clients": "Klienci"
+    "clients": "Klienci",
+    "devices": "Urządzenia"
   },
   "language": {
     "label": "Język",
@@ -223,9 +224,24 @@
     "columns": {
       "serialNumber": "Numer seryjny",
       "model": "Urządzenie",
-      "installationDate": "Data instalacji"
+      "installationDate": "Data instalacji",
+      "client": "Klient"
     },
-    "clientEmpty": "Klient nie ma jeszcze urządzeń"
+    "clientEmpty": "Klient nie ma jeszcze urządzeń",
+    "title": "Urządzenia",
+    "search": {
+      "label": "Szukaj urządzeń",
+      "placeholder": "Numer seryjny, model lub producent"
+    },
+    "empty": {
+      "title": "Brak urządzeń",
+      "description": "Urządzenia dodaje się na karcie klienta.",
+      "goToClients": "Przejdź do klientów"
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żadne urządzenie nie pasuje do „{{search}}”."
+    }
   },
   "workOrders": {
     "status": {
