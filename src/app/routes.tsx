@@ -69,6 +69,17 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                   (await import("@/features/clients/pages/CreateClientPage")).CreateClientPage,
               },
             },
+            {
+              path: ":clientId/edit",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/clients/api/clientLoader")).createClientLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/clients/pages/EditClientPage")).EditClientPage,
+              },
+            },
           ],
         },
         {

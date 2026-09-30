@@ -148,7 +148,8 @@
       "name": "Nazwa",
       "address": "Adres",
       "contactPerson": "Osoba kontaktowa",
-      "phone": "Telefon"
+      "phone": "Telefon",
+      "actions": "Akcje"
     },
     "search": {
       "label": "Szukaj klientów",
@@ -183,6 +184,15 @@
       "title": "Nowy klient",
       "submit": "Dodaj klienta",
       "created": "Dodano klienta {{name}}."
+    },
+    "edit": {
+      "title": "Edycja klienta",
+      "submit": "Zapisz zmiany",
+      "saved": "Zapisano zmiany klienta."
+    },
+    "actions": {
+      "label": "Akcje klienta {{name}}",
+      "edit": "Edytuj"
     }
   },
   "apiErrors": {

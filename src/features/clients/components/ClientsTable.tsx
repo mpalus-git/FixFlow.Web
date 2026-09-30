@@ -1,6 +1,7 @@
 import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { ClientRowActions } from "@/features/clients/components/ClientRowActions";
 import { formatAddress } from "@/features/clients/formatAddress";
 import type { components } from "@/shared/api/schema";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table";
@@ -35,6 +36,15 @@ export function ClientsTable({ clients, isUpdating }: ClientsTableProps) {
             <a className="underline-offset-4 hover:underline" href={`tel:${info.getValue()}`}>
               {info.getValue()}
             </a>
+          ),
+        }),
+        columnHelper.display({
+          id: "actions",
+          header: () => <span className="sr-only">{t("clients.columns.actions")}</span>,
+          cell: ({ row }) => (
+            <div className="flex justify-end">
+              <ClientRowActions client={row.original} />
+            </div>
           ),
         }),
       ]),
