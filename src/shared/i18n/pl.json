@@ -6,5 +6,11 @@
     "label": "Język",
     "pl": "Polski",
     "en": "English"
+  },
+  "states": {
+    "loading": "Ładowanie…",
+    "retry": "Spróbuj ponownie",
+    "errorTitle": "Nie udało się wczytać danych",
+    "errorDescription": "Sprawdź połączenie i spróbuj ponownie."
   }
 }
