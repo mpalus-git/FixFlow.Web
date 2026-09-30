@@ -99,5 +99,19 @@
     "Admin": "Administrator",
     "Dispatcher": "Dispatcher",
     "Technician": "Technician"
+  },
+  "profile": {
+    "password": {
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Repeat new password",
+      "requirements": "At least 8 characters, an uppercase and a lowercase letter, a digit and a character other than a letter or digit.",
+      "submit": "Change password",
+      "submitting": "Changing…",
+      "changed": "The password has been changed. Your other devices have been signed out.",
+      "rateLimited": "Too many attempts. Try again in a moment.",
+      "rateLimitedWithDelay": "Too many attempts. Try again in {{seconds}} s.",
+      "demoAccountLocked": "Demo account passwords cannot be changed so that they stay available to every visitor."
+    }
   }
 }

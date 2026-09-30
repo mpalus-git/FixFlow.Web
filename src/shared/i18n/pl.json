@@ -99,5 +99,19 @@
     "Admin": "Administrator",
     "Dispatcher": "Dyspozytor",
     "Technician": "Technik"
+  },
+  "profile": {
+    "password": {
+      "currentPassword": "Obecne hasło",
+      "newPassword": "Nowe hasło",
+      "confirmNewPassword": "Powtórz nowe hasło",
+      "requirements": "Co najmniej 8 znaków, wielka i mała litera, cyfra oraz znak inny niż litera i cyfra.",
+      "submit": "Zmień hasło",
+      "submitting": "Zmienianie…",
+      "changed": "Hasło zostało zmienione. Pozostałe urządzenia zostały wylogowane.",
+      "rateLimited": "Zbyt wiele prób. Spróbuj ponownie za chwilę.",
+      "rateLimitedWithDelay": "Zbyt wiele prób. Spróbuj ponownie za {{seconds}} s.",
+      "demoAccountLocked": "Hasła kont demo nie można zmienić, żeby pozostały dostępne dla wszystkich odwiedzających."
+    }
   }
 }
