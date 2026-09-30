@@ -16,7 +16,7 @@ type ThemeState = {
 const themeStorageKey = "fixflow.theme";
 const darkSchemeQuery = "(prefers-color-scheme: dark)";
 
-function isThemePreference(value: unknown): value is ThemePreference {
+export function isThemePreference(value: unknown): value is ThemePreference {
   return themePreferences.some((preference) => preference === value);
 }
 

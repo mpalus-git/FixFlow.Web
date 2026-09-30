@@ -10,6 +10,12 @@
     "pl": "Polski",
     "en": "English"
   },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
   "states": {
     "loading": "Loading…",
     "retry": "Try again",
