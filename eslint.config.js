@@ -63,6 +63,12 @@ export default defineConfig([
     },
   },
   {
+    files: ["src/shared/i18n/i18next.d.ts"],
+    rules: {
+      "@typescript-eslint/consistent-type-definitions": "off",
+    },
+  },
+  {
     files: ["vite.config.ts"],
     languageOptions: {
       globals: globals.node,

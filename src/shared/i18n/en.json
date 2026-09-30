@@ -1,0 +1,10 @@
+{
+  "app": {
+    "name": "FixFlow"
+  },
+  "language": {
+    "label": "Language",
+    "pl": "Polski",
+    "en": "English"
+  }
+}
