@@ -54,7 +54,14 @@
   "validation": {
     "required": "This field is required",
     "email": "Enter a valid email address",
-    "tooLong": "The value is too long"
+    "tooLong": "The value is too long",
+    "passwordTooShort": "The password must be at least 8 characters long",
+    "passwordUppercase": "The password must contain an uppercase letter",
+    "passwordLowercase": "The password must contain a lowercase letter",
+    "passwordDigit": "The password must contain a digit",
+    "passwordSymbol": "The password must contain a character other than a letter or digit",
+    "passwordUnchanged": "The new password must differ from the current one",
+    "passwordConfirmation": "The passwords do not match"
   },
   "auth": {
     "login": {
