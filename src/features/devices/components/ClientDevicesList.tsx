@@ -16,7 +16,7 @@ import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table";
+import { DataTable } from "@/shared/ui/DataTable";
 
 type DeviceResponse = components["schemas"]["DeviceResponse"];
 
@@ -77,32 +77,7 @@ export function ClientDevicesList({ clientId }: ClientDevicesListProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-xl border" aria-busy={devicesQuery.isPlaceholderData}>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="px-3">
-                    {header.isPlaceholder ? null : <table.FlexRender header={header} />}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getAllCells().map((cell) => (
-                  <TableCell key={cell.id} className="px-3">
-                    <table.FlexRender cell={cell} />
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <DataTable table={table} isUpdating={devicesQuery.isPlaceholderData} />
       <PaginationControls
         page={page}
         pageSize={devicesPageSize}
