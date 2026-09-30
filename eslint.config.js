@@ -23,6 +23,7 @@ export default defineConfig([
   },
   {
     files: ["**/*.{ts,tsx}"],
+    ignores: ["src/shared/api/schema.ts"],
     extends: [
       js.configs.recommended,
       tseslint.configs.strictTypeChecked,
@@ -66,6 +67,12 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2023,
       globals: globals.node,
+    },
+  },
+  {
+    files: ["src/shared/api/schema.ts"],
+    languageOptions: {
+      parser: tseslint.parser,
     },
   },
   {
