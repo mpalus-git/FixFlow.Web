@@ -1,6 +1,7 @@
 import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import { ClientRowActions } from "@/features/clients/components/ClientRowActions";
 import { formatAddress } from "@/features/clients/formatAddress";
 import type { components } from "@/shared/api/schema";
@@ -30,7 +31,14 @@ export function ClientsTable({ clients, isUpdating, onArchive }: ClientsTablePro
       columnHelper.columns([
         columnHelper.accessor("name", {
           header: t("clients.columns.name"),
-          cell: (info) => <span className="font-medium">{info.getValue()}</span>,
+          cell: ({ row }) => (
+            <Link
+              to={`/clients/${row.original.id}`}
+              className="font-medium underline-offset-4 hover:underline"
+            >
+              {row.original.name}
+            </Link>
+          ),
         }),
         columnHelper.accessor((client) => formatAddress(client.address), {
           id: "address",

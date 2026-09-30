@@ -75,6 +75,21 @@ describe("ClientCardPage", () => {
     expect(await within(history).findByText("Kocioł nie grzeje wody użytkowej")).toBeVisible();
   });
 
+  it("opens from the client list by the client name", async () => {
+    mockCard();
+    const clientPage: ClientPage = { items: [client], page: 1, pageSize: 20, totalCount: 1 };
+    server.use(http.get(`${apiBaseUrl}/api/v1/clients`, () => HttpResponse.json(clientPage)));
+    const user = userEvent.setup();
+    const router = renderApp("/clients");
+
+    await user.click(await screen.findByRole("link", { name: "Piekarnia Kowalski" }));
+
+    expect(
+      await screen.findByRole("heading", { name: "Piekarnia Kowalski", level: 1 }),
+    ).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe(cardPath);
+  });
+
   it("shows an archived client without actions and explains the missing devices", async () => {
     mockCard({ ...client, archivedAt: "2026-09-20T10:00:00Z" });
     renderApp(cardPath);

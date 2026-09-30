@@ -7,6 +7,7 @@ import { endSession } from "@/shared/session/sessionStore";
 import { createClientResponse } from "@/test/clientFixtures";
 import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
+import { mockEmptyClientCardLists } from "@/test/clientCardMocks";
 import { signInAs } from "@/test/signedInUser";
 
 type ClientPage = components["schemas"]["PagedResponseOfClientResponse"];
@@ -24,18 +25,21 @@ describe("CreateClientPage", () => {
     localStorage.clear();
   });
 
-  it("creates a client from the list and shows it after returning", async () => {
+  it("creates a client from the list and opens its card", async () => {
     const created = createClientResponse({ email: null });
     const receivedBodies: ClientRequest[] = [];
-    let clientPage: ClientPage = { items: [], page: 1, pageSize: 20, totalCount: 0 };
+    const clientPage: ClientPage = { items: [], page: 1, pageSize: 20, totalCount: 0 };
     server.use(
       http.get(clientsUrl, () => HttpResponse.json(clientPage)),
       http.post<never, ClientRequest>(clientsUrl, async ({ request }) => {
         receivedBodies.push(await request.json());
-        clientPage = { ...clientPage, items: [created], totalCount: 1 };
         return HttpResponse.json(created, { status: 201 });
       }),
+      http.get(`${clientsUrl}/${created.id}`, () =>
+        HttpResponse.json(created, { headers: { ETag: '"1"' } }),
+      ),
     );
+    mockEmptyClientCardLists();
     const user = userEvent.setup();
     const router = renderApp("/clients");
 
@@ -49,8 +53,10 @@ describe("CreateClientPage", () => {
     await user.type(screen.getByLabelText("Telefon"), created.phone);
     await user.click(screen.getByRole("button", { name: "Dodaj klienta" }));
 
-    expect(await screen.findByRole("cell", { name: created.name })).toBeInTheDocument();
-    expect(router.state.location.pathname).toBe("/clients");
+    expect(
+      await screen.findByRole("heading", { name: created.name, level: 1 }),
+    ).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe(`/clients/${created.id}`);
     expect(receivedBodies).toEqual([
       {
         name: created.name,
