@@ -1,5 +1,6 @@
-import { LogOutIcon, UserIcon } from "lucide-react";
+import { LogOutIcon, UserCogIcon, UserIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import { useCurrentUser } from "@/shared/session/currentUser";
 import { logout } from "@/shared/session/logout";
 import { Button } from "@/shared/ui/button";
@@ -33,6 +34,12 @@ export function UserMenu() {
           <span className="text-xs font-normal">{t(`roles.${user.role}`)}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/profile">
+            <UserCogIcon aria-hidden="true" />
+            {t("userMenu.profile")}
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem
           onSelect={() => {
             void logout();

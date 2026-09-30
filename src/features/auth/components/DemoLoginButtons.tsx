@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { type DemoAccount, demoDataResetUtc } from "@/features/auth/demoAccounts";
+import { type DemoAccount, demoDataResetUtc } from "@/shared/lib/demoAccounts";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatTime } from "@/shared/lib/dateTime";
 import { Button } from "@/shared/ui/button";

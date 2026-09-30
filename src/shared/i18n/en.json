@@ -54,7 +54,14 @@
   "validation": {
     "required": "This field is required",
     "email": "Enter a valid email address",
-    "tooLong": "The value is too long"
+    "tooLong": "The value is too long",
+    "passwordTooShort": "The password must be at least 8 characters long",
+    "passwordUppercase": "The password must contain an uppercase letter",
+    "passwordLowercase": "The password must contain a lowercase letter",
+    "passwordDigit": "The password must contain a digit",
+    "passwordSymbol": "The password must contain a character other than a letter or digit",
+    "passwordUnchanged": "The new password must differ from the current one",
+    "passwordConfirmation": "The passwords do not match"
   },
   "auth": {
     "login": {
@@ -86,11 +93,34 @@
   },
   "userMenu": {
     "label": "User account",
+    "profile": "Profile",
     "logout": "Sign out"
   },
   "roles": {
     "Admin": "Administrator",
     "Dispatcher": "Dispatcher",
     "Technician": "Technician"
+  },
+  "profile": {
+    "title": "Profile",
+    "account": {
+      "title": "Account details",
+      "email": "Email",
+      "role": "Role"
+    },
+    "password": {
+      "title": "Change password",
+      "description": "After the change, your other devices will be signed out.",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Repeat new password",
+      "requirements": "At least 8 characters, an uppercase and a lowercase letter, a digit and a character other than a letter or digit.",
+      "submit": "Change password",
+      "submitting": "Changing…",
+      "changed": "The password has been changed. Your other devices have been signed out.",
+      "rateLimited": "Too many attempts. Try again in a moment.",
+      "rateLimitedWithDelay": "Too many attempts. Try again in {{seconds}} s.",
+      "demoAccountLocked": "Demo account passwords cannot be changed so that they stay available to every visitor."
+    }
   }
 }

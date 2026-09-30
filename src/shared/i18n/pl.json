@@ -54,7 +54,14 @@
   "validation": {
     "required": "To pole jest wymagane",
     "email": "Podaj poprawny adres e-mail",
-    "tooLong": "Wartość jest za długa"
+    "tooLong": "Wartość jest za długa",
+    "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków",
+    "passwordUppercase": "Hasło musi zawierać wielką literę",
+    "passwordLowercase": "Hasło musi zawierać małą literę",
+    "passwordDigit": "Hasło musi zawierać cyfrę",
+    "passwordSymbol": "Hasło musi zawierać znak inny niż litera i cyfra",
+    "passwordUnchanged": "Nowe hasło musi różnić się od obecnego",
+    "passwordConfirmation": "Hasła nie są takie same"
   },
   "auth": {
     "login": {
@@ -86,11 +93,34 @@
   },
   "userMenu": {
     "label": "Konto użytkownika",
+    "profile": "Profil",
     "logout": "Wyloguj"
   },
   "roles": {
     "Admin": "Administrator",
     "Dispatcher": "Dyspozytor",
     "Technician": "Technik"
+  },
+  "profile": {
+    "title": "Profil",
+    "account": {
+      "title": "Dane konta",
+      "email": "E-mail",
+      "role": "Rola"
+    },
+    "password": {
+      "title": "Zmiana hasła",
+      "description": "Po zmianie hasła pozostałe urządzenia zostaną wylogowane.",
+      "currentPassword": "Obecne hasło",
+      "newPassword": "Nowe hasło",
+      "confirmNewPassword": "Powtórz nowe hasło",
+      "requirements": "Co najmniej 8 znaków, wielka i mała litera, cyfra oraz znak inny niż litera i cyfra.",
+      "submit": "Zmień hasło",
+      "submitting": "Zmienianie…",
+      "changed": "Hasło zostało zmienione. Pozostałe urządzenia zostały wylogowane.",
+      "rateLimited": "Zbyt wiele prób. Spróbuj ponownie za chwilę.",
+      "rateLimitedWithDelay": "Zbyt wiele prób. Spróbuj ponownie za {{seconds}} s.",
+      "demoAccountLocked": "Hasła kont demo nie można zmienić, żeby pozostały dostępne dla wszystkich odwiedzających."
+    }
   }
 }

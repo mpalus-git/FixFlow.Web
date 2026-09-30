@@ -51,6 +51,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           },
         },
         {
+          path: "profile",
+          lazy: {
+            Component: async () =>
+              (await import("@/features/profile/pages/ProfilePage")).ProfilePage,
+          },
+        },
+        {
           path: "*",
           Component: NotFoundPage,
         },
