@@ -97,6 +97,7 @@ describe("ClientCardPage", () => {
     expect(await screen.findByText("Zarchiwizowany")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Edytuj" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Archiwizuj" })).toBeNull();
+    expect(screen.queryByRole("link", { name: "Dodaj urządzenie" })).toBeNull();
     expect(screen.getByRole("note")).toHaveTextContent("zarchiwizowane razem z nim");
     const history = screen.getByRole("region", { name: "Historia zleceń" });
     expect(await within(history).findByText("Kocioł nie grzeje wody użytkowej")).toBeVisible();

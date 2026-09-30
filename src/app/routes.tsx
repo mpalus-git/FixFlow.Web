@@ -81,6 +81,17 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
               },
             },
             {
+              path: ":clientId/devices/new",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/clients/api/clientLoader")).createClientLoader(
+                    queryClient,
+                  ),
+                Component: async () =>
+                  (await import("@/features/devices/pages/CreateDevicePage")).CreateDevicePage,
+              },
+            },
+            {
               path: ":clientId/edit",
               lazy: {
                 loader: async () =>

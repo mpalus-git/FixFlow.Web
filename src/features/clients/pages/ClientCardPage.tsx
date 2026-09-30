@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArchiveIcon, PencilIcon } from "lucide-react";
+import { ArchiveIcon, PencilIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router";
@@ -102,9 +102,19 @@ export function ClientCardPage() {
         </CardContent>
       </Card>
       <section aria-labelledby="client-devices-heading" className="flex flex-col gap-4">
-        <h2 id="client-devices-heading" className="text-lg font-semibold">
-          {t("clients.card.devices")}
-        </h2>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 id="client-devices-heading" className="text-lg font-semibold">
+            {t("clients.card.devices")}
+          </h2>
+          {isArchived ? null : (
+            <Button variant="outline" asChild>
+              <Link to={`/clients/${client.id}/devices/new`}>
+                <PlusIcon aria-hidden="true" />
+                {t("clients.card.addDevice")}
+              </Link>
+            </Button>
+          )}
+        </div>
         {isArchived ? (
           <Alert role="note">
             <AlertDescription>{t("clients.card.archivedDevices")}</AlertDescription>

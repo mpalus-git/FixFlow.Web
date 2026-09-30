@@ -210,7 +210,8 @@
       "devices": "Devices",
       "workOrders": "Work order history",
       "archivedDevices": "The client devices were archived together with the client and are no longer listed.",
-      "openClient": "Open the client"
+      "openClient": "Open the client",
+      "addDevice": "Add device"
     }
   },
   "apiErrors": {
@@ -255,6 +256,12 @@
     },
     "form": {
       "serialNumberHint": "Stored in upper case, without leading or trailing spaces."
+    },
+    "create": {
+      "title": "New device",
+      "forClient": "Client:",
+      "submit": "Add device",
+      "created": "Device {{serialNumber}} has been added."
     }
   },
   "workOrders": {
