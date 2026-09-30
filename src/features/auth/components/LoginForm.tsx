@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useLoginMutation } from "@/features/auth/api/useLoginMutation";
+import { DemoLoginButtons } from "@/features/auth/components/DemoLoginButtons";
+import type { DemoAccount } from "@/features/auth/demoAccounts";
 import {
   loginFields,
   type LoginFormValues,
@@ -19,9 +21,10 @@ import { Label } from "@/shared/ui/label";
 
 export type LoginFormProps = {
   onLoggedIn: () => void;
+  demoAccounts?: readonly DemoAccount[];
 };
 
-export function LoginForm({ onLoggedIn }: LoginFormProps) {
+export function LoginForm({ onLoggedIn, demoAccounts = [] }: LoginFormProps) {
   const { t } = useTranslation();
   const [formError, setFormError] = useState<string | null>(null);
   const loginMutation = useLoginMutation();
@@ -52,7 +55,7 @@ export function LoginForm({ onLoggedIn }: LoginFormProps) {
     }
   }
 
-  const submit = form.handleSubmit(async (values) => {
+  async function logIn(values: LoginFormValues) {
     setFormError(null);
     try {
       await loginMutation.mutateAsync(values);
@@ -60,7 +63,9 @@ export function LoginForm({ onLoggedIn }: LoginFormProps) {
     } catch (error) {
       showLoginError(error);
     }
-  });
+  }
+
+  const submit = form.handleSubmit(logIn);
 
   return (
     <form noValidate onSubmit={(event) => void submit(event)} className="flex flex-col gap-4">
@@ -93,9 +98,17 @@ export function LoginForm({ onLoggedIn }: LoginFormProps) {
         />
         <FieldError id="login-password-error" message={errors.password?.message} />
       </div>
-      <Button type="submit" size="lg" disabled={isSubmitting}>
+      <Button type="submit" size="lg" disabled={isSubmitting || loginMutation.isPending}>
         {isSubmitting ? t("auth.login.submitting") : t("auth.login.submit")}
       </Button>
+      <DemoLoginButtons
+        accounts={demoAccounts}
+        disabled={loginMutation.isPending}
+        onSelect={({ email, password }) => {
+          form.reset({ email, password });
+          void logIn({ email, password });
+        }}
+      />
     </form>
   );
 }

@@ -2,6 +2,7 @@ import { WrenchIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 import { LoginForm } from "@/features/auth/components/LoginForm";
+import { readDemoAccounts } from "@/features/auth/demoAccounts";
 import { readReturnTo } from "@/shared/lib/returnTo";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card";
 
@@ -22,6 +23,7 @@ export function LoginPage() {
       </CardHeader>
       <CardContent>
         <LoginForm
+          demoAccounts={readDemoAccounts()}
           onLoggedIn={() => {
             void navigate(returnTo, { replace: true });
           }}

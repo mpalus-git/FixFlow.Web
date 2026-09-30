@@ -66,6 +66,12 @@
       "invalidCredentials": "Nieprawidłowy e-mail lub hasło.",
       "rateLimited": "Zbyt wiele prób logowania. Spróbuj ponownie za chwilę.",
       "rateLimitedWithDelay": "Zbyt wiele prób logowania. Spróbuj ponownie za {{seconds}} s."
+    },
+    "demo": {
+      "heading": "Wypróbuj bez zakładania konta",
+      "dispatcher": "Zaloguj jako dyspozytor",
+      "technician": "Zaloguj jako technik",
+      "resetNotice": "Dane demo są przywracane codziennie o {{time}}."
     }
   },
   "errors": {

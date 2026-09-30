@@ -29,6 +29,10 @@ export function formatDateTime(value: string, language: Language): string {
   return formatInAppTimeZone(value, "P p", language);
 }
 
+export function formatTime(value: string, language: Language): string {
+  return formatInAppTimeZone(value, "p", language);
+}
+
 export function formatDate(value: string, language: Language): string {
   return formatInAppTimeZone(value, "P", language);
 }

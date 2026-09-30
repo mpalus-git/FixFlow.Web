@@ -81,4 +81,36 @@ describe("LoginForm", () => {
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Spróbuj ponownie za 37 s");
   });
+
+  it("does not offer demo accounts when none are configured", () => {
+    renderWithProviders(<LoginForm onLoggedIn={vi.fn()} />);
+
+    expect(screen.queryByRole("button", { name: "Zaloguj jako dyspozytor" })).toBeNull();
+  });
+
+  it("logs in with the chosen demo account in one click", async () => {
+    const receivedBodies: LoginRequest[] = [];
+    server.use(
+      http.post<never, LoginRequest>(loginUrl, async ({ request }) => {
+        receivedBodies.push(await request.json());
+        return HttpResponse.json(createAuthTokens("demo"));
+      }),
+    );
+    const onLoggedIn = vi.fn();
+    const demoAccounts = [
+      { role: "Dispatcher", email: "dispatcher@demo.test", password: "Demo-Password-1" },
+      { role: "Technician", email: "technician@demo.test", password: "Demo-Password-2" },
+    ] as const;
+    renderWithProviders(<LoginForm onLoggedIn={onLoggedIn} demoAccounts={demoAccounts} />);
+
+    expect(screen.getByText(/Dane demo są przywracane codziennie o/)).toBeInTheDocument();
+    await userEvent.setup().click(screen.getByRole("button", { name: "Zaloguj jako technik" }));
+
+    await vi.waitFor(() => {
+      expect(onLoggedIn).toHaveBeenCalledOnce();
+    });
+    expect(receivedBodies).toEqual([
+      { email: "technician@demo.test", password: "Demo-Password-2" },
+    ]);
+  });
 });

@@ -66,6 +66,12 @@
       "invalidCredentials": "Invalid email or password.",
       "rateLimited": "Too many sign-in attempts. Try again in a moment.",
       "rateLimitedWithDelay": "Too many sign-in attempts. Try again in {{seconds}} s."
+    },
+    "demo": {
+      "heading": "Try it without an account",
+      "dispatcher": "Sign in as dispatcher",
+      "technician": "Sign in as technician",
+      "resetNotice": "Demo data is restored every day at {{time}}."
     }
   },
   "errors": {
