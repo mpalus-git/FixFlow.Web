@@ -49,5 +49,10 @@
     "elapsed": "Minęło {{seconds}} s",
     "unavailableTitle": "Serwer nie odpowiada",
     "unavailableDescription": "Nie udało się połączyć z serwerem w ciągu 90 sekund. Sprawdź połączenie i spróbuj ponownie."
+  },
+  "validation": {
+    "required": "To pole jest wymagane",
+    "email": "Podaj poprawny adres e-mail",
+    "tooLong": "Wartość jest za długa"
   }
 }

@@ -49,5 +49,10 @@
     "elapsed": "{{seconds}} s elapsed",
     "unavailableTitle": "The server is not responding",
     "unavailableDescription": "Could not connect to the server within 90 seconds. Check your connection and try again."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email address",
+    "tooLong": "The value is too long"
   }
 }
