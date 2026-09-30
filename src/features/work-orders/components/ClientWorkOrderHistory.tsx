@@ -69,7 +69,7 @@ export function ClientWorkOrderHistory({ clientId }: ClientWorkOrderHistoryProps
         columnHelper.accessor("description", {
           header: t("workOrders.columns.description"),
           cell: (info) => (
-            <span className="block max-w-64 truncate" title={info.getValue()}>
+            <span className="block max-w-48 truncate" title={info.getValue()}>
               {info.getValue()}
             </span>
           ),

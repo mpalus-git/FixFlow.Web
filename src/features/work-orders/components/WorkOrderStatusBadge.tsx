@@ -4,12 +4,24 @@ import { Badge } from "@/shared/ui/badge";
 
 type WorkOrderStatus = components["schemas"]["WorkOrderStatus"];
 
-const statusClassNames: Record<WorkOrderStatus, string> = {
-  New: "bg-secondary text-secondary-foreground",
-  Assigned: "bg-sky-100 text-sky-900 dark:bg-sky-950 dark:text-sky-200",
-  InProgress: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
-  Completed: "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200",
-  Invoiced: "border-border text-muted-foreground",
+const statusStyles: Record<
+  WorkOrderStatus,
+  { variant: "secondary" | "outline"; className?: string }
+> = {
+  New: { variant: "secondary" },
+  Assigned: {
+    variant: "secondary",
+    className: "bg-sky-100 text-sky-900 dark:bg-sky-950 dark:text-sky-200",
+  },
+  InProgress: {
+    variant: "secondary",
+    className: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
+  },
+  Completed: {
+    variant: "secondary",
+    className: "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200",
+  },
+  Invoiced: { variant: "outline", className: "text-muted-foreground" },
 };
 
 export type WorkOrderStatusBadgeProps = {
@@ -18,6 +30,11 @@ export type WorkOrderStatusBadgeProps = {
 
 export function WorkOrderStatusBadge({ status }: WorkOrderStatusBadgeProps) {
   const { t } = useTranslation();
+  const { variant, className } = statusStyles[status];
 
-  return <Badge className={statusClassNames[status]}>{t(`workOrders.status.${status}`)}</Badge>;
+  return (
+    <Badge variant={variant} className={className}>
+      {t(`workOrders.status.${status}`)}
+    </Badge>
+  );
 }
