@@ -54,5 +54,23 @@
     "required": "This field is required",
     "email": "Enter a valid email address",
     "tooLong": "The value is too long"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "description": "FixFlow dispatcher panel",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "invalidCredentials": "Invalid email or password.",
+      "rateLimited": "Too many sign-in attempts. Try again in a moment.",
+      "rateLimitedWithDelay": "Too many sign-in attempts. Try again in {{seconds}} s."
+    }
+  },
+  "errors": {
+    "server": "The server returned an error. Try again.",
+    "network": "Cannot connect to the server.",
+    "unexpected": "An unexpected error occurred."
   }
 }

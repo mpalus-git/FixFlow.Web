@@ -54,5 +54,23 @@
     "required": "To pole jest wymagane",
     "email": "Podaj poprawny adres e-mail",
     "tooLong": "Wartość jest za długa"
+  },
+  "auth": {
+    "login": {
+      "title": "Zaloguj się",
+      "description": "Panel dyspozytora systemu FixFlow",
+      "email": "E-mail",
+      "password": "Hasło",
+      "submit": "Zaloguj się",
+      "submitting": "Logowanie…",
+      "invalidCredentials": "Nieprawidłowy e-mail lub hasło.",
+      "rateLimited": "Zbyt wiele prób logowania. Spróbuj ponownie za chwilę.",
+      "rateLimitedWithDelay": "Zbyt wiele prób logowania. Spróbuj ponownie za {{seconds}} s."
+    }
+  },
+  "errors": {
+    "server": "Serwer zwrócił błąd. Spróbuj ponownie.",
+    "network": "Brak połączenia z serwerem.",
+    "unexpected": "Wystąpił nieoczekiwany błąd."
   }
 }
