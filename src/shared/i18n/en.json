@@ -53,6 +53,13 @@
       "toInvoiceHint": "Completed, waiting for an invoice",
       "overdue": "Overdue",
       "overdueHint": "Due date passed before completion"
+    },
+    "statusChart": {
+      "title": "Work orders by status",
+      "description": "All work orders in the system, in handling order",
+      "series": "Work orders",
+      "status": "Status",
+      "empty": "There are no work orders yet"
     }
   },
   "notFound": {

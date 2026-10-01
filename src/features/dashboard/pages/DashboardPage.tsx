@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { RefreshCwIcon } from "lucide-react";
+import { ClipboardListIcon, RefreshCwIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { dashboardSummaryQueryOptions } from "@/features/dashboard/api/dashboardQueries";
 import { DashboardStatTiles } from "@/features/dashboard/components/DashboardStatTiles";
+import { StatusChart } from "@/features/dashboard/components/StatusChart";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatDateTime } from "@/shared/lib/dateTime";
 import { Button } from "@/shared/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card";
+import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { Skeleton } from "@/shared/ui/skeleton";
 
@@ -40,7 +43,27 @@ export function DashboardPage() {
     if (summary === undefined) {
       return <DashboardSkeleton />;
     }
-    return <DashboardStatTiles summary={summary} />;
+    const totalCount = summary.statusCounts.reduce((total, { count }) => total + count, 0);
+    return (
+      <>
+        <DashboardStatTiles summary={summary} />
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("dashboard.statusChart.title")}</CardTitle>
+              <CardDescription>{t("dashboard.statusChart.description")}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {totalCount === 0 ? (
+                <EmptyState icon={ClipboardListIcon} title={t("dashboard.statusChart.empty")} />
+              ) : (
+                <StatusChart statusCounts={summary.statusCounts} />
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </>
+    );
   }
 
   return (

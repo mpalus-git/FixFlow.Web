@@ -53,6 +53,13 @@
       "toInvoiceHint": "Zakończone, czekają na fakturę",
       "overdue": "Opóźnione",
       "overdueHint": "Termin minął przed zakończeniem"
+    },
+    "statusChart": {
+      "title": "Zlecenia według statusu",
+      "description": "Wszystkie zlecenia w systemie, w kolejności obsługi",
+      "series": "Zlecenia",
+      "status": "Status",
+      "empty": "W systemie nie ma jeszcze zleceń"
     }
   },
   "notFound": {
