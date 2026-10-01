@@ -17,7 +17,8 @@
     "myWorkOrders": "Moje zlecenia",
     "clients": "Klienci",
     "devices": "Urządzenia",
-    "dispatch": "Tablica dispatch"
+    "dispatch": "Tablica dispatch",
+    "parts": "Części"
   },
   "language": {
     "label": "Język",
@@ -437,11 +438,28 @@
   },
   "parts": {
     "unknown": "Nieznana część",
+    "title": "Części",
+    "lowStockHint_one": "Części, których zostało {{count}} sztuka lub mniej, są oznaczone jako niski stan.",
+    "lowStockHint_few": "Części, których zostały {{count}} sztuki lub mniej, są oznaczone jako niski stan.",
+    "lowStockHint_many": "Części, których zostało {{count}} sztuk lub mniej, są oznaczone jako niski stan.",
+    "lowStockHint_other": "Części, których zostało {{count}} sztuki lub mniej, są oznaczone jako niski stan.",
     "columns": {
       "name": "Nazwa",
       "catalogNumber": "Numer katalogowy",
       "stockQuantity": "Stan",
       "unitPrice": "Cena netto"
+    },
+    "search": {
+      "label": "Szukaj części",
+      "placeholder": "Nazwa lub numer katalogowy"
+    },
+    "empty": {
+      "title": "Brak części",
+      "description": "Katalog części jest pusty."
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żadna część nie pasuje do „{{search}}”."
     },
     "stock": {
       "low": "Niski stan",

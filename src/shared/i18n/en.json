@@ -17,7 +17,8 @@
     "myWorkOrders": "My work orders",
     "clients": "Clients",
     "devices": "Devices",
-    "dispatch": "Dispatch board"
+    "dispatch": "Dispatch board",
+    "parts": "Parts"
   },
   "language": {
     "label": "Language",
@@ -435,11 +436,26 @@
   },
   "parts": {
     "unknown": "Unknown part",
+    "title": "Parts",
+    "lowStockHint_one": "Parts with {{count}} unit or fewer left are marked as low stock.",
+    "lowStockHint_other": "Parts with {{count}} units or fewer left are marked as low stock.",
     "columns": {
       "name": "Name",
       "catalogNumber": "Catalog number",
       "stockQuantity": "Stock",
       "unitPrice": "Net price"
+    },
+    "search": {
+      "label": "Search parts",
+      "placeholder": "Name or catalog number"
+    },
+    "empty": {
+      "title": "No parts",
+      "description": "The parts catalog is empty."
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No part matches “{{search}}”."
     },
     "stock": {
       "low": "Low stock",
