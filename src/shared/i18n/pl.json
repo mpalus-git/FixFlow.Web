@@ -450,7 +450,8 @@
       "name": "Nazwa",
       "catalogNumber": "Numer katalogowy",
       "stockQuantity": "Stan",
-      "unitPrice": "Cena netto"
+      "unitPrice": "Cena netto",
+      "actions": "Akcje"
     },
     "search": {
       "label": "Szukaj części",
@@ -478,11 +479,20 @@
       "submit": "Dodaj część",
       "created": "Dodano część {{name}}."
     },
+    "edit": {
+      "title": "Edycja części",
+      "submit": "Zapisz zmiany",
+      "saved": "Zapisano zmiany części."
+    },
     "form": {
       "unitPrice": "Cena netto (zł)",
       "initialStock": "Stan początkowy (szt.)",
       "catalogNumberHint": "Unikalny; zapisywany wielkimi literami.",
       "stockHint": "Stan zmienia się przez przyjęcie dostawy i zużycie w zleceniach."
+    },
+    "actions": {
+      "label": "Akcje części {{name}}",
+      "edit": "Edytuj"
     }
   },
   "dispatch": {

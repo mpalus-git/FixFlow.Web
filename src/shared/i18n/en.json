@@ -446,7 +446,8 @@
       "name": "Name",
       "catalogNumber": "Catalog number",
       "stockQuantity": "Stock",
-      "unitPrice": "Net price"
+      "unitPrice": "Net price",
+      "actions": "Actions"
     },
     "search": {
       "label": "Search parts",
@@ -472,11 +473,20 @@
       "submit": "Add part",
       "created": "Part {{name}} was added."
     },
+    "edit": {
+      "title": "Edit part",
+      "submit": "Save changes",
+      "saved": "Part changes were saved."
+    },
     "form": {
       "unitPrice": "Net price (PLN)",
       "initialStock": "Initial stock (pcs)",
       "catalogNumberHint": "Unique; stored in upper case.",
       "stockHint": "Stock changes through deliveries and use in work orders."
+    },
+    "actions": {
+      "label": "Actions for part {{name}}",
+      "edit": "Edit"
     }
   },
   "dispatch": {

@@ -231,6 +231,15 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                   (await import("@/features/parts/pages/CreatePartPage")).CreatePartPage,
               },
             },
+            {
+              path: ":partId/edit",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/parts/api/partLoader")).createPartLoader(queryClient),
+                Component: async () =>
+                  (await import("@/features/parts/pages/EditPartPage")).EditPartPage,
+              },
+            },
           ],
         },
         {

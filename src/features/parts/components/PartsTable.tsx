@@ -1,6 +1,7 @@
 import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { PartRowActions } from "@/features/parts/components/PartRowActions";
 import { PartStock } from "@/features/parts/components/PartStock";
 import type { components } from "@/shared/api/schema";
 import { useLanguage } from "@/shared/i18n/useLanguage";
@@ -13,7 +14,12 @@ const features = tableFeatures({});
 
 const numericColumnIds: readonly string[] = ["stockQuantity", "unitPrice"];
 
+const actionsColumnId = "actions";
+
 function cellClassName(columnId: string): string {
+  if (columnId === actionsColumnId) {
+    return "sticky right-0 bg-background px-3";
+  }
   return numericColumnIds.includes(columnId) ? "px-3 text-right" : "px-3";
 }
 
@@ -49,6 +55,15 @@ export function PartsTable({ parts, isUpdating }: PartsTableProps) {
           header: t("parts.columns.unitPrice"),
           cell: (info) => (
             <span className="tabular-nums">{formatMoney(info.getValue(), language)}</span>
+          ),
+        }),
+        columnHelper.display({
+          id: actionsColumnId,
+          header: () => <span className="sr-only">{t("parts.columns.actions")}</span>,
+          cell: ({ row }) => (
+            <div className="flex justify-end">
+              <PartRowActions part={row.original} />
+            </div>
           ),
         }),
       ]),
