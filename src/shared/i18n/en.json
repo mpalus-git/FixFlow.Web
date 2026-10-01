@@ -41,7 +41,19 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "comingSoon": "Work order statistics will appear here"
+    "generatedAt": "As of {{time}}",
+    "refresh": "Refresh",
+    "tiles": {
+      "label": "Work orders that need attention",
+      "unassigned": "To assign",
+      "unassignedHint": "New work orders without a technician",
+      "inProgress": "In progress",
+      "inProgressHint": "Technicians working on site",
+      "toInvoice": "To invoice",
+      "toInvoiceHint": "Completed, waiting for an invoice",
+      "overdue": "Overdue",
+      "overdueHint": "Due date passed before completion"
+    }
   },
   "notFound": {
     "title": "Page not found",

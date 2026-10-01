@@ -41,7 +41,19 @@
   },
   "dashboard": {
     "title": "Pulpit",
-    "comingSoon": "Tu pojawią się statystyki zleceń"
+    "generatedAt": "Stan na {{time}}",
+    "refresh": "Odśwież",
+    "tiles": {
+      "label": "Zlecenia wymagające uwagi",
+      "unassigned": "Do przypisania",
+      "unassignedHint": "Nowe zlecenia bez technika",
+      "inProgress": "W realizacji",
+      "inProgressHint": "Technicy pracują na miejscu",
+      "toInvoice": "Do zafakturowania",
+      "toInvoiceHint": "Zakończone, czekają na fakturę",
+      "overdue": "Opóźnione",
+      "overdueHint": "Termin minął przed zakończeniem"
+    }
   },
   "notFound": {
     "title": "Nie znaleziono strony",
