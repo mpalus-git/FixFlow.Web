@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { WorkOrderEditLink } from "@/features/work-orders/components/WorkOrderEditLink";
 import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOrderPriorityBadge";
 import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrderStatusBadge";
 import type { components } from "@/shared/api/schema";
@@ -21,7 +22,14 @@ export const workOrderTableFeatures = tableFeatures({ rowSortingFeature });
 const columnHelper = createColumnHelper<typeof workOrderTableFeatures, WorkOrderListItem>();
 
 export type WorkOrderColumnId =
-  "dueDate" | "clientName" | "device" | "description" | "priority" | "status" | "technician";
+  | "dueDate"
+  | "clientName"
+  | "device"
+  | "description"
+  | "priority"
+  | "status"
+  | "technician"
+  | "actions";
 
 function sortableHeader<TValue extends CellData>(label: string) {
   return function Header({
@@ -106,6 +114,15 @@ export function useWorkOrderColumns(columnIds: readonly WorkOrderColumnId[]) {
           info.getValue() ?? (
             <span className="text-muted-foreground">{t("workOrders.unassigned")}</span>
           ),
+      }),
+      columnHelper.display({
+        id: "actions",
+        header: () => <span className="sr-only">{t("workOrders.columns.actions")}</span>,
+        cell: ({ row }) => (
+          <div className="flex justify-end">
+            <WorkOrderEditLink workOrder={row.original} />
+          </div>
+        ),
       }),
     ]);
     return columnIds.flatMap((columnId) => allColumns.filter((column) => column.id === columnId));
