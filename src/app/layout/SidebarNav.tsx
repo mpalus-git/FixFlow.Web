@@ -6,7 +6,7 @@ import { type Role, useCurrentUser } from "@/shared/session/currentUser";
 
 const navItems: readonly {
   to: string;
-  labelKey: "nav.dashboard" | "nav.myWorkOrders" | "nav.clients" | "nav.devices";
+  labelKey: "nav.dashboard" | "nav.workOrders" | "nav.myWorkOrders" | "nav.clients" | "nav.devices";
   icon: typeof LayoutDashboardIcon;
   end: boolean;
   roles: readonly Role[];
@@ -16,6 +16,13 @@ const navItems: readonly {
     labelKey: "nav.dashboard",
     icon: LayoutDashboardIcon,
     end: true,
+    roles: ["Admin", "Dispatcher"],
+  },
+  {
+    to: "/work-orders",
+    labelKey: "nav.workOrders",
+    icon: ClipboardListIcon,
+    end: false,
     roles: ["Admin", "Dispatcher"],
   },
   {
