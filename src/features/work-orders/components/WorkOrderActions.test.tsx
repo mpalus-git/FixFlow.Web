@@ -159,6 +159,7 @@ describe("WorkOrderActions", () => {
     const { workOrderUrl, changeOnServer } = mockWorkOrder(workOrder);
     server.use(
       http.post(`${workOrderUrl}/invoice`, () => {
+        changeOnServer({ status: "Invoiced", invoicedAt: "2026-10-01T10:00:00Z" });
         const problem: ProblemDetails = {
           status: 409,
           title: "Conflict",
@@ -170,7 +171,6 @@ describe("WorkOrderActions", () => {
     await openDetails(workOrder);
     const user = userEvent.setup();
 
-    changeOnServer({ status: "Invoiced", invoicedAt: "2026-10-01T10:00:00Z" });
     await user.click(screen.getByRole("button", { name: "Zafakturuj" }));
     const dialog = await screen.findByRole("alertdialog");
     await user.click(within(dialog).getByRole("button", { name: "Zafakturuj" }));
