@@ -52,6 +52,7 @@ export function WorkOrderHistory({ filter }: WorkOrderHistoryProps) {
   const isDeviceHistory = "deviceId" in filter;
   const columns = useWorkOrderColumns(
     isDeviceHistory ? deviceHistoryColumnIds : clientHistoryColumnIds,
+    "/work-orders",
   );
   const table = useTable({
     features: workOrderTableFeatures,

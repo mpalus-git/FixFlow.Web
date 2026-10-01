@@ -6,9 +6,10 @@ import { Skeleton } from "@/shared/ui/skeleton";
 
 export type ClientNameLinkProps = {
   clientId: string;
+  linked?: boolean;
 };
 
-export function ClientNameLink({ clientId }: ClientNameLinkProps) {
+export function ClientNameLink({ clientId, linked = true }: ClientNameLinkProps) {
   const { t } = useTranslation();
   const clientQuery = useQuery(clientQueryOptions(clientId));
 
@@ -16,9 +17,13 @@ export function ClientNameLink({ clientId }: ClientNameLinkProps) {
     return <Skeleton role="status" className="h-4 w-40" aria-label={t("states.loading")} />;
   }
 
-  return (
+  const name = clientQuery.data?.data.name ?? t("clients.card.openClient");
+
+  return linked ? (
     <Link to={`/clients/${clientId}`} className="underline-offset-4 hover:underline">
-      {clientQuery.data?.data.name ?? t("clients.card.openClient")}
+      {name}
     </Link>
+  ) : (
+    <span>{name}</span>
   );
 }

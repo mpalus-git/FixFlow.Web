@@ -36,9 +36,11 @@ export function CreateWorkOrderPage() {
             submitLabel={t("workOrders.create.submit")}
             cancelTo={returnPath}
             onSubmit={async (values) => {
-              await createWorkOrderMutation.mutateAsync(toCreateWorkOrderRequest(values));
+              const { data: workOrder } = await createWorkOrderMutation.mutateAsync(
+                toCreateWorkOrderRequest(values),
+              );
               toast.success(t("workOrders.create.created"));
-              await navigate(returnPath);
+              await navigate(`/work-orders/${workOrder.id}`);
             }}
           />
         </CardContent>

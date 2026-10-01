@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
 import userEvent from "@testing-library/user-event";
 import { WorkOrdersTable } from "@/features/work-orders/components/WorkOrdersTable";
 import type { WorkOrderSort } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
@@ -7,14 +8,17 @@ import { createWorkOrderListItem } from "@/test/workOrderFixtures";
 function renderTable(sort: WorkOrderSort, showTechnician = true) {
   const onSortChange = vi.fn<(sort: WorkOrderSort) => void>();
   render(
-    <WorkOrdersTable
-      workOrders={[createWorkOrderListItem()]}
-      isUpdating={false}
-      sort={sort}
-      onSortChange={onSortChange}
-      showTechnician={showTechnician}
-      showActions={false}
-    />,
+    <MemoryRouter>
+      <WorkOrdersTable
+        workOrders={[createWorkOrderListItem()]}
+        isUpdating={false}
+        sort={sort}
+        onSortChange={onSortChange}
+        showTechnician={showTechnician}
+        showActions={false}
+        detailsBasePath="/work-orders"
+      />
+    </MemoryRouter>,
   );
   return onSortChange;
 }
@@ -29,6 +33,15 @@ describe("WorkOrdersTable", () => {
       "descending",
     );
     expect(screen.getByRole("columnheader", { name: "Termin" })).not.toHaveAttribute("aria-sort");
+  });
+
+  it("links the due date to the work order details", () => {
+    renderTable({ sortBy: "DueDate", sortDirection: "Asc" });
+
+    expect(screen.getByRole("link", { name: "16.07.2026 00:30" })).toHaveAttribute(
+      "href",
+      `/work-orders/${createWorkOrderListItem().id}`,
+    );
   });
 
   it("sorts ascending by a newly chosen column", async () => {

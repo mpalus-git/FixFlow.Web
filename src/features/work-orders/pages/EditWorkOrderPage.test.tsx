@@ -4,6 +4,7 @@ import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { endSession } from "@/shared/session/sessionStore";
+import { createClientResponse } from "@/test/clientFixtures";
 import { createDeviceResponse } from "@/test/deviceFixtures";
 import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
@@ -46,6 +47,10 @@ function mockWorkOrderApi(initial: WorkOrderResponse, listItems: WorkOrderPage["
     http.get(`${apiBaseUrl}/api/v1/devices/${initial.deviceId}`, () =>
       HttpResponse.json(createDeviceResponse(), { headers: { ETag: '"1"' } }),
     ),
+    http.get(`${workOrderUrl}/service-entries`, () => HttpResponse.json([])),
+    http.get(`${apiBaseUrl}/api/v1/clients/${createDeviceResponse().clientId}`, () =>
+      HttpResponse.json(createClientResponse(), { headers: { ETag: '"1"' } }),
+    ),
     http.get(`${apiBaseUrl}/api/v1/work-orders`, () => HttpResponse.json(workOrderPage)),
     http.get(`${apiBaseUrl}/api/v1/users`, () => HttpResponse.json(userPage)),
   );
@@ -67,7 +72,7 @@ describe("EditWorkOrderPage", () => {
     localStorage.clear();
   });
 
-  it("saves the edited version and keeps an untouched overdue due date", async () => {
+  it("saves the edited version, keeps an untouched overdue due date and opens the details", async () => {
     const { updates } = mockWorkOrderApi(overdueWorkOrder);
     const router = renderApp(`/work-orders/${overdueWorkOrder.id}/edit`);
     const user = userEvent.setup();
@@ -90,7 +95,7 @@ describe("EditWorkOrderPage", () => {
       },
     ]);
     await vi.waitFor(() => {
-      expect(router.state.location.pathname).toBe("/work-orders");
+      expect(router.state.location.pathname).toBe(`/work-orders/${overdueWorkOrder.id}`);
     });
   });
 
@@ -141,7 +146,9 @@ describe("EditWorkOrderPage", () => {
     const user = userEvent.setup();
 
     const doneRow = (await screen.findByText("SN-DONE")).closest("tr");
-    expect(within(doneRow ?? document.body).queryByRole("link")).not.toBeInTheDocument();
+    expect(
+      within(doneRow ?? document.body).queryByRole("link", { name: /Edytuj zlecenie/ }),
+    ).not.toBeInTheDocument();
     await user.click(screen.getByRole("link", { name: "Edytuj zlecenie dla SN-OPEN" }));
     await user.click(await screen.findByRole("link", { name: "Anuluj" }));
 

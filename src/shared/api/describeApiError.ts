@@ -10,6 +10,8 @@ const errorCodeMessageKeys = {
   "Device.NotFound": "apiErrors.deviceNotFound",
   "WorkOrder.Closed": "apiErrors.workOrderClosed",
   "WorkOrder.DeviceArchived": "apiErrors.workOrderDeviceArchived",
+  "WorkOrder.NoServiceEntries": "apiErrors.workOrderNoServiceEntries",
+  "WorkOrder.NotCompleted": "apiErrors.workOrderNotCompleted",
   "WorkOrder.NotFound": "apiErrors.workOrderNotFound",
 } as const;
 

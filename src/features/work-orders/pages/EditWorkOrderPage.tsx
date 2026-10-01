@@ -25,7 +25,7 @@ export function EditWorkOrderPage() {
   const { t } = useTranslation();
   const { workOrderId = "" } = useParams();
   const navigate = useNavigate();
-  const returnPath = useReturnPath();
+  const returnPath = useReturnPath(`/work-orders/${workOrderId}`);
   const queryClient = useQueryClient();
   const workOrderQuery = useQuery(workOrderQueryOptions(workOrderId));
   const updateWorkOrderMutation = useUpdateWorkOrderMutation();

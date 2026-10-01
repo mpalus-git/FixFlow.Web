@@ -2,6 +2,7 @@ import { type SortingState, type Updater, useTable } from "@tanstack/react-table
 import { useMemo } from "react";
 import {
   type WorkOrderColumnId,
+  type WorkOrderDetailsBasePath,
   type WorkOrderListItem,
   useWorkOrderColumns,
   workOrderTableFeatures,
@@ -59,6 +60,7 @@ export type WorkOrdersTableProps = {
   onSortChange: (sort: WorkOrderSort) => void;
   showTechnician: boolean;
   showActions: boolean;
+  detailsBasePath: WorkOrderDetailsBasePath;
 };
 
 export function WorkOrdersTable({
@@ -68,6 +70,7 @@ export function WorkOrdersTable({
   onSortChange,
   showTechnician,
   showActions,
+  detailsBasePath,
 }: WorkOrdersTableProps) {
   const columnIds = useMemo(
     () => [
@@ -77,7 +80,7 @@ export function WorkOrdersTable({
     ],
     [showTechnician, showActions],
   );
-  const columns = useWorkOrderColumns(columnIds);
+  const columns = useWorkOrderColumns(columnIds, detailsBasePath);
   const sorting = toSortingState(sort);
   const table = useTable({
     features: workOrderTableFeatures,

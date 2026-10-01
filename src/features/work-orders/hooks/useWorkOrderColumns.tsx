@@ -7,9 +7,11 @@ import {
 } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Link, useLocation } from "react-router";
 import { WorkOrderEditLink } from "@/features/work-orders/components/WorkOrderEditLink";
 import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOrderPriorityBadge";
 import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrderStatusBadge";
+import type { ReturnPathState } from "@/features/work-orders/hooks/useReturnPath";
 import type { components } from "@/shared/api/schema";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatDateTime } from "@/shared/lib/dateTime";
@@ -50,18 +52,31 @@ function sortableHeader<TValue extends CellData>(label: string) {
   };
 }
 
-export function useWorkOrderColumns(columnIds: readonly WorkOrderColumnId[]) {
+export type WorkOrderDetailsBasePath = "/work-orders" | "/my-work-orders";
+
+export function useWorkOrderColumns(
+  columnIds: readonly WorkOrderColumnId[],
+  detailsBasePath: WorkOrderDetailsBasePath,
+) {
   const { t } = useTranslation();
   const language = useLanguage();
+  const { pathname, search } = useLocation();
 
   return useMemo(() => {
+    const returnPathState: ReturnPathState = { returnTo: `${pathname}${search}` };
     const allColumns = columnHelper.columns([
       columnHelper.accessor("dueDate", {
         id: "dueDate",
         header: sortableHeader(t("workOrders.columns.dueDate")),
         cell: ({ row }) => (
           <div className="flex flex-col items-start gap-1">
-            {formatDateTime(row.original.dueDate, language)}
+            <Link
+              to={`${detailsBasePath}/${row.original.id}`}
+              state={returnPathState}
+              className="font-medium underline-offset-4 hover:underline"
+            >
+              {formatDateTime(row.original.dueDate, language)}
+            </Link>
             {row.original.isOverdue ? (
               <Badge variant="destructive">{t("workOrders.overdue")}</Badge>
             ) : null}
@@ -126,5 +141,5 @@ export function useWorkOrderColumns(columnIds: readonly WorkOrderColumnId[]) {
       }),
     ]);
     return columnIds.flatMap((columnId) => allColumns.filter((column) => column.id === columnId));
-  }, [t, language, columnIds]);
+  }, [t, language, columnIds, detailsBasePath, pathname, search]);
 }

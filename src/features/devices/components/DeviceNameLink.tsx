@@ -6,9 +6,10 @@ import { Skeleton } from "@/shared/ui/skeleton";
 
 export type DeviceNameLinkProps = {
   deviceId: string;
+  linked?: boolean;
 };
 
-export function DeviceNameLink({ deviceId }: DeviceNameLinkProps) {
+export function DeviceNameLink({ deviceId, linked = true }: DeviceNameLinkProps) {
   const { t } = useTranslation();
   const deviceQuery = useQuery(deviceQueryOptions(deviceId));
   const device = deviceQuery.data?.data;
@@ -17,15 +18,20 @@ export function DeviceNameLink({ deviceId }: DeviceNameLinkProps) {
     return <Skeleton role="status" className="h-4 w-48" aria-label={t("states.loading")} />;
   }
 
-  return (
+  const name =
+    device === undefined
+      ? t("devices.openDevice")
+      : t("devices.name", {
+          serialNumber: device.serialNumber,
+          manufacturer: device.manufacturer,
+          model: device.model,
+        });
+
+  return linked ? (
     <Link to={`/devices/${deviceId}`} className="underline-offset-4 hover:underline">
-      {device === undefined
-        ? t("devices.openDevice")
-        : t("devices.name", {
-            serialNumber: device.serialNumber,
-            manufacturer: device.manufacturer,
-            model: device.model,
-          })}
+      {name}
     </Link>
+  ) : (
+    <span>{name}</span>
   );
 }

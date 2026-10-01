@@ -44,11 +44,29 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
         },
         {
           path: "my-work-orders",
+          ErrorBoundary: RouteErrorBoundary,
           middleware: [createRequireRole(queryClient, ["Technician"])],
-          lazy: {
-            Component: async () =>
-              (await import("@/features/work-orders/pages/MyWorkOrdersPage")).MyWorkOrdersPage,
-          },
+          children: [
+            {
+              index: true,
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/work-orders/pages/MyWorkOrdersPage")).MyWorkOrdersPage,
+              },
+            },
+            {
+              path: ":workOrderId",
+              lazy: {
+                loader: async () =>
+                  (
+                    await import("@/features/work-orders/api/workOrderLoader")
+                  ).createWorkOrderLoader(queryClient),
+                Component: async () =>
+                  (await import("@/features/work-orders/pages/WorkOrderDetailsPage"))
+                    .WorkOrderDetailsPage,
+              },
+            },
+          ],
         },
         {
           path: "work-orders",
@@ -68,6 +86,18 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                 Component: async () =>
                   (await import("@/features/work-orders/pages/CreateWorkOrderPage"))
                     .CreateWorkOrderPage,
+              },
+            },
+            {
+              path: ":workOrderId",
+              lazy: {
+                loader: async () =>
+                  (
+                    await import("@/features/work-orders/api/workOrderLoader")
+                  ).createWorkOrderLoader(queryClient),
+                Component: async () =>
+                  (await import("@/features/work-orders/pages/WorkOrderDetailsPage"))
+                    .WorkOrderDetailsPage,
               },
             },
             {

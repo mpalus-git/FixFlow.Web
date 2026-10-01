@@ -1,10 +1,14 @@
 import { QueryClient } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
-import { workOrderListQueryOptions } from "@/features/work-orders/api/workOrderQueries";
+import {
+  serviceEntriesQueryOptions,
+  workOrderListQueryOptions,
+} from "@/features/work-orders/api/workOrderQueries";
 import type { WorkOrderListParams } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { server } from "@/test/server";
+import { createServiceEntryResponse } from "@/test/workOrderFixtures";
 
 type WorkOrderPage = components["schemas"]["PagedResponseOfWorkOrderListItemResponse"];
 
@@ -66,5 +70,20 @@ describe("workOrderListQueryOptions", () => {
       sortBy: "Priority",
       sortDirection: "Desc",
     });
+  });
+});
+
+describe("serviceEntriesQueryOptions", () => {
+  it("loads all service entries of the work order", async () => {
+    const entry = createServiceEntryResponse();
+    server.use(
+      http.get(`${workOrdersUrl}/${entry.workOrderId}/service-entries`, () =>
+        HttpResponse.json([entry]),
+      ),
+    );
+
+    const entries = await new QueryClient().query(serviceEntriesQueryOptions(entry.workOrderId));
+
+    expect(entries).toEqual([entry]);
   });
 });

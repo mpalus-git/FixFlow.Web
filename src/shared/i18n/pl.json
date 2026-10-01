@@ -5,7 +5,8 @@
   "common": {
     "close": "Zamknij",
     "saving": "Zapisywanie…",
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "opensInNewTab": " (otwiera się w nowej karcie)"
   },
   "nav": {
     "label": "Nawigacja główna",
@@ -227,7 +228,9 @@
     "deviceNotFound": "Nie znaleziono urządzenia.",
     "workOrderClosed": "Zlecenie jest zakończone lub zafakturowane i nie można go zmieniać.",
     "workOrderDeviceArchived": "Nie można założyć zlecenia na zarchiwizowane urządzenie.",
-    "workOrderNotFound": "Nie znaleziono zlecenia."
+    "workOrderNotFound": "Nie znaleziono zlecenia.",
+    "workOrderNoServiceEntries": "Zlecenia bez wpisów serwisowych nie można zakończyć.",
+    "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń."
   },
   "devices": {
     "columns": {
@@ -368,6 +371,38 @@
       "title": "Edycja zlecenia",
       "submit": "Zapisz zmiany",
       "saved": "Zapisano zmiany zlecenia."
+    },
+    "details": {
+      "timeline": "Przebieg zlecenia",
+      "title": "Szczegóły zlecenia",
+      "back": "Wróć",
+      "edit": "Edytuj",
+      "serviceEntries": "Wpisy serwisowe",
+      "unknownTechnician": "Technik spoza listy"
+    },
+    "serviceEntries": {
+      "correction": "Korekta",
+      "duration": "{{hours}} h {{minutes}} min",
+      "showOnMap": "Pokaż miejsce pracy na mapie",
+      "photos": "Zdjęcia",
+      "photo": "Zdjęcie {{number}}, otwiera się w nowej karcie",
+      "part": "Część",
+      "quantity": "Ilość",
+      "unitPrice": "Cena jedn. netto",
+      "value": "Wartość netto",
+      "empty": {
+        "title": "Brak wpisów serwisowych",
+        "description": "Wpisy dodaje przypisany technik w aplikacji mobilnej."
+      },
+      "totalWorkTime": "Czas pracy łącznie:",
+      "totalPartsValue": "Części netto łącznie:"
+    },
+    "protocol": {
+      "download": "Pobierz protokół",
+      "downloading": "Pobieranie…"
     }
+  },
+  "parts": {
+    "unknown": "Nieznana część"
   }
 }

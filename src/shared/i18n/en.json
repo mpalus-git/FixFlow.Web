@@ -5,7 +5,8 @@
   "common": {
     "close": "Close",
     "saving": "Saving…",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "opensInNewTab": " (opens in a new tab)"
   },
   "nav": {
     "label": "Main navigation",
@@ -225,7 +226,9 @@
     "deviceNotFound": "The device was not found.",
     "workOrderClosed": "The work order is completed or invoiced and cannot be changed.",
     "workOrderDeviceArchived": "A work order cannot be created for an archived device.",
-    "workOrderNotFound": "Work order not found."
+    "workOrderNotFound": "Work order not found.",
+    "workOrderNoServiceEntries": "A work order without service entries cannot be completed.",
+    "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders."
   },
   "devices": {
     "columns": {
@@ -366,6 +369,38 @@
       "title": "Edit work order",
       "submit": "Save changes",
       "saved": "Work order changes saved."
+    },
+    "details": {
+      "timeline": "Work order progress",
+      "title": "Work order details",
+      "back": "Back",
+      "edit": "Edit",
+      "serviceEntries": "Service entries",
+      "unknownTechnician": "Unlisted technician"
+    },
+    "serviceEntries": {
+      "correction": "Correction",
+      "duration": "{{hours}} h {{minutes}} min",
+      "showOnMap": "Show the work location on a map",
+      "photos": "Photos",
+      "photo": "Photo {{number}}, opens in a new tab",
+      "part": "Part",
+      "quantity": "Quantity",
+      "unitPrice": "Net unit price",
+      "value": "Net value",
+      "empty": {
+        "title": "No service entries",
+        "description": "Entries are added by the assigned technician in the mobile app."
+      },
+      "totalWorkTime": "Total work time:",
+      "totalPartsValue": "Total net parts:"
+    },
+    "protocol": {
+      "download": "Download protocol",
+      "downloading": "Downloading…"
     }
+  },
+  "parts": {
+    "unknown": "Unknown part"
   }
 }
