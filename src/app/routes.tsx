@@ -115,6 +115,15 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           ],
         },
         {
+          path: "dispatch",
+          ErrorBoundary: RouteErrorBoundary,
+          middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
+          lazy: {
+            Component: async () =>
+              (await import("@/features/dispatch/pages/DispatchPage")).DispatchPage,
+          },
+        },
+        {
           path: "clients",
           ErrorBoundary: RouteErrorBoundary,
           middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],

@@ -462,6 +462,18 @@
     "errors": {
       "changed": "The work order changed in the meantime. The board now shows its current state.",
       "partial": "The work order was changed only partially: {{reason}}"
-    }
+    },
+    "week": {
+      "range": "{{from}} – {{to}}",
+      "previous": "Previous week",
+      "next": "Next week",
+      "current": "Current week"
+    },
+    "noTechnicians": {
+      "title": "No technicians",
+      "description": "An administrator has not created any active technician accounts yet."
+    },
+    "emptyWeek": "Technicians have no work orders assigned this week.",
+    "limit": "The board shows the first 100 work orders. Some work orders did not fit - see the Work orders tab for the full list."
   }
 }

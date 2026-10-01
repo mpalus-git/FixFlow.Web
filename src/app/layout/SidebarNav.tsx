@@ -1,12 +1,24 @@
 import { cn } from "cn";
-import { Building2Icon, ClipboardListIcon, CpuIcon, LayoutDashboardIcon } from "lucide-react";
+import {
+  Building2Icon,
+  CalendarRangeIcon,
+  ClipboardListIcon,
+  CpuIcon,
+  LayoutDashboardIcon,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
 import { type Role, useCurrentUser } from "@/shared/session/currentUser";
 
 const navItems: readonly {
   to: string;
-  labelKey: "nav.dashboard" | "nav.workOrders" | "nav.myWorkOrders" | "nav.clients" | "nav.devices";
+  labelKey:
+    | "nav.dashboard"
+    | "nav.workOrders"
+    | "nav.dispatch"
+    | "nav.myWorkOrders"
+    | "nav.clients"
+    | "nav.devices";
   icon: typeof LayoutDashboardIcon;
   end: boolean;
   roles: readonly Role[];
@@ -22,6 +34,13 @@ const navItems: readonly {
     to: "/work-orders",
     labelKey: "nav.workOrders",
     icon: ClipboardListIcon,
+    end: false,
+    roles: ["Admin", "Dispatcher"],
+  },
+  {
+    to: "/dispatch",
+    labelKey: "nav.dispatch",
+    icon: CalendarRangeIcon,
     end: false,
     roles: ["Admin", "Dispatcher"],
   },

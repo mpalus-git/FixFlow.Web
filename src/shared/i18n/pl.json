@@ -464,6 +464,18 @@
     "errors": {
       "changed": "Zlecenie zmieniło się w międzyczasie. Tablica pokazuje teraz aktualny stan.",
       "partial": "Zlecenie zostało zmienione tylko częściowo: {{reason}}"
-    }
+    },
+    "week": {
+      "range": "{{from}} – {{to}}",
+      "previous": "Poprzedni tydzień",
+      "next": "Następny tydzień",
+      "current": "Bieżący tydzień"
+    },
+    "noTechnicians": {
+      "title": "Brak techników",
+      "description": "Administrator nie założył jeszcze aktywnych kont techników."
+    },
+    "emptyWeek": "W tym tygodniu technicy nie mają przypisanych zleceń.",
+    "limit": "Tablica pokazuje pierwsze 100 zleceń. Część zleceń nie zmieściła się na tablicy - pełną listę znajdziesz w zakładce Zlecenia."
   }
 }
