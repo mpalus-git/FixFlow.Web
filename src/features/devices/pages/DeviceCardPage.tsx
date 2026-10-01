@@ -9,7 +9,7 @@ import {
   type ArchivableDevice,
   ArchiveDeviceDialog,
 } from "@/features/devices/components/ArchiveDeviceDialog";
-import { WorkOrderHistory } from "@/features/work-orders";
+import { NewWorkOrderLink, WorkOrderHistory } from "@/features/work-orders";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatCalendarDate, formatDate } from "@/shared/lib/dateTime";
 import { Badge } from "@/shared/ui/badge";
@@ -50,6 +50,7 @@ export function DeviceCardPage() {
         </div>
         {device.archivedAt === null ? (
           <div className="flex flex-wrap gap-2">
+            <NewWorkOrderLink clientId={device.clientId} deviceId={device.id} />
             <Button variant="outline" asChild>
               <Link to={`/devices/${device.id}/edit`}>
                 <PencilIcon aria-hidden="true" />
