@@ -16,7 +16,8 @@
     "skipToContent": "Skip to content",
     "myWorkOrders": "My work orders",
     "clients": "Clients",
-    "devices": "Devices"
+    "devices": "Devices",
+    "dispatch": "Dispatch board"
   },
   "language": {
     "label": "Language",
@@ -431,5 +432,22 @@
   },
   "parts": {
     "unknown": "Unknown part"
+  },
+  "dispatch": {
+    "title": "Dispatch board",
+    "technician": "Technician",
+    "inactiveTechnician": "inactive",
+    "today": "today",
+    "unassigned": {
+      "title": "Unassigned",
+      "description": "New work orders. Drag a card onto a technician and day.",
+      "empty": "No new work orders"
+    },
+    "card": {
+      "move": "Move work order {{workOrder}}",
+      "locked": "A work order in the {{status}} status cannot be moved",
+      "overdue": "Overdue"
+    },
+    "cell": "{{technician}}, {{day}}"
   }
 }

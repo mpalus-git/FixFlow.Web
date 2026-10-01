@@ -16,7 +16,8 @@
     "skipToContent": "Przejdź do treści",
     "myWorkOrders": "Moje zlecenia",
     "clients": "Klienci",
-    "devices": "Urządzenia"
+    "devices": "Urządzenia",
+    "dispatch": "Tablica dispatch"
   },
   "language": {
     "label": "Język",
@@ -433,5 +434,22 @@
   },
   "parts": {
     "unknown": "Nieznana część"
+  },
+  "dispatch": {
+    "title": "Tablica dispatch",
+    "technician": "Technik",
+    "inactiveTechnician": "nieaktywny",
+    "today": "dziś",
+    "unassigned": {
+      "title": "Nieprzypisane",
+      "description": "Nowe zlecenia. Przeciągnij kartę na technika i dzień.",
+      "empty": "Brak nowych zleceń"
+    },
+    "card": {
+      "move": "Przenieś zlecenie {{workOrder}}",
+      "locked": "Zlecenie w statusie {{status}} nie może być przeniesione",
+      "overdue": "Po terminie"
+    },
+    "cell": "{{technician}}, {{day}}"
   }
 }

@@ -47,6 +47,10 @@ export function formatCalendarDate(value: string, language: Language): string {
   return format(date, "P", { locale: dateFnsLocales[language] });
 }
 
+export function formatCalendarWeekday(value: string, language: Language): string {
+  return format(parseCalendarDate(value), "EEEE", { locale: dateFnsLocales[language] });
+}
+
 export function isCalendarDate(value: string): boolean {
   const match = calendarDatePattern.exec(value);
   if (!match) {

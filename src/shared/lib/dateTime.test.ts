@@ -2,6 +2,7 @@ import {
   addCalendarDays,
   calendarDateOf,
   formatCalendarDate,
+  formatCalendarWeekday,
   formatDate,
   formatDateTime,
   formatTime,
@@ -197,5 +198,12 @@ describe("withCalendarDate", () => {
 
   it("keeps the Warsaw day of a timestamp that is still the previous day in UTC", () => {
     expect(withCalendarDate("2026-07-15T22:30:00Z", "2026-07-20")).toBe("2026-07-19T22:30:00.000Z");
+  });
+});
+
+describe("formatCalendarWeekday", () => {
+  it("names the weekday of a calendar date in both languages", () => {
+    expect(formatCalendarWeekday("2026-09-28", "pl")).toBe("poniedziałek");
+    expect(formatCalendarWeekday("2026-10-04", "en")).toBe("Sunday");
   });
 });
