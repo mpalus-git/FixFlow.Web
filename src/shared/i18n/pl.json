@@ -230,7 +230,10 @@
     "workOrderDeviceArchived": "Nie można założyć zlecenia na zarchiwizowane urządzenie.",
     "workOrderNotFound": "Nie znaleziono zlecenia.",
     "workOrderNoServiceEntries": "Zlecenia bez wpisów serwisowych nie można zakończyć.",
-    "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń."
+    "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń.",
+    "concurrentModification": "Zlecenie zostało zmienione w międzyczasie. Wyświetlono aktualny stan, spróbuj ponownie.",
+    "workOrderInvalidStatusTransition": "Status zlecenia zmienił się w międzyczasie i ta akcja nie jest już dostępna.",
+    "workOrderTechnicianNotFound": "Wybrany technik nie jest już aktywny."
   },
   "devices": {
     "columns": {

@@ -8,11 +8,14 @@ const errorCodeMessageKeys = {
   "Device.ClientArchived": "apiErrors.deviceClientArchived",
   "Device.DuplicateSerialNumber": "apiErrors.deviceDuplicateSerialNumber",
   "Device.NotFound": "apiErrors.deviceNotFound",
+  "Persistence.ConcurrentModification": "apiErrors.concurrentModification",
   "WorkOrder.Closed": "apiErrors.workOrderClosed",
   "WorkOrder.DeviceArchived": "apiErrors.workOrderDeviceArchived",
+  "WorkOrder.InvalidStatusTransition": "apiErrors.workOrderInvalidStatusTransition",
   "WorkOrder.NoServiceEntries": "apiErrors.workOrderNoServiceEntries",
   "WorkOrder.NotCompleted": "apiErrors.workOrderNotCompleted",
   "WorkOrder.NotFound": "apiErrors.workOrderNotFound",
+  "WorkOrder.TechnicianNotFound": "apiErrors.workOrderTechnicianNotFound",
 } as const;
 
 type KnownErrorCode = keyof typeof errorCodeMessageKeys;

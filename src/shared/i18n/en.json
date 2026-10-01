@@ -228,7 +228,10 @@
     "workOrderDeviceArchived": "A work order cannot be created for an archived device.",
     "workOrderNotFound": "Work order not found.",
     "workOrderNoServiceEntries": "A work order without service entries cannot be completed.",
-    "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders."
+    "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders.",
+    "concurrentModification": "The work order was changed in the meantime. Its current state is shown, try again.",
+    "workOrderInvalidStatusTransition": "The work order status changed in the meantime and this action is no longer available.",
+    "workOrderTechnicianNotFound": "The selected technician is no longer active."
   },
   "devices": {
     "columns": {
