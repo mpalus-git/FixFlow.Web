@@ -52,11 +52,25 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
         },
         {
           path: "work-orders",
+          ErrorBoundary: RouteErrorBoundary,
           middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
-          lazy: {
-            Component: async () =>
-              (await import("@/features/work-orders/pages/WorkOrdersPage")).WorkOrdersPage,
-          },
+          children: [
+            {
+              index: true,
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/work-orders/pages/WorkOrdersPage")).WorkOrdersPage,
+              },
+            },
+            {
+              path: "new",
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/work-orders/pages/CreateWorkOrderPage"))
+                    .CreateWorkOrderPage,
+              },
+            },
+          ],
         },
         {
           path: "clients",

@@ -352,6 +352,11 @@
       "optionsError": "Nie udało się wczytać listy",
       "deviceOption": "{{serialNumber}} · {{manufacturer}} {{model}}",
       "dueDateHint": "Czas polski (Europe/Warsaw)."
+    },
+    "create": {
+      "title": "Nowe zlecenie",
+      "submit": "Utwórz zlecenie",
+      "created": "Utworzono zlecenie."
     }
   }
 }

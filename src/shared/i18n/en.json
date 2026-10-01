@@ -350,6 +350,11 @@
       "optionsError": "Could not load the list",
       "deviceOption": "{{serialNumber}} · {{manufacturer}} {{model}}",
       "dueDateHint": "Polish time (Europe/Warsaw)."
+    },
+    "create": {
+      "title": "New work order",
+      "submit": "Create work order",
+      "created": "Work order created."
     }
   }
 }
