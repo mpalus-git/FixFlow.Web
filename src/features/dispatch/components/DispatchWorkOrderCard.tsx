@@ -32,36 +32,38 @@ function CardBody({ workOrder, showDate, handle, linked }: CardBodyProps) {
     : formatTime(workOrder.dueDate, language);
 
   return (
-    <div className="flex gap-1">
-      {handle}
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <div className="flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
-          <time
-            dateTime={workOrder.dueDate}
-            className={cn("font-medium tabular-nums", workOrder.isOverdue && "text-destructive")}
-          >
-            {time}
-          </time>
-          {workOrder.isOverdue ? (
-            <>
-              <TriangleAlertIcon aria-hidden="true" className="size-3.5 text-destructive" />
-              <span className="sr-only">{t("dispatch.card.overdue")}</span>
-            </>
-          ) : null}
-          <WorkOrderPriorityBadge priority={workOrder.priority} />
-        </div>
-        {linked ? (
-          <Link
-            to={`/work-orders/${workOrder.id}`}
-            state={{ returnTo: `${pathname}${search}` }}
-            className="truncate rounded-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            {workOrder.clientName}
-          </Link>
-        ) : (
-          <span className="truncate font-medium">{workOrder.clientName}</span>
-        )}
-        <span className="truncate text-xs text-muted-foreground">{workOrder.deviceModel}</span>
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+        {handle}
+        <time
+          dateTime={workOrder.dueDate}
+          className={cn("font-medium tabular-nums", workOrder.isOverdue && "text-destructive")}
+        >
+          {time}
+        </time>
+        {workOrder.isOverdue ? (
+          <>
+            <TriangleAlertIcon aria-hidden="true" className="size-3.5 shrink-0 text-destructive" />
+            <span className="sr-only">{t("dispatch.card.overdue")}</span>
+          </>
+        ) : null}
+      </div>
+      {linked ? (
+        <Link
+          to={`/work-orders/${workOrder.id}`}
+          state={{ returnTo: `${pathname}${search}` }}
+          className="line-clamp-2 rounded-sm leading-snug font-medium break-words underline-offset-4 outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          {workOrder.clientName}
+        </Link>
+      ) : (
+        <span className="line-clamp-2 leading-snug font-medium break-words">
+          {workOrder.clientName}
+        </span>
+      )}
+      <span className="truncate text-xs text-muted-foreground">{workOrder.deviceModel}</span>
+      <div className="flex flex-wrap gap-1">
+        <WorkOrderPriorityBadge priority={workOrder.priority} />
         {canDragWorkOrder(workOrder) ? null : <WorkOrderStatusBadge status={workOrder.status} />}
       </div>
     </div>
@@ -92,7 +94,7 @@ export function DispatchWorkOrderCard({ workOrder, showDate }: DispatchWorkOrder
       {...attributes}
       {...listeners}
       aria-label={t("dispatch.card.move", { workOrder: workOrderLabel(workOrder, language) })}
-      className="flex h-6 w-5 shrink-0 cursor-grab touch-none items-center justify-center rounded-sm text-muted-foreground outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing"
+      className="-ml-0.5 flex h-6 w-5 shrink-0 cursor-grab touch-none items-center justify-center rounded-sm text-muted-foreground outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing"
     >
       <GripVerticalIcon aria-hidden="true" className="size-4" />
     </button>

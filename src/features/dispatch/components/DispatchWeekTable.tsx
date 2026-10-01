@@ -6,6 +6,24 @@ import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatCalendarDate, formatCalendarWeekday } from "@/shared/lib/dateTime";
 import { Badge } from "@/shared/ui/badge";
 
+type TechnicianEmailProps = {
+  email: string;
+};
+
+function TechnicianEmail({ email }: TechnicianEmailProps) {
+  const at = email.indexOf("@");
+  if (at < 0) {
+    return <span className="block [overflow-wrap:anywhere]">{email}</span>;
+  }
+  return (
+    <span className="block [overflow-wrap:anywhere]">
+      {email.slice(0, at)}
+      <wbr />
+      {email.slice(at)}
+    </span>
+  );
+}
+
 export function dispatchCellId(technicianId: string, day: string): string {
   return `${technicianId}/${day}`;
 }
@@ -21,14 +39,14 @@ export function DispatchWeekTable({ board, today, dropStateFor }: DispatchWeekTa
   const language = useLanguage();
 
   return (
-    <div className="overflow-x-auto rounded-xl border">
+    <div className="relative overflow-x-auto rounded-xl border">
       <table className="w-full min-w-[60rem] table-fixed border-collapse text-sm">
         <caption className="sr-only">{t("dispatch.title")}</caption>
         <thead>
           <tr>
             <th
               scope="col"
-              className="sticky left-0 z-10 w-36 bg-background p-2 text-left font-medium"
+              className="sticky left-0 z-10 w-28 bg-background p-2 text-left font-medium sm:w-36"
             >
               {t("dispatch.technician")}
             </th>
@@ -55,7 +73,7 @@ export function DispatchWeekTable({ board, today, dropStateFor }: DispatchWeekTa
                 scope="row"
                 className="sticky left-0 z-10 border-t bg-background p-2 text-left align-top font-normal"
               >
-                <span className="block break-all">{technician.email}</span>
+                <TechnicianEmail email={technician.email} />
                 {technician.isActive ? null : (
                   <Badge variant="outline" className="mt-1 text-muted-foreground">
                     {t("dispatch.inactiveTechnician")}
