@@ -401,6 +401,19 @@
     "protocol": {
       "download": "Download protocol",
       "downloading": "Downloading…"
+    },
+    "assign": {
+      "title": "Assign technician",
+      "changeTitle": "Change technician",
+      "description": "Only an active technician can be chosen. The work order will move to the Assigned status.",
+      "changeDescription": "The current technician will be unassigned and the work order assigned to the chosen active technician.",
+      "chooseTechnician": "Choose a technician",
+      "noTechnicians": "No other active technicians",
+      "submit": "Assign",
+      "changeSubmit": "Change technician",
+      "assigned": "Technician assigned.",
+      "changed": "Technician changed.",
+      "partialChange": "The previous technician was unassigned, but the new one could not be assigned: {{reason}} The work order is now New."
     }
   },
   "parts": {

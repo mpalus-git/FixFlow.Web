@@ -403,6 +403,19 @@
     "protocol": {
       "download": "Pobierz protokół",
       "downloading": "Pobieranie…"
+    },
+    "assign": {
+      "title": "Przypisz technika",
+      "changeTitle": "Zmień technika",
+      "description": "Można wybrać tylko aktywnego technika. Zlecenie przejdzie do statusu Przypisane.",
+      "changeDescription": "Obecny technik zostanie odpięty, a zlecenie przypisane do wybranego aktywnego technika.",
+      "chooseTechnician": "Wybierz technika",
+      "noTechnicians": "Brak innych aktywnych techników",
+      "submit": "Przypisz",
+      "changeSubmit": "Zmień technika",
+      "assigned": "Przypisano technika.",
+      "changed": "Zmieniono technika.",
+      "partialChange": "Odpięto poprzedniego technika, ale nie udało się przypisać nowego: {{reason}} Zlecenie ma teraz status Nowe."
     }
   },
   "parts": {
