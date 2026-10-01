@@ -10,6 +10,7 @@
   "nav": {
     "label": "Main navigation",
     "dashboard": "Dashboard",
+    "workOrders": "Work orders",
     "openMenu": "Open menu",
     "skipToContent": "Skip to content",
     "myWorkOrders": "My work orders",
@@ -282,6 +283,19 @@
     }
   },
   "workOrders": {
+    "title": "Work orders",
+    "search": {
+      "label": "Search work orders",
+      "placeholder": "Fault description, serial number or client"
+    },
+    "empty": {
+      "title": "No work orders",
+      "assignedToMe": "You have no assigned work orders"
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No work order matches the selected filters."
+    },
     "status": {
       "New": "New",
       "Assigned": "Assigned",
