@@ -5,7 +5,8 @@
   "common": {
     "close": "Close",
     "saving": "Saving…",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "opensInNewTab": " (opens in a new tab)"
   },
   "nav": {
     "label": "Main navigation",
@@ -371,6 +372,23 @@
     },
     "details": {
       "timeline": "Work order progress"
+    },
+    "serviceEntries": {
+      "correction": "Correction",
+      "duration": "{{hours}} h {{minutes}} min",
+      "showOnMap": "Show the work location on a map",
+      "photos": "Photos",
+      "photo": "Photo {{number}}, opens in a new tab",
+      "part": "Part",
+      "quantity": "Quantity",
+      "unitPrice": "Net unit price",
+      "value": "Net value",
+      "empty": {
+        "title": "No service entries",
+        "description": "Entries are added by the assigned technician in the mobile app."
+      },
+      "totalWorkTime": "Total work time:",
+      "totalPartsValue": "Total net parts:"
     }
   },
   "parts": {

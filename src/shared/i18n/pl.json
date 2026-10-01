@@ -5,7 +5,8 @@
   "common": {
     "close": "Zamknij",
     "saving": "Zapisywanie…",
-    "cancel": "Anuluj"
+    "cancel": "Anuluj",
+    "opensInNewTab": " (otwiera się w nowej karcie)"
   },
   "nav": {
     "label": "Nawigacja główna",
@@ -373,6 +374,23 @@
     },
     "details": {
       "timeline": "Przebieg zlecenia"
+    },
+    "serviceEntries": {
+      "correction": "Korekta",
+      "duration": "{{hours}} h {{minutes}} min",
+      "showOnMap": "Pokaż miejsce pracy na mapie",
+      "photos": "Zdjęcia",
+      "photo": "Zdjęcie {{number}}, otwiera się w nowej karcie",
+      "part": "Część",
+      "quantity": "Ilość",
+      "unitPrice": "Cena jedn. netto",
+      "value": "Wartość netto",
+      "empty": {
+        "title": "Brak wpisów serwisowych",
+        "description": "Wpisy dodaje przypisany technik w aplikacji mobilnej."
+      },
+      "totalWorkTime": "Czas pracy łącznie:",
+      "totalPartsValue": "Części netto łącznie:"
     }
   },
   "parts": {
