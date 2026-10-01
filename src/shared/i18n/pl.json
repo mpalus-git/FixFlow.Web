@@ -10,6 +10,7 @@
   "nav": {
     "label": "Nawigacja główna",
     "dashboard": "Pulpit",
+    "workOrders": "Zlecenia",
     "openMenu": "Otwórz menu",
     "skipToContent": "Przejdź do treści",
     "myWorkOrders": "Moje zlecenia",
@@ -96,8 +97,7 @@
     "unexpected": "Wystąpił nieoczekiwany błąd."
   },
   "myWorkOrders": {
-    "title": "Moje zlecenia",
-    "comingSoon": "Tu pojawią się zlecenia przypisane do Ciebie"
+    "title": "Moje zlecenia"
   },
   "userMenu": {
     "label": "Konto użytkownika",
@@ -284,6 +284,19 @@
     }
   },
   "workOrders": {
+    "title": "Zlecenia",
+    "search": {
+      "label": "Szukaj zleceń",
+      "placeholder": "Opis usterki, numer seryjny lub klient"
+    },
+    "empty": {
+      "title": "Brak zleceń",
+      "assignedToMe": "Nie masz przypisanych zleceń"
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żadne zlecenie nie pasuje do wybranych filtrów."
+    },
     "status": {
       "New": "Nowe",
       "Assigned": "Przypisane",
@@ -299,6 +312,7 @@
     },
     "columns": {
       "dueDate": "Termin",
+      "client": "Klient",
       "device": "Urządzenie",
       "description": "Opis usterki",
       "priority": "Priorytet",
@@ -308,6 +322,20 @@
     "overdue": "Po terminie",
     "unassigned": "Nieprzypisane",
     "clientHistoryEmpty": "Klient nie ma jeszcze zleceń",
-    "deviceHistoryEmpty": "Urządzenie nie ma jeszcze zleceń"
+    "deviceHistoryEmpty": "Urządzenie nie ma jeszcze zleceń",
+    "filters": {
+      "label": "Filtry zleceń",
+      "status": "Status",
+      "allStatuses": "Wszystkie statusy",
+      "technician": "Technik",
+      "allTechnicians": "Wszyscy technicy",
+      "inactiveTechnician": "{{email}} (nieaktywny)",
+      "techniciansLoading": "Wczytywanie techników…",
+      "techniciansError": "Nie udało się wczytać techników",
+      "dueFrom": "Termin od",
+      "dueTo": "Termin do",
+      "overdueOnly": "Tylko po terminie",
+      "clear": "Wyczyść filtry"
+    }
   }
 }

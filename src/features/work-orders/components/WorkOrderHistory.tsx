@@ -1,33 +1,37 @@
 import { useQuery } from "@tanstack/react-query";
-import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-table";
+import { useTable } from "@tanstack/react-table";
 import { ClipboardListIcon } from "lucide-react";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   type WorkOrderHistoryFilter,
   workOrderHistoryPageSize,
   workOrderHistoryQueryOptions,
 } from "@/features/work-orders/api/workOrderQueries";
-import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOrderPriorityBadge";
-import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrderStatusBadge";
-import type { components } from "@/shared/api/schema";
-import { useLanguage } from "@/shared/i18n/useLanguage";
-import { formatDateTime } from "@/shared/lib/dateTime";
+import {
+  type WorkOrderColumnId,
+  useWorkOrderColumns,
+  workOrderTableFeatures,
+} from "@/features/work-orders/hooks/useWorkOrderColumns";
 import { useKeepPageInRange } from "@/shared/lib/useKeepPageInRange";
 import { usePageSearchParam } from "@/shared/lib/useListSearchParams";
-import { Badge } from "@/shared/ui/badge";
 import { DataTable } from "@/shared/ui/DataTable";
 import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 
-type WorkOrderListItem = components["schemas"]["WorkOrderListItemResponse"];
+const clientHistoryColumnIds: readonly WorkOrderColumnId[] = [
+  "dueDate",
+  "device",
+  "description",
+  "priority",
+  "status",
+  "technician",
+];
 
-const features = tableFeatures({});
-const columnHelper = createColumnHelper<typeof features, WorkOrderListItem>();
-
-const deviceColumnId = "deviceSerialNumber";
+const deviceHistoryColumnIds: readonly WorkOrderColumnId[] = clientHistoryColumnIds.filter(
+  (columnId) => columnId !== "device",
+);
 
 export type WorkOrderHistoryProps = {
   filter: WorkOrderHistoryFilter;
@@ -35,7 +39,6 @@ export type WorkOrderHistoryProps = {
 
 export function WorkOrderHistory({ filter }: WorkOrderHistoryProps) {
   const { t } = useTranslation();
-  const language = useLanguage();
   const { page, setPage } = usePageSearchParam("ordersPage");
   const historyQuery = useQuery(workOrderHistoryQueryOptions({ filter, page }));
   const historyPage = historyQuery.data;
@@ -47,61 +50,13 @@ export function WorkOrderHistory({ filter }: WorkOrderHistoryProps) {
     setPage,
   });
   const isDeviceHistory = "deviceId" in filter;
-  const columns = useMemo(
-    () =>
-      columnHelper
-        .columns([
-          columnHelper.accessor("dueDate", {
-            header: t("workOrders.columns.dueDate"),
-            cell: ({ row }) => (
-              <div className="flex flex-col items-start gap-1">
-                {formatDateTime(row.original.dueDate, language)}
-                {row.original.isOverdue ? (
-                  <Badge variant="destructive">{t("workOrders.overdue")}</Badge>
-                ) : null}
-              </div>
-            ),
-          }),
-          columnHelper.accessor(deviceColumnId, {
-            id: deviceColumnId,
-            header: t("workOrders.columns.device"),
-            cell: ({ row }) => (
-              <div className="flex flex-col">
-                <span className="font-medium">{row.original.deviceSerialNumber}</span>
-                <span className="text-muted-foreground">{row.original.deviceModel}</span>
-              </div>
-            ),
-          }),
-          columnHelper.accessor("description", {
-            header: t("workOrders.columns.description"),
-            cell: (info) => (
-              <span className="block max-w-48 truncate" title={info.getValue()}>
-                {info.getValue()}
-              </span>
-            ),
-          }),
-          columnHelper.accessor("priority", {
-            header: t("workOrders.columns.priority"),
-            cell: (info) => <WorkOrderPriorityBadge priority={info.getValue()} />,
-          }),
-          columnHelper.accessor("status", {
-            header: t("workOrders.columns.status"),
-            cell: (info) => <WorkOrderStatusBadge status={info.getValue()} />,
-          }),
-          columnHelper.accessor("technicianEmail", {
-            header: t("workOrders.columns.technician"),
-            cell: (info) =>
-              info.getValue() ?? (
-                <span className="text-muted-foreground">{t("workOrders.unassigned")}</span>
-              ),
-          }),
-        ])
-        .filter((column) => !isDeviceHistory || column.id !== deviceColumnId),
-    [t, language, isDeviceHistory],
+  const columns = useWorkOrderColumns(
+    isDeviceHistory ? deviceHistoryColumnIds : clientHistoryColumnIds,
   );
   const table = useTable({
-    features,
+    features: workOrderTableFeatures,
     columns,
+    enableSorting: false,
     data: historyPage?.items ?? [],
     getRowId: (workOrder) => workOrder.id,
   });

@@ -10,6 +10,7 @@
   "nav": {
     "label": "Main navigation",
     "dashboard": "Dashboard",
+    "workOrders": "Work orders",
     "openMenu": "Open menu",
     "skipToContent": "Skip to content",
     "myWorkOrders": "My work orders",
@@ -96,8 +97,7 @@
     "unexpected": "An unexpected error occurred."
   },
   "myWorkOrders": {
-    "title": "My work orders",
-    "comingSoon": "Work orders assigned to you will appear here"
+    "title": "My work orders"
   },
   "userMenu": {
     "label": "User account",
@@ -282,6 +282,19 @@
     }
   },
   "workOrders": {
+    "title": "Work orders",
+    "search": {
+      "label": "Search work orders",
+      "placeholder": "Fault description, serial number or client"
+    },
+    "empty": {
+      "title": "No work orders",
+      "assignedToMe": "You have no assigned work orders"
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No work order matches the selected filters."
+    },
     "status": {
       "New": "New",
       "Assigned": "Assigned",
@@ -297,6 +310,7 @@
     },
     "columns": {
       "dueDate": "Due",
+      "client": "Client",
       "device": "Device",
       "description": "Fault description",
       "priority": "Priority",
@@ -306,6 +320,20 @@
     "overdue": "Overdue",
     "unassigned": "Unassigned",
     "clientHistoryEmpty": "The client has no work orders yet",
-    "deviceHistoryEmpty": "The device has no work orders yet"
+    "deviceHistoryEmpty": "The device has no work orders yet",
+    "filters": {
+      "label": "Work order filters",
+      "status": "Status",
+      "allStatuses": "All statuses",
+      "technician": "Technician",
+      "allTechnicians": "All technicians",
+      "inactiveTechnician": "{{email}} (inactive)",
+      "techniciansLoading": "Loading technicians…",
+      "techniciansError": "Could not load technicians",
+      "dueFrom": "Due from",
+      "dueTo": "Due to",
+      "overdueOnly": "Overdue only",
+      "clear": "Clear filters"
+    }
   }
 }

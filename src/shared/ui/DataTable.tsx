@@ -1,11 +1,23 @@
-import type { ReactTable, RowData, TableFeatures } from "@tanstack/react-table";
+import type { ColumnSort, ReactTable, RowData, TableFeatures } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table";
 
 export type DataTableProps<TFeatures extends TableFeatures, TData extends RowData> = {
   table: ReactTable<TFeatures, TData>;
   isUpdating: boolean;
   cellClassName?: (columnId: string) => string;
+  sorting?: readonly ColumnSort[];
 };
+
+function ariaSortFor(
+  sorting: readonly ColumnSort[] | undefined,
+  columnId: string,
+): "ascending" | "descending" | undefined {
+  const columnSort = sorting?.find((sort) => sort.id === columnId);
+  if (columnSort === undefined) {
+    return undefined;
+  }
+  return columnSort.desc ? "descending" : "ascending";
+}
 
 function defaultCellClassName(): string {
   return "px-3";
@@ -15,6 +27,7 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
   table,
   isUpdating,
   cellClassName = defaultCellClassName,
+  sorting,
 }: DataTableProps<TFeatures, TData>) {
   return (
     <div className="overflow-hidden rounded-xl border" aria-busy={isUpdating}>
@@ -23,7 +36,11 @@ export function DataTable<TFeatures extends TableFeatures, TData extends RowData
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className={cellClassName(header.column.id)}>
+                <TableHead
+                  key={header.id}
+                  className={cellClassName(header.column.id)}
+                  aria-sort={ariaSortFor(sorting, header.column.id)}
+                >
                   {header.isPlaceholder ? null : <table.FlexRender header={header} />}
                 </TableHead>
               ))}
