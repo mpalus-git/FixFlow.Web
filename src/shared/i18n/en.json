@@ -448,6 +448,10 @@
       "locked": "A work order in the {{status}} status cannot be moved",
       "overdue": "Overdue"
     },
-    "cell": "{{technician}}, {{day}}"
+    "cell": "{{technician}}, {{day}}",
+    "errors": {
+      "changed": "The work order changed in the meantime. The board now shows its current state.",
+      "partial": "The work order was changed only partially: {{reason}}"
+    }
   }
 }

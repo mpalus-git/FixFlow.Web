@@ -450,6 +450,10 @@
       "locked": "Zlecenie w statusie {{status}} nie może być przeniesione",
       "overdue": "Po terminie"
     },
-    "cell": "{{technician}}, {{day}}"
+    "cell": "{{technician}}, {{day}}",
+    "errors": {
+      "changed": "Zlecenie zmieniło się w międzyczasie. Tablica pokazuje teraz aktualny stan.",
+      "partial": "Zlecenie zostało zmienione tylko częściowo: {{reason}}"
+    }
   }
 }
