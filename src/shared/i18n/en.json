@@ -60,6 +60,21 @@
       "series": "Work orders",
       "status": "Status",
       "empty": "There are no work orders yet"
+    },
+    "workload": {
+      "title": "Technician workload",
+      "description": "Open work orders of active technicians",
+      "technician": "Technician",
+      "assigned": "Assigned",
+      "inProgress": "In progress",
+      "overdue": "Overdue",
+      "dueThisWeek": "This week",
+      "dispatchLink": "This week's board",
+      "empty": "No active technicians"
+    },
+    "technicians": {
+      "title": "Technicians' work orders",
+      "description": "Open work orders, overdue ones and due dates in the week {{weekStart}} – {{weekEnd}}"
     }
   },
   "notFound": {

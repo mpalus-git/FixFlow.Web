@@ -60,6 +60,21 @@
       "series": "Zlecenia",
       "status": "Status",
       "empty": "W systemie nie ma jeszcze zleceń"
+    },
+    "workload": {
+      "title": "Obłożenie techników",
+      "description": "Otwarte zlecenia aktywnych techników",
+      "technician": "Technik",
+      "assigned": "Przypisane",
+      "inProgress": "W realizacji",
+      "overdue": "Opóźnione",
+      "dueThisWeek": "W tym tygodniu",
+      "dispatchLink": "Tablica tygodnia",
+      "empty": "Brak aktywnych techników"
+    },
+    "technicians": {
+      "title": "Zlecenia techników",
+      "description": "Otwarte zlecenia, opóźnienia i terminy w tygodniu {{weekStart}} – {{weekEnd}}"
     }
   },
   "notFound": {
