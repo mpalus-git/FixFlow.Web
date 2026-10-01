@@ -31,6 +31,10 @@ const sortFieldsByColumnId = {
   status: "Status",
 } as const satisfies Partial<Record<WorkOrderColumnId, WorkOrderSortBy>>;
 
+function cellClassName(columnId: string): string {
+  return columnId === "description" ? "hidden px-3 2xl:table-cell" : "px-3";
+}
+
 function toSortingState({ sortBy, sortDirection }: WorkOrderSort): SortingState {
   const entry = Object.entries(sortFieldsByColumnId).find(([, field]) => field === sortBy);
   return entry === undefined ? [] : [{ id: entry[0], desc: sortDirection === "Desc" }];
@@ -79,5 +83,12 @@ export function WorkOrdersTable({
     sortDescFirst: false,
   });
 
-  return <DataTable table={table} isUpdating={isUpdating} sorting={sorting} />;
+  return (
+    <DataTable
+      table={table}
+      isUpdating={isUpdating}
+      sorting={sorting}
+      cellClassName={cellClassName}
+    />
+  );
 }

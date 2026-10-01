@@ -63,7 +63,9 @@ export function useWorkOrderColumns(columnIds: readonly WorkOrderColumnId[]) {
       columnHelper.accessor("clientName", {
         id: "clientName",
         header: sortableHeader(t("workOrders.columns.client")),
-        cell: (info) => <span className="font-medium">{info.getValue()}</span>,
+        cell: (info) => (
+          <span className="block max-w-48 font-medium whitespace-normal">{info.getValue()}</span>
+        ),
       }),
       columnHelper.accessor("deviceSerialNumber", {
         id: "device",
