@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { technicianOptionsQueryOptions } from "@/features/work-orders/api/technicianQueries";
+import { technicianOptionsQueryOptions } from "@/shared/api/technicianQueries";
 import { useCurrentUser } from "@/shared/session/currentUser";
 
 export function useTechnicianLabel(): (technicianId: string | null) => string {

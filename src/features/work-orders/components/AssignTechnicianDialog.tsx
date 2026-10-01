@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { activeTechnicianOptionsQueryOptions } from "@/features/work-orders/api/technicianQueries";
+import { activeTechnicianOptionsQueryOptions } from "@/shared/api/technicianQueries";
 import {
   PartialTechnicianChangeError,
   useAssignTechnicianMutation,
