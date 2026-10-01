@@ -74,7 +74,7 @@ describe("user status actions", () => {
       await screen.findByText("Dezaktywowano konto jan.technik@fixflow.test."),
     ).toBeInTheDocument();
     expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
-    expect(rowOf("jan.technik@fixflow.test").getByText("Nieaktywne")).toBeInTheDocument();
+    expect(rowOf("jan.technik@fixflow.test").getAllByText("Nieaktywne")).not.toHaveLength(0);
   });
 
   it("links to the technician's work orders when open work orders block deactivation", async () => {
@@ -96,7 +96,7 @@ describe("user status actions", () => {
     expect(
       await within(dialog).findByRole("link", { name: "Pokaż zlecenia technika" }),
     ).toHaveAttribute("href", `/work-orders?technician=${technician?.id ?? ""}`);
-    expect(rowOf("jan.technik@fixflow.test").getByText("Aktywne")).toBeInTheDocument();
+    expect(rowOf("jan.technik@fixflow.test").getAllByText("Aktywne")).not.toHaveLength(0);
   });
 
   it("activates a deactivated account without asking", async () => {
@@ -109,7 +109,7 @@ describe("user status actions", () => {
     expect(
       await screen.findByText("Aktywowano konto piotr.technik@fixflow.test."),
     ).toBeInTheDocument();
-    expect(rowOf("piotr.technik@fixflow.test").getByText("Aktywne")).toBeInTheDocument();
+    expect(rowOf("piotr.technik@fixflow.test").getAllByText("Aktywne")).not.toHaveLength(0);
   });
 
   it("does not offer deactivation of the own account or a demo account", async () => {

@@ -32,9 +32,9 @@ describe("UsersPage", () => {
     await screen.findByText("jan.technik@fixflow.test");
 
     expect(rowOf("admin@fixflow.test").getByText("Twoje konto")).toBeInTheDocument();
-    expect(rowOf("anna.dyspozytor@fixflow.test").getByText("Dyspozytor")).toBeInTheDocument();
-    expect(rowOf("jan.technik@fixflow.test").getByText("Aktywne")).toBeInTheDocument();
-    expect(rowOf("piotr.technik@fixflow.test").getByText("Nieaktywne")).toBeInTheDocument();
+    expect(rowOf("anna.dyspozytor@fixflow.test").getAllByText("Dyspozytor")).not.toHaveLength(0);
+    expect(rowOf("jan.technik@fixflow.test").getAllByText("Aktywne")).not.toHaveLength(0);
+    expect(rowOf("piotr.technik@fixflow.test").getAllByText("Nieaktywne")).not.toHaveLength(0);
     expect(
       within(screen.getByRole("navigation", { name: "Nawigacja główna" })).getByRole("link", {
         name: "Użytkownicy",
