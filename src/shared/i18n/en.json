@@ -220,7 +220,10 @@
     "deviceArchived": "The device is archived and cannot be changed.",
     "deviceClientArchived": "Devices cannot be added to an archived client.",
     "deviceDuplicateSerialNumber": "A device with this serial number already exists (also among archived ones).",
-    "deviceNotFound": "The device was not found."
+    "deviceNotFound": "The device was not found.",
+    "workOrderClosed": "The work order is completed or invoiced and cannot be changed.",
+    "workOrderDeviceArchived": "A work order cannot be created for an archived device.",
+    "workOrderNotFound": "Work order not found."
   },
   "devices": {
     "columns": {

@@ -222,7 +222,10 @@
     "deviceArchived": "Urządzenie jest zarchiwizowane i nie można go zmieniać.",
     "deviceClientArchived": "Nie można dodać urządzenia do zarchiwizowanego klienta.",
     "deviceDuplicateSerialNumber": "Urządzenie o tym numerze seryjnym już istnieje (także wśród zarchiwizowanych).",
-    "deviceNotFound": "Nie znaleziono urządzenia."
+    "deviceNotFound": "Nie znaleziono urządzenia.",
+    "workOrderClosed": "Zlecenie jest zakończone lub zafakturowane i nie można go zmieniać.",
+    "workOrderDeviceArchived": "Nie można założyć zlecenia na zarchiwizowane urządzenie.",
+    "workOrderNotFound": "Nie znaleziono zlecenia."
   },
   "devices": {
     "columns": {

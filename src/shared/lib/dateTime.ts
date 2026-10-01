@@ -77,3 +77,11 @@ export function toUtcIso(localDateTime: string): string {
   );
   return new Date(date.getTime()).toISOString();
 }
+
+export function toLocalDateTimeInput(value: string): string {
+  return format(parseTimestamp(value), "yyyy-MM-dd'T'HH:mm", { in: tz(appTimeZone) });
+}
+
+export function isLocalDateTime(value: string): boolean {
+  return localDateTimePattern.test(value) && toLocalDateTimeInput(toUtcIso(value)) === value;
+}

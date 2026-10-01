@@ -4,7 +4,9 @@ import {
   formatDateTime,
   formatTime,
   isCalendarDate,
+  isLocalDateTime,
   todayCalendarDate,
+  toLocalDateTimeInput,
   toUtcIso,
 } from "@/shared/lib/dateTime";
 
@@ -103,4 +105,28 @@ describe("isCalendarDate", () => {
   it.each(["2026-02-29", "2026-13-01", "2026-1-5", "15.07.2026", ""])("rejects %s", (value) => {
     expect(isCalendarDate(value)).toBe(false);
   });
+});
+
+describe("toLocalDateTimeInput", () => {
+  it("shows a UTC timestamp as Warsaw local time for a date and time field", () => {
+    expect(toLocalDateTimeInput("2026-07-15T13:30:00Z")).toBe("2026-07-15T15:30");
+    expect(toLocalDateTimeInput("2026-01-15T23:30:00Z")).toBe("2026-01-16T00:30");
+  });
+
+  it("drops seconds, so an untouched field differs from the original timestamp", () => {
+    expect(toLocalDateTimeInput("2026-10-01T08:05:42.123Z")).toBe("2026-10-01T10:05");
+  });
+});
+
+describe("isLocalDateTime", () => {
+  it("accepts an existing Warsaw date and time", () => {
+    expect(isLocalDateTime("2026-10-25T02:30")).toBe(true);
+  });
+
+  it.each(["2026-03-29T02:30", "2026-02-30T10:00", "2026-10-01T24:00", "2026-10-01", ""])(
+    "rejects %s",
+    (value) => {
+      expect(isLocalDateTime(value)).toBe(false);
+    },
+  );
 });

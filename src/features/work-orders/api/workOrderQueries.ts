@@ -1,6 +1,6 @@
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/shared/api/apiClient";
-import { unwrap } from "@/shared/api/baseClient";
+import { unwrap, unwrapVersioned } from "@/shared/api/baseClient";
 import { queryKeyRoots } from "@/shared/api/queryKeyRoots";
 import type { operations } from "@/shared/api/schema";
 import type { WorkOrderListParams } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
@@ -24,6 +24,8 @@ export const workOrderKeys = {
   history: (params: WorkOrderHistoryParams) =>
     [...workOrderKeys.lists(), "history", params] as const,
   list: (params: WorkOrderListParams) => [...workOrderKeys.lists(), "all", params] as const,
+  details: () => [...workOrderKeys.all, "detail"] as const,
+  detail: (workOrderId: string) => [...workOrderKeys.details(), workOrderId] as const,
 };
 
 function toListWorkOrdersQuery({
@@ -78,5 +80,18 @@ export function workOrderHistoryQueryOptions({ filter, page }: WorkOrderHistoryP
         }),
       ),
     placeholderData: keepPreviousData,
+  });
+}
+
+export function workOrderQueryOptions(workOrderId: string) {
+  return queryOptions({
+    queryKey: workOrderKeys.detail(workOrderId),
+    queryFn: async ({ signal }) =>
+      unwrapVersioned(
+        await apiClient.GET("/api/v1/work-orders/{workOrderId}", {
+          params: { path: { workOrderId } },
+          signal,
+        }),
+      ),
   });
 }

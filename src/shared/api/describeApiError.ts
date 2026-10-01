@@ -8,6 +8,9 @@ const errorCodeMessageKeys = {
   "Device.ClientArchived": "apiErrors.deviceClientArchived",
   "Device.DuplicateSerialNumber": "apiErrors.deviceDuplicateSerialNumber",
   "Device.NotFound": "apiErrors.deviceNotFound",
+  "WorkOrder.Closed": "apiErrors.workOrderClosed",
+  "WorkOrder.DeviceArchived": "apiErrors.workOrderDeviceArchived",
+  "WorkOrder.NotFound": "apiErrors.workOrderNotFound",
 } as const;
 
 type KnownErrorCode = keyof typeof errorCodeMessageKeys;
