@@ -1,0 +1,87 @@
+import { useQuery } from "@tanstack/react-query";
+import { SearchXIcon, UsersIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { userListQueryOptions, usersPageSize } from "@/features/users/api/userQueries";
+import { UserFilters } from "@/features/users/components/UserFilters";
+import { UsersTable } from "@/features/users/components/UsersTable";
+import {
+  hasActiveUserFilters,
+  useUserListSearchParams,
+} from "@/features/users/hooks/useUserListSearchParams";
+import { useKeepPageInRange } from "@/shared/lib/useKeepPageInRange";
+import { useCurrentUser } from "@/shared/session/currentUser";
+import { EmptyState } from "@/shared/ui/EmptyState";
+import { ErrorState } from "@/shared/ui/ErrorState";
+import { ListSkeleton } from "@/shared/ui/ListSkeleton";
+import { PaginationControls } from "@/shared/ui/PaginationControls";
+
+export function UsersPage() {
+  const { t } = useTranslation();
+  const currentUser = useCurrentUser();
+  const { page, filters, setPage, setFilters, clearFilters } = useUserListSearchParams();
+  const usersQuery = useQuery(userListQueryOptions({ page, filters }));
+  const userPage = usersQuery.data;
+  const isFiltered = hasActiveUserFilters({ page, filters });
+  useKeepPageInRange({
+    page,
+    pageSize: usersPageSize,
+    totalCount: userPage?.totalCount,
+    isPlaceholderData: usersQuery.isPlaceholderData,
+    setPage,
+  });
+
+  function renderContent() {
+    if (usersQuery.isError) {
+      return <ErrorState onRetry={() => void usersQuery.refetch()} />;
+    }
+    if (userPage === undefined || currentUser === undefined) {
+      return <ListSkeleton />;
+    }
+    if (userPage.totalCount === 0) {
+      return isFiltered ? (
+        <EmptyState
+          icon={SearchXIcon}
+          title={t("users.noResults.title")}
+          description={t("users.noResults.description")}
+        />
+      ) : (
+        <EmptyState
+          icon={UsersIcon}
+          title={t("users.empty.title")}
+          description={t("users.empty.description")}
+        />
+      );
+    }
+    return (
+      <>
+        <UsersTable
+          users={userPage.items}
+          currentUserId={currentUser.id}
+          isUpdating={usersQuery.isPlaceholderData}
+        />
+        <PaginationControls
+          page={page}
+          pageSize={usersPageSize}
+          totalCount={userPage.totalCount}
+          onPageChange={setPage}
+        />
+      </>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-semibold tracking-tight">{t("users.title")}</h1>
+        <p className="text-sm text-muted-foreground">{t("users.description")}</p>
+      </div>
+      <UserFilters
+        filters={filters}
+        onChange={setFilters}
+        canClear={isFiltered}
+        onClear={clearFilters}
+      />
+      {renderContent()}
+    </div>
+  );
+}

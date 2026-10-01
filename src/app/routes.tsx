@@ -243,6 +243,19 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           ],
         },
         {
+          path: "users",
+          ErrorBoundary: RouteErrorBoundary,
+          middleware: [createRequireRole(queryClient, ["Admin"])],
+          children: [
+            {
+              index: true,
+              lazy: {
+                Component: async () => (await import("@/features/users/pages/UsersPage")).UsersPage,
+              },
+            },
+          ],
+        },
+        {
           path: "profile",
           lazy: {
             Component: async () =>

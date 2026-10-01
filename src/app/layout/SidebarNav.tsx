@@ -6,6 +6,7 @@ import {
   CpuIcon,
   LayoutDashboardIcon,
   PackageIcon,
+  UsersIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
@@ -20,7 +21,8 @@ const navItems: readonly {
     | "nav.myWorkOrders"
     | "nav.clients"
     | "nav.devices"
-    | "nav.parts";
+    | "nav.parts"
+    | "nav.users";
   icon: typeof LayoutDashboardIcon;
   end: boolean;
   roles: readonly Role[];
@@ -66,6 +68,13 @@ const navItems: readonly {
     icon: PackageIcon,
     end: false,
     roles: ["Admin", "Dispatcher"],
+  },
+  {
+    to: "/users",
+    labelKey: "nav.users",
+    icon: UsersIcon,
+    end: false,
+    roles: ["Admin"],
   },
   {
     to: "/my-work-orders",
