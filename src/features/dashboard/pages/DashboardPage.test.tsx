@@ -86,6 +86,35 @@ describe("DashboardPage", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("lists each technician's open work orders with links to their list and the week board", async () => {
+    mockDashboardSummary();
+    renderApp("/");
+
+    const table = await screen.findByRole("table", { name: "Zlecenia techników" });
+    const rows = within(table).getAllByRole("row");
+
+    expect(rows.map((row) => row.textContent)).toEqual([
+      "TechnikPrzypisaneW realizacjiOpóźnioneW tym tygodniu",
+      "anna.kowalczyk@fixflow.test3112",
+      "tomasz.wojcik@fixflow.test2101",
+    ]);
+    expect(
+      within(table).getByRole("link", { name: "anna.kowalczyk@fixflow.test" }),
+    ).toHaveAttribute("href", "/work-orders?technician=00000000-0000-4000-8000-0000000000a2");
+    expect(screen.getByRole("link", { name: "Tablica tygodnia" })).toHaveAttribute(
+      "href",
+      "/dispatch?week=2026-09-28",
+    );
+  });
+
+  it("explains that there are no active technicians", async () => {
+    mockDashboardSummary(createDashboardSummary({ technicians: [] }));
+    renderApp("/");
+
+    expect(await screen.findByText("Brak aktywnych techników")).toBeInTheDocument();
+    expect(screen.queryByRole("table", { name: "Zlecenia techników" })).not.toBeInTheDocument();
+  });
+
   it("loads the summary again when refreshed", async () => {
     const requestCount = mockDashboardSummary();
     renderApp("/");

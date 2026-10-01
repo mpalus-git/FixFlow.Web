@@ -1,13 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { ClipboardListIcon, RefreshCwIcon } from "lucide-react";
+import { CalendarRangeIcon, ClipboardListIcon, RefreshCwIcon, UsersIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import { dashboardSummaryQueryOptions } from "@/features/dashboard/api/dashboardQueries";
 import { DashboardStatTiles } from "@/features/dashboard/components/DashboardStatTiles";
 import { StatusChart } from "@/features/dashboard/components/StatusChart";
+import { TechnicianWorkloadChart } from "@/features/dashboard/components/TechnicianWorkloadChart";
+import { TechnicianWorkloadTable } from "@/features/dashboard/components/TechnicianWorkloadTable";
 import { useLanguage } from "@/shared/i18n/useLanguage";
-import { formatDateTime } from "@/shared/lib/dateTime";
+import { formatCalendarDate, formatDateTime } from "@/shared/lib/dateTime";
 import { Button } from "@/shared/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/shared/ui/card";
 import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -61,7 +71,44 @@ export function DashboardPage() {
               )}
             </CardContent>
           </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("dashboard.workload.title")}</CardTitle>
+              <CardDescription>{t("dashboard.workload.description")}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {summary.technicians.length === 0 ? (
+                <EmptyState icon={UsersIcon} title={t("dashboard.workload.empty")} />
+              ) : (
+                <TechnicianWorkloadChart technicians={summary.technicians} />
+              )}
+            </CardContent>
+          </Card>
         </div>
+        {summary.technicians.length === 0 ? null : (
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("dashboard.technicians.title")}</CardTitle>
+              <CardDescription>
+                {t("dashboard.technicians.description", {
+                  weekStart: formatCalendarDate(summary.weekStart, language),
+                  weekEnd: formatCalendarDate(summary.weekEnd, language),
+                })}
+              </CardDescription>
+              <CardAction>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to={`/dispatch?week=${summary.weekStart}`}>
+                    <CalendarRangeIcon aria-hidden="true" />
+                    {t("dashboard.workload.dispatchLink")}
+                  </Link>
+                </Button>
+              </CardAction>
+            </CardHeader>
+            <CardContent>
+              <TechnicianWorkloadTable technicians={summary.technicians} />
+            </CardContent>
+          </Card>
+        )}
       </>
     );
   }
