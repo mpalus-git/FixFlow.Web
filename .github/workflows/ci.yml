@@ -14,19 +14,12 @@ concurrency:
 
 jobs:
   verify:
-    name: Lint, typecheck, test, build
+    name: Lint, typecheck, build
     runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v6
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
 
       - name: Verify generated API types
         run: |
@@ -39,7 +32,47 @@ jobs:
 
       - run: pnpm check:comments
 
-      - run: pnpm test --run --coverage
+      - run: pnpm build
+
+  test:
+    name: Tests (${{ matrix.shard }}/3)
+    runs-on: ubuntu-26.04
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ./.github/actions/setup
+
+      - run: pnpm test --run --shard=${{ matrix.shard }}/3 --coverage --reporter=default --reporter=blob
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: test-blob-${{ matrix.shard }}
+          path: .vitest/blob
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+  coverage:
+    name: Coverage report
+    needs: test
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ./.github/actions/setup
+
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: test-blob-*
+          path: .vitest/blob
+          merge-multiple: true
+
+      - run: pnpm test --run --merge-reports --coverage
 
       - name: Coverage summary
         if: always()
@@ -52,8 +85,6 @@ jobs:
               echo '```'
             } >> "$GITHUB_STEP_SUMMARY"
           fi
-
-      - run: pnpm build
 
   contract-drift:
     name: API contract drift
