@@ -97,8 +97,7 @@
     "unexpected": "An unexpected error occurred."
   },
   "myWorkOrders": {
-    "title": "My work orders",
-    "comingSoon": "Work orders assigned to you will appear here"
+    "title": "My work orders"
   },
   "userMenu": {
     "label": "User account",

@@ -1,6 +1,5 @@
-import { ClipboardListIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { EmptyState } from "@/shared/ui/EmptyState";
+import { WorkOrderList } from "@/features/work-orders/components/WorkOrderList";
 
 export function MyWorkOrdersPage() {
   const { t } = useTranslation();
@@ -8,7 +7,7 @@ export function MyWorkOrdersPage() {
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-semibold tracking-tight">{t("myWorkOrders.title")}</h1>
-      <EmptyState icon={ClipboardListIcon} title={t("myWorkOrders.comingSoon")} />
+      <WorkOrderList scope="assignedToMe" />
     </div>
   );
 }

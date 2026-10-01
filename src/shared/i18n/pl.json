@@ -97,8 +97,7 @@
     "unexpected": "Wystąpił nieoczekiwany błąd."
   },
   "myWorkOrders": {
-    "title": "Moje zlecenia",
-    "comingSoon": "Tu pojawią się zlecenia przypisane do Ciebie"
+    "title": "Moje zlecenia"
   },
   "userMenu": {
     "label": "Konto użytkownika",
