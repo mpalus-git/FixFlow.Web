@@ -434,7 +434,19 @@
     }
   },
   "parts": {
-    "unknown": "Unknown part"
+    "unknown": "Unknown part",
+    "columns": {
+      "name": "Name",
+      "catalogNumber": "Catalog number",
+      "stockQuantity": "Stock",
+      "unitPrice": "Net price"
+    },
+    "stock": {
+      "low": "Low stock",
+      "out": "Out of stock",
+      "units_one": "{{count}} pc",
+      "units_other": "{{count}} pcs"
+    }
   },
   "dispatch": {
     "title": "Dispatch board",

@@ -436,7 +436,21 @@
     }
   },
   "parts": {
-    "unknown": "Nieznana część"
+    "unknown": "Nieznana część",
+    "columns": {
+      "name": "Nazwa",
+      "catalogNumber": "Numer katalogowy",
+      "stockQuantity": "Stan",
+      "unitPrice": "Cena netto"
+    },
+    "stock": {
+      "low": "Niski stan",
+      "out": "Brak",
+      "units_one": "{{count}} szt.",
+      "units_few": "{{count}} szt.",
+      "units_many": "{{count}} szt.",
+      "units_other": "{{count}} szt."
+    }
   },
   "dispatch": {
     "title": "Tablica dispatch",
