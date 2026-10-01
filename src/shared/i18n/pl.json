@@ -451,6 +451,16 @@
       "overdue": "Po terminie"
     },
     "cell": "{{technician}}, {{day}}",
+    "dnd": {
+      "instructions": "Aby podnieść zlecenie, naciśnij spację lub Enter. Strzałkami przenieś je na technika i dzień, a spacją lub Enter upuść. Escape anuluje przenoszenie.",
+      "picked": "Podniesiono zlecenie {{workOrder}}.",
+      "over": "Zlecenie {{workOrder}} nad polem: {{target}}.",
+      "overBlocked": "Zlecenie {{workOrder}} nad polem: {{target}}. Tu nie można go upuścić.",
+      "outside": "Zlecenie {{workOrder}} poza tablicą.",
+      "dropped": "Upuszczono zlecenie {{workOrder}} na polu: {{target}}.",
+      "notDropped": "Zlecenie {{workOrder}} nie zostało przeniesione.",
+      "cancelled": "Anulowano przenoszenie zlecenia {{workOrder}}."
+    },
     "errors": {
       "changed": "Zlecenie zmieniło się w międzyczasie. Tablica pokazuje teraz aktualny stan.",
       "partial": "Zlecenie zostało zmienione tylko częściowo: {{reason}}"

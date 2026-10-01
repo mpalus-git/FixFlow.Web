@@ -449,6 +449,16 @@
       "overdue": "Overdue"
     },
     "cell": "{{technician}}, {{day}}",
+    "dnd": {
+      "instructions": "To pick up a work order, press Space or Enter. Use the arrow keys to move it onto a technician and day, then press Space or Enter to drop it. Press Escape to cancel.",
+      "picked": "Picked up work order {{workOrder}}.",
+      "over": "Work order {{workOrder}} is over: {{target}}.",
+      "overBlocked": "Work order {{workOrder}} is over: {{target}}. It cannot be dropped here.",
+      "outside": "Work order {{workOrder}} is outside the board.",
+      "dropped": "Dropped work order {{workOrder}} on: {{target}}.",
+      "notDropped": "Work order {{workOrder}} was not moved.",
+      "cancelled": "Moving work order {{workOrder}} was cancelled."
+    },
     "errors": {
       "changed": "The work order changed in the meantime. The board now shows its current state.",
       "partial": "The work order was changed only partially: {{reason}}"
