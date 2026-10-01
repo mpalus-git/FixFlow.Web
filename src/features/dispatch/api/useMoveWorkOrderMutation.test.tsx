@@ -3,7 +3,12 @@ import { renderHook } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import type { ReactNode } from "react";
 import { dispatchKeys } from "@/features/dispatch/api/dispatchQueries";
-import { useMoveWorkOrderMutation } from "@/features/dispatch/api/useMoveWorkOrderMutation";
+import {
+  PartialDispatchMoveError,
+  StaleDispatchBoardError,
+  useMoveWorkOrderMutation,
+} from "@/features/dispatch/api/useMoveWorkOrderMutation";
+import { ApiError } from "@/shared/api/apiError";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { server } from "@/test/server";
@@ -12,6 +17,7 @@ import { createWorkOrderListItem, createWorkOrderResponse } from "@/test/workOrd
 type WorkOrderPage = components["schemas"]["PagedResponseOfWorkOrderListItemResponse"];
 type UpdateWorkOrderRequest = components["schemas"]["UpdateWorkOrderRequest"];
 type AssignTechnicianRequest = components["schemas"]["AssignTechnicianRequest"];
+type ProblemDetails = components["schemas"]["ProblemDetails"];
 
 const weekStart = "2026-09-28";
 const anna = "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d";
@@ -25,6 +31,11 @@ const workOrderUrl = `${apiBaseUrl}/api/v1/work-orders/${newOrder.id}`;
 
 function pageOf(items: WorkOrderPage["items"]): WorkOrderPage {
   return { items, page: 1, pageSize: 100, totalCount: items.length };
+}
+
+function problem(status: number, errorCode: string) {
+  const body: ProblemDetails = { status, title: errorCode, errorCode };
+  return HttpResponse.json(body, { status });
 }
 
 function setUp({
@@ -86,5 +97,40 @@ describe("useMoveWorkOrderMutation", () => {
       { ...newOrder, status: "Assigned", technicianId: anna, technicianEmail: "anna@fixflow.test" },
     ]);
     expect(queryClient.getQueryData(dispatchKeys.unassigned())).toEqual(pageOf([]));
+  });
+
+  it("restores the board when the server rejects the move", async () => {
+    const { queryClient, move } = setUp({
+      assign: () => problem(409, "WorkOrder.InvalidStatusTransition"),
+    });
+
+    await expect(move("2026-09-29")).rejects.toBeInstanceOf(ApiError);
+
+    expect(queryClient.getQueryData(dispatchKeys.week(weekStart))).toEqual(pageOf([newOrder]));
+    expect(queryClient.getQueryData(dispatchKeys.unassigned())).toEqual(pageOf([newOrder]));
+  });
+
+  it("changes nothing when the work order changed after the board was loaded", async () => {
+    const { calls, move } = setUp({
+      current: createWorkOrderResponse({ status: "Assigned", technicianId: anna }),
+    });
+
+    await expect(move("2026-10-01")).rejects.toBeInstanceOf(StaleDispatchBoardError);
+
+    expect(calls).toEqual([]);
+  });
+
+  it("reports a version conflict when the work order changed just before saving", async () => {
+    const { calls, move } = setUp({ update: () => problem(412, "Persistence.PreconditionFailed") });
+
+    await expect(move("2026-10-01")).rejects.toMatchObject({ status: 412 });
+
+    expect(calls).toHaveLength(1);
+  });
+
+  it("reports a partial move when the due date changed but the assignment failed", async () => {
+    const { move } = setUp({ assign: () => problem(404, "WorkOrder.TechnicianNotFound") });
+
+    await expect(move("2026-10-01")).rejects.toBeInstanceOf(PartialDispatchMoveError);
   });
 });
