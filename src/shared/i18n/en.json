@@ -599,7 +599,8 @@
     "actions": {
       "label": "Actions for account {{email}}",
       "deactivate": "Deactivate",
-      "activate": "Activate"
+      "activate": "Activate",
+      "resetPassword": "Reset password"
     },
     "protection": {
       "ownAccount": "This is your account - you cannot deactivate it, and you can change its password in your profile.",
@@ -616,6 +617,14 @@
     },
     "activate": {
       "activated": "Activated account {{email}}."
+    },
+    "resetPassword": {
+      "title": "New password for {{email}}",
+      "description": "The user is signed out on every device (open sessions expire within about fifteen minutes) and a lockout after failed sign-ins is lifted. Give them the new password.",
+      "newPassword": "New password",
+      "confirmNewPassword": "Repeat new password",
+      "submit": "Set password",
+      "done": "Set a new password for {{email}}."
     }
   }
 }

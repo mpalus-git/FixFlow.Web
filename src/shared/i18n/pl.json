@@ -605,7 +605,8 @@
     "actions": {
       "label": "Akcje konta {{email}}",
       "deactivate": "Dezaktywuj",
-      "activate": "Aktywuj"
+      "activate": "Aktywuj",
+      "resetPassword": "Resetuj hasło"
     },
     "protection": {
       "ownAccount": "To Twoje konto - nie możesz go dezaktywować, a hasło zmienisz w profilu.",
@@ -622,6 +623,14 @@
     },
     "activate": {
       "activated": "Aktywowano konto {{email}}."
+    },
+    "resetPassword": {
+      "title": "Nowe hasło dla {{email}}",
+      "description": "Użytkownik zostanie wylogowany na wszystkich urządzeniach (otwarte sesje wygasną w ciągu kilkunastu minut), a blokada po nieudanych logowaniach zostanie zdjęta. Przekaż mu nowe hasło.",
+      "newPassword": "Nowe hasło",
+      "confirmNewPassword": "Powtórz nowe hasło",
+      "submit": "Ustaw hasło",
+      "done": "Ustawiono nowe hasło dla {{email}}."
     }
   }
 }

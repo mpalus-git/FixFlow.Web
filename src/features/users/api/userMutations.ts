@@ -47,3 +47,19 @@ export function useChangeUserStatusMutation() {
     },
   });
 }
+
+export type UserPasswordReset = {
+  userId: string;
+  newPassword: string;
+};
+
+export function useResetUserPasswordMutation() {
+  return useMutation({
+    mutationFn: async ({ userId, newPassword }: UserPasswordReset) => {
+      await apiClient.POST("/api/v1/users/{userId}/password", {
+        params: { path: { userId } },
+        body: { newPassword },
+      });
+    },
+  });
+}

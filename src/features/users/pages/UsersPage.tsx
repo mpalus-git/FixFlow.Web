@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useChangeUserStatusMutation } from "@/features/users/api/userMutations";
 import { userListQueryOptions, usersPageSize } from "@/features/users/api/userQueries";
 import { DeactivateUserDialog } from "@/features/users/components/DeactivateUserDialog";
+import { ResetPasswordDialog } from "@/features/users/components/ResetPasswordDialog";
 import { UserFilters } from "@/features/users/components/UserFilters";
 import { UsersTable } from "@/features/users/components/UsersTable";
 import {
@@ -35,6 +36,7 @@ export function UsersPage() {
   const isFiltered = hasActiveUserFilters({ page, filters });
   const changeStatusMutation = useChangeUserStatusMutation();
   const [userToDeactivate, setUserToDeactivate] = useState<UserResponse | null>(null);
+  const [userToResetPassword, setUserToResetPassword] = useState<UserResponse | null>(null);
 
   function activate(user: UserResponse) {
     changeStatusMutation.mutate(
@@ -89,6 +91,7 @@ export function UsersPage() {
           isUpdating={usersQuery.isPlaceholderData}
           onDeactivate={setUserToDeactivate}
           onActivate={activate}
+          onResetPassword={setUserToResetPassword}
         />
         <PaginationControls
           page={page}
@@ -121,6 +124,12 @@ export function UsersPage() {
         onClear={clearFilters}
       />
       {renderContent()}
+      <ResetPasswordDialog
+        user={userToResetPassword}
+        onClose={() => {
+          setUserToResetPassword(null);
+        }}
+      />
       <DeactivateUserDialog
         user={userToDeactivate}
         onClose={() => {

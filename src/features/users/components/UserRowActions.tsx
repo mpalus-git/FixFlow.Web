@@ -1,4 +1,4 @@
-import { EllipsisIcon, UserCheckIcon, UserXIcon } from "lucide-react";
+import { EllipsisIcon, KeyRoundIcon, UserCheckIcon, UserXIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { UserAccountProtection } from "@/features/users/userRules";
 import type { components } from "@/shared/api/schema";
@@ -18,6 +18,7 @@ export type UserRowActionsProps = {
   protection: UserAccountProtection;
   onDeactivate: (user: UserResponse) => void;
   onActivate: (user: UserResponse) => void;
+  onResetPassword: (user: UserResponse) => void;
 };
 
 export function UserRowActions({
@@ -25,6 +26,7 @@ export function UserRowActions({
   protection,
   onDeactivate,
   onActivate,
+  onResetPassword,
 }: UserRowActionsProps) {
   const { t } = useTranslation();
 
@@ -61,6 +63,15 @@ export function UserRowActions({
             {t("users.actions.activate")}
           </DropdownMenuItem>
         )}
+        <DropdownMenuItem
+          disabled={protection !== null}
+          onSelect={() => {
+            onResetPassword(user);
+          }}
+        >
+          <KeyRoundIcon aria-hidden="true" />
+          {t("users.actions.resetPassword")}
+        </DropdownMenuItem>
         {protection === null ? null : (
           <DropdownMenuLabel className="text-xs font-normal whitespace-normal text-muted-foreground">
             {t(`users.protection.${protection}`)}

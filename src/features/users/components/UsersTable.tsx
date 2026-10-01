@@ -29,6 +29,7 @@ export type UsersTableProps = {
   isUpdating: boolean;
   onDeactivate: (user: UserResponse) => void;
   onActivate: (user: UserResponse) => void;
+  onResetPassword: (user: UserResponse) => void;
 };
 
 export function UsersTable({
@@ -37,6 +38,7 @@ export function UsersTable({
   isUpdating,
   onDeactivate,
   onActivate,
+  onResetPassword,
 }: UsersTableProps) {
   const { t } = useTranslation();
   const columns = useMemo(
@@ -94,12 +96,13 @@ export function UsersTable({
                 protection={userAccountProtection(row.original, currentUserId)}
                 onDeactivate={onDeactivate}
                 onActivate={onActivate}
+                onResetPassword={onResetPassword}
               />
             </div>
           ),
         }),
       ]),
-    [t, currentUserId, onDeactivate, onActivate],
+    [t, currentUserId, onDeactivate, onActivate, onResetPassword],
   );
   const table = useTable({
     features,
