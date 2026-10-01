@@ -366,7 +366,20 @@
       "created": "Work order created."
     },
     "actions": {
-      "edit": "Edit work order for {{serialNumber}}"
+      "edit": "Edit work order for {{serialNumber}}",
+      "assign": "Assign technician",
+      "changeTechnician": "Change technician",
+      "unassign": "Unassign technician",
+      "unassigned": "Technician unassigned.",
+      "complete": "Complete as fallback",
+      "completeRequiresEntries": "Requires at least one service entry.",
+      "completeTitle": "Complete the work order as a fallback?",
+      "completeDescription": "The technician usually completes the work order in the mobile app. After completion no entries can be added and the work order cannot be edited.",
+      "completed": "Work order completed.",
+      "invoice": "Invoice",
+      "invoiceTitle": "Invoice the work order?",
+      "invoiceDescription": "This is the final status of the work order and cannot be undone.",
+      "invoiced": "Work order invoiced."
     },
     "edit": {
       "title": "Edit work order",

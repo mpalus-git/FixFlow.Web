@@ -368,7 +368,20 @@
       "created": "Utworzono zlecenie."
     },
     "actions": {
-      "edit": "Edytuj zlecenie dla {{serialNumber}}"
+      "edit": "Edytuj zlecenie dla {{serialNumber}}",
+      "assign": "Przypisz technika",
+      "changeTechnician": "Zmień technika",
+      "unassign": "Odepnij technika",
+      "unassigned": "Odpięto technika.",
+      "complete": "Zakończ awaryjnie",
+      "completeRequiresEntries": "Wymaga co najmniej jednego wpisu serwisowego.",
+      "completeTitle": "Zakończyć zlecenie awaryjnie?",
+      "completeDescription": "Zwykle zlecenie kończy technik w aplikacji mobilnej. Po zakończeniu nie można dodawać wpisów ani edytować zlecenia.",
+      "completed": "Zakończono zlecenie.",
+      "invoice": "Zafakturuj",
+      "invoiceTitle": "Zafakturować zlecenie?",
+      "invoiceDescription": "To ostatni status zlecenia i nie można go cofnąć.",
+      "invoiced": "Zafakturowano zlecenie."
     },
     "edit": {
       "title": "Edycja zlecenia",
