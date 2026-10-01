@@ -19,7 +19,8 @@
     "clients": "Klienci",
     "devices": "Urządzenia",
     "dispatch": "Tablica dispatch",
-    "parts": "Części"
+    "parts": "Części",
+    "users": "Użytkownicy"
   },
   "language": {
     "label": "Język",
@@ -555,5 +556,35 @@
     },
     "emptyWeek": "W tym tygodniu technicy nie mają przypisanych zleceń.",
     "limit": "Tablica pokazuje pierwsze 100 zleceń. Część zleceń nie zmieściła się na tablicy - pełną listę znajdziesz w zakładce Zlecenia."
+  },
+  "users": {
+    "title": "Użytkownicy",
+    "description": "Konta dyspozytorów, techników i administratorów. Dezaktywowane konto nie może się zalogować.",
+    "currentAccount": "Twoje konto",
+    "filters": {
+      "label": "Filtry użytkowników",
+      "role": "Rola",
+      "allRoles": "Wszystkie role",
+      "status": "Status konta",
+      "allStatuses": "Wszystkie konta",
+      "clear": "Wyczyść filtry"
+    },
+    "status": {
+      "active": "Aktywne",
+      "inactive": "Nieaktywne"
+    },
+    "columns": {
+      "email": "E-mail",
+      "role": "Rola",
+      "status": "Status"
+    },
+    "empty": {
+      "title": "Brak użytkowników",
+      "description": "Nie ma jeszcze żadnych kont."
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żadne konto nie pasuje do wybranych filtrów."
+    }
   }
 }

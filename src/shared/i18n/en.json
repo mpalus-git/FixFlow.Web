@@ -19,7 +19,8 @@
     "clients": "Clients",
     "devices": "Devices",
     "dispatch": "Dispatch board",
-    "parts": "Parts"
+    "parts": "Parts",
+    "users": "Users"
   },
   "language": {
     "label": "Language",
@@ -549,5 +550,35 @@
     },
     "emptyWeek": "Technicians have no work orders assigned this week.",
     "limit": "The board shows the first 100 work orders. Some work orders did not fit - see the Work orders tab for the full list."
+  },
+  "users": {
+    "title": "Users",
+    "description": "Accounts of dispatchers, technicians and administrators. A deactivated account cannot sign in.",
+    "currentAccount": "Your account",
+    "filters": {
+      "label": "User filters",
+      "role": "Role",
+      "allRoles": "All roles",
+      "status": "Account status",
+      "allStatuses": "All accounts",
+      "clear": "Clear filters"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "columns": {
+      "email": "Email",
+      "role": "Role",
+      "status": "Status"
+    },
+    "empty": {
+      "title": "No users",
+      "description": "There are no accounts yet."
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No account matches the selected filters."
+    }
   }
 }
