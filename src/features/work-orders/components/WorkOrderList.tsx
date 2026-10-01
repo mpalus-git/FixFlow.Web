@@ -69,6 +69,7 @@ export function WorkOrderList({ scope }: WorkOrderListProps) {
           onSortChange={setSort}
           showTechnician={isDispatcherScope}
           showActions={isDispatcherScope}
+          detailsBasePath={isDispatcherScope ? "/work-orders" : "/my-work-orders"}
         />
         <PaginationControls
           page={page}

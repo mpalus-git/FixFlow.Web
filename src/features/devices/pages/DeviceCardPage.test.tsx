@@ -99,7 +99,7 @@ describe("DeviceCardPage", () => {
     expect(screen.queryByRole("link", { name: "Nowe zlecenie" })).not.toBeInTheDocument();
   });
 
-  it("creates a work order for the device and comes back to its card", async () => {
+  it("creates a work order for the device and opens its details", async () => {
     mockCard();
     const clientPage: ClientPage = {
       items: [createClientResponse()],
@@ -139,7 +139,7 @@ describe("DeviceCardPage", () => {
     await user.click(screen.getByRole("button", { name: "Utwórz zlecenie" }));
 
     await vi.waitFor(() => {
-      expect(router.state.location.pathname).toBe(cardPath);
+      expect(router.state.location.pathname).toBe(`/work-orders/${createWorkOrderResponse().id}`);
     });
     expect(createdBodies[0]?.deviceId).toBe(device.id);
   });

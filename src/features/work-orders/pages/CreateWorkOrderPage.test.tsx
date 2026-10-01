@@ -66,7 +66,7 @@ describe("CreateWorkOrderPage", () => {
     localStorage.clear();
   });
 
-  it("creates the work order with the due date in UTC and returns to the list", async () => {
+  it("creates the work order with the due date in UTC and opens its details", async () => {
     const createdBodies = mockApi();
     const router = renderApp("/work-orders/new");
 
@@ -74,7 +74,7 @@ describe("CreateWorkOrderPage", () => {
 
     expect(await screen.findByText("Utworzono zlecenie.")).toBeInTheDocument();
     await vi.waitFor(() => {
-      expect(router.state.location.pathname).toBe("/work-orders");
+      expect(router.state.location.pathname).toBe(`/work-orders/${createWorkOrderResponse().id}`);
     });
     expect(createdBodies).toEqual([
       {
@@ -86,12 +86,13 @@ describe("CreateWorkOrderPage", () => {
     ]);
   });
 
-  it("returns to the filtered list it was opened from", async () => {
+  it("cancels back to the filtered list it was opened from", async () => {
     mockApi();
     const router = renderApp("/work-orders?status=New");
 
-    await userEvent.setup().click(await screen.findByRole("link", { name: "Nowe zlecenie" }));
-    await fillAndSubmit();
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole("link", { name: "Nowe zlecenie" }));
+    await user.click(await screen.findByRole("link", { name: "Anuluj" }));
 
     await vi.waitFor(() => {
       expect(router.state.location.pathname).toBe("/work-orders");
