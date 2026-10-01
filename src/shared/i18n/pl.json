@@ -341,6 +341,17 @@
       "dueTo": "Termin do",
       "overdueOnly": "Tylko po terminie",
       "clear": "Wyczyść filtry"
+    },
+    "form": {
+      "chooseClient": "Wybierz klienta",
+      "chooseDevice": "Wybierz urządzenie",
+      "chooseClientFirst": "Najpierw wybierz klienta",
+      "noClients": "Brak aktywnych klientów",
+      "noDevices": "Klient nie ma aktywnych urządzeń",
+      "loadingOptions": "Wczytywanie…",
+      "optionsError": "Nie udało się wczytać listy",
+      "deviceOption": "{{serialNumber}} · {{manufacturer}} {{model}}",
+      "dueDateHint": "Czas polski (Europe/Warsaw)."
     }
   }
 }
