@@ -299,6 +299,7 @@
     },
     "columns": {
       "dueDate": "Termin",
+      "client": "Klient",
       "device": "Urządzenie",
       "description": "Opis usterki",
       "priority": "Priorytet",

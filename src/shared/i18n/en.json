@@ -297,6 +297,7 @@
     },
     "columns": {
       "dueDate": "Due",
+      "client": "Client",
       "device": "Device",
       "description": "Fault description",
       "priority": "Priority",
