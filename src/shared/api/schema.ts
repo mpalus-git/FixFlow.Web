@@ -447,6 +447,22 @@ export type paths = {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/dashboard/summary": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetDashboardSummary"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/demo-data/reset": {
     parameters: {
       query?: never;
@@ -536,6 +552,14 @@ export type components = {
       description: string;
       dueDate: string;
       priority?: components["schemas"]["WorkOrderPriority"];
+    };
+    DashboardSummaryResponse: {
+      generatedAt: string;
+      weekStart: string;
+      weekEnd: string;
+      statusCounts: components["schemas"]["WorkOrderStatusCountResponse"][];
+      overdueCount: number;
+      technicians: components["schemas"]["TechnicianWorkloadResponse"][];
     };
     DeviceListItemResponse: {
       id: string;
@@ -655,6 +679,14 @@ export type components = {
       createdAt: string;
     };
     Stream: string;
+    TechnicianWorkloadResponse: {
+      technicianId: string;
+      email: string;
+      assignedCount: number;
+      inProgressCount: number;
+      overdueCount: number;
+      dueThisWeekCount: number;
+    };
     UpdateClientRequest: {
       name: string;
       address: components["schemas"]["ClientAddress"];
@@ -719,6 +751,10 @@ export type components = {
       invoicedAt: null | string;
     };
     WorkOrderStatus: "New" | "Assigned" | "InProgress" | "Completed" | "Invoiced";
+    WorkOrderStatusCountResponse: {
+      status: components["schemas"]["WorkOrderStatus"];
+      count: number;
+    };
   };
   responses: never;
   parameters: never;
@@ -2726,6 +2762,41 @@ export interface operations {
         };
       };
       409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
+  GetDashboardSummary: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DashboardSummaryResponse"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      403: {
         headers: {
           [name: string]: unknown;
         };

@@ -93,8 +93,10 @@ describe("UsersPage", () => {
     await vi.waitFor(() => {
       expect(router.state.location.pathname).toBe("/");
     }, 5000);
+    const navigation = await screen.findByRole("navigation", { name: "Nawigacja główna" });
+    expect(await within(navigation).findByRole("link", { name: "Zlecenia" })).toBeInTheDocument();
     expect(
-      within(screen.getByRole("navigation", { name: "Nawigacja główna" })).queryByRole("link", {
+      within(navigation).queryByRole("link", {
         name: "Użytkownicy",
       }),
     ).not.toBeInTheDocument();
