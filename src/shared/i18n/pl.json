@@ -493,6 +493,15 @@
     "actions": {
       "label": "Akcje części {{name}}",
       "edit": "Edytuj"
+    },
+    "restock": {
+      "title": "Przyjęcie dostawy",
+      "description": "{{name}} – obecnie {{stock}}",
+      "quantity": "Liczba dostarczonych sztuk",
+      "preview": "Stan po przyjęciu: {{stock}}",
+      "submit": "Przyjmij dostawę",
+      "done": "Przyjęto dostawę części {{name}}. Stan: {{stock}}",
+      "concurrent": "Stan części zmienił się w tym samym momencie. Spróbuj ponownie."
     }
   },
   "dispatch": {
