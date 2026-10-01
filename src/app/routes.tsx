@@ -224,6 +224,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                 Component: async () => (await import("@/features/parts/pages/PartsPage")).PartsPage,
               },
             },
+            {
+              path: "new",
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/parts/pages/CreatePartPage")).CreatePartPage,
+              },
+            },
           ],
         },
         {

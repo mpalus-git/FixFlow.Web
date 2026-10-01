@@ -236,7 +236,10 @@
     "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders.",
     "concurrentModification": "The work order was changed in the meantime. Its current state is shown, try again.",
     "workOrderInvalidStatusTransition": "The work order status changed in the meantime and this action is no longer available.",
-    "workOrderTechnicianNotFound": "The selected technician is no longer active."
+    "workOrderTechnicianNotFound": "The selected technician is no longer active.",
+    "partArchived": "The part is archived and cannot be changed.",
+    "partDuplicateCatalogNumber": "A part with this catalog number already exists (including archived ones).",
+    "partNotFound": "Part not found."
   },
   "devices": {
     "columns": {
@@ -462,6 +465,18 @@
       "out": "Out of stock",
       "units_one": "{{count}} pc",
       "units_other": "{{count}} pcs"
+    },
+    "create": {
+      "link": "Add part",
+      "title": "New part",
+      "submit": "Add part",
+      "created": "Part {{name}} was added."
+    },
+    "form": {
+      "unitPrice": "Net price (PLN)",
+      "initialStock": "Initial stock (pcs)",
+      "catalogNumberHint": "Unique; stored in upper case.",
+      "stockHint": "Stock changes through deliveries and use in work orders."
     }
   },
   "dispatch": {

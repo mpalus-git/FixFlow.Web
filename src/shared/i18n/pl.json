@@ -238,7 +238,10 @@
     "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń.",
     "concurrentModification": "Zlecenie zostało zmienione w międzyczasie. Wyświetlono aktualny stan, spróbuj ponownie.",
     "workOrderInvalidStatusTransition": "Status zlecenia zmienił się w międzyczasie i ta akcja nie jest już dostępna.",
-    "workOrderTechnicianNotFound": "Wybrany technik nie jest już aktywny."
+    "workOrderTechnicianNotFound": "Wybrany technik nie jest już aktywny.",
+    "partArchived": "Część jest zarchiwizowana i nie można jej zmieniać.",
+    "partDuplicateCatalogNumber": "Część o tym numerze katalogowym już istnieje (także wśród zarchiwizowanych).",
+    "partNotFound": "Nie znaleziono części."
   },
   "devices": {
     "columns": {
@@ -468,6 +471,18 @@
       "units_few": "{{count}} szt.",
       "units_many": "{{count}} szt.",
       "units_other": "{{count}} szt."
+    },
+    "create": {
+      "link": "Dodaj część",
+      "title": "Nowa część",
+      "submit": "Dodaj część",
+      "created": "Dodano część {{name}}."
+    },
+    "form": {
+      "unitPrice": "Cena netto (zł)",
+      "initialStock": "Stan początkowy (szt.)",
+      "catalogNumberHint": "Unikalny; zapisywany wielkimi literami.",
+      "stockHint": "Stan zmienia się przez przyjęcie dostawy i zużycie w zleceniach."
     }
   },
   "dispatch": {
