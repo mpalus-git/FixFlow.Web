@@ -492,7 +492,9 @@
     },
     "actions": {
       "label": "Akcje części {{name}}",
-      "edit": "Edytuj"
+      "edit": "Edytuj",
+      "restock": "Przyjmij dostawę",
+      "archive": "Archiwizuj"
     },
     "restock": {
       "title": "Przyjęcie dostawy",
@@ -502,6 +504,13 @@
       "submit": "Przyjmij dostawę",
       "done": "Przyjęto dostawę części {{name}}. Stan: {{stock}}",
       "concurrent": "Stan części zmienił się w tym samym momencie. Spróbuj ponownie."
+    },
+    "archive": {
+      "title": "Zarchiwizować część {{name}}?",
+      "description": "Część zniknie z katalogu i nie będzie można jej używać w nowych wpisach serwisowych. Historia zużycia zostanie zachowana, a numer katalogowy pozostanie zajęty.",
+      "confirm": "Archiwizuj",
+      "archived": "Zarchiwizowano część {{name}}.",
+      "concurrent": "Część została zmieniona w tym samym momencie. Spróbuj ponownie."
     }
   },
   "dispatch": {

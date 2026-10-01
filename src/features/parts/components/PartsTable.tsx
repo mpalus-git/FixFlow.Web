@@ -28,9 +28,11 @@ const columnHelper = createColumnHelper<typeof features, PartResponse>();
 export type PartsTableProps = {
   parts: PartResponse[];
   isUpdating: boolean;
+  onRestock: (part: PartResponse) => void;
+  onArchive: (part: PartResponse) => void;
 };
 
-export function PartsTable({ parts, isUpdating }: PartsTableProps) {
+export function PartsTable({ parts, isUpdating, onRestock, onArchive }: PartsTableProps) {
   const { t } = useTranslation();
   const language = useLanguage();
   const columns = useMemo(
@@ -62,12 +64,12 @@ export function PartsTable({ parts, isUpdating }: PartsTableProps) {
           header: () => <span className="sr-only">{t("parts.columns.actions")}</span>,
           cell: ({ row }) => (
             <div className="flex justify-end">
-              <PartRowActions part={row.original} />
+              <PartRowActions part={row.original} onRestock={onRestock} onArchive={onArchive} />
             </div>
           ),
         }),
       ]),
-    [t, language],
+    [t, language, onRestock, onArchive],
   );
   const table = useTable({
     features,

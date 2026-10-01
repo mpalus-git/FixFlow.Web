@@ -486,7 +486,9 @@
     },
     "actions": {
       "label": "Actions for part {{name}}",
-      "edit": "Edit"
+      "edit": "Edit",
+      "restock": "Register delivery",
+      "archive": "Archive"
     },
     "restock": {
       "title": "Register delivery",
@@ -496,6 +498,13 @@
       "submit": "Register delivery",
       "done": "Delivery of {{name}} registered. Stock: {{stock}}.",
       "concurrent": "The stock of the part changed at the same moment. Try again."
+    },
+    "archive": {
+      "title": "Archive part {{name}}?",
+      "description": "The part will disappear from the catalog and cannot be used in new service entries. Its usage history is kept and the catalog number stays reserved.",
+      "confirm": "Archive",
+      "archived": "Part {{name}} was archived.",
+      "concurrent": "The part was changed at the same moment. Try again."
     }
   },
   "dispatch": {
