@@ -12,6 +12,7 @@ export type TextFieldProps = {
   type?: HTMLInputTypeAttribute;
   autoComplete?: HTMLInputAutoCompleteAttribute;
   inputMode?: "text" | "tel" | "email" | "numeric";
+  min?: string;
   max?: string;
   hint?: string;
 };
@@ -24,6 +25,7 @@ export function TextField({
   type = "text",
   autoComplete = "off",
   inputMode,
+  min,
   max,
   hint,
 }: TextFieldProps) {
@@ -38,6 +40,7 @@ export function TextField({
         type={type}
         autoComplete={autoComplete}
         inputMode={inputMode}
+        min={min}
         max={max}
         aria-invalid={error !== undefined}
         aria-describedby={hint === undefined ? errorId : `${hintId} ${errorId}`}
