@@ -12,6 +12,7 @@ const errorCodeMessageKeys = {
   "Part.DuplicateCatalogNumber": "apiErrors.partDuplicateCatalogNumber",
   "Part.NotFound": "apiErrors.partNotFound",
   "Persistence.ConcurrentModification": "apiErrors.concurrentModification",
+  "User.DuplicateEmail": "apiErrors.userDuplicateEmail",
   "WorkOrder.Closed": "apiErrors.workOrderClosed",
   "WorkOrder.DeviceArchived": "apiErrors.workOrderDeviceArchived",
   "WorkOrder.InvalidStatusTransition": "apiErrors.workOrderInvalidStatusTransition",

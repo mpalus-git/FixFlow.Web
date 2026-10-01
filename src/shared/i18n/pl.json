@@ -242,7 +242,8 @@
     "workOrderTechnicianNotFound": "Wybrany technik nie jest już aktywny.",
     "partArchived": "Część jest zarchiwizowana i nie można jej zmieniać.",
     "partDuplicateCatalogNumber": "Część o tym numerze katalogowym już istnieje (także wśród zarchiwizowanych).",
-    "partNotFound": "Nie znaleziono części."
+    "partNotFound": "Nie znaleziono części.",
+    "userDuplicateEmail": "Konto z tym adresem e-mail już istnieje."
   },
   "devices": {
     "columns": {
@@ -585,6 +586,16 @@
     "noResults": {
       "title": "Brak wyników",
       "description": "Żadne konto nie pasuje do wybranych filtrów."
+    },
+    "create": {
+      "link": "Załóż konto",
+      "title": "Nowe konto",
+      "description": "Przekaż hasło początkowe użytkownikowi. Po zalogowaniu może je zmienić w profilu.",
+      "chooseRole": "Wybierz rolę",
+      "password": "Hasło początkowe",
+      "confirmPassword": "Powtórz hasło",
+      "submit": "Załóż konto",
+      "created": "Założono konto {{email}}."
     }
   }
 }

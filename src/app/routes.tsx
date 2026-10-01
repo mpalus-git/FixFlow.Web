@@ -253,6 +253,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                 Component: async () => (await import("@/features/users/pages/UsersPage")).UsersPage,
               },
             },
+            {
+              path: "new",
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/users/pages/CreateUserPage")).CreateUserPage,
+              },
+            },
           ],
         },
         {

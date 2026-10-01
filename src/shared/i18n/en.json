@@ -240,7 +240,8 @@
     "workOrderTechnicianNotFound": "The selected technician is no longer active.",
     "partArchived": "The part is archived and cannot be changed.",
     "partDuplicateCatalogNumber": "A part with this catalog number already exists (including archived ones).",
-    "partNotFound": "Part not found."
+    "partNotFound": "Part not found.",
+    "userDuplicateEmail": "An account with this email address already exists."
   },
   "devices": {
     "columns": {
@@ -579,6 +580,16 @@
     "noResults": {
       "title": "No results",
       "description": "No account matches the selected filters."
+    },
+    "create": {
+      "link": "Create account",
+      "title": "New account",
+      "description": "Give the initial password to the user. After signing in they can change it in their profile.",
+      "chooseRole": "Choose a role",
+      "password": "Initial password",
+      "confirmPassword": "Repeat password",
+      "submit": "Create account",
+      "created": "Created account {{email}}."
     }
   }
 }
