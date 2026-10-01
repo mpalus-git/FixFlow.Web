@@ -1,14 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import { PlusIcon, SearchXIcon, UsersIcon } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
+import { toast } from "sonner";
+import { useChangeUserStatusMutation } from "@/features/users/api/userMutations";
 import { userListQueryOptions, usersPageSize } from "@/features/users/api/userQueries";
+import { DeactivateUserDialog } from "@/features/users/components/DeactivateUserDialog";
 import { UserFilters } from "@/features/users/components/UserFilters";
 import { UsersTable } from "@/features/users/components/UsersTable";
 import {
   hasActiveUserFilters,
   useUserListSearchParams,
 } from "@/features/users/hooks/useUserListSearchParams";
+import { ApiError } from "@/shared/api/apiError";
+import { describeApiError } from "@/shared/api/describeApiError";
+import type { components } from "@/shared/api/schema";
 import { useKeepPageInRange } from "@/shared/lib/useKeepPageInRange";
 import { useCurrentUser } from "@/shared/session/currentUser";
 import { Button } from "@/shared/ui/button";
@@ -17,6 +24,8 @@ import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 
+type UserResponse = components["schemas"]["UserResponse"];
+
 export function UsersPage() {
   const { t } = useTranslation();
   const currentUser = useCurrentUser();
@@ -24,6 +33,24 @@ export function UsersPage() {
   const usersQuery = useQuery(userListQueryOptions({ page, filters }));
   const userPage = usersQuery.data;
   const isFiltered = hasActiveUserFilters({ page, filters });
+  const changeStatusMutation = useChangeUserStatusMutation();
+  const [userToDeactivate, setUserToDeactivate] = useState<UserResponse | null>(null);
+
+  function activate(user: UserResponse) {
+    changeStatusMutation.mutate(
+      { userId: user.id, isActive: true },
+      {
+        onSuccess: () => {
+          toast.success(t("users.activate.activated", { email: user.email }));
+        },
+        onError: (error) => {
+          toast.error(
+            error instanceof ApiError ? describeApiError(error, t) : t("errors.unexpected"),
+          );
+        },
+      },
+    );
+  }
   useKeepPageInRange({
     page,
     pageSize: usersPageSize,
@@ -60,6 +87,8 @@ export function UsersPage() {
           users={userPage.items}
           currentUserId={currentUser.id}
           isUpdating={usersQuery.isPlaceholderData}
+          onDeactivate={setUserToDeactivate}
+          onActivate={activate}
         />
         <PaginationControls
           page={page}
@@ -92,6 +121,12 @@ export function UsersPage() {
         onClear={clearFilters}
       />
       {renderContent()}
+      <DeactivateUserDialog
+        user={userToDeactivate}
+        onClose={() => {
+          setUserToDeactivate(null);
+        }}
+      />
     </div>
   );
 }

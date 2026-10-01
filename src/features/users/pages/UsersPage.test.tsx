@@ -49,6 +49,9 @@ describe("UsersPage", () => {
     const router = renderApp("/users");
 
     await user.selectOptions(await screen.findByLabelText("Rola"), "Technician");
+    await vi.waitFor(() => {
+      expect(requests.at(-1)?.get("role")).toBe("Technician");
+    }, 5000);
     await user.selectOptions(screen.getByLabelText("Status konta"), "Nieaktywne");
 
     await vi.waitFor(() => {

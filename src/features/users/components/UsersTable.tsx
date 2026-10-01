@@ -1,6 +1,8 @@
 import { createColumnHelper, tableFeatures, useTable } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { UserRowActions } from "@/features/users/components/UserRowActions";
+import { userAccountProtection } from "@/features/users/userRules";
 import type { components } from "@/shared/api/schema";
 import { isRole } from "@/shared/session/currentUser";
 import { Badge } from "@/shared/ui/badge";
@@ -10,7 +12,12 @@ type UserResponse = components["schemas"]["UserResponse"];
 
 const features = tableFeatures({});
 
+const actionsColumnId = "actions";
+
 function cellClassName(columnId: string): string {
+  if (columnId === actionsColumnId) {
+    return "sticky right-0 bg-background px-3";
+  }
   return columnId === "email" ? "min-w-40 px-3 whitespace-normal break-all" : "px-3";
 }
 
@@ -20,9 +27,17 @@ export type UsersTableProps = {
   users: UserResponse[];
   currentUserId: string;
   isUpdating: boolean;
+  onDeactivate: (user: UserResponse) => void;
+  onActivate: (user: UserResponse) => void;
 };
 
-export function UsersTable({ users, currentUserId, isUpdating }: UsersTableProps) {
+export function UsersTable({
+  users,
+  currentUserId,
+  isUpdating,
+  onDeactivate,
+  onActivate,
+}: UsersTableProps) {
   const { t } = useTranslation();
   const columns = useMemo(
     () =>
@@ -30,14 +45,19 @@ export function UsersTable({ users, currentUserId, isUpdating }: UsersTableProps
         columnHelper.accessor("email", {
           id: "email",
           header: t("users.columns.email"),
-          cell: ({ row }) => (
-            <span className="flex flex-col">
-              <span className="font-medium">{row.original.email}</span>
-              {row.original.id === currentUserId ? (
-                <span className="text-muted-foreground">{t("users.currentAccount")}</span>
-              ) : null}
-            </span>
-          ),
+          cell: ({ row }) => {
+            const protection = userAccountProtection(row.original, currentUserId);
+            return (
+              <span className="flex flex-col">
+                <span className="font-medium">{row.original.email}</span>
+                {protection === null ? null : (
+                  <span className="text-muted-foreground">
+                    {t(protection === "ownAccount" ? "users.currentAccount" : "users.demoAccount")}
+                  </span>
+                )}
+              </span>
+            );
+          },
         }),
         columnHelper.accessor("role", {
           id: "role",
@@ -64,8 +84,22 @@ export function UsersTable({ users, currentUserId, isUpdating }: UsersTableProps
               </Badge>
             ),
         }),
+        columnHelper.display({
+          id: actionsColumnId,
+          header: () => <span className="sr-only">{t("users.columns.actions")}</span>,
+          cell: ({ row }) => (
+            <div className="flex justify-end">
+              <UserRowActions
+                user={row.original}
+                protection={userAccountProtection(row.original, currentUserId)}
+                onDeactivate={onDeactivate}
+                onActivate={onActivate}
+              />
+            </div>
+          ),
+        }),
       ]),
-    [t, currentUserId],
+    [t, currentUserId, onDeactivate, onActivate],
   );
   const table = useTable({
     features,
