@@ -17,7 +17,8 @@
     "myWorkOrders": "My work orders",
     "clients": "Clients",
     "devices": "Devices",
-    "dispatch": "Dispatch board"
+    "dispatch": "Dispatch board",
+    "parts": "Parts"
   },
   "language": {
     "label": "Language",
@@ -74,7 +75,10 @@
     "calendarDate": "Enter a valid date",
     "dateInFuture": "The date cannot be in the future",
     "dateTime": "Enter a valid date and time",
-    "futureDateTime": "The due date must be in the future"
+    "futureDateTime": "The due date must be in the future",
+    "price": "Enter a net price in PLN, e.g. 45.50 (at most 2 decimal places)",
+    "stockQuantity": "Enter a whole number from 0 to 100,000",
+    "deliveryQuantity": "Enter a whole number from 1 to 100,000"
   },
   "auth": {
     "login": {
@@ -232,7 +236,10 @@
     "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders.",
     "concurrentModification": "The work order was changed in the meantime. Its current state is shown, try again.",
     "workOrderInvalidStatusTransition": "The work order status changed in the meantime and this action is no longer available.",
-    "workOrderTechnicianNotFound": "The selected technician is no longer active."
+    "workOrderTechnicianNotFound": "The selected technician is no longer active.",
+    "partArchived": "The part is archived and cannot be changed.",
+    "partDuplicateCatalogNumber": "A part with this catalog number already exists (including archived ones).",
+    "partNotFound": "Part not found."
   },
   "devices": {
     "columns": {
@@ -431,7 +438,74 @@
     }
   },
   "parts": {
-    "unknown": "Unknown part"
+    "unknown": "Unknown part",
+    "title": "Parts",
+    "lowStockHint_one": "Parts with {{count}} unit or fewer left are marked as low stock.",
+    "lowStockHint_other": "Parts with {{count}} units or fewer left are marked as low stock.",
+    "columns": {
+      "name": "Name",
+      "catalogNumber": "Catalog number",
+      "stockQuantity": "Stock",
+      "unitPrice": "Net price",
+      "actions": "Actions"
+    },
+    "search": {
+      "label": "Search parts",
+      "placeholder": "Name or catalog number"
+    },
+    "empty": {
+      "title": "No parts",
+      "description": "The parts catalog is empty."
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No part matches “{{search}}”."
+    },
+    "stock": {
+      "low": "Low stock",
+      "out": "Out of stock",
+      "units_one": "{{count}} pc",
+      "units_other": "{{count}} pcs"
+    },
+    "create": {
+      "link": "Add part",
+      "title": "New part",
+      "submit": "Add part",
+      "created": "Part {{name}} was added."
+    },
+    "edit": {
+      "title": "Edit part",
+      "submit": "Save changes",
+      "saved": "Part changes were saved."
+    },
+    "form": {
+      "unitPrice": "Net price (PLN)",
+      "initialStock": "Initial stock (pcs)",
+      "catalogNumberHint": "Unique; stored in upper case.",
+      "stockHint": "Stock changes through deliveries and use in work orders."
+    },
+    "actions": {
+      "label": "Actions for part {{name}}",
+      "edit": "Edit",
+      "restock": "Register delivery",
+      "archive": "Archive"
+    },
+    "restock": {
+      "title": "Register delivery",
+      "description": "{{name}} – currently {{stock}}",
+      "quantity": "Delivered units",
+      "preview": "Stock after delivery: {{stock}}",
+      "submit": "Register delivery",
+      "done": "Delivery of {{name}} registered. Stock: {{stock}}.",
+      "concurrent": "The stock of the part changed at the same moment. Try again."
+    },
+    "archive": {
+      "title": "Archive part {{name}}?",
+      "description": "The part will disappear from the catalog and cannot be used in new service entries. Its usage history is kept and the catalog number stays reserved.",
+      "confirm": "Archive",
+      "archived": "Part {{name}} was archived.",
+      "concurrent": "The part was changed at the same moment. Try again."
+    }
   },
   "dispatch": {
     "title": "Dispatch board",

@@ -17,6 +17,9 @@ export const validationMessages = {
   dateInFuture: "validation.dateInFuture",
   dateTime: "validation.dateTime",
   futureDateTime: "validation.futureDateTime",
+  price: "validation.price",
+  stockQuantity: "validation.stockQuantity",
+  deliveryQuantity: "validation.deliveryQuantity",
 } as const;
 
 export type ValidationMessageKey = (typeof validationMessages)[keyof typeof validationMessages];

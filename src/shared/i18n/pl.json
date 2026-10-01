@@ -17,7 +17,8 @@
     "myWorkOrders": "Moje zlecenia",
     "clients": "Klienci",
     "devices": "Urządzenia",
-    "dispatch": "Tablica dispatch"
+    "dispatch": "Tablica dispatch",
+    "parts": "Części"
   },
   "language": {
     "label": "Język",
@@ -74,7 +75,10 @@
     "calendarDate": "Podaj poprawną datę",
     "dateInFuture": "Data nie może być z przyszłości",
     "dateTime": "Podaj poprawną datę i godzinę",
-    "futureDateTime": "Termin musi być w przyszłości"
+    "futureDateTime": "Termin musi być w przyszłości",
+    "price": "Podaj cenę netto w zł, np. 45,50 (najwyżej 2 miejsca po przecinku)",
+    "stockQuantity": "Podaj liczbę całkowitą od 0 do 100 000",
+    "deliveryQuantity": "Podaj liczbę całkowitą od 1 do 100 000"
   },
   "auth": {
     "login": {
@@ -234,7 +238,10 @@
     "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń.",
     "concurrentModification": "Zlecenie zostało zmienione w międzyczasie. Wyświetlono aktualny stan, spróbuj ponownie.",
     "workOrderInvalidStatusTransition": "Status zlecenia zmienił się w międzyczasie i ta akcja nie jest już dostępna.",
-    "workOrderTechnicianNotFound": "Wybrany technik nie jest już aktywny."
+    "workOrderTechnicianNotFound": "Wybrany technik nie jest już aktywny.",
+    "partArchived": "Część jest zarchiwizowana i nie można jej zmieniać.",
+    "partDuplicateCatalogNumber": "Część o tym numerze katalogowym już istnieje (także wśród zarchiwizowanych).",
+    "partNotFound": "Nie znaleziono części."
   },
   "devices": {
     "columns": {
@@ -433,7 +440,78 @@
     }
   },
   "parts": {
-    "unknown": "Nieznana część"
+    "unknown": "Nieznana część",
+    "title": "Części",
+    "lowStockHint_one": "Części, których zostało {{count}} sztuka lub mniej, są oznaczone jako niski stan.",
+    "lowStockHint_few": "Części, których zostały {{count}} sztuki lub mniej, są oznaczone jako niski stan.",
+    "lowStockHint_many": "Części, których zostało {{count}} sztuk lub mniej, są oznaczone jako niski stan.",
+    "lowStockHint_other": "Części, których zostało {{count}} sztuki lub mniej, są oznaczone jako niski stan.",
+    "columns": {
+      "name": "Nazwa",
+      "catalogNumber": "Numer katalogowy",
+      "stockQuantity": "Stan",
+      "unitPrice": "Cena netto",
+      "actions": "Akcje"
+    },
+    "search": {
+      "label": "Szukaj części",
+      "placeholder": "Nazwa lub numer katalogowy"
+    },
+    "empty": {
+      "title": "Brak części",
+      "description": "Katalog części jest pusty."
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żadna część nie pasuje do „{{search}}”."
+    },
+    "stock": {
+      "low": "Niski stan",
+      "out": "Brak",
+      "units_one": "{{count}} szt.",
+      "units_few": "{{count}} szt.",
+      "units_many": "{{count}} szt.",
+      "units_other": "{{count}} szt."
+    },
+    "create": {
+      "link": "Dodaj część",
+      "title": "Nowa część",
+      "submit": "Dodaj część",
+      "created": "Dodano część {{name}}."
+    },
+    "edit": {
+      "title": "Edycja części",
+      "submit": "Zapisz zmiany",
+      "saved": "Zapisano zmiany części."
+    },
+    "form": {
+      "unitPrice": "Cena netto (zł)",
+      "initialStock": "Stan początkowy (szt.)",
+      "catalogNumberHint": "Unikalny; zapisywany wielkimi literami.",
+      "stockHint": "Stan zmienia się przez przyjęcie dostawy i zużycie w zleceniach."
+    },
+    "actions": {
+      "label": "Akcje części {{name}}",
+      "edit": "Edytuj",
+      "restock": "Przyjmij dostawę",
+      "archive": "Archiwizuj"
+    },
+    "restock": {
+      "title": "Przyjęcie dostawy",
+      "description": "{{name}} – obecnie {{stock}}",
+      "quantity": "Liczba dostarczonych sztuk",
+      "preview": "Stan po przyjęciu: {{stock}}",
+      "submit": "Przyjmij dostawę",
+      "done": "Przyjęto dostawę części {{name}}. Stan: {{stock}}",
+      "concurrent": "Stan części zmienił się w tym samym momencie. Spróbuj ponownie."
+    },
+    "archive": {
+      "title": "Zarchiwizować część {{name}}?",
+      "description": "Część zniknie z katalogu i nie będzie można jej używać w nowych wpisach serwisowych. Historia zużycia zostanie zachowana, a numer katalogowy pozostanie zajęty.",
+      "confirm": "Archiwizuj",
+      "archived": "Zarchiwizowano część {{name}}.",
+      "concurrent": "Część została zmieniona w tym samym momencie. Spróbuj ponownie."
+    }
   },
   "dispatch": {
     "title": "Tablica dispatch",

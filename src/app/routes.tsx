@@ -214,6 +214,35 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           ],
         },
         {
+          path: "parts",
+          ErrorBoundary: RouteErrorBoundary,
+          middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
+          children: [
+            {
+              index: true,
+              lazy: {
+                Component: async () => (await import("@/features/parts/pages/PartsPage")).PartsPage,
+              },
+            },
+            {
+              path: "new",
+              lazy: {
+                Component: async () =>
+                  (await import("@/features/parts/pages/CreatePartPage")).CreatePartPage,
+              },
+            },
+            {
+              path: ":partId/edit",
+              lazy: {
+                loader: async () =>
+                  (await import("@/features/parts/api/partLoader")).createPartLoader(queryClient),
+                Component: async () =>
+                  (await import("@/features/parts/pages/EditPartPage")).EditPartPage,
+              },
+            },
+          ],
+        },
+        {
           path: "profile",
           lazy: {
             Component: async () =>

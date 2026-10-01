@@ -11,10 +11,11 @@ export type TextFieldProps = {
   registration: UseFormRegisterReturn;
   type?: HTMLInputTypeAttribute;
   autoComplete?: HTMLInputAutoCompleteAttribute;
-  inputMode?: "text" | "tel" | "email" | "numeric";
+  inputMode?: "text" | "tel" | "email" | "numeric" | "decimal";
   min?: string;
   max?: string;
   hint?: string;
+  readOnly?: boolean;
 };
 
 export function TextField({
@@ -28,6 +29,7 @@ export function TextField({
   min,
   max,
   hint,
+  readOnly = false,
 }: TextFieldProps) {
   const errorId = `${id}-error`;
   const hintId = `${id}-hint`;
@@ -42,6 +44,8 @@ export function TextField({
         inputMode={inputMode}
         min={min}
         max={max}
+        readOnly={readOnly}
+        className={readOnly ? "bg-muted text-muted-foreground" : undefined}
         aria-invalid={error !== undefined}
         aria-describedby={hint === undefined ? errorId : `${hintId} ${errorId}`}
         {...registration}
