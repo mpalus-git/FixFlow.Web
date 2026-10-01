@@ -284,7 +284,9 @@
       "description": "The device will disappear from lists and its work order history is kept. No new work orders can be created for it and its serial number stays reserved.",
       "confirm": "Archive",
       "archived": "Device {{serialNumber}} has been archived."
-    }
+    },
+    "name": "{{serialNumber}} · {{manufacturer}} {{model}}",
+    "openDevice": "Open device"
   },
   "workOrders": {
     "title": "Work orders",
@@ -320,7 +322,8 @@
       "description": "Fault description",
       "priority": "Priority",
       "status": "Status",
-      "technician": "Technician"
+      "technician": "Technician",
+      "actions": "Actions"
     },
     "overdue": "Overdue",
     "unassigned": "Unassigned",
@@ -355,6 +358,14 @@
       "title": "New work order",
       "submit": "Create work order",
       "created": "Work order created."
+    },
+    "actions": {
+      "edit": "Edit work order for {{serialNumber}}"
+    },
+    "edit": {
+      "title": "Edit work order",
+      "submit": "Save changes",
+      "saved": "Work order changes saved."
     }
   }
 }

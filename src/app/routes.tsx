@@ -70,6 +70,18 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
                     .CreateWorkOrderPage,
               },
             },
+            {
+              path: ":workOrderId/edit",
+              lazy: {
+                loader: async () =>
+                  (
+                    await import("@/features/work-orders/api/workOrderLoader")
+                  ).createWorkOrderLoader(queryClient),
+                Component: async () =>
+                  (await import("@/features/work-orders/pages/EditWorkOrderPage"))
+                    .EditWorkOrderPage,
+              },
+            },
           ],
         },
         {
