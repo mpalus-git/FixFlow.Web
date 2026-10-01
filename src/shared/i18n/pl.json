@@ -370,6 +370,9 @@
       "title": "Edycja zlecenia",
       "submit": "Zapisz zmiany",
       "saved": "Zapisano zmiany zlecenia."
+    },
+    "details": {
+      "timeline": "Przebieg zlecenia"
     }
   },
   "parts": {

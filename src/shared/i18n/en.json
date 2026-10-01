@@ -368,6 +368,9 @@
       "title": "Edit work order",
       "submit": "Save changes",
       "saved": "Work order changes saved."
+    },
+    "details": {
+      "timeline": "Work order progress"
     }
   },
   "parts": {
