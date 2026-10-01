@@ -17,6 +17,6 @@ function readStateReturnTo(state: unknown): string | null {
   return readReturnTo(state.returnTo);
 }
 
-export function useReturnPath(): string {
-  return readStateReturnTo(useLocation().state) ?? workOrderListPath;
+export function useReturnPath(fallbackPath: string = workOrderListPath): string {
+  return readStateReturnTo(useLocation().state) ?? fallbackPath;
 }

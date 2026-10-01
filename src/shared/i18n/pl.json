@@ -373,7 +373,12 @@
       "saved": "Zapisano zmiany zlecenia."
     },
     "details": {
-      "timeline": "Przebieg zlecenia"
+      "timeline": "Przebieg zlecenia",
+      "title": "Szczegóły zlecenia",
+      "back": "Wróć",
+      "edit": "Edytuj",
+      "serviceEntries": "Wpisy serwisowe",
+      "unknownTechnician": "Technik spoza listy"
     },
     "serviceEntries": {
       "correction": "Korekta",

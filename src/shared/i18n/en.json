@@ -371,7 +371,12 @@
       "saved": "Work order changes saved."
     },
     "details": {
-      "timeline": "Work order progress"
+      "timeline": "Work order progress",
+      "title": "Work order details",
+      "back": "Back",
+      "edit": "Edit",
+      "serviceEntries": "Service entries",
+      "unknownTechnician": "Unlisted technician"
     },
     "serviceEntries": {
       "correction": "Correction",
