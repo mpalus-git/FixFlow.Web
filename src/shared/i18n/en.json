@@ -6,7 +6,8 @@
     "close": "Close",
     "saving": "Saving…",
     "cancel": "Cancel",
-    "opensInNewTab": " (opens in a new tab)"
+    "opensInNewTab": " (opens in a new tab)",
+    "passwordRequirements": "At least 8 characters, an uppercase and a lowercase letter, a digit and a character other than a letter or digit."
   },
   "nav": {
     "label": "Main navigation",
@@ -18,7 +19,8 @@
     "clients": "Clients",
     "devices": "Devices",
     "dispatch": "Dispatch board",
-    "parts": "Parts"
+    "parts": "Parts",
+    "users": "Users"
   },
   "language": {
     "label": "Language",
@@ -130,7 +132,6 @@
       "currentPassword": "Current password",
       "newPassword": "New password",
       "confirmNewPassword": "Repeat new password",
-      "requirements": "At least 8 characters, an uppercase and a lowercase letter, a digit and a character other than a letter or digit.",
       "submit": "Change password",
       "submitting": "Changing…",
       "changed": "The password has been changed. Your other devices have been signed out.",
@@ -239,7 +240,11 @@
     "workOrderTechnicianNotFound": "The selected technician is no longer active.",
     "partArchived": "The part is archived and cannot be changed.",
     "partDuplicateCatalogNumber": "A part with this catalog number already exists (including archived ones).",
-    "partNotFound": "Part not found."
+    "partNotFound": "Part not found.",
+    "userDuplicateEmail": "An account with this email address already exists.",
+    "userCannotDeactivateSelf": "You cannot deactivate your own account.",
+    "userHasOpenWorkOrders": "The technician has assigned or in-progress work orders.",
+    "userNotFound": "The user account was not found."
   },
   "devices": {
     "columns": {
@@ -549,5 +554,77 @@
     },
     "emptyWeek": "Technicians have no work orders assigned this week.",
     "limit": "The board shows the first 100 work orders. Some work orders did not fit - see the Work orders tab for the full list."
+  },
+  "users": {
+    "title": "Users",
+    "description": "Accounts of dispatchers, technicians and administrators. A deactivated account cannot sign in.",
+    "currentAccount": "Your account",
+    "filters": {
+      "label": "User filters",
+      "role": "Role",
+      "allRoles": "All roles",
+      "status": "Account status",
+      "allStatuses": "All accounts",
+      "clear": "Clear filters"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "columns": {
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "empty": {
+      "title": "No users",
+      "description": "There are no accounts yet."
+    },
+    "noResults": {
+      "title": "No results",
+      "description": "No account matches the selected filters."
+    },
+    "create": {
+      "link": "Create account",
+      "title": "New account",
+      "description": "Give the initial password to the user. After signing in they can change it in their profile.",
+      "chooseRole": "Choose a role",
+      "password": "Initial password",
+      "confirmPassword": "Repeat password",
+      "submit": "Create account",
+      "created": "Created account {{email}}."
+    },
+    "demoAccount": "Demo account",
+    "actions": {
+      "label": "Actions for account {{email}}",
+      "deactivate": "Deactivate",
+      "activate": "Activate",
+      "resetPassword": "Reset password"
+    },
+    "protection": {
+      "ownAccount": "This is your account - you cannot deactivate it, and you can change its password in your profile.",
+      "demoAccount": "Demo accounts are protected so that they stay available to every visitor."
+    },
+    "deactivate": {
+      "title": "Deactivate account {{email}}?",
+      "description": "The user cannot sign in until you activate the account again. Their open sessions expire within about fifteen minutes.",
+      "confirm": "Deactivate",
+      "pending": "Deactivating…",
+      "deactivated": "Deactivated account {{email}}.",
+      "openWorkOrders": "The technician has assigned or in-progress work orders. Unassign or complete them before deactivating the account.",
+      "showWorkOrders": "Show the technician's work orders"
+    },
+    "activate": {
+      "activated": "Activated account {{email}}."
+    },
+    "resetPassword": {
+      "title": "New password for {{email}}",
+      "description": "The user is signed out on every device (open sessions expire within about fifteen minutes) and a lockout after failed sign-ins is lifted. Give them the new password.",
+      "newPassword": "New password",
+      "confirmNewPassword": "Repeat new password",
+      "submit": "Set password",
+      "done": "Set a new password for {{email}}."
+    }
   }
 }

@@ -6,7 +6,8 @@
     "close": "Zamknij",
     "saving": "Zapisywanie…",
     "cancel": "Anuluj",
-    "opensInNewTab": " (otwiera się w nowej karcie)"
+    "opensInNewTab": " (otwiera się w nowej karcie)",
+    "passwordRequirements": "Co najmniej 8 znaków, wielka i mała litera, cyfra oraz znak inny niż litera i cyfra."
   },
   "nav": {
     "label": "Nawigacja główna",
@@ -18,7 +19,8 @@
     "clients": "Klienci",
     "devices": "Urządzenia",
     "dispatch": "Tablica dispatch",
-    "parts": "Części"
+    "parts": "Części",
+    "users": "Użytkownicy"
   },
   "language": {
     "label": "Język",
@@ -130,7 +132,6 @@
       "currentPassword": "Obecne hasło",
       "newPassword": "Nowe hasło",
       "confirmNewPassword": "Powtórz nowe hasło",
-      "requirements": "Co najmniej 8 znaków, wielka i mała litera, cyfra oraz znak inny niż litera i cyfra.",
       "submit": "Zmień hasło",
       "submitting": "Zmienianie…",
       "changed": "Hasło zostało zmienione. Pozostałe urządzenia zostały wylogowane.",
@@ -241,7 +242,11 @@
     "workOrderTechnicianNotFound": "Wybrany technik nie jest już aktywny.",
     "partArchived": "Część jest zarchiwizowana i nie można jej zmieniać.",
     "partDuplicateCatalogNumber": "Część o tym numerze katalogowym już istnieje (także wśród zarchiwizowanych).",
-    "partNotFound": "Nie znaleziono części."
+    "partNotFound": "Nie znaleziono części.",
+    "userDuplicateEmail": "Konto z tym adresem e-mail już istnieje.",
+    "userCannotDeactivateSelf": "Nie możesz dezaktywować własnego konta.",
+    "userHasOpenWorkOrders": "Technik ma przypisane lub rozpoczęte zlecenia.",
+    "userNotFound": "Nie znaleziono konta użytkownika."
   },
   "devices": {
     "columns": {
@@ -555,5 +560,77 @@
     },
     "emptyWeek": "W tym tygodniu technicy nie mają przypisanych zleceń.",
     "limit": "Tablica pokazuje pierwsze 100 zleceń. Część zleceń nie zmieściła się na tablicy - pełną listę znajdziesz w zakładce Zlecenia."
+  },
+  "users": {
+    "title": "Użytkownicy",
+    "description": "Konta dyspozytorów, techników i administratorów. Dezaktywowane konto nie może się zalogować.",
+    "currentAccount": "Twoje konto",
+    "filters": {
+      "label": "Filtry użytkowników",
+      "role": "Rola",
+      "allRoles": "Wszystkie role",
+      "status": "Status konta",
+      "allStatuses": "Wszystkie konta",
+      "clear": "Wyczyść filtry"
+    },
+    "status": {
+      "active": "Aktywne",
+      "inactive": "Nieaktywne"
+    },
+    "columns": {
+      "email": "E-mail",
+      "role": "Rola",
+      "status": "Status",
+      "actions": "Akcje"
+    },
+    "empty": {
+      "title": "Brak użytkowników",
+      "description": "Nie ma jeszcze żadnych kont."
+    },
+    "noResults": {
+      "title": "Brak wyników",
+      "description": "Żadne konto nie pasuje do wybranych filtrów."
+    },
+    "create": {
+      "link": "Załóż konto",
+      "title": "Nowe konto",
+      "description": "Przekaż hasło początkowe użytkownikowi. Po zalogowaniu może je zmienić w profilu.",
+      "chooseRole": "Wybierz rolę",
+      "password": "Hasło początkowe",
+      "confirmPassword": "Powtórz hasło",
+      "submit": "Załóż konto",
+      "created": "Założono konto {{email}}."
+    },
+    "demoAccount": "Konto demo",
+    "actions": {
+      "label": "Akcje konta {{email}}",
+      "deactivate": "Dezaktywuj",
+      "activate": "Aktywuj",
+      "resetPassword": "Resetuj hasło"
+    },
+    "protection": {
+      "ownAccount": "To Twoje konto - nie możesz go dezaktywować, a hasło zmienisz w profilu.",
+      "demoAccount": "Konto demo jest chronione, żeby pozostało dostępne dla wszystkich odwiedzających."
+    },
+    "deactivate": {
+      "title": "Dezaktywować konto {{email}}?",
+      "description": "Użytkownik nie zaloguje się, dopóki nie aktywujesz konta ponownie. Jego otwarte sesje wygasną w ciągu kilkunastu minut.",
+      "confirm": "Dezaktywuj",
+      "pending": "Dezaktywowanie…",
+      "deactivated": "Dezaktywowano konto {{email}}.",
+      "openWorkOrders": "Technik ma przypisane lub rozpoczęte zlecenia. Odepnij je albo zakończ przed dezaktywacją.",
+      "showWorkOrders": "Pokaż zlecenia technika"
+    },
+    "activate": {
+      "activated": "Aktywowano konto {{email}}."
+    },
+    "resetPassword": {
+      "title": "Nowe hasło dla {{email}}",
+      "description": "Użytkownik zostanie wylogowany na wszystkich urządzeniach (otwarte sesje wygasną w ciągu kilkunastu minut), a blokada po nieudanych logowaniach zostanie zdjęta. Przekaż mu nowe hasło.",
+      "newPassword": "Nowe hasło",
+      "confirmNewPassword": "Powtórz nowe hasło",
+      "submit": "Ustaw hasło",
+      "done": "Ustawiono nowe hasło dla {{email}}."
+    }
   }
 }
