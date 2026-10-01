@@ -15,6 +15,8 @@ export const validationMessages = {
   phone: "validation.phone",
   calendarDate: "validation.calendarDate",
   dateInFuture: "validation.dateInFuture",
+  dateTime: "validation.dateTime",
+  futureDateTime: "validation.futureDateTime",
 } as const;
 
 export type ValidationMessageKey = (typeof validationMessages)[keyof typeof validationMessages];

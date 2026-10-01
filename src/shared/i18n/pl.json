@@ -70,7 +70,9 @@
     "postalCode": "Podaj kod pocztowy w formacie NN-NNN",
     "phone": "Podaj od 9 do 20 cyfr, spacji lub myślników, opcjonalnie z + na początku",
     "calendarDate": "Podaj poprawną datę",
-    "dateInFuture": "Data nie może być z przyszłości"
+    "dateInFuture": "Data nie może być z przyszłości",
+    "dateTime": "Podaj poprawną datę i godzinę",
+    "futureDateTime": "Termin musi być w przyszłości"
   },
   "auth": {
     "login": {

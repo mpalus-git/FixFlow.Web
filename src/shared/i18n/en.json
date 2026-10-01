@@ -70,7 +70,9 @@
     "postalCode": "Enter the postal code in the NN-NNN format",
     "phone": "Enter 9 to 20 digits, spaces or dashes, optionally starting with +",
     "calendarDate": "Enter a valid date",
-    "dateInFuture": "The date cannot be in the future"
+    "dateInFuture": "The date cannot be in the future",
+    "dateTime": "Enter a valid date and time",
+    "futureDateTime": "The due date must be in the future"
   },
   "auth": {
     "login": {
