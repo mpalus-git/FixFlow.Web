@@ -74,7 +74,10 @@
     "calendarDate": "Podaj poprawną datę",
     "dateInFuture": "Data nie może być z przyszłości",
     "dateTime": "Podaj poprawną datę i godzinę",
-    "futureDateTime": "Termin musi być w przyszłości"
+    "futureDateTime": "Termin musi być w przyszłości",
+    "price": "Podaj cenę netto w zł, np. 45,50 (najwyżej 2 miejsca po przecinku)",
+    "stockQuantity": "Podaj liczbę całkowitą od 0 do 100 000",
+    "deliveryQuantity": "Podaj liczbę całkowitą od 1 do 100 000"
   },
   "auth": {
     "login": {

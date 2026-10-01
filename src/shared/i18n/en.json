@@ -74,7 +74,10 @@
     "calendarDate": "Enter a valid date",
     "dateInFuture": "The date cannot be in the future",
     "dateTime": "Enter a valid date and time",
-    "futureDateTime": "The due date must be in the future"
+    "futureDateTime": "The due date must be in the future",
+    "price": "Enter a net price in PLN, e.g. 45.50 (at most 2 decimal places)",
+    "stockQuantity": "Enter a whole number from 0 to 100,000",
+    "deliveryQuantity": "Enter a whole number from 1 to 100,000"
   },
   "auth": {
     "login": {
