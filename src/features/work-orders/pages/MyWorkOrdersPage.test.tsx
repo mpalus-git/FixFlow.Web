@@ -45,6 +45,7 @@ describe("MyWorkOrdersPage", () => {
     expect(screen.getByLabelText("Status")).toBeInTheDocument();
     expect(screen.queryByLabelText("Technik")).not.toBeInTheDocument();
     expect(screen.queryByRole("columnheader", { name: "Technik" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Edytuj zlecenie/ })).not.toBeInTheDocument();
     expect(userListRequests).toHaveLength(0);
   });
 

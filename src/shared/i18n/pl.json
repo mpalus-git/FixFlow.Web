@@ -70,7 +70,9 @@
     "postalCode": "Podaj kod pocztowy w formacie NN-NNN",
     "phone": "Podaj od 9 do 20 cyfr, spacji lub myślników, opcjonalnie z + na początku",
     "calendarDate": "Podaj poprawną datę",
-    "dateInFuture": "Data nie może być z przyszłości"
+    "dateInFuture": "Data nie może być z przyszłości",
+    "dateTime": "Podaj poprawną datę i godzinę",
+    "futureDateTime": "Termin musi być w przyszłości"
   },
   "auth": {
     "login": {
@@ -222,7 +224,10 @@
     "deviceArchived": "Urządzenie jest zarchiwizowane i nie można go zmieniać.",
     "deviceClientArchived": "Nie można dodać urządzenia do zarchiwizowanego klienta.",
     "deviceDuplicateSerialNumber": "Urządzenie o tym numerze seryjnym już istnieje (także wśród zarchiwizowanych).",
-    "deviceNotFound": "Nie znaleziono urządzenia."
+    "deviceNotFound": "Nie znaleziono urządzenia.",
+    "workOrderClosed": "Zlecenie jest zakończone lub zafakturowane i nie można go zmieniać.",
+    "workOrderDeviceArchived": "Nie można założyć zlecenia na zarchiwizowane urządzenie.",
+    "workOrderNotFound": "Nie znaleziono zlecenia."
   },
   "devices": {
     "columns": {
@@ -281,7 +286,9 @@
       "description": "Urządzenie zniknie z list, a historia zleceń zostanie zachowana. Nie będzie można zakładać dla niego nowych zleceń, a jego numer seryjny pozostanie zajęty.",
       "confirm": "Archiwizuj",
       "archived": "Zarchiwizowano urządzenie {{serialNumber}}."
-    }
+    },
+    "name": "{{serialNumber}} · {{manufacturer}} {{model}}",
+    "openDevice": "Przejdź do urządzenia"
   },
   "workOrders": {
     "title": "Zlecenia",
@@ -317,7 +324,8 @@
       "description": "Opis usterki",
       "priority": "Priorytet",
       "status": "Status",
-      "technician": "Technik"
+      "technician": "Technik",
+      "actions": "Akcje"
     },
     "overdue": "Po terminie",
     "unassigned": "Nieprzypisane",
@@ -336,6 +344,30 @@
       "dueTo": "Termin do",
       "overdueOnly": "Tylko po terminie",
       "clear": "Wyczyść filtry"
+    },
+    "form": {
+      "chooseClient": "Wybierz klienta",
+      "chooseDevice": "Wybierz urządzenie",
+      "chooseClientFirst": "Najpierw wybierz klienta",
+      "noClients": "Brak aktywnych klientów",
+      "noDevices": "Klient nie ma aktywnych urządzeń",
+      "loadingOptions": "Wczytywanie…",
+      "optionsError": "Nie udało się wczytać listy",
+      "deviceOption": "{{serialNumber}} · {{manufacturer}} {{model}}",
+      "dueDateHint": "Czas polski (Europe/Warsaw)."
+    },
+    "create": {
+      "title": "Nowe zlecenie",
+      "submit": "Utwórz zlecenie",
+      "created": "Utworzono zlecenie."
+    },
+    "actions": {
+      "edit": "Edytuj zlecenie dla {{serialNumber}}"
+    },
+    "edit": {
+      "title": "Edycja zlecenia",
+      "submit": "Zapisz zmiany",
+      "saved": "Zapisano zmiany zlecenia."
     }
   }
 }

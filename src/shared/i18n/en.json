@@ -70,7 +70,9 @@
     "postalCode": "Enter the postal code in the NN-NNN format",
     "phone": "Enter 9 to 20 digits, spaces or dashes, optionally starting with +",
     "calendarDate": "Enter a valid date",
-    "dateInFuture": "The date cannot be in the future"
+    "dateInFuture": "The date cannot be in the future",
+    "dateTime": "Enter a valid date and time",
+    "futureDateTime": "The due date must be in the future"
   },
   "auth": {
     "login": {
@@ -220,7 +222,10 @@
     "deviceArchived": "The device is archived and cannot be changed.",
     "deviceClientArchived": "Devices cannot be added to an archived client.",
     "deviceDuplicateSerialNumber": "A device with this serial number already exists (also among archived ones).",
-    "deviceNotFound": "The device was not found."
+    "deviceNotFound": "The device was not found.",
+    "workOrderClosed": "The work order is completed or invoiced and cannot be changed.",
+    "workOrderDeviceArchived": "A work order cannot be created for an archived device.",
+    "workOrderNotFound": "Work order not found."
   },
   "devices": {
     "columns": {
@@ -279,7 +284,9 @@
       "description": "The device will disappear from lists and its work order history is kept. No new work orders can be created for it and its serial number stays reserved.",
       "confirm": "Archive",
       "archived": "Device {{serialNumber}} has been archived."
-    }
+    },
+    "name": "{{serialNumber}} · {{manufacturer}} {{model}}",
+    "openDevice": "Open device"
   },
   "workOrders": {
     "title": "Work orders",
@@ -315,7 +322,8 @@
       "description": "Fault description",
       "priority": "Priority",
       "status": "Status",
-      "technician": "Technician"
+      "technician": "Technician",
+      "actions": "Actions"
     },
     "overdue": "Overdue",
     "unassigned": "Unassigned",
@@ -334,6 +342,30 @@
       "dueTo": "Due to",
       "overdueOnly": "Overdue only",
       "clear": "Clear filters"
+    },
+    "form": {
+      "chooseClient": "Choose a client",
+      "chooseDevice": "Choose a device",
+      "chooseClientFirst": "Choose a client first",
+      "noClients": "No active clients",
+      "noDevices": "The client has no active devices",
+      "loadingOptions": "Loading…",
+      "optionsError": "Could not load the list",
+      "deviceOption": "{{serialNumber}} · {{manufacturer}} {{model}}",
+      "dueDateHint": "Polish time (Europe/Warsaw)."
+    },
+    "create": {
+      "title": "New work order",
+      "submit": "Create work order",
+      "created": "Work order created."
+    },
+    "actions": {
+      "edit": "Edit work order for {{serialNumber}}"
+    },
+    "edit": {
+      "title": "Edit work order",
+      "submit": "Save changes",
+      "saved": "Work order changes saved."
     }
   }
 }

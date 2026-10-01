@@ -30,7 +30,7 @@ export function WorkOrderList({ scope }: WorkOrderListProps) {
   const workOrdersQuery = useQuery(workOrderListQueryOptions(listParams));
   const workOrderPage = workOrdersQuery.data;
   const isFiltered = hasActiveFilters(listParams);
-  const showTechnician = scope === "all";
+  const isDispatcherScope = scope === "all";
   useKeepPageInRange({
     page,
     pageSize: workOrderListPageSize,
@@ -67,7 +67,8 @@ export function WorkOrderList({ scope }: WorkOrderListProps) {
           isUpdating={workOrdersQuery.isPlaceholderData}
           sort={sort}
           onSortChange={setSort}
-          showTechnician={showTechnician}
+          showTechnician={isDispatcherScope}
+          showActions={isDispatcherScope}
         />
         <PaginationControls
           page={page}
@@ -91,7 +92,7 @@ export function WorkOrderList({ scope }: WorkOrderListProps) {
       <WorkOrderFilters
         filters={filters}
         onChange={setFilters}
-        showTechnicianFilter={showTechnician}
+        showTechnicianFilter={isDispatcherScope}
         canClear={isFiltered}
         onClear={clearFilters}
       />

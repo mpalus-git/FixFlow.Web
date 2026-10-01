@@ -13,6 +13,7 @@ function renderTable(sort: WorkOrderSort, showTechnician = true) {
       sort={sort}
       onSortChange={onSortChange}
       showTechnician={showTechnician}
+      showActions={false}
     />,
   );
   return onSortChange;

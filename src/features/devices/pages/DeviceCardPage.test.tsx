@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
@@ -9,12 +9,14 @@ import { createDeviceListItem, createDeviceResponse } from "@/test/deviceFixture
 import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
 import { signInAs } from "@/test/signedInUser";
-import { createWorkOrderListItem } from "@/test/workOrderFixtures";
+import { createWorkOrderListItem, createWorkOrderResponse } from "@/test/workOrderFixtures";
 
 type DeviceResponse = components["schemas"]["DeviceResponse"];
 type DevicePage = components["schemas"]["PagedResponseOfDeviceListItemResponse"];
 type WorkOrderPage = components["schemas"]["PagedResponseOfWorkOrderListItemResponse"];
 type ProblemDetails = components["schemas"]["ProblemDetails"];
+type ClientPage = components["schemas"]["PagedResponseOfClientResponse"];
+type CreateWorkOrderRequest = components["schemas"]["CreateWorkOrderRequest"];
 
 const device = createDeviceResponse();
 const deviceUrl = `${apiBaseUrl}/api/v1/devices/${device.id}`;
@@ -94,6 +96,52 @@ describe("DeviceCardPage", () => {
 
     expect(await screen.findByText("Zarchiwizowane")).toBeInTheDocument();
     expect(screen.getByText("20.09.2026")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Nowe zlecenie" })).not.toBeInTheDocument();
+  });
+
+  it("creates a work order for the device and comes back to its card", async () => {
+    mockCard();
+    const clientPage: ClientPage = {
+      items: [createClientResponse()],
+      page: 1,
+      pageSize: 100,
+      totalCount: 1,
+    };
+    const devicePage: DevicePage = {
+      items: [createDeviceListItem()],
+      page: 1,
+      pageSize: 100,
+      totalCount: 1,
+    };
+    const createdBodies: CreateWorkOrderRequest[] = [];
+    server.use(
+      http.get(`${apiBaseUrl}/api/v1/clients`, () => HttpResponse.json(clientPage)),
+      http.get(`${apiBaseUrl}/api/v1/devices`, () => HttpResponse.json(devicePage)),
+      http.post<never, CreateWorkOrderRequest>(
+        `${apiBaseUrl}/api/v1/work-orders`,
+        async ({ request }) => {
+          createdBodies.push(await request.json());
+          return HttpResponse.json(createWorkOrderResponse(), {
+            status: 201,
+            headers: { ETag: '"1"' },
+          });
+        },
+      ),
+    );
+    const router = renderApp(cardPath);
+    const user = userEvent.setup();
+
+    await user.click(await screen.findByRole("link", { name: "Nowe zlecenie" }));
+    await screen.findByRole("option", { name: /SN-2024-0001/ });
+    expect(screen.getByLabelText("Urządzenie")).toHaveValue(device.id);
+    await user.type(screen.getByLabelText("Opis usterki"), "Przegląd okresowy");
+    fireEvent.change(screen.getByLabelText("Termin"), { target: { value: "2030-01-15T10:00" } });
+    await user.click(screen.getByRole("button", { name: "Utwórz zlecenie" }));
+
+    await vi.waitFor(() => {
+      expect(router.state.location.pathname).toBe(cardPath);
+    });
+    expect(createdBodies[0]?.deviceId).toBe(device.id);
   });
 
   it("shows the not found page for a device that does not exist", async () => {

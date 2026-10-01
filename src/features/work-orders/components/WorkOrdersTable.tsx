@@ -1,4 +1,5 @@
 import { type SortingState, type Updater, useTable } from "@tanstack/react-table";
+import { useMemo } from "react";
 import {
   type WorkOrderColumnId,
   type WorkOrderListItem,
@@ -12,17 +13,14 @@ import {
 } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
 import { DataTable } from "@/shared/ui/DataTable";
 
-const allColumnIds: readonly WorkOrderColumnId[] = [
+const baseColumnIds: readonly WorkOrderColumnId[] = [
   "dueDate",
   "clientName",
   "device",
   "description",
   "priority",
   "status",
-  "technician",
 ];
-
-const columnIdsWithoutTechnician = allColumnIds.filter((columnId) => columnId !== "technician");
 
 const sortFieldsByColumnId = {
   dueDate: "DueDate",
@@ -32,7 +30,10 @@ const sortFieldsByColumnId = {
 } as const satisfies Partial<Record<WorkOrderColumnId, WorkOrderSortBy>>;
 
 function cellClassName(columnId: string): string {
-  return columnId === "description" ? "hidden px-3 2xl:table-cell" : "px-3";
+  if (columnId === "description") {
+    return "hidden px-3 2xl:table-cell";
+  }
+  return columnId === "actions" ? "sticky right-0 bg-background px-3" : "px-3";
 }
 
 function toSortingState({ sortBy, sortDirection }: WorkOrderSort): SortingState {
@@ -57,6 +58,7 @@ export type WorkOrdersTableProps = {
   sort: WorkOrderSort;
   onSortChange: (sort: WorkOrderSort) => void;
   showTechnician: boolean;
+  showActions: boolean;
 };
 
 export function WorkOrdersTable({
@@ -65,8 +67,17 @@ export function WorkOrdersTable({
   sort,
   onSortChange,
   showTechnician,
+  showActions,
 }: WorkOrdersTableProps) {
-  const columns = useWorkOrderColumns(showTechnician ? allColumnIds : columnIdsWithoutTechnician);
+  const columnIds = useMemo(
+    () => [
+      ...baseColumnIds,
+      ...(showTechnician ? (["technician"] as const) : []),
+      ...(showActions ? (["actions"] as const) : []),
+    ],
+    [showTechnician, showActions],
+  );
+  const columns = useWorkOrderColumns(columnIds);
   const sorting = toSortingState(sort);
   const table = useTable({
     features: workOrderTableFeatures,
