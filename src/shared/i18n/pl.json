@@ -227,7 +227,9 @@
     "deviceNotFound": "Nie znaleziono urządzenia.",
     "workOrderClosed": "Zlecenie jest zakończone lub zafakturowane i nie można go zmieniać.",
     "workOrderDeviceArchived": "Nie można założyć zlecenia na zarchiwizowane urządzenie.",
-    "workOrderNotFound": "Nie znaleziono zlecenia."
+    "workOrderNotFound": "Nie znaleziono zlecenia.",
+    "workOrderNoServiceEntries": "Zlecenia bez wpisów serwisowych nie można zakończyć.",
+    "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń."
   },
   "devices": {
     "columns": {
@@ -369,5 +371,8 @@
       "submit": "Zapisz zmiany",
       "saved": "Zapisano zmiany zlecenia."
     }
+  },
+  "parts": {
+    "unknown": "Nieznana część"
   }
 }

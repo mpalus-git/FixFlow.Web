@@ -47,3 +47,25 @@ export function createWorkOrderResponse(
     ...overrides,
   };
 }
+
+type ServiceEntryResponse = components["schemas"]["ServiceEntryResponse"];
+
+export function createServiceEntryResponse(
+  overrides: Partial<ServiceEntryResponse> = {},
+): ServiceEntryResponse {
+  return {
+    id: "6c5b4a39-2817-4f6e-9d8c-7b6a5f4e3d2c",
+    workOrderId: "5d4c3b2a-1f0e-4d9c-8b7a-6f5e4d3c2b1a",
+    technicianId: "0b6f0c9e-0d6e-4a57-9d55-6a1f3f0f2a10",
+    note: "Wymieniono czujnik ciśnienia",
+    isCorrection: false,
+    photoUrls: [],
+    workStartedAt: "2026-07-14T07:00:00Z",
+    workFinishedAt: "2026-07-14T08:30:00Z",
+    latitude: null,
+    longitude: null,
+    parts: [],
+    createdAt: "2026-07-14T08:35:00Z",
+    ...overrides,
+  };
+}

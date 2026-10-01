@@ -225,7 +225,9 @@
     "deviceNotFound": "The device was not found.",
     "workOrderClosed": "The work order is completed or invoiced and cannot be changed.",
     "workOrderDeviceArchived": "A work order cannot be created for an archived device.",
-    "workOrderNotFound": "Work order not found."
+    "workOrderNotFound": "Work order not found.",
+    "workOrderNoServiceEntries": "A work order without service entries cannot be completed.",
+    "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders."
   },
   "devices": {
     "columns": {
@@ -367,5 +369,8 @@
       "submit": "Save changes",
       "saved": "Work order changes saved."
     }
+  },
+  "parts": {
+    "unknown": "Unknown part"
   }
 }

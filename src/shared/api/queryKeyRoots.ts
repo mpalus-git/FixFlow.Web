@@ -3,4 +3,5 @@ export const queryKeyRoots = {
   devices: ["devices"],
   workOrders: ["workOrders"],
   users: ["users"],
+  parts: ["parts"],
 } as const;
