@@ -6,6 +6,7 @@ import { DeviceClientName, DeviceNameLink } from "@/features/devices";
 import { workOrderQueryOptions } from "@/features/work-orders/api/workOrderQueries";
 import { ServiceEntryList } from "@/features/work-orders/components/ServiceEntryList";
 import { ServiceProtocolButton } from "@/features/work-orders/components/ServiceProtocolButton";
+import { WorkOrderActions } from "@/features/work-orders/components/WorkOrderActions";
 import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOrderPriorityBadge";
 import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrderStatusBadge";
 import { WorkOrderStatusTimeline } from "@/features/work-orders/components/WorkOrderStatusTimeline";
@@ -62,7 +63,10 @@ export function WorkOrderDetailsPage() {
               ) : null}
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-start gap-2">
+            {user === undefined ? null : (
+              <WorkOrderActions workOrder={workOrder} role={user.role} />
+            )}
             <ServiceProtocolButton workOrderId={workOrder.id} status={workOrder.status} />
             {!isTechnician && canEditWorkOrder(workOrder.status) ? (
               <Button variant="outline" asChild>

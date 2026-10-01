@@ -230,7 +230,10 @@
     "workOrderDeviceArchived": "Nie można założyć zlecenia na zarchiwizowane urządzenie.",
     "workOrderNotFound": "Nie znaleziono zlecenia.",
     "workOrderNoServiceEntries": "Zlecenia bez wpisów serwisowych nie można zakończyć.",
-    "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń."
+    "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń.",
+    "concurrentModification": "Zlecenie zostało zmienione w międzyczasie. Wyświetlono aktualny stan, spróbuj ponownie.",
+    "workOrderInvalidStatusTransition": "Status zlecenia zmienił się w międzyczasie i ta akcja nie jest już dostępna.",
+    "workOrderTechnicianNotFound": "Wybrany technik nie jest już aktywny."
   },
   "devices": {
     "columns": {
@@ -365,7 +368,20 @@
       "created": "Utworzono zlecenie."
     },
     "actions": {
-      "edit": "Edytuj zlecenie dla {{serialNumber}}"
+      "edit": "Edytuj zlecenie dla {{serialNumber}}",
+      "assign": "Przypisz technika",
+      "changeTechnician": "Zmień technika",
+      "unassign": "Odepnij technika",
+      "unassigned": "Odpięto technika.",
+      "complete": "Zakończ awaryjnie",
+      "completeRequiresEntries": "Wymaga co najmniej jednego wpisu serwisowego.",
+      "completeTitle": "Zakończyć zlecenie awaryjnie?",
+      "completeDescription": "Zwykle zlecenie kończy technik w aplikacji mobilnej. Po zakończeniu nie można dodawać wpisów ani edytować zlecenia.",
+      "completed": "Zakończono zlecenie.",
+      "invoice": "Zafakturuj",
+      "invoiceTitle": "Zafakturować zlecenie?",
+      "invoiceDescription": "To ostatni status zlecenia i nie można go cofnąć.",
+      "invoiced": "Zafakturowano zlecenie."
     },
     "edit": {
       "title": "Edycja zlecenia",
@@ -400,6 +416,19 @@
     "protocol": {
       "download": "Pobierz protokół",
       "downloading": "Pobieranie…"
+    },
+    "assign": {
+      "title": "Przypisz technika",
+      "changeTitle": "Zmień technika",
+      "description": "Można wybrać tylko aktywnego technika. Zlecenie przejdzie do statusu Przypisane.",
+      "changeDescription": "Obecny technik zostanie odpięty, a zlecenie przypisane do wybranego aktywnego technika.",
+      "chooseTechnician": "Wybierz technika",
+      "noTechnicians": "Brak innych aktywnych techników",
+      "submit": "Przypisz",
+      "changeSubmit": "Zmień technika",
+      "assigned": "Przypisano technika.",
+      "changed": "Zmieniono technika.",
+      "partialChange": "Odpięto poprzedniego technika, ale nie udało się przypisać nowego: {{reason}} Zlecenie ma teraz status Nowe."
     }
   },
   "parts": {

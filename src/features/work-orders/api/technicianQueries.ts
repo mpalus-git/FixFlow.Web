@@ -17,3 +17,18 @@ export function technicianOptionsQueryOptions() {
       ).items,
   });
 }
+
+export function activeTechnicianOptionsQueryOptions() {
+  return queryOptions({
+    queryKey: [...queryKeyRoots.users, "technicianOptions", "active"] as const,
+    queryFn: async ({ signal }) =>
+      unwrap(
+        await apiClient.GET("/api/v1/users", {
+          params: {
+            query: { role: "Technician", isActive: true, pageSize: technicianOptionsLimit },
+          },
+          signal,
+        }),
+      ).items,
+  });
+}

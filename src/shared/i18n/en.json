@@ -228,7 +228,10 @@
     "workOrderDeviceArchived": "A work order cannot be created for an archived device.",
     "workOrderNotFound": "Work order not found.",
     "workOrderNoServiceEntries": "A work order without service entries cannot be completed.",
-    "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders."
+    "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders.",
+    "concurrentModification": "The work order was changed in the meantime. Its current state is shown, try again.",
+    "workOrderInvalidStatusTransition": "The work order status changed in the meantime and this action is no longer available.",
+    "workOrderTechnicianNotFound": "The selected technician is no longer active."
   },
   "devices": {
     "columns": {
@@ -363,7 +366,20 @@
       "created": "Work order created."
     },
     "actions": {
-      "edit": "Edit work order for {{serialNumber}}"
+      "edit": "Edit work order for {{serialNumber}}",
+      "assign": "Assign technician",
+      "changeTechnician": "Change technician",
+      "unassign": "Unassign technician",
+      "unassigned": "Technician unassigned.",
+      "complete": "Complete as fallback",
+      "completeRequiresEntries": "Requires at least one service entry.",
+      "completeTitle": "Complete the work order as a fallback?",
+      "completeDescription": "The technician usually completes the work order in the mobile app. After completion no entries can be added and the work order cannot be edited.",
+      "completed": "Work order completed.",
+      "invoice": "Invoice",
+      "invoiceTitle": "Invoice the work order?",
+      "invoiceDescription": "This is the final status of the work order and cannot be undone.",
+      "invoiced": "Work order invoiced."
     },
     "edit": {
       "title": "Edit work order",
@@ -398,6 +414,19 @@
     "protocol": {
       "download": "Download protocol",
       "downloading": "Downloading…"
+    },
+    "assign": {
+      "title": "Assign technician",
+      "changeTitle": "Change technician",
+      "description": "Only an active technician can be chosen. The work order will move to the Assigned status.",
+      "changeDescription": "The current technician will be unassigned and the work order assigned to the chosen active technician.",
+      "chooseTechnician": "Choose a technician",
+      "noTechnicians": "No other active technicians",
+      "submit": "Assign",
+      "changeSubmit": "Change technician",
+      "assigned": "Technician assigned.",
+      "changed": "Technician changed.",
+      "partialChange": "The previous technician was unassigned, but the new one could not be assigned: {{reason}} The work order is now New."
     }
   },
   "parts": {
