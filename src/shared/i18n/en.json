@@ -241,7 +241,10 @@
     "partArchived": "The part is archived and cannot be changed.",
     "partDuplicateCatalogNumber": "A part with this catalog number already exists (including archived ones).",
     "partNotFound": "Part not found.",
-    "userDuplicateEmail": "An account with this email address already exists."
+    "userDuplicateEmail": "An account with this email address already exists.",
+    "userCannotDeactivateSelf": "You cannot deactivate your own account.",
+    "userHasOpenWorkOrders": "The technician has assigned or in-progress work orders.",
+    "userNotFound": "The user account was not found."
   },
   "devices": {
     "columns": {
@@ -571,7 +574,8 @@
     "columns": {
       "email": "Email",
       "role": "Role",
-      "status": "Status"
+      "status": "Status",
+      "actions": "Actions"
     },
     "empty": {
       "title": "No users",
@@ -590,6 +594,28 @@
       "confirmPassword": "Repeat password",
       "submit": "Create account",
       "created": "Created account {{email}}."
+    },
+    "demoAccount": "Demo account",
+    "actions": {
+      "label": "Actions for account {{email}}",
+      "deactivate": "Deactivate",
+      "activate": "Activate"
+    },
+    "protection": {
+      "ownAccount": "This is your account - you cannot deactivate it, and you can change its password in your profile.",
+      "demoAccount": "Demo accounts are protected so that they stay available to every visitor."
+    },
+    "deactivate": {
+      "title": "Deactivate account {{email}}?",
+      "description": "The user cannot sign in until you activate the account again. Their open sessions expire within about fifteen minutes.",
+      "confirm": "Deactivate",
+      "pending": "Deactivating…",
+      "deactivated": "Deactivated account {{email}}.",
+      "openWorkOrders": "The technician has assigned or in-progress work orders. Unassign or complete them before deactivating the account.",
+      "showWorkOrders": "Show the technician's work orders"
+    },
+    "activate": {
+      "activated": "Activated account {{email}}."
     }
   }
 }

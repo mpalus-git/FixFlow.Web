@@ -243,7 +243,10 @@
     "partArchived": "Część jest zarchiwizowana i nie można jej zmieniać.",
     "partDuplicateCatalogNumber": "Część o tym numerze katalogowym już istnieje (także wśród zarchiwizowanych).",
     "partNotFound": "Nie znaleziono części.",
-    "userDuplicateEmail": "Konto z tym adresem e-mail już istnieje."
+    "userDuplicateEmail": "Konto z tym adresem e-mail już istnieje.",
+    "userCannotDeactivateSelf": "Nie możesz dezaktywować własnego konta.",
+    "userHasOpenWorkOrders": "Technik ma przypisane lub rozpoczęte zlecenia.",
+    "userNotFound": "Nie znaleziono konta użytkownika."
   },
   "devices": {
     "columns": {
@@ -577,7 +580,8 @@
     "columns": {
       "email": "E-mail",
       "role": "Rola",
-      "status": "Status"
+      "status": "Status",
+      "actions": "Akcje"
     },
     "empty": {
       "title": "Brak użytkowników",
@@ -596,6 +600,28 @@
       "confirmPassword": "Powtórz hasło",
       "submit": "Załóż konto",
       "created": "Założono konto {{email}}."
+    },
+    "demoAccount": "Konto demo",
+    "actions": {
+      "label": "Akcje konta {{email}}",
+      "deactivate": "Dezaktywuj",
+      "activate": "Aktywuj"
+    },
+    "protection": {
+      "ownAccount": "To Twoje konto - nie możesz go dezaktywować, a hasło zmienisz w profilu.",
+      "demoAccount": "Konto demo jest chronione, żeby pozostało dostępne dla wszystkich odwiedzających."
+    },
+    "deactivate": {
+      "title": "Dezaktywować konto {{email}}?",
+      "description": "Użytkownik nie zaloguje się, dopóki nie aktywujesz konta ponownie. Jego otwarte sesje wygasną w ciągu kilkunastu minut.",
+      "confirm": "Dezaktywuj",
+      "pending": "Dezaktywowanie…",
+      "deactivated": "Dezaktywowano konto {{email}}.",
+      "openWorkOrders": "Technik ma przypisane lub rozpoczęte zlecenia. Odepnij je albo zakończ przed dezaktywacją.",
+      "showWorkOrders": "Pokaż zlecenia technika"
+    },
+    "activate": {
+      "activated": "Aktywowano konto {{email}}."
     }
   }
 }
