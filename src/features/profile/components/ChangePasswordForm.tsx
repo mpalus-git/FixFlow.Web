@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { type UseFormRegisterReturn, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useChangePasswordMutation } from "@/features/profile/api/useChangePasswordMutation";
@@ -13,43 +13,7 @@ import { ApiError } from "@/shared/api/apiError";
 import { applyFieldErrors } from "@/shared/api/applyFieldErrors";
 import { Alert, AlertDescription } from "@/shared/ui/alert";
 import { Button } from "@/shared/ui/button";
-import { FieldError } from "@/shared/ui/FieldError";
-import { Input } from "@/shared/ui/input";
-import { Label } from "@/shared/ui/label";
-
-type PasswordFieldProps = {
-  id: string;
-  label: string;
-  autoComplete: "current-password" | "new-password";
-  error: string | undefined;
-  registration: UseFormRegisterReturn;
-  hint?: string;
-};
-
-function PasswordField({ id, label, autoComplete, error, registration, hint }: PasswordFieldProps) {
-  const errorId = `${id}-error`;
-  const hintId = `${id}-hint`;
-
-  return (
-    <div className="flex flex-col gap-2">
-      <Label htmlFor={id}>{label}</Label>
-      <Input
-        id={id}
-        type="password"
-        autoComplete={autoComplete}
-        aria-invalid={error !== undefined}
-        aria-describedby={hint === undefined ? errorId : `${hintId} ${errorId}`}
-        {...registration}
-      />
-      {hint === undefined ? null : (
-        <p id={hintId} className="text-sm text-muted-foreground">
-          {hint}
-        </p>
-      )}
-      <FieldError id={errorId} message={error} />
-    </div>
-  );
-}
+import { TextField } from "@/shared/ui/TextField";
 
 export type ChangePasswordFormProps = {
   isDemoAccount: boolean;
@@ -110,24 +74,27 @@ export function ChangePasswordForm({ isDemoAccount }: ChangePasswordFormProps) {
         </Alert>
       )}
       <fieldset disabled={isDemoAccount} className="flex flex-col gap-4">
-        <PasswordField
+        <TextField
           id="current-password"
           label={t("profile.password.currentPassword")}
+          type="password"
           autoComplete="current-password"
           error={errors.currentPassword?.message}
           registration={form.register("currentPassword")}
         />
-        <PasswordField
+        <TextField
           id="new-password"
           label={t("profile.password.newPassword")}
+          type="password"
           autoComplete="new-password"
           error={errors.newPassword?.message}
           registration={form.register("newPassword")}
-          hint={t("profile.password.requirements")}
+          hint={t("common.passwordRequirements")}
         />
-        <PasswordField
+        <TextField
           id="confirm-new-password"
           label={t("profile.password.confirmNewPassword")}
+          type="password"
           autoComplete="new-password"
           error={errors.confirmNewPassword?.message}
           registration={form.register("confirmNewPassword")}

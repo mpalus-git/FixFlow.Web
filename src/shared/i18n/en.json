@@ -6,7 +6,8 @@
     "close": "Close",
     "saving": "Saving…",
     "cancel": "Cancel",
-    "opensInNewTab": " (opens in a new tab)"
+    "opensInNewTab": " (opens in a new tab)",
+    "passwordRequirements": "At least 8 characters, an uppercase and a lowercase letter, a digit and a character other than a letter or digit."
   },
   "nav": {
     "label": "Main navigation",
@@ -130,7 +131,6 @@
       "currentPassword": "Current password",
       "newPassword": "New password",
       "confirmNewPassword": "Repeat new password",
-      "requirements": "At least 8 characters, an uppercase and a lowercase letter, a digit and a character other than a letter or digit.",
       "submit": "Change password",
       "submitting": "Changing…",
       "changed": "The password has been changed. Your other devices have been signed out.",

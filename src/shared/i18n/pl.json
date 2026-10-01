@@ -6,7 +6,8 @@
     "close": "Zamknij",
     "saving": "Zapisywanie…",
     "cancel": "Anuluj",
-    "opensInNewTab": " (otwiera się w nowej karcie)"
+    "opensInNewTab": " (otwiera się w nowej karcie)",
+    "passwordRequirements": "Co najmniej 8 znaków, wielka i mała litera, cyfra oraz znak inny niż litera i cyfra."
   },
   "nav": {
     "label": "Nawigacja główna",
@@ -130,7 +131,6 @@
       "currentPassword": "Obecne hasło",
       "newPassword": "Nowe hasło",
       "confirmNewPassword": "Powtórz nowe hasło",
-      "requirements": "Co najmniej 8 znaków, wielka i mała litera, cyfra oraz znak inny niż litera i cyfra.",
       "submit": "Zmień hasło",
       "submitting": "Zmienianie…",
       "changed": "Hasło zostało zmienione. Pozostałe urządzenia zostały wylogowane.",

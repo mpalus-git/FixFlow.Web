@@ -37,3 +37,15 @@ export function requiredText(maxLength: number) {
     .min(1, { error: validationMessages.required })
     .max(maxLength, { error: validationMessages.tooLong });
 }
+
+export const passwordMaxLength = 128;
+
+export const newPasswordSchema = z
+  .string()
+  .min(1, { error: validationMessages.required })
+  .min(8, { error: validationMessages.passwordTooShort })
+  .max(passwordMaxLength, { error: validationMessages.tooLong })
+  .regex(/[A-Z]/, { error: validationMessages.passwordUppercase })
+  .regex(/[a-z]/, { error: validationMessages.passwordLowercase })
+  .regex(/[0-9]/, { error: validationMessages.passwordDigit })
+  .regex(/[^A-Za-z0-9]/, { error: validationMessages.passwordSymbol });
