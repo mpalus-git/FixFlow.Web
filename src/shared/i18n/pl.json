@@ -396,6 +396,10 @@
       },
       "totalWorkTime": "Czas pracy łącznie:",
       "totalPartsValue": "Części netto łącznie:"
+    },
+    "protocol": {
+      "download": "Pobierz protokół",
+      "downloading": "Pobieranie…"
     }
   },
   "parts": {

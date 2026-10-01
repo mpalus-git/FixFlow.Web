@@ -394,6 +394,10 @@
       },
       "totalWorkTime": "Total work time:",
       "totalPartsValue": "Total net parts:"
+    },
+    "protocol": {
+      "download": "Download protocol",
+      "downloading": "Downloading…"
     }
   },
   "parts": {

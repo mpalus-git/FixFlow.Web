@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router";
 import { DeviceClientName, DeviceNameLink } from "@/features/devices";
 import { workOrderQueryOptions } from "@/features/work-orders/api/workOrderQueries";
 import { ServiceEntryList } from "@/features/work-orders/components/ServiceEntryList";
+import { ServiceProtocolButton } from "@/features/work-orders/components/ServiceProtocolButton";
 import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOrderPriorityBadge";
 import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrderStatusBadge";
 import { WorkOrderStatusTimeline } from "@/features/work-orders/components/WorkOrderStatusTimeline";
@@ -61,14 +62,17 @@ export function WorkOrderDetailsPage() {
               ) : null}
             </div>
           </div>
-          {!isTechnician && canEditWorkOrder(workOrder.status) ? (
-            <Button variant="outline" asChild>
-              <Link to={`/work-orders/${workOrder.id}/edit`}>
-                <PencilIcon aria-hidden="true" />
-                {t("workOrders.details.edit")}
-              </Link>
-            </Button>
-          ) : null}
+          <div className="flex flex-wrap gap-2">
+            <ServiceProtocolButton workOrderId={workOrder.id} status={workOrder.status} />
+            {!isTechnician && canEditWorkOrder(workOrder.status) ? (
+              <Button variant="outline" asChild>
+                <Link to={`/work-orders/${workOrder.id}/edit`}>
+                  <PencilIcon aria-hidden="true" />
+                  {t("workOrders.details.edit")}
+                </Link>
+              </Button>
+            ) : null}
+          </div>
         </div>
       </div>
       <Card>
