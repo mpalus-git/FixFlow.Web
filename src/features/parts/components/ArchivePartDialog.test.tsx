@@ -78,6 +78,6 @@ describe("ArchivePartDialog", () => {
     expect(
       await screen.findByText("Część została zmieniona w tym samym momencie. Spróbuj ponownie."),
     ).toBeInTheDocument();
-    expect(screen.getByRole("cell", { name: "Filtr powietrza" })).toBeInTheDocument();
+    expect(screen.getByText("Filtr powietrza")).toBeInTheDocument();
   });
 });

@@ -45,6 +45,7 @@ export function TextField({
         min={min}
         max={max}
         readOnly={readOnly}
+        className={readOnly ? "bg-muted text-muted-foreground" : undefined}
         aria-invalid={error !== undefined}
         aria-describedby={hint === undefined ? errorId : `${hintId} ${errorId}`}
         {...registration}

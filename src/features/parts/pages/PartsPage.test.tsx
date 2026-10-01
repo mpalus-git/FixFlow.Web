@@ -63,7 +63,7 @@ function mockPartList() {
 }
 
 function rowOf(name: string) {
-  const row = screen.getByRole("cell", { name }).closest("tr");
+  const row = screen.getByText(name).closest("tr");
   if (row === null) {
     throw new Error(`Row ${name} not found`);
   }
@@ -84,7 +84,7 @@ describe("PartsPage", () => {
     mockPartList();
     renderApp("/parts");
 
-    await screen.findByRole("cell", { name: "Filtr powietrza" });
+    await screen.findByText("Filtr powietrza");
 
     expect(rowOf("Czynnik chłodniczy R32").getByText("25 szt.")).toBeInTheDocument();
     expect(rowOf("Czynnik chłodniczy R32").queryByText("Niski stan")).not.toBeInTheDocument();
@@ -111,8 +111,8 @@ describe("PartsPage", () => {
       expect(requests.at(-1)?.get("search")).toBe("flt");
     }, 5000);
     expect(router.state.location.search).toBe("?search=flt");
-    expect(await screen.findByRole("cell", { name: "Filtr powietrza" })).toBeInTheDocument();
-    expect(screen.queryByRole("cell", { name: "Kondensator rozruchowy" })).not.toBeInTheDocument();
+    expect(await screen.findByText("Filtr powietrza")).toBeInTheDocument();
+    expect(screen.queryByText("Kondensator rozruchowy")).not.toBeInTheDocument();
   });
 
   it("explains when the catalog is empty", async () => {
@@ -139,6 +139,6 @@ describe("PartsPage", () => {
     mockPartList();
     await userEvent.setup().click(screen.getByRole("button", { name: "Spróbuj ponownie" }));
 
-    expect(await screen.findByRole("cell", { name: "Filtr powietrza" })).toBeInTheDocument();
+    expect(await screen.findByText("Filtr powietrza")).toBeInTheDocument();
   });
 });

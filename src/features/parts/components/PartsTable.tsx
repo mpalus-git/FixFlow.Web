@@ -20,6 +20,12 @@ function cellClassName(columnId: string): string {
   if (columnId === actionsColumnId) {
     return "sticky right-0 bg-background px-3";
   }
+  if (columnId === "catalogNumber") {
+    return "hidden px-3 md:table-cell";
+  }
+  if (columnId === "name") {
+    return "min-w-36 px-3 whitespace-normal";
+  }
   return numericColumnIds.includes(columnId) ? "px-3 text-right" : "px-3";
 }
 
@@ -41,7 +47,12 @@ export function PartsTable({ parts, isUpdating, onRestock, onArchive }: PartsTab
         columnHelper.accessor("name", {
           id: "name",
           header: t("parts.columns.name"),
-          cell: (info) => <span className="font-medium">{info.getValue()}</span>,
+          cell: ({ row }) => (
+            <span className="flex flex-col">
+              <span className="font-medium">{row.original.name}</span>
+              <span className="text-muted-foreground md:hidden">{row.original.catalogNumber}</span>
+            </span>
+          ),
         }),
         columnHelper.accessor("catalogNumber", {
           id: "catalogNumber",
