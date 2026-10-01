@@ -307,6 +307,20 @@
     "overdue": "Overdue",
     "unassigned": "Unassigned",
     "clientHistoryEmpty": "The client has no work orders yet",
-    "deviceHistoryEmpty": "The device has no work orders yet"
+    "deviceHistoryEmpty": "The device has no work orders yet",
+    "filters": {
+      "label": "Work order filters",
+      "status": "Status",
+      "allStatuses": "All statuses",
+      "technician": "Technician",
+      "allTechnicians": "All technicians",
+      "inactiveTechnician": "{{email}} (inactive)",
+      "techniciansLoading": "Loading technicians…",
+      "techniciansError": "Could not load technicians",
+      "dueFrom": "Due from",
+      "dueTo": "Due to",
+      "overdueOnly": "Overdue only",
+      "clear": "Clear filters"
+    }
   }
 }
