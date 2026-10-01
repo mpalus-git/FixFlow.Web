@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
-import { technicianOptionsQueryOptions } from "@/features/work-orders/api/technicianQueries";
+import { technicianOptionsQueryOptions } from "@/shared/api/technicianQueries";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { createUser } from "@/test/signedInUser";

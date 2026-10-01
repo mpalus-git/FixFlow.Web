@@ -1,5 +1,8 @@
 import {
+  addCalendarDays,
+  calendarDateOf,
   formatCalendarDate,
+  formatCalendarWeekday,
   formatDate,
   formatDateTime,
   formatTime,
@@ -8,6 +11,9 @@ import {
   todayCalendarDate,
   toLocalDateTimeInput,
   toUtcIso,
+  weekDays,
+  weekStartOf,
+  withCalendarDate,
 } from "@/shared/lib/dateTime";
 
 describe("dateTime", () => {
@@ -129,4 +135,75 @@ describe("isLocalDateTime", () => {
       expect(isLocalDateTime(value)).toBe(false);
     },
   );
+});
+
+describe("calendarDateOf", () => {
+  it("returns the Warsaw calendar day of a UTC timestamp", () => {
+    expect(calendarDateOf("2026-07-15T22:30:00Z")).toBe("2026-07-16");
+    expect(calendarDateOf("2026-01-15T22:30:00Z")).toBe("2026-01-15");
+  });
+});
+
+describe("addCalendarDays", () => {
+  it("moves across month and year boundaries", () => {
+    expect(addCalendarDays("2026-12-30", 3)).toBe("2027-01-02");
+    expect(addCalendarDays("2026-03-01", -1)).toBe("2026-02-28");
+  });
+
+  it("keeps the day across the clock changes", () => {
+    expect(addCalendarDays("2026-03-28", 1)).toBe("2026-03-29");
+    expect(addCalendarDays("2026-10-25", 1)).toBe("2026-10-26");
+  });
+
+  it("throws on a value that is not a calendar date", () => {
+    expect(() => addCalendarDays("2026-02-30", 1)).toThrow(RangeError);
+  });
+});
+
+describe("weekStartOf", () => {
+  it("returns the Monday of the week", () => {
+    expect(weekStartOf("2026-10-01")).toBe("2026-09-28");
+    expect(weekStartOf("2026-09-28")).toBe("2026-09-28");
+  });
+
+  it("treats Sunday as the last day of the week", () => {
+    expect(weekStartOf("2026-10-04")).toBe("2026-09-28");
+  });
+});
+
+describe("weekDays", () => {
+  it("returns seven consecutive days starting on the given Monday", () => {
+    expect(weekDays("2026-10-19")).toEqual([
+      "2026-10-19",
+      "2026-10-20",
+      "2026-10-21",
+      "2026-10-22",
+      "2026-10-23",
+      "2026-10-24",
+      "2026-10-25",
+    ]);
+  });
+});
+
+describe("withCalendarDate", () => {
+  it("moves a timestamp to another day keeping the Warsaw time", () => {
+    expect(withCalendarDate("2026-10-01T08:05:42.123Z", "2026-10-03")).toBe(
+      "2026-10-03T08:05:42.123Z",
+    );
+  });
+
+  it("keeps the Warsaw time when moving across the autumn clock change", () => {
+    expect(withCalendarDate("2026-10-23T08:00:00Z", "2026-10-26")).toBe("2026-10-26T09:00:00.000Z");
+  });
+
+  it("keeps the Warsaw day of a timestamp that is still the previous day in UTC", () => {
+    expect(withCalendarDate("2026-07-15T22:30:00Z", "2026-07-20")).toBe("2026-07-19T22:30:00.000Z");
+  });
+});
+
+describe("formatCalendarWeekday", () => {
+  it("names the weekday of a calendar date in both languages", () => {
+    expect(formatCalendarWeekday("2026-09-28", "pl")).toBe("poniedziałek");
+    expect(formatCalendarWeekday("2026-10-04", "en")).toBe("Sunday");
+  });
 });

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { XIcon } from "lucide-react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
-import { technicianOptionsQueryOptions } from "@/features/work-orders/api/technicianQueries";
+import { technicianOptionsQueryOptions } from "@/shared/api/technicianQueries";
 import {
   type WorkOrderListFilters,
   workOrderStatuses,

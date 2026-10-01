@@ -16,7 +16,8 @@
     "skipToContent": "Skip to content",
     "myWorkOrders": "My work orders",
     "clients": "Clients",
-    "devices": "Devices"
+    "devices": "Devices",
+    "dispatch": "Dispatch board"
   },
   "language": {
     "label": "Language",
@@ -431,5 +432,48 @@
   },
   "parts": {
     "unknown": "Unknown part"
+  },
+  "dispatch": {
+    "title": "Dispatch board",
+    "technician": "Technician",
+    "inactiveTechnician": "inactive",
+    "today": "today",
+    "unassigned": {
+      "title": "Unassigned",
+      "description": "New work orders. Drag a card onto a technician and day.",
+      "empty": "No new work orders"
+    },
+    "card": {
+      "move": "Move work order {{workOrder}}",
+      "locked": "A work order in the {{status}} status cannot be moved",
+      "overdue": "Overdue"
+    },
+    "cell": "{{technician}}, {{day}}",
+    "dnd": {
+      "instructions": "To pick up a work order, press Space or Enter. Use the arrow keys to move it onto a technician and day, then press Space or Enter to drop it. Press Escape to cancel.",
+      "picked": "Picked up work order {{workOrder}}.",
+      "over": "Work order {{workOrder}} is over: {{target}}.",
+      "overBlocked": "Work order {{workOrder}} is over: {{target}}. It cannot be dropped here.",
+      "outside": "Work order {{workOrder}} is outside the board.",
+      "dropped": "Dropped work order {{workOrder}} on: {{target}}.",
+      "notDropped": "Work order {{workOrder}} was not moved.",
+      "cancelled": "Moving work order {{workOrder}} was cancelled."
+    },
+    "errors": {
+      "changed": "The work order changed in the meantime. The board now shows its current state.",
+      "partial": "The work order was changed only partially: {{reason}}"
+    },
+    "week": {
+      "range": "{{from}} – {{to}}",
+      "previous": "Previous week",
+      "next": "Next week",
+      "current": "Current week"
+    },
+    "noTechnicians": {
+      "title": "No technicians",
+      "description": "An administrator has not created any active technician accounts yet."
+    },
+    "emptyWeek": "Technicians have no work orders assigned this week.",
+    "limit": "The board shows the first 100 work orders. Some work orders did not fit - see the Work orders tab for the full list."
   }
 }
