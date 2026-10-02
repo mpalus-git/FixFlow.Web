@@ -94,3 +94,17 @@ export async function getWorkOrder(
     await api.GET("/api/v1/work-orders/{workOrderId}", { params: { path: { workOrderId } } }),
   );
 }
+
+export async function findWorkOrderId(
+  api: ApiClient,
+  status: Schemas["WorkOrderStatus"],
+): Promise<string> {
+  const page = expectData(
+    await api.GET("/api/v1/work-orders", { params: { query: { status, pageSize: 1 } } }),
+  );
+  const workOrder = page.items[0];
+  if (workOrder === undefined) {
+    throw new Error(`No ${status} work order in demo data`);
+  }
+  return workOrder.id;
+}
