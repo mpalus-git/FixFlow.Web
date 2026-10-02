@@ -86,6 +86,52 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
           fi
 
+  e2e:
+    name: E2E tests
+    runs-on: ubuntu-26.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ./.github/actions/setup
+
+      - name: Generate secrets
+        run: |
+          for name in POSTGRES_PASSWORD JWT_SIGNING_KEY; do
+            value="$(openssl rand -hex 32)"
+            echo "::add-mask::$value"
+            echo "$name=$value" >> "$GITHUB_ENV"
+          done
+          for name in DEMO_ADMIN_PASSWORD DEMO_DISPATCHER_PASSWORD DEMO_TECHNICIAN_PASSWORD; do
+            value="Aa1!$(openssl rand -hex 12)"
+            echo "::add-mask::$value"
+            echo "$name=$value" >> "$GITHUB_ENV"
+          done
+
+      - name: Start API
+        run: docker compose -f e2e/compose.yaml up -d
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Wait for API
+        run: pnpm e2e:up
+
+      - run: pnpm e2e
+
+      - name: API logs
+        if: failure()
+        run: docker compose -f e2e/compose.yaml logs api
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
   contract-drift:
     name: API contract drift
     runs-on: ubuntu-26.04

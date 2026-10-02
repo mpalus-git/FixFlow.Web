@@ -2,7 +2,7 @@ import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { loadEnv } from "vite";
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 
 function createApiProxy(target: string) {
   const route = { target, changeOrigin: true };
@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       globals: true,
       setupFiles: ["./src/test/setup.ts"],
+      exclude: [...configDefaults.exclude, "e2e/**"],
       restoreMocks: true,
       testTimeout: 15_000,
       env: {

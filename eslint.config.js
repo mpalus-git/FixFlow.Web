@@ -8,7 +8,7 @@ import tseslint from "typescript-eslint";
 import { noComments } from "./eslint-rules/noComments.js";
 
 export default defineConfig([
-  globalIgnores(["dist", "coverage"]),
+  globalIgnores(["dist", "coverage", "playwright-report", "test-results"]),
   {
     files: ["**/*.{ts,tsx,js,mjs}"],
     linterOptions: {
@@ -85,12 +85,21 @@ export default defineConfig([
     },
   },
   {
-    files: ["vite.config.ts"],
+    files: ["vite.config.ts", "playwright.config.ts"],
     languageOptions: {
       globals: globals.node,
     },
     rules: {
       "no-restricted-syntax": "off",
+    },
+  },
+  {
+    files: ["e2e/**/*.ts"],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      "react-hooks/rules-of-hooks": "off",
     },
   },
 ]);
