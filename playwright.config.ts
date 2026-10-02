@@ -17,8 +17,9 @@ export default defineConfig({
   forbidOnly: isCi,
   retries: isCi ? 1 : 0,
   workers: isCi ? 2 : "50%",
+  globalTimeout: isCi ? 600_000 : 0,
   reporter: isCi
-    ? [["github"], ["html", { open: "never" }]]
+    ? [["list"], ["github"], ["html", { open: "never" }]]
     : [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: appUrl,
