@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
-import { findWorkOrderId, signInToApi } from "./support/api";
-import { demoAccount } from "./support/environment";
+import { type ApiClient, findWorkOrderId, signInToApi } from "./support/api";
+import { type DemoRole, demoAccount } from "./support/environment";
 import { signIn } from "./support/signIn";
 
 const blockingImpacts = new Set(["serious", "critical"]);
@@ -20,15 +20,36 @@ async function blockingViolations(page: Page): Promise<string[]> {
     );
 }
 
-async function expectAccessibleScreen(page: Page, path: string, heading: string): Promise<void> {
-  await test.step(path, async () => {
-    await page.goto(path);
-    await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
-    await page.waitForLoadState("networkidle");
-    await expect(page.getByText("Wczytywanie", { exact: false })).toHaveCount(0);
-    expect.soft(await blockingViolations(page), path).toEqual([]);
-  });
-}
+type Screen = {
+  name: string;
+  role: DemoRole;
+  heading: string;
+  path: (api: ApiClient) => Promise<string> | string;
+};
+
+const screens: Screen[] = [
+  { name: "dashboard", role: "dispatcher", heading: "Pulpit", path: () => "/" },
+  { name: "work order list", role: "dispatcher", heading: "Zlecenia", path: () => "/work-orders" },
+  {
+    name: "work order details",
+    role: "dispatcher",
+    heading: "Szczegóły zlecenia",
+    path: async (api) => `/work-orders/${await findWorkOrderId(api, "Completed")}`,
+  },
+  {
+    name: "dispatch board",
+    role: "dispatcher",
+    heading: "Tablica dispatch",
+    path: () => "/dispatch",
+  },
+  { name: "client list", role: "dispatcher", heading: "Klienci", path: () => "/clients" },
+  {
+    name: "technician work orders",
+    role: "technician",
+    heading: "Moje zlecenia",
+    path: () => "/my-work-orders",
+  },
+];
 
 for (const colorScheme of ["light", "dark"] as const) {
   test.describe(`${colorScheme} theme`, () => {
@@ -41,22 +62,18 @@ for (const colorScheme of ["light", "dark"] as const) {
       expect(await blockingViolations(page)).toEqual([]);
     });
 
-    test("dispatcher screens have no serious accessibility violations", async ({ page }) => {
-      const dispatcher = demoAccount("dispatcher");
-      const workOrderId = await findWorkOrderId(await signInToApi(dispatcher), "Completed");
-      await signIn(page, dispatcher);
+    for (const screen of screens) {
+      test(`${screen.name} has no serious accessibility violations`, async ({ page }) => {
+        const account = demoAccount(screen.role);
+        const path = await screen.path(await signInToApi(account));
 
-      await expectAccessibleScreen(page, "/", "Pulpit");
-      await expectAccessibleScreen(page, "/work-orders", "Zlecenia");
-      await expectAccessibleScreen(page, `/work-orders/${workOrderId}`, "Szczegóły zlecenia");
-      await expectAccessibleScreen(page, "/dispatch", "Tablica dispatch");
-      await expectAccessibleScreen(page, "/clients", "Klienci");
-    });
+        await signIn(page, account, { path: `/login?returnTo=${encodeURIComponent(path)}` });
+        await expect(page.getByRole("heading", { level: 1, name: screen.heading })).toBeVisible();
+        await page.waitForLoadState("networkidle");
+        await expect(page.getByText("Wczytywanie", { exact: false })).toHaveCount(0);
 
-    test("technician work orders have no serious accessibility violations", async ({ page }) => {
-      await signIn(page, demoAccount("technician"));
-
-      await expectAccessibleScreen(page, "/my-work-orders", "Moje zlecenia");
-    });
+        expect(await blockingViolations(page)).toEqual([]);
+      });
+    }
   });
 }
