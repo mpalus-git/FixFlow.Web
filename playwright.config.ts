@@ -8,6 +8,7 @@ if (existsSync(envFile)) {
 }
 
 const isCi = Boolean(process.env.CI);
+const vite = "node node_modules/vite/bin/vite.js";
 const dispatcher = demoAccount("dispatcher");
 const technician = demoAccount("technician");
 
@@ -30,7 +31,7 @@ export default defineConfig({
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: "pnpm build && pnpm preview --port 4173 --strictPort",
+    command: `${vite} build && ${vite} preview --port 4173 --strictPort`,
     url: appUrl,
     reuseExistingServer: !isCi,
     timeout: 180_000,
