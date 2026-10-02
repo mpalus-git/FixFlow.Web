@@ -208,3 +208,26 @@ Jedno miejsce mapuje odpowiedzi ProblemDetails na błąd aplikacji: błędy wali
 | E2E | Playwright, axe-core | prawdziwe API z obrazu Docker: logowanie, utworzenie zlecenia, przypisanie technika przeciągnięciem, konflikt 412 w dwóch kontekstach przeglądarki, uśpiony serwer, brak naruszeń dostępności poziomu serious i critical na głównych ekranach w obu motywach, działanie aplikacji pod produkcyjną polityką CSP |
 
 CI uruchamia lint, kontrolę typów, kontrolę wygenerowanych typów, build, testy w trzech shardach z raportem pokrycia w podsumowaniu joba oraz testy e2e na obrazie `ghcr.io/mpalus-git/fixflow.api` z PostgreSQL 18 i losowymi sekretami.
+
+## Ograniczenia
+
+- Refresh token w `localStorage` może odczytać skrypt wstrzyknięty przez XSS. CSP ogranicza to ryzyko, ale go nie usuwa; wynika ono z tego, że API zwraca token w treści odpowiedzi.
+- Darmowy plan Render: zimny start do minuty oraz limit 10 logowań i odświeżeń sesji na minutę z jednego adresu IP, wspólny dla wszystkich użytkowników za tym samym NAT. Każde przeładowanie strony zużywa jedno odświeżenie.
+- Dane demo są wspólne, więc zmiany innych odwiedzających są widoczne do nocnego resetu.
+- Licznik opóźnionych na pulpicie opiera się na fladze `IsOverdue` odświeżanej co godzinę (dłużej, gdy Render śpi) i może chwilowo różnić się od podsumowania techników, które liczy opóźnienie na bieżąco.
+- Pola wyboru klienta i urządzenia w formularzu zlecenia, lista techników oraz tablica dispatch pobierają najwyżej 100 pozycji (limit strony w API). Przy większej skali potrzebne byłoby wyszukiwanie po stronie serwera; tablica pokazuje wtedy ostrzeżenie.
+- Brak aktualizacji na żywo: dane odświeżają się przy akcjach i po powrocie do karty, a równoległą zmianę innego dyspozytora wykrywa dopiero ETag przy zapisie.
+- Panel technika jest tylko do odczytu. Wpisy serwisowe dodaje aplikacja mobilna, która jeszcze nie powstała, więc w demo pochodzą z danych startowych.
+- Lista użytkowników nie ma wyszukiwania ani sortowania, bo API ich nie udostępnia.
+
+## Co zrobiłbym inaczej
+
+- Refresh token w ciasteczku `httpOnly`, ustawianym przez API albo przez cienki BFF na tej samej domenie. Usunęłoby to największe ryzyko opisane wyżej.
+- Jedna operacja przeniesienia zlecenia w API. Zmiana technika na tablicy to teraz dwa żądania (odpięcie i przypisanie), więc możliwy jest stan częściowy; panel go obsługuje komunikatem, ale endpoint wykonujący całe przeniesienie w jednej transakcji byłby prostszy i bezpieczniejszy.
+- Aktualizacje tablicy dispatch na żywo (SSE albo SignalR), gdy pracuje na niej kilku dyspozytorów naraz.
+- Wybór klienta i urządzenia jako pole z wyszukiwaniem po stronie serwera zamiast listy do 100 pozycji.
+- Testy regresji wizualnej w obu motywach, obok obecnych testów zachowania i dostępności.
+
+## Licencja
+
+Wszelkie prawa zastrzeżone. Kod jest udostępniony wyłącznie do wglądu; wykorzystanie, kopiowanie lub modyfikacja wymagają zgody autora.
