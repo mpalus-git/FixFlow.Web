@@ -1,0 +1,46 @@
+name: fixflow-e2e
+
+services:
+  api:
+    image: ghcr.io/mpalus-git/fixflow.api:sha-912a0b1a42c18661ce53d4c04389a616267fc483
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      PORT: "8080"
+      ConnectionStrings__Database: Host=postgres;Port=5432;Database=fixflow;Username=fixflow;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      Jwt__SigningKey: ${JWT_SIGNING_KEY:?Set JWT_SIGNING_KEY}
+      Seed__DemoUsers__Enabled: "true"
+      Seed__DemoUsers__AdminPassword: ${DEMO_ADMIN_PASSWORD:?Set DEMO_ADMIN_PASSWORD}
+      Seed__DemoUsers__DispatcherPassword: ${DEMO_DISPATCHER_PASSWORD:?Set DEMO_DISPATCHER_PASSWORD}
+      Seed__DemoUsers__TechnicianPassword: ${DEMO_TECHNICIAN_PASSWORD:?Set DEMO_TECHNICIAN_PASSWORD}
+      Seed__DemoData__Enabled: "true"
+      Email__Enabled: "false"
+      Cors__AllowedOrigins__0: http://localhost:4173
+      RateLimiting__Auth__PermitLimit: "1000"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - bash
+        - -c
+        - |-
+          exec 3<>/dev/tcp/127.0.0.1/8080 && printf 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3 && head -n 1 <&3 | grep -q ' 200 '
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 10s
+
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: fixflow
+      POSTGRES_USER: fixflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fixflow -d fixflow"]
+      interval: 3s
+      timeout: 3s
+      retries: 20

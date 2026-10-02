@@ -17,7 +17,10 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,css,html,yml,yaml}\"",
     "check:comments": "node scripts/check-no-comments.mjs",
     "api:sync": "node scripts/sync-api-contract.mjs",
-    "api:types": "node scripts/generate-api-types.mjs"
+    "api:types": "node scripts/generate-api-types.mjs",
+    "e2e": "playwright test",
+    "e2e:up": "docker compose -f e2e/compose.yaml up -d --wait",
+    "e2e:down": "docker compose -f e2e/compose.yaml down -v"
   },
   "dependencies": {
     "@date-fns/tz": "1.5.0",
@@ -46,8 +49,10 @@
     "zustand": "5.0.15"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@eslint/compat": "2.1.1",
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
     "@tailwindcss/vite": "4.3.3",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
