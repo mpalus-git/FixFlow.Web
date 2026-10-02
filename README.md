@@ -151,3 +151,60 @@ e2e/                   testy Playwright, compose.yaml z obrazem API
 openapi/               kopia kontraktu FixFlow.Api
 scripts/               synchronizacja kontraktu, generowanie typów, kontrola komentarzy
 ```
+
+## Decyzje techniczne
+
+### Typy z kontraktu API
+
+Panel nie ma ręcznie pisanych DTO. Kopia kontraktu leży w `openapi/fixflow-api.v1.json`, a `pnpm api:types` generuje z niej `src/shared/api/schema.ts`, z którego korzystają klient openapi-fetch, zapytania TanStack Query i handlery MSW w testach (handler zwracający kształt niezgodny z kontraktem się nie kompiluje). CI generuje typy ponownie i odrzuca build, jeśli różnią się od zacommitowanych, a osobny nieblokujący job ostrzega, gdy kopia kontraktu rozjedzie się z gałęzią main API.
+
+### Odświeżanie tokenów single-flight
+
+API rotuje refresh token przy każdym odświeżeniu, a ponowne użycie starego tokena unieważnia całą rodzinę i wylogowuje użytkownika. Dlatego:
+
+- w obrębie karty wszystkie równoległe żądania, które dostały 401, czekają na jedną wspólną obietnicę odświeżenia i są powtarzane najwyżej raz;
+- między kartami odświeżanie jest chronione blokadą Web Locks API (`navigator.locks`); wewnątrz blokady panel ponownie odczytuje refresh token z `localStorage`, więc jeśli inna karta już go wymieniła, używa nowego zamiast zużywać stary;
+- wylogowanie unieważnia token w API, czyści sesję i powiadamia pozostałe karty przez `BroadcastChannel`;
+- nieudane odświeżenie kończy sesję i przenosi na logowanie z parametrem `returnTo`.
+
+### Współbieżność: ETag i If-Match
+
+Pojedyncze zasoby (klient, urządzenie, część, zlecenie) przychodzą z nagłówkiem `ETag`. Formularz edycji zapamiętuje wersję, którą użytkownik otworzył, i wysyła ją w `If-Match`, nawet jeśli dane w tle zdążyły się odświeżyć. Odpowiedź 412 otwiera dialog „Dane zmieniły się w międzyczasie” z możliwością wczytania aktualnej wersji; panel nigdy nie nadpisuje cudzych zmian automatycznie. Tablica dispatch przed zmianą terminu lub technika pobiera aktualną wersję zlecenia i przerywa operację, jeśli stan różni się od tego, co widział dyspozytor.
+
+### Strefa czasowa
+
+Firma działa w Polsce, więc wszystkie daty są wyświetlane w strefie Europe/Warsaw niezależnie od strefy przeglądarki, a znaczniki czasu są wysyłane w UTC. Daty kalendarzowe (`yyyy-MM-dd`, np. data instalacji) nigdy nie przechodzą przez `new Date`, żeby nie przesunęły się o dzień. Testy Vitest i Playwright działają w strefie America/New_York, żeby wyłapać każdą zależność od strefy przeglądarki.
+
+### Uśpiony serwer
+
+Przy starcie panel wywołuje `GET /health/ready`, które budzi zarówno usługę na Render, jak i bazę. Jeśli odpowiedź nie przyjdzie w 3 sekundy, pojawia się ekran z paskiem postępu i ponawianiem co 3 sekundy, a po 90 sekundach komunikat z przyciskiem ponowienia. Formularz logowania renderuje się dopiero, gdy API odpowiada.
+
+### Przechowywanie tokenów
+
+Access token jest trzymany wyłącznie w pamięci. Refresh token trafia do `localStorage`, bo API zwraca go w treści odpowiedzi i ciasteczko `httpOnly` nie jest możliwe bez zmian po stronie serwera. To świadomy kompromis: token w `localStorage` może odczytać skrypt wstrzyknięty przez XSS. Ryzyko ogranicza:
+
+- Content Security Policy z `script-src 'self'` (bez skryptów inline, `eval` i zewnętrznych domen; Zod działa w trybie `jitless`, żeby nie próbował `eval`);
+- brak `dangerouslySetInnerHTML` i skryptów zewnętrznych;
+- nagłówki `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` i `frame-ancestors 'none'` ustawione w `vercel.json`.
+
+Każdy dostęp do `localStorage` jest w `try/catch`: gdy magazyn jest niedostępny, sesja trwa do zamknięcia karty.
+
+### Błędy z API
+
+Jedno miejsce mapuje odpowiedzi ProblemDetails na błąd aplikacji: błędy walidacji (400) trafiają do pól formularza po kluczu z API, konflikty unikalności (409) do właściwego pola, 404 kończy się stroną „nie znaleziono”, a błędy serwera i brak sieci powiadomieniem z możliwością ponowienia. Komunikaty są tłumaczone po kodzie błędu z API, a gdy tłumaczenia brak, panel pokazuje opis z serwera. Walidacja w formularzach odwzorowuje reguły API, ale nie zastępuje ich.
+
+### Pozostałe
+
+- Stan filtrów, sortowania i paginacji list jest w adresie strony, więc odświeżenie i udostępniony link zachowują widok.
+- Optimistic update tylko tam, gdzie wycofanie jest proste: przeciąganie na tablicy dispatch i archiwizacja. Formularze czekają na odpowiedź serwera.
+- Akcje niedozwolone dla roli lub statusu są ukryte albo wyłączone z podpowiedzią.
+- Kod nie zawiera komentarzy, co pilnują własna reguła ESLint i skrypt dla CSS, HTML, YAML i tsconfig.
+
+## Testy
+
+| Rodzaj | Narzędzia | Co obejmuje |
+|---|---|---|
+| Jednostkowe i komponentów | Vitest, React Testing Library, user-event, MSW | ok. 580 testów: sesja i równoległe odświeżanie (także między kartami), mapowanie ProblemDetails, daty i strefy, schematy Zod, widoczność akcji według roli i statusu, formularze z błędami z serwera i konfliktem 412, tablica dispatch z obsługą klawiatury |
+| E2E | Playwright, axe-core | prawdziwe API z obrazu Docker: logowanie, utworzenie zlecenia, przypisanie technika przeciągnięciem, konflikt 412 w dwóch kontekstach przeglądarki, uśpiony serwer, brak naruszeń dostępności poziomu serious i critical na głównych ekranach w obu motywach, działanie aplikacji pod produkcyjną polityką CSP |
+
+CI uruchamia lint, kontrolę typów, kontrolę wygenerowanych typów, build, testy w trzech shardach z raportem pokrycia w podsumowaniu joba oraz testy e2e na obrazie `ghcr.io/mpalus-git/fixflow.api` z PostgreSQL 18 i losowymi sekretami.
