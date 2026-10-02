@@ -114,7 +114,7 @@ export function DispatchWorkOrderCard({ workOrder, showDate }: DispatchWorkOrder
       className={cn(
         cardClassName,
         workOrder.isOverdue && "border-destructive/50",
-        !draggable && "bg-muted/50",
+        !draggable && "border-dashed",
         isDragging && "opacity-40",
       )}
     >
