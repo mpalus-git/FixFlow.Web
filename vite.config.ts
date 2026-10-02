@@ -5,8 +5,7 @@ import { loadEnv } from "vite";
 import { configDefaults, defineConfig } from "vitest/config";
 
 function createApiProxy(target: string) {
-  const route = { target, changeOrigin: true };
-  return { "/api": route, "/health": route };
+  return { "/api": { target, changeOrigin: true } };
 }
 
 export default defineConfig(({ mode }) => {

@@ -3,7 +3,7 @@ import { checkServerReady } from "@/app/server-wake/checkServerReady";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import { server } from "@/test/server";
 
-const readinessUrl = `${apiBaseUrl}/health/ready`;
+const readinessUrl = `${apiBaseUrl}/api/v1/system/ready`;
 
 describe("checkServerReady", () => {
   it("reports ready when the readiness check succeeds", async () => {

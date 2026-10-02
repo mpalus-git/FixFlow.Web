@@ -8,7 +8,7 @@ type SleepingServer = {
 async function simulateSleepingServer(page: Page): Promise<SleepingServer> {
   let asleep = true;
   let checks = 0;
-  await page.route("**/health/ready", async (route) => {
+  await page.route("**/api/v1/system/ready", async (route) => {
     checks += 1;
     if (!asleep) {
       await route.continue();

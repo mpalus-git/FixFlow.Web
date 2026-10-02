@@ -83,7 +83,7 @@ cp .env.example .env.local
 
 ### Z API na Render
 
-W `.env.local` wystarczy ustawić adres API, do którego serwer deweloperski Vite przekieruje żądania `/api` i `/health` (dzięki temu lokalnie nie ma problemu z CORS):
+W `.env.local` wystarczy ustawić adres API, do którego serwer deweloperski Vite przekieruje żądania `/api` (dzięki temu lokalnie nie ma problemu z CORS):
 
 ```bash
 API_PROXY_TARGET=https://fixflow-api-us2p.onrender.com
@@ -177,7 +177,7 @@ Firma działa w Polsce, więc wszystkie daty są wyświetlane w strefie Europe/W
 
 ### Uśpiony serwer
 
-Przy starcie panel wywołuje `GET /health/ready`, które budzi zarówno usługę na Render, jak i bazę. Jeśli odpowiedź nie przyjdzie w 3 sekundy, pojawia się ekran z paskiem postępu i ponawianiem co 3 sekundy, a po 90 sekundach komunikat z przyciskiem ponowienia. Formularz logowania renderuje się dopiero, gdy API odpowiada.
+Przy starcie panel wywołuje `GET /api/v1/system/ready`, które budzi zarówno usługę na Render, jak i bazę. Nie używa `/health/ready`, bo lista EasyPrivacy (domyślnie włączona m.in. w Brave Shields i uBlock Origin) blokuje żądania do `onrender.com/health`. Jeśli odpowiedź nie przyjdzie w 3 sekundy, pojawia się ekran z paskiem postępu i ponawianiem co 3 sekundy, a po 90 sekundach komunikat z przyciskiem ponowienia. Formularz logowania renderuje się dopiero, gdy API odpowiada.
 
 ### Przechowywanie tokenów
 
