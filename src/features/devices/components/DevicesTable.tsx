@@ -80,5 +80,12 @@ export function DevicesTable({ devices, isUpdating, onArchive }: DevicesTablePro
     getRowId: (device) => device.id,
   });
 
-  return <DataTable table={table} isUpdating={isUpdating} cellClassName={cellClassName} />;
+  return (
+    <DataTable
+      table={table}
+      label={t("devices.title")}
+      isUpdating={isUpdating}
+      cellClassName={cellClassName}
+    />
+  );
 }

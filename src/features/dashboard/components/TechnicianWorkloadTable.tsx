@@ -25,7 +25,7 @@ export function TechnicianWorkloadTable({ technicians }: TechnicianWorkloadTable
   const { t } = useTranslation();
 
   return (
-    <Table>
+    <Table label={t("dashboard.technicians.title")}>
       <TableCaption className="sr-only">{t("dashboard.technicians.title")}</TableCaption>
       <TableHeader>
         <TableRow>

@@ -127,5 +127,12 @@ export function UsersTable({
     getRowId: (user) => user.id,
   });
 
-  return <DataTable table={table} isUpdating={isUpdating} cellClassName={cellClassName} />;
+  return (
+    <DataTable
+      table={table}
+      label={t("users.title")}
+      isUpdating={isUpdating}
+      cellClassName={cellClassName}
+    />
+  );
 }

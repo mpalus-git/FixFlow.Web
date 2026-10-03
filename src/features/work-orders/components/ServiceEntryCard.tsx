@@ -94,7 +94,7 @@ export function ServiceEntryCard({ entry }: ServiceEntryCardProps) {
           </ul>
         )}
         {entry.parts.length === 0 ? null : (
-          <Table>
+          <Table label={t("workOrders.serviceEntries.parts")}>
             <TableHeader>
               <TableRow>
                 <TableHead>{t("workOrders.serviceEntries.part")}</TableHead>

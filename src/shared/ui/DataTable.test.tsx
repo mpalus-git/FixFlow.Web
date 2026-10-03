@@ -5,7 +5,7 @@ import {
   tableFeatures,
   useTable,
 } from "@tanstack/react-table";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { DataTable } from "@/shared/ui/DataTable";
@@ -43,10 +43,40 @@ function SortableFruitTable() {
     sortDescFirst: false,
   });
 
-  return <DataTable table={table} isUpdating={false} sorting={sorting} />;
+  return <DataTable table={table} label="Fruits" isUpdating={false} sorting={sorting} />;
+}
+
+function mockResizeObserver() {
+  const callbacks: (() => void)[] = [];
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      constructor(callback: () => void) {
+        callbacks.push(callback);
+      }
+      observe = vi.fn();
+      disconnect = vi.fn();
+    },
+  );
+  return () => {
+    act(() => {
+      for (const callback of callbacks) {
+        callback();
+      }
+    });
+  };
+}
+
+function setWidths(element: HTMLElement, scrollWidth: number, clientWidth: number) {
+  Object.defineProperty(element, "scrollWidth", { configurable: true, value: scrollWidth });
+  Object.defineProperty(element, "clientWidth", { configurable: true, value: clientWidth });
 }
 
 describe("DataTable", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it("marks the sorted column header and switches the direction on each click", async () => {
     const user = userEvent.setup();
     render(<SortableFruitTable />);
@@ -69,5 +99,19 @@ describe("DataTable", () => {
 
     expect(screen.getByRole("columnheader", { name: "Price" })).not.toHaveAttribute("aria-sort");
     expect(screen.queryByRole("button", { name: "Price" })).not.toBeInTheDocument();
+  });
+
+  it("makes the table container focusable only while the table scrolls horizontally", () => {
+    const notifyResize = mockResizeObserver();
+    render(<SortableFruitTable />);
+    const container = screen.getByRole("group", { name: "Fruits" });
+
+    setWidths(container, 900, 360);
+    notifyResize();
+    expect(container).toHaveAttribute("tabindex", "0");
+
+    setWidths(container, 900, 1280);
+    notifyResize();
+    expect(container).not.toHaveAttribute("tabindex");
   });
 });

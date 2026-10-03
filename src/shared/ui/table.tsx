@@ -1,9 +1,19 @@
 import * as React from "react";
 import { cn } from "cn";
+import { useHorizontalOverflow } from "@/shared/ui/useHorizontalOverflow";
 
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+function Table({ className, label, ...props }: React.ComponentProps<"table"> & { label: string }) {
+  const { ref, isOverflowing } = useHorizontalOverflow<HTMLDivElement>();
+
   return (
-    <div data-slot="table-container" className="relative w-full overflow-x-auto">
+    <div
+      ref={ref}
+      data-slot="table-container"
+      role="group"
+      aria-label={label}
+      tabIndex={isOverflowing ? 0 : undefined}
+      className="relative w-full overflow-x-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+    >
       <table
         data-slot="table"
         className={cn("w-full caption-bottom text-sm", className)}

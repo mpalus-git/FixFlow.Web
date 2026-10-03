@@ -460,7 +460,8 @@
         "description": "Wpisy dodaje przypisany technik w aplikacji mobilnej."
       },
       "totalWorkTime": "Czas pracy łącznie:",
-      "totalPartsValue": "Części netto łącznie:"
+      "totalPartsValue": "Części netto łącznie:",
+      "parts": "Zużyte części"
     },
     "protocol": {
       "download": "Pobierz protokół",

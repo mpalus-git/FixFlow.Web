@@ -458,7 +458,8 @@
         "description": "Entries are added by the assigned technician in the mobile app."
       },
       "totalWorkTime": "Total work time:",
-      "totalPartsValue": "Total net parts:"
+      "totalPartsValue": "Total net parts:",
+      "parts": "Parts used"
     },
     "protocol": {
       "download": "Download protocol",
