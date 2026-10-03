@@ -5,6 +5,7 @@ import { LoginForm } from "@/features/auth/components/LoginForm";
 import { readDemoAccounts } from "@/shared/lib/demoAccounts";
 import { readReturnTo } from "@/shared/lib/returnTo";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 export function LoginPage() {
   const { t } = useTranslation();
@@ -15,6 +16,7 @@ export function LoginPage() {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader className="items-center text-center">
+        <PageTitle title={t("auth.login.title")} />
         <WrenchIcon aria-hidden="true" className="mx-auto size-8 text-primary" />
         <CardTitle>
           <h1 className="text-xl font-semibold">{t("auth.login.title")}</h1>

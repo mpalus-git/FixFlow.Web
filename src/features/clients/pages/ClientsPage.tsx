@@ -15,6 +15,7 @@ import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 import { SearchInput } from "@/shared/ui/SearchInput";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 type ClientResponse = components["schemas"]["ClientResponse"];
 
@@ -84,6 +85,7 @@ export function ClientsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
+        <PageTitle title={t("clients.title")} />
         <h1 className="text-2xl font-semibold tracking-tight">{t("clients.title")}</h1>
         {addClientButton}
       </div>

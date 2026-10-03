@@ -4,6 +4,7 @@ import { isDemoAccountEmail } from "@/shared/lib/demoAccounts";
 import { useCurrentUser } from "@/shared/session/currentUser";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 export function ProfilePage() {
   const { t } = useTranslation();
@@ -15,6 +16,7 @@ export function ProfilePage() {
 
   return (
     <div className="flex max-w-xl flex-col gap-6">
+      <PageTitle title={t("profile.title")} />
       <h1 className="text-2xl font-semibold tracking-tight">{t("profile.title")}</h1>
       <Card>
         <CardHeader>

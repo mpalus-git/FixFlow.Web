@@ -10,6 +10,7 @@ import {
   toCreateWorkOrderRequest,
 } from "@/features/work-orders/schemas/workOrderSchema";
 import { Card, CardContent } from "@/shared/ui/card";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 export function CreateWorkOrderPage() {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ export function CreateWorkOrderPage() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-6">
+      <PageTitle title={t("workOrders.create.title")} />
       <h1 className="text-2xl font-semibold tracking-tight">{t("workOrders.create.title")}</h1>
       <Card>
         <CardContent>
