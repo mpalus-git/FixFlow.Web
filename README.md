@@ -169,7 +169,7 @@ API rotuje refresh token przy każdym odświeżeniu, a ponowne użycie starego t
 
 ### Współbieżność: ETag i If-Match
 
-Pojedyncze zasoby (klient, urządzenie, część, zlecenie) przychodzą z nagłówkiem `ETag`. Formularz edycji zapamiętuje wersję, którą użytkownik otworzył, i wysyła ją w `If-Match`, nawet jeśli dane w tle zdążyły się odświeżyć. Odpowiedź 412 otwiera dialog „Dane zmieniły się w międzyczasie” z możliwością wczytania aktualnej wersji; panel nigdy nie nadpisuje cudzych zmian automatycznie. Tablica dispatch przed zmianą terminu lub technika pobiera aktualną wersję zlecenia i przerywa operację, jeśli stan różni się od tego, co widział dyspozytor.
+Pojedyncze zasoby (klient, urządzenie, część, zlecenie) przychodzą z nagłówkiem `ETag`. Formularz edycji zapamiętuje wersję, którą użytkownik otworzył, i wysyła ją w `If-Match`, nawet jeśli dane w tle zdążyły się odświeżyć. Odpowiedź 412 otwiera dialog „Dane zmieniły się w międzyczasie” z możliwością wczytania aktualnej wersji; panel nigdy nie nadpisuje cudzych zmian automatycznie. Tablica dispatch przed zmianą terminu lub technika pobiera aktualną wersję zlecenia i przerywa operację, jeśli stan różni się od tego, co widział dyspozytor. Samo przeniesienie (technik i termin) to jedno żądanie API - przypisanie z nowym terminem albo `reassign` - więc zlecenie nigdy nie zostaje zmienione tylko częściowo.
 
 ### Strefa czasowa
 
@@ -223,7 +223,6 @@ CI uruchamia lint, kontrolę typów, kontrolę wygenerowanych typów, build, tes
 ## Co zrobiłbym inaczej
 
 - Refresh token w ciasteczku `httpOnly`, ustawianym przez API albo przez cienki BFF na tej samej domenie. Usunęłoby to największe ryzyko opisane wyżej.
-- Jedna operacja przeniesienia zlecenia w API. Zmiana technika na tablicy to teraz dwa żądania (odpięcie i przypisanie), więc możliwy jest stan częściowy; panel go obsługuje komunikatem, ale endpoint wykonujący całe przeniesienie w jednej transakcji byłby prostszy i bezpieczniejszy.
 - Aktualizacje tablicy dispatch na żywo (SSE albo SignalR), gdy pracuje na niej kilku dyspozytorów naraz.
 - Wybór klienta i urządzenia jako pole z wyszukiwaniem po stronie serwera zamiast listy do 100 pozycji.
 - Testy regresji wizualnej w obu motywach, obok obecnych testów zachowania i dostępności.
