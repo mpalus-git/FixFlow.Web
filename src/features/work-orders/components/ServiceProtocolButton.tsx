@@ -12,12 +12,21 @@ import { Button } from "@/shared/ui/button";
 
 type WorkOrderStatus = components["schemas"]["WorkOrderStatus"];
 
+function protocolFileName(workOrderNumber: string): string {
+  return `protokol-${workOrderNumber.replaceAll("/", "-")}.pdf`;
+}
+
 export type ServiceProtocolButtonProps = {
   workOrderId: string;
+  workOrderNumber: string;
   status: WorkOrderStatus;
 };
 
-export function ServiceProtocolButton({ workOrderId, status }: ServiceProtocolButtonProps) {
+export function ServiceProtocolButton({
+  workOrderId,
+  workOrderNumber,
+  status,
+}: ServiceProtocolButtonProps) {
   const { t } = useTranslation();
   const downloadMutation = useMutation({
     mutationFn: async () =>
@@ -28,7 +37,7 @@ export function ServiceProtocolButton({ workOrderId, status }: ServiceProtocolBu
         }),
       ),
     onSuccess: (pdf) => {
-      saveBlob(pdf, `protokol-${workOrderId}.pdf`);
+      saveBlob(pdf, protocolFileName(workOrderNumber));
     },
     onError: (error) => {
       toast.error(error instanceof ApiError ? describeApiError(error, t) : t("errors.unexpected"), {

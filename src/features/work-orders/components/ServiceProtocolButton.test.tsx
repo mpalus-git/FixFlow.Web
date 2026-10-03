@@ -16,7 +16,11 @@ const protocolUrl = `${apiBaseUrl}/api/v1/work-orders/${workOrderId}/protocol`;
 function renderButton(status: WorkOrderStatus) {
   renderWithProviders(
     <>
-      <ServiceProtocolButton workOrderId={workOrderId} status={status} />
+      <ServiceProtocolButton
+        workOrderId={workOrderId}
+        workOrderNumber="ZL/2026/0042"
+        status={status}
+      />
       <Toaster />
     </>,
   );
@@ -41,7 +45,7 @@ function captureDownloads() {
 }
 
 describe("ServiceProtocolButton", () => {
-  it("downloads the PDF protocol of a completed work order", async () => {
+  it("downloads the PDF protocol of a completed work order named after its number", async () => {
     server.use(
       http.get(
         protocolUrl,
@@ -57,7 +61,7 @@ describe("ServiceProtocolButton", () => {
     await userEvent.setup().click(screen.getByRole("button", { name: "Pobierz protokół" }));
 
     await vi.waitFor(() => {
-      expect(fileNames).toEqual([`protokol-${workOrderId}.pdf`]);
+      expect(fileNames).toEqual(["protokol-ZL-2026-0042.pdf"]);
     });
     expect(savedBlobs[0]?.type).toBe("application/pdf");
   });

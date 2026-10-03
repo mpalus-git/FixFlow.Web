@@ -65,7 +65,11 @@ export function WorkOrderDetailsPage() {
             {user === undefined ? null : (
               <WorkOrderActions workOrder={workOrder} role={user.role} />
             )}
-            <ServiceProtocolButton workOrderId={workOrder.id} status={workOrder.status} />
+            <ServiceProtocolButton
+              workOrderId={workOrder.id}
+              workOrderNumber={workOrder.number}
+              status={workOrder.status}
+            />
             {!isTechnician && canEditWorkOrder(workOrder.status) ? (
               <Button variant="outline" asChild>
                 <Link to={`/work-orders/${workOrder.id}/edit`}>
