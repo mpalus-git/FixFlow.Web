@@ -75,6 +75,16 @@ describe("ClientCardPage", () => {
     expect(await within(history).findByText("Kocioł nie grzeje wody użytkowej")).toBeVisible();
   });
 
+  it("names the device and work order pagination differently", async () => {
+    mockCard();
+    renderApp(cardPath);
+
+    expect(
+      await screen.findByRole("navigation", { name: "Paginacja urządzeń" }),
+    ).toBeInTheDocument();
+    expect(await screen.findByRole("navigation", { name: "Paginacja zleceń" })).toBeInTheDocument();
+  });
+
   it("opens from the client list by the client name", async () => {
     mockCard();
     const clientPage: ClientPage = { items: [client], page: 1, pageSize: 20, totalCount: 1 };

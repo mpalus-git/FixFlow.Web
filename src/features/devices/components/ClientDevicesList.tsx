@@ -91,6 +91,7 @@ export function ClientDevicesList({ clientId }: ClientDevicesListProps) {
         pageSize={devicesPageSize}
         totalCount={devicePage.totalCount}
         onPageChange={setPage}
+        label={t("devices.clientPagination")}
       />
     </div>
   );

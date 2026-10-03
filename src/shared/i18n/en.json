@@ -25,7 +25,8 @@
   "language": {
     "label": "Language",
     "pl": "Polski",
-    "en": "English"
+    "en": "English",
+    "current": "Language: {{language}}"
   },
   "theme": {
     "label": "Theme",
@@ -339,7 +340,8 @@
       "description": "The device will disappear from lists and its work order history is kept. No new work orders can be created for it and its serial number stays reserved.",
       "confirm": "Archive",
       "archived": "Device {{serialNumber}} has been archived."
-    }
+    },
+    "clientPagination": "Device pagination"
   },
   "workOrders": {
     "title": "Work orders",
@@ -474,7 +476,8 @@
       "assigned": "Technician assigned.",
       "changed": "Technician changed."
     },
-    "deviceName": "{{serialNumber}} · {{model}}"
+    "deviceName": "{{serialNumber}} · {{model}}",
+    "historyPagination": "Work order pagination"
   },
   "parts": {
     "title": "Parts",

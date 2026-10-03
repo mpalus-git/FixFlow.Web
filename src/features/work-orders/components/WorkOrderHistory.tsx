@@ -88,6 +88,7 @@ export function WorkOrderHistory({ filter }: WorkOrderHistoryProps) {
         pageSize={workOrderHistoryPageSize}
         totalCount={historyPage.totalCount}
         onPageChange={setPage}
+        label={t("workOrders.historyPagination")}
       />
     </div>
   );

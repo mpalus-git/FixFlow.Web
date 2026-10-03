@@ -13,10 +13,10 @@ describe("LanguageSwitcher", () => {
     const user = userEvent.setup();
     render(<LanguageSwitcher />);
 
-    await user.click(screen.getByRole("button", { name: "Język" }));
+    await user.click(screen.getByRole("button", { name: "Język: PL" }));
     await user.click(screen.getByRole("menuitemradio", { name: "English" }));
 
-    expect(await screen.findByRole("button", { name: "Language" })).toHaveTextContent("en");
+    expect(await screen.findByRole("button", { name: "Language: EN" })).toBeInTheDocument();
     expect(document.documentElement.lang).toBe("en");
   });
 });

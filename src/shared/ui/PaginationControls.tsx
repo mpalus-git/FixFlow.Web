@@ -7,6 +7,7 @@ export type PaginationControlsProps = {
   pageSize: number;
   totalCount: number;
   onPageChange: (page: number) => void;
+  label?: string;
 };
 
 export function countPages(totalCount: number, pageSize: number): number {
@@ -18,13 +19,14 @@ export function PaginationControls({
   pageSize,
   totalCount,
   onPageChange,
+  label,
 }: PaginationControlsProps) {
   const { t } = useTranslation();
   const pageCount = countPages(totalCount, pageSize);
 
   return (
     <nav
-      aria-label={t("pagination.label")}
+      aria-label={label ?? t("pagination.label")}
       className="flex flex-wrap items-center justify-between gap-3 text-sm"
     >
       <p className="text-muted-foreground">{t("pagination.total", { count: totalCount })}</p>
