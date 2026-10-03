@@ -1,5 +1,5 @@
 import type { components } from "@/shared/api/schema";
-import { toApiError } from "@/shared/api/apiError";
+import { ApiError, isServerUnreachable, toApiError } from "@/shared/api/apiError";
 
 type ProblemDetails = components["schemas"]["ProblemDetails"];
 type ValidationProblemDetails = components["schemas"]["HttpValidationProblemDetails"];
@@ -43,10 +43,24 @@ describe("toApiError", () => {
     [412, "preconditionFailed"],
     [428, "preconditionRequired"],
     [500, "server"],
-    [503, "server"],
     [415, "unexpected"],
   ])("maps status %i to %s", (status, kind) => {
     expect(toApiError(problemResponse(status), null).kind).toBe(kind);
+  });
+
+  it.each([502, 503, 504])(
+    "recognises status %i with a page instead of problem details as an unavailable server",
+    (status) => {
+      const error = toApiError(problemResponse(status), "<html>Application loading</html>");
+
+      expect(error.kind).toBe("serverUnavailable");
+    },
+  );
+
+  it("keeps a 503 with problem details from the API as a server error", () => {
+    const body: ProblemDetails = { status: 503, title: "Service unavailable" };
+
+    expect(toApiError(problemResponse(503), body).kind).toBe("server");
   });
 
   it("reads the retry delay of a rate limited request", () => {
@@ -60,10 +74,24 @@ describe("toApiError", () => {
   });
 
   it("tolerates a body that is not problem details", () => {
-    const error = toApiError(problemResponse(503), "<html>Application loading</html>");
+    const error = toApiError(problemResponse(500), "<html>Internal error</html>");
 
     expect(error.kind).toBe("server");
     expect(error.detail).toBeNull();
     expect(error.fieldErrors).toEqual({});
+  });
+});
+
+describe("isServerUnreachable", () => {
+  it.each(["network", "serverUnavailable"] as const)("treats a %s error as unreachable", (kind) => {
+    expect(isServerUnreachable(new ApiError({ kind }))).toBe(true);
+  });
+
+  it("does not treat a server error with problem details as unreachable", () => {
+    expect(isServerUnreachable(new ApiError({ kind: "server" }))).toBe(false);
+  });
+
+  it("does not treat an error that did not come from the API as unreachable", () => {
+    expect(isServerUnreachable(new TypeError("Failed to fetch"))).toBe(false);
   });
 });

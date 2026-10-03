@@ -43,7 +43,8 @@
     "errorDescription": "Spróbuj ponownie za chwilę.",
     "errorNetwork": "Brak połączenia z serwerem. Sprawdź połączenie i spróbuj ponownie.",
     "errorServer": "Błąd serwera. Spróbuj ponownie za chwilę.",
-    "errorForbidden": "Nie masz uprawnień do tych danych."
+    "errorForbidden": "Nie masz uprawnień do tych danych.",
+    "errorServerUnavailable": "Serwer demo jest chwilowo niedostępny. Spróbuj ponownie za chwilę."
   },
   "dashboard": {
     "title": "Pulpit",
@@ -143,7 +144,8 @@
   },
   "errors": {
     "server": "Serwer zwrócił błąd. Spróbuj ponownie.",
-    "network": "Brak połączenia z serwerem.",
+    "network": "Brak połączenia z serwerem. Serwer demo mógł zostać uśpiony - spróbuj ponownie za chwilę.",
+    "serverUnavailable": "Serwer demo się uruchamia. Spróbuj ponownie za chwilę.",
     "unexpected": "Wystąpił nieoczekiwany błąd."
   },
   "myWorkOrders": {

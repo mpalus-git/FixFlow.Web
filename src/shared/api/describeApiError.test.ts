@@ -27,7 +27,13 @@ describe("describeApiError", () => {
 
   it("describes a network error without details", () => {
     expect(describeApiError(new ApiError({ kind: "network" }), i18next.t)).toBe(
-      "Brak połączenia z serwerem.",
+      "Brak połączenia z serwerem. Serwer demo mógł zostać uśpiony - spróbuj ponownie za chwilę.",
+    );
+  });
+
+  it("asks to try again later while the demo server is starting", () => {
+    expect(describeApiError(new ApiError({ kind: "serverUnavailable" }), i18next.t)).toBe(
+      "Serwer demo się uruchamia. Spróbuj ponownie za chwilę.",
     );
   });
 });

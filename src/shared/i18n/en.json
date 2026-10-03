@@ -43,7 +43,8 @@
     "errorDescription": "Try again in a moment.",
     "errorNetwork": "Cannot connect to the server. Check your connection and try again.",
     "errorServer": "Server error. Try again in a moment.",
-    "errorForbidden": "You do not have permission to view this data."
+    "errorForbidden": "You do not have permission to view this data.",
+    "errorServerUnavailable": "The demo server is temporarily unavailable. Try again in a moment."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -143,7 +144,8 @@
   },
   "errors": {
     "server": "The server returned an error. Try again.",
-    "network": "Cannot connect to the server.",
+    "network": "Cannot connect to the server. The demo server may be asleep - try again in a moment.",
+    "serverUnavailable": "The demo server is starting. Try again in a moment.",
     "unexpected": "An unexpected error occurred."
   },
   "myWorkOrders": {

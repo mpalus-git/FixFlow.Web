@@ -19,6 +19,8 @@ function descriptionKeyFor(error: unknown) {
       return "states.errorNetwork";
     case "server":
       return "states.errorServer";
+    case "serverUnavailable":
+      return "states.errorServerUnavailable";
     case "forbidden":
       return "states.errorForbidden";
     default:
