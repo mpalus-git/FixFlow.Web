@@ -160,7 +160,8 @@
   "userMenu": {
     "label": "User account",
     "profile": "Profile",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "loggingOut": "Signing out…"
   },
   "roles": {
     "Admin": "Administrator",

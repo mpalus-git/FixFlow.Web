@@ -1,4 +1,5 @@
-import { LogOutIcon, UserCogIcon, UserIcon } from "lucide-react";
+import { LoaderCircleIcon, LogOutIcon, UserCogIcon, UserIcon } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useCurrentUser } from "@/shared/session/currentUser";
@@ -16,6 +17,7 @@ import {
 export function UserMenu() {
   const { t } = useTranslation();
   const user = useCurrentUser();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   if (user === undefined) {
     return null;
@@ -42,12 +44,19 @@ export function UserMenu() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
-          onSelect={() => {
+          disabled={isLoggingOut}
+          onSelect={(event) => {
+            event.preventDefault();
+            setIsLoggingOut(true);
             void logout();
           }}
         >
-          <LogOutIcon aria-hidden="true" />
-          {t("userMenu.logout")}
+          {isLoggingOut ? (
+            <LoaderCircleIcon aria-hidden="true" className="animate-spin" />
+          ) : (
+            <LogOutIcon aria-hidden="true" />
+          )}
+          {t(isLoggingOut ? "userMenu.loggingOut" : "userMenu.logout")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

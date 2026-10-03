@@ -160,7 +160,8 @@
   "userMenu": {
     "label": "Konto użytkownika",
     "profile": "Profil",
-    "logout": "Wyloguj"
+    "logout": "Wyloguj",
+    "loggingOut": "Wylogowywanie…"
   },
   "roles": {
     "Admin": "Administrator",
