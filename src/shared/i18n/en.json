@@ -268,6 +268,7 @@
     "workOrderClosed": "The work order is completed or invoiced and cannot be changed.",
     "workOrderDeviceArchived": "A work order cannot be created for an archived device.",
     "workOrderNotFound": "Work order not found.",
+    "workOrderNotReassignable": "The work order has already been started, so its technician and due date cannot be changed.",
     "workOrderNoServiceEntries": "A work order without service entries cannot be completed.",
     "workOrderNotCompleted": "The protocol is available only for completed or invoiced work orders.",
     "concurrentModification": "The work order was changed in the meantime. Its current state is shown, try again.",
@@ -465,14 +466,13 @@
       "title": "Assign technician",
       "changeTitle": "Change technician",
       "description": "Only an active technician can be chosen. The work order will move to the Assigned status.",
-      "changeDescription": "The current technician will be unassigned and the work order assigned to the chosen active technician.",
+      "changeDescription": "The work order is moved straight to the chosen active technician and stays in the Assigned status.",
       "chooseTechnician": "Choose a technician",
       "noTechnicians": "No other active technicians",
       "submit": "Assign",
       "changeSubmit": "Change technician",
       "assigned": "Technician assigned.",
-      "changed": "Technician changed.",
-      "partialChange": "The previous technician was unassigned, but the new one could not be assigned: {{reason}} The work order is now New."
+      "changed": "Technician changed."
     },
     "deviceName": "{{serialNumber}} · {{model}}"
   },
@@ -572,8 +572,7 @@
       "cancelled": "Moving work order {{workOrder}} was cancelled."
     },
     "errors": {
-      "changed": "The work order changed in the meantime. The board now shows its current state.",
-      "partial": "The work order was changed only partially: {{reason}}"
+      "changed": "The work order changed in the meantime. The board now shows its current state."
     },
     "week": {
       "range": "{{from}} – {{to}}",

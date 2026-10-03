@@ -270,6 +270,7 @@
     "workOrderClosed": "Zlecenie jest zakończone lub zafakturowane i nie można go zmieniać.",
     "workOrderDeviceArchived": "Nie można założyć zlecenia na zarchiwizowane urządzenie.",
     "workOrderNotFound": "Nie znaleziono zlecenia.",
+    "workOrderNotReassignable": "Zlecenie zostało już rozpoczęte, więc nie można zmienić technika ani terminu.",
     "workOrderNoServiceEntries": "Zlecenia bez wpisów serwisowych nie można zakończyć.",
     "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń.",
     "concurrentModification": "Zlecenie zostało zmienione w międzyczasie. Wyświetlono aktualny stan, spróbuj ponownie.",
@@ -467,14 +468,13 @@
       "title": "Przypisz technika",
       "changeTitle": "Zmień technika",
       "description": "Można wybrać tylko aktywnego technika. Zlecenie przejdzie do statusu Przypisane.",
-      "changeDescription": "Obecny technik zostanie odpięty, a zlecenie przypisane do wybranego aktywnego technika.",
+      "changeDescription": "Zlecenie zostanie od razu przypisane do wybranego aktywnego technika i pozostanie w statusie Przypisane.",
       "chooseTechnician": "Wybierz technika",
       "noTechnicians": "Brak innych aktywnych techników",
       "submit": "Przypisz",
       "changeSubmit": "Zmień technika",
       "assigned": "Przypisano technika.",
-      "changed": "Zmieniono technika.",
-      "partialChange": "Odpięto poprzedniego technika, ale nie udało się przypisać nowego: {{reason}} Zlecenie ma teraz status Nowe."
+      "changed": "Zmieniono technika."
     },
     "deviceName": "{{serialNumber}} · {{model}}"
   },
@@ -578,8 +578,7 @@
       "cancelled": "Anulowano przenoszenie zlecenia {{workOrder}}."
     },
     "errors": {
-      "changed": "Zlecenie zmieniło się w międzyczasie. Tablica pokazuje teraz aktualny stan.",
-      "partial": "Zlecenie zostało zmienione tylko częściowo: {{reason}}"
+      "changed": "Zlecenie zmieniło się w międzyczasie. Tablica pokazuje teraz aktualny stan."
     },
     "week": {
       "range": "{{from}} – {{to}}",

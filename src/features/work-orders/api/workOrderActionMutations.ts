@@ -11,13 +11,6 @@ export type TechnicianAssignment = {
   technicianId: string;
 };
 
-export class PartialTechnicianChangeError extends Error {
-  constructor(cause: unknown) {
-    super("The technician was unassigned, but the new one could not be assigned.", { cause });
-    this.name = "PartialTechnicianChangeError";
-  }
-}
-
 async function storeVersion(queryClient: QueryClient, version: Versioned<WorkOrderResponse>) {
   queryClient.setQueryData(workOrderKeys.detail(version.data.id), version);
   await queryClient.invalidateQueries({ queryKey: workOrderKeys.lists() });
@@ -33,6 +26,15 @@ async function reloadWorkOrder(queryClient: QueryClient, workOrderId: string) {
 async function assign({ workOrderId, technicianId }: TechnicianAssignment) {
   return unwrapVersioned(
     await apiClient.POST("/api/v1/work-orders/{workOrderId}/assign", {
+      params: { path: { workOrderId } },
+      body: { technicianId },
+    }),
+  );
+}
+
+async function reassign({ workOrderId, technicianId }: TechnicianAssignment) {
+  return unwrapVersioned(
+    await apiClient.POST("/api/v1/work-orders/{workOrderId}/reassign", {
       params: { path: { workOrderId } },
       body: { technicianId },
     }),
@@ -71,14 +73,7 @@ export function useChangeTechnicianMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (assignment: TechnicianAssignment) => {
-      await storeVersion(queryClient, await unassign(assignment.workOrderId));
-      try {
-        return await assign(assignment);
-      } catch (error) {
-        throw new PartialTechnicianChangeError(error);
-      }
-    },
+    mutationFn: reassign,
     onSuccess: (version) => storeVersion(queryClient, version),
     onError: (_error, { workOrderId }) => reloadWorkOrder(queryClient, workOrderId),
   });

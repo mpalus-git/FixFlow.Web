@@ -8,7 +8,7 @@ import {
   planDispatchMove,
 } from "@/features/dispatch/dispatchBoard";
 import { apiClient } from "@/shared/api/apiClient";
-import { unwrapVersioned } from "@/shared/api/baseClient";
+import { unwrap } from "@/shared/api/baseClient";
 import { queryKeyRoots } from "@/shared/api/queryKeyRoots";
 import type { components } from "@/shared/api/schema";
 import { calendarDateOf, weekDays } from "@/shared/lib/dateTime";
@@ -29,65 +29,43 @@ export class StaleDispatchBoardError extends Error {
   }
 }
 
-export class PartialDispatchMoveError extends Error {
-  constructor(cause: unknown) {
-    super("The work order was changed only partially.", { cause });
-    this.name = "PartialDispatchMoveError";
-  }
-}
-
 type BoardSnapshot = {
   week: WorkOrderPage | undefined;
   unassigned: WorkOrderPage | undefined;
 };
 
-async function loadCurrentVersion(workOrder: DispatchWorkOrder) {
-  const current = unwrapVersioned(
+async function ensureBoardIsCurrent(workOrder: DispatchWorkOrder) {
+  const current = unwrap(
     await apiClient.GET("/api/v1/work-orders/{workOrderId}", {
       params: { path: { workOrderId: workOrder.id } },
     }),
   );
   if (
-    current.data.status !== workOrder.status ||
-    current.data.technicianId !== workOrder.technicianId ||
-    Date.parse(current.data.dueDate) !== Date.parse(workOrder.dueDate)
+    current.status !== workOrder.status ||
+    current.technicianId !== workOrder.technicianId ||
+    Date.parse(current.dueDate) !== Date.parse(workOrder.dueDate)
   ) {
     throw new StaleDispatchBoardError();
   }
-  return current;
 }
 
-async function applyPlan(workOrder: DispatchWorkOrder, plan: DispatchMovePlan) {
-  const current = await loadCurrentVersion(workOrder);
-  const workOrderId = workOrder.id;
-  let changed = false;
-  try {
-    if (plan.dueDate !== null) {
-      await apiClient.PUT("/api/v1/work-orders/{workOrderId}", {
-        params: { path: { workOrderId }, header: { "If-Match": current.etag } },
-        body: {
-          description: current.data.description,
-          priority: current.data.priority,
-          dueDate: plan.dueDate,
-        },
-      });
-      changed = true;
-    }
-    if (plan.unassign) {
-      await apiClient.POST("/api/v1/work-orders/{workOrderId}/unassign", {
-        params: { path: { workOrderId } },
-      });
-      changed = true;
-    }
-    if (plan.assignTo !== null) {
-      await apiClient.POST("/api/v1/work-orders/{workOrderId}/assign", {
-        params: { path: { workOrderId } },
-        body: { technicianId: plan.assignTo },
-      });
-    }
-  } catch (error) {
-    throw changed ? new PartialDispatchMoveError(error) : error;
+async function applyPlan(workOrder: DispatchWorkOrder, plan: DispatchMovePlan | null) {
+  if (plan === null) {
+    return;
   }
+  await ensureBoardIsCurrent(workOrder);
+  const path = { workOrderId: workOrder.id };
+  if (plan.kind === "unassign") {
+    await apiClient.POST("/api/v1/work-orders/{workOrderId}/unassign", { params: { path } });
+    return;
+  }
+  const body =
+    plan.dueDate === null
+      ? { technicianId: plan.technicianId }
+      : { technicianId: plan.technicianId, dueDate: plan.dueDate };
+  await (plan.kind === "assign"
+    ? apiClient.POST("/api/v1/work-orders/{workOrderId}/assign", { params: { path }, body })
+    : apiClient.POST("/api/v1/work-orders/{workOrderId}/reassign", { params: { path }, body }));
 }
 
 function replaceOrRemove(
@@ -105,8 +83,9 @@ function replaceOrRemove(
 
 function movedWorkOrder(
   { workOrder, target, technician }: MoveWorkOrderVariables,
-  plan: DispatchMovePlan,
+  plan: DispatchMovePlan | null,
 ): DispatchWorkOrder {
+  const dueDate = plan === null || plan.kind === "unassign" ? null : plan.dueDate;
   const assigned = target.kind === "cell" && technician !== null;
   return {
     ...workOrder,
@@ -114,8 +93,8 @@ function movedWorkOrder(
     technicianId: assigned ? target.technicianId : null,
     technicianEmail: assigned ? technician.email : null,
     technicianName: assigned ? technician.fullName : null,
-    dueDate: plan.dueDate ?? workOrder.dueDate,
-    isOverdue: plan.dueDate === null ? workOrder.isOverdue : false,
+    dueDate: dueDate ?? workOrder.dueDate,
+    isOverdue: dueDate === null ? workOrder.isOverdue : false,
   };
 }
 

@@ -23,11 +23,10 @@ export type DispatchBoard = {
   unassigned: DispatchWorkOrder[];
 };
 
-export type DispatchMovePlan = {
-  dueDate: string | null;
-  unassign: boolean;
-  assignTo: string | null;
-};
+export type DispatchMovePlan =
+  | { kind: "assign"; technicianId: string; dueDate: string | null }
+  | { kind: "reassign"; technicianId: string; dueDate: string | null }
+  | { kind: "unassign" };
 
 type DispatchBoardSource = {
   weekStart: string;
@@ -79,20 +78,24 @@ export function canDragWorkOrder(workOrder: DispatchWorkOrder): boolean {
 export function planDispatchMove(
   workOrder: DispatchWorkOrder,
   target: DispatchTarget,
-): DispatchMovePlan {
+): DispatchMovePlan | null {
   if (target.kind === "unassigned") {
-    return { dueDate: null, unassign: workOrder.status === "Assigned", assignTo: null };
+    return workOrder.status === "Assigned" ? { kind: "unassign" } : null;
   }
   const dueDate =
     calendarDateOf(workOrder.dueDate) === target.day
       ? null
       : withCalendarDate(workOrder.dueDate, target.day);
-  const changesTechnician = workOrder.technicianId !== target.technicianId;
-  return {
-    dueDate,
-    unassign: workOrder.status === "Assigned" && changesTechnician,
-    assignTo: changesTechnician ? target.technicianId : null,
-  };
+  if (workOrder.status === "New") {
+    return { kind: "assign", technicianId: target.technicianId, dueDate };
+  }
+  if (
+    workOrder.status !== "Assigned" ||
+    (workOrder.technicianId === target.technicianId && dueDate === null)
+  ) {
+    return null;
+  }
+  return { kind: "reassign", technicianId: target.technicianId, dueDate };
 }
 
 export function canDropWorkOrder(
@@ -110,8 +113,10 @@ export function canDropWorkOrder(
     }
   }
   const plan = planDispatchMove(workOrder, target);
-  if (plan.dueDate !== null && Date.parse(plan.dueDate) <= now.getTime()) {
+  if (plan === null) {
     return false;
   }
-  return plan.dueDate !== null || plan.unassign || plan.assignTo !== null;
+  return (
+    plan.kind === "unassign" || plan.dueDate === null || Date.parse(plan.dueDate) > now.getTime()
+  );
 }

@@ -52,6 +52,13 @@ function mockApi(assignResponse?: () => Response) {
       calls.push("unassign");
       return HttpResponse.json(workOrder, { headers: { ETag: '"2"' } });
     }),
+    http.post<never, AssignTechnicianRequest>(`${workOrderUrl}/reassign`, async ({ request }) => {
+      const { technicianId } = await request.json();
+      calls.push(`reassign ${technicianId}`);
+      return HttpResponse.json(createWorkOrderResponse({ status: "Assigned", technicianId }), {
+        headers: { ETag: '"3"' },
+      });
+    }),
     http.post<never, AssignTechnicianRequest>(`${workOrderUrl}/assign`, async ({ request }) => {
       const { technicianId } = await request.json();
       calls.push(`assign ${technicianId}`);
@@ -110,7 +117,7 @@ describe("AssignTechnicianDialog", () => {
     await user.click(screen.getByRole("button", { name: "Zmień technika" }));
 
     expect(await screen.findByText("Zmieniono technika.")).toBeInTheDocument();
-    expect(calls).toEqual(["unassign", `assign ${piotr}`]);
+    expect(calls).toEqual([`reassign ${piotr}`]);
   });
 
   it("asks for a technician before assigning", async () => {
