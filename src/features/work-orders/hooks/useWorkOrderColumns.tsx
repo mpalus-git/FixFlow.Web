@@ -102,7 +102,7 @@ export function useWorkOrderColumns(
         header: t("workOrders.columns.device"),
         enableSorting: false,
         cell: ({ row }) => (
-          <div className="flex flex-col">
+          <div className="flex max-w-48 flex-col whitespace-normal">
             <span className="font-medium">{row.original.deviceSerialNumber}</span>
             <span className="text-muted-foreground">{row.original.deviceModel}</span>
           </div>
@@ -132,10 +132,13 @@ export function useWorkOrderColumns(
         id: "technician",
         header: t("workOrders.columns.technician"),
         enableSorting: false,
-        cell: (info) =>
-          info.getValue() ?? (
-            <span className="text-muted-foreground">{t("workOrders.unassigned")}</span>
-          ),
+        cell: (info) => (
+          <span className="block max-w-32 whitespace-normal">
+            {info.getValue() ?? (
+              <span className="text-muted-foreground">{t("workOrders.unassigned")}</span>
+            )}
+          </span>
+        ),
       }),
       columnHelper.display({
         id: "actions",
