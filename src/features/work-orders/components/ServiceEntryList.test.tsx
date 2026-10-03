@@ -52,12 +52,7 @@ function money(amount: number): string {
 }
 
 function renderEntries(entries: ServiceEntryResponse[]) {
-  server.use(
-    http.get(entriesUrl, () => HttpResponse.json(entries)),
-    http.get(`${apiBaseUrl}/api/v1/parts/${part.id}`, () =>
-      HttpResponse.json(part, { headers: { ETag: '"1"' } }),
-    ),
-  );
+  server.use(http.get(entriesUrl, () => HttpResponse.json(entries)));
   renderWithProviders(<ServiceEntryList workOrderId={workOrderId} />);
 }
 

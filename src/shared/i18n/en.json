@@ -478,7 +478,6 @@
     }
   },
   "parts": {
-    "unknown": "Unknown part",
     "title": "Parts",
     "lowStockHint_one": "Parts with {{count}} unit or fewer left are marked as low stock.",
     "lowStockHint_other": "Parts with {{count}} units or fewer left are marked as low stock.",

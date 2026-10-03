@@ -480,7 +480,6 @@
     }
   },
   "parts": {
-    "unknown": "Nieznana część",
     "title": "Części",
     "lowStockHint_one": "Części, których zostało {{count}} sztuka lub mniej, są oznaczone jako niski stan.",
     "lowStockHint_few": "Części, których zostały {{count}} sztuki lub mniej, są oznaczone jako niski stan.",
