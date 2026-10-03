@@ -68,7 +68,7 @@ function kindFromResponse(status: number, body: unknown): ApiErrorKind {
   return kindsByStatus[status] ?? (status >= 500 ? "server" : "unexpected");
 }
 
-export function isServerUnreachable(error: unknown): error is ApiError {
+export function isServerUnreachable(error: unknown): boolean {
   return (
     error instanceof ApiError && (error.kind === "network" || error.kind === "serverUnavailable")
   );
