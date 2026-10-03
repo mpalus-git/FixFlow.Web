@@ -1,6 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
-import { type ApiClient, findWorkOrderId, signInToApi } from "./support/api";
+import {
+  type ApiClient,
+  createClientWithDevice,
+  findPartId,
+  findWorkOrderId,
+  signInToApi,
+} from "./support/api";
 import { type DemoRole, demoAccount } from "./support/environment";
 import { signIn } from "./support/signIn";
 
@@ -25,6 +31,8 @@ type Screen = {
   role: DemoRole;
   heading: string;
   path: (api: ApiClient) => Promise<string> | string;
+  viewport?: { width: number; height: number };
+  prepare?: (page: Page) => Promise<void>;
 };
 
 const screens: Screen[] = [
@@ -49,6 +57,29 @@ const screens: Screen[] = [
     heading: "Moje zlecenia",
     path: () => "/my-work-orders",
   },
+  {
+    name: "technician work order details on a phone",
+    role: "technician",
+    heading: "Zlecenie ZL/",
+    path: async (api) => `/my-work-orders/${await findWorkOrderId(api, "Completed")}`,
+    viewport: { width: 360, height: 800 },
+  },
+  {
+    name: "part edit form",
+    role: "dispatcher",
+    heading: "Edycja części",
+    path: async (api) => `/parts/${await findPartId(api)}/edit`,
+  },
+  {
+    name: "client archive confirmation",
+    role: "dispatcher",
+    heading: "Klient E2E",
+    path: async (api) => `/clients/${(await createClientWithDevice(api)).client.id}`,
+    prepare: async (page) => {
+      await page.getByRole("button", { name: "Archiwizuj" }).click();
+      await expect(page.getByRole("alertdialog")).toBeVisible();
+    },
+  },
 ];
 
 for (const colorScheme of ["light", "dark"] as const) {
@@ -64,6 +95,9 @@ for (const colorScheme of ["light", "dark"] as const) {
 
     for (const screen of screens) {
       test(`${screen.name} has no serious accessibility violations`, async ({ page }) => {
+        if (screen.viewport !== undefined) {
+          await page.setViewportSize(screen.viewport);
+        }
         const account = demoAccount(screen.role);
         const path = await screen.path(await signInToApi(account));
 
@@ -71,6 +105,7 @@ for (const colorScheme of ["light", "dark"] as const) {
         await expect(page.getByRole("heading", { level: 1, name: screen.heading })).toBeVisible();
         await page.waitForLoadState("networkidle");
         await expect(page.getByText("Wczytywanie", { exact: false })).toHaveCount(0);
+        await screen.prepare?.(page);
 
         expect(await blockingViolations(page)).toEqual([]);
       });
