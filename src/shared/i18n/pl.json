@@ -612,6 +612,7 @@
       "inactive": "Nieaktywne"
     },
     "columns": {
+      "fullName": "Imię i nazwisko",
       "email": "E-mail",
       "role": "Rola",
       "status": "Status",

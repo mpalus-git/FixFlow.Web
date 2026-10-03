@@ -21,7 +21,13 @@ function mockDetails(workOrder: WorkOrderResponse) {
   const userListRequests: Request[] = [];
   const userPage: UserPage = {
     items: [
-      { id: otherTechnicianId, email: "anna@fixflow.test", role: "Technician", isActive: true },
+      {
+        id: otherTechnicianId,
+        email: "anna@fixflow.test",
+        fullName: "Anna Nowak",
+        role: "Technician",
+        isActive: true,
+      },
     ],
     page: 1,
     pageSize: 100,

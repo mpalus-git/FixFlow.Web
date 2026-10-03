@@ -24,10 +24,17 @@ const noFilters: WorkOrderListFilters = {
 function mockTechnicians() {
   const userPage: UserPage = {
     items: [
-      { id: activeTechnicianId, email: "anna@fixflow.test", role: "Technician", isActive: true },
+      {
+        id: activeTechnicianId,
+        email: "anna@fixflow.test",
+        fullName: "Anna Nowak",
+        role: "Technician",
+        isActive: true,
+      },
       {
         id: inactiveTechnicianId,
         email: "piotr@fixflow.test",
+        fullName: "Piotr Zieliński",
         role: "Technician",
         isActive: false,
       },

@@ -2,7 +2,7 @@ name: fixflow-e2e
 
 services:
   api:
-    image: ghcr.io/mpalus-git/fixflow.api:sha-df0747f76a24c4e069316ca869c5b329be817cb9
+    image: ghcr.io/mpalus-git/fixflow.api:sha-86148d06aed5c5d073f0e1c41cdd4883b4802487
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       PORT: "8080"

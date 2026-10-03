@@ -23,8 +23,20 @@ function mockApi(assignResponse?: () => Response) {
   const calls: string[] = [];
   const userPage: UserPage = {
     items: [
-      { id: anna, email: "anna@fixflow.test", role: "Technician", isActive: true },
-      { id: piotr, email: "piotr@fixflow.test", role: "Technician", isActive: true },
+      {
+        id: anna,
+        email: "anna@fixflow.test",
+        fullName: "Anna Nowak",
+        role: "Technician",
+        isActive: true,
+      },
+      {
+        id: piotr,
+        email: "piotr@fixflow.test",
+        fullName: "Piotr Zieliński",
+        role: "Technician",
+        isActive: true,
+      },
     ],
     page: 1,
     pageSize: 100,

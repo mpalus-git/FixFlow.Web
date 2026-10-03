@@ -18,8 +18,20 @@ const weekStart = "2026-09-28";
 const anna = "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d";
 const piotr = "2b3c4d5e-6f7a-4b8c-9d0e-1f2a3b4c5d6e";
 const technicians = [
-  { id: anna, email: "anna@fixflow.test", role: "Technician", isActive: true },
-  { id: piotr, email: "piotr@fixflow.test", role: "Technician", isActive: true },
+  {
+    id: anna,
+    email: "anna@fixflow.test",
+    fullName: "Anna Nowak",
+    role: "Technician",
+    isActive: true,
+  },
+  {
+    id: piotr,
+    email: "piotr@fixflow.test",
+    fullName: "Piotr Zieliński",
+    role: "Technician",
+    isActive: true,
+  },
 ];
 const newOrder = createWorkOrderListItem({
   id: "6e5d4c3b-2a19-4f8e-9d7c-6b5a4f3e2d1c",

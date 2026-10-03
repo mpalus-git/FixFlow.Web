@@ -19,7 +19,15 @@ const workEntry = createServiceEntryResponse({
   photoUrls: ["https://photos.example.com/boiler.jpg"],
   latitude: 50.2649,
   longitude: 19.0238,
-  parts: [{ partId: part.id, quantity: 3, unitPrice: 148.5 }],
+  parts: [
+    {
+      partId: part.id,
+      partName: part.name,
+      catalogNumber: part.catalogNumber,
+      quantity: 3,
+      unitPrice: 148.5,
+    },
+  ],
 });
 const correction = createServiceEntryResponse({
   id: "7d6c5b4a-3928-4f7e-8d9c-0b1a2f3e4d5c",
@@ -28,7 +36,15 @@ const correction = createServiceEntryResponse({
   workStartedAt: null,
   workFinishedAt: null,
   createdAt: "2026-07-14T10:00:00Z",
-  parts: [{ partId: part.id, quantity: 1, unitPrice: 148.5 }],
+  parts: [
+    {
+      partId: part.id,
+      partName: part.name,
+      catalogNumber: part.catalogNumber,
+      quantity: 1,
+      unitPrice: 148.5,
+    },
+  ],
 });
 
 function money(amount: number): string {

@@ -28,9 +28,21 @@ const newOrder = createWorkOrderListItem({
 
 describe("buildDispatchBoard", () => {
   const technicians = [
-    { id: anna, email: "anna@fixflow.test", role: "Technician", isActive: true },
-    { id: piotr, email: "piotr@fixflow.test", role: "Technician", isActive: true },
-    { id: ewa, email: "ewa@fixflow.test", role: "Technician", isActive: false },
+    {
+      id: anna,
+      email: "anna@fixflow.test",
+      fullName: "Anna Nowak",
+      role: "Technician",
+      isActive: true,
+    },
+    {
+      id: piotr,
+      email: "piotr@fixflow.test",
+      fullName: "Piotr Zieliński",
+      role: "Technician",
+      isActive: true,
+    },
+    { id: ewa, email: "ewa@fixflow.test", fullName: "Ewa", role: "Technician", isActive: false },
   ];
 
   it("places assigned work orders in the technician row on their Warsaw due day", () => {

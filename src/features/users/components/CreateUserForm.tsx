@@ -75,6 +75,13 @@ export function CreateUserForm({ onSubmit }: CreateUserFormProps) {
       )}
       <div className="grid gap-4 sm:grid-cols-2">
         <TextField
+          id="user-full-name"
+          autoComplete="off"
+          label={t("users.columns.fullName")}
+          error={errors.fullName?.message}
+          registration={form.register("fullName")}
+        />
+        <TextField
           id="user-email"
           type="email"
           inputMode="email"
@@ -100,23 +107,25 @@ export function CreateUserForm({ onSubmit }: CreateUserFormProps) {
           </NativeSelect>
           <FieldError id="user-role-error" message={errors.role?.message} />
         </div>
-        <TextField
-          id="user-password"
-          type="password"
-          autoComplete="new-password"
-          label={t("users.create.password")}
-          hint={t("common.passwordRequirements")}
-          error={errors.password?.message}
-          registration={form.register("password")}
-        />
-        <TextField
-          id="user-confirm-password"
-          type="password"
-          autoComplete="new-password"
-          label={t("users.create.confirmPassword")}
-          error={errors.confirmPassword?.message}
-          registration={form.register("confirmPassword")}
-        />
+        <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2">
+          <TextField
+            id="user-password"
+            type="password"
+            autoComplete="new-password"
+            label={t("users.create.password")}
+            hint={t("common.passwordRequirements")}
+            error={errors.password?.message}
+            registration={form.register("password")}
+          />
+          <TextField
+            id="user-confirm-password"
+            type="password"
+            autoComplete="new-password"
+            label={t("users.create.confirmPassword")}
+            error={errors.confirmPassword?.message}
+            registration={form.register("confirmPassword")}
+          />
+        </div>
       </div>
       <div className="flex flex-wrap gap-2">
         <Button type="submit" disabled={isSubmitting}>

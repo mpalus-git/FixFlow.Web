@@ -27,7 +27,8 @@ function mockCreate(respond: (request: CreateUserRequest) => Response) {
 
 async function fillForm() {
   const user = userEvent.setup();
-  await user.type(await screen.findByLabelText("E-mail"), "ewa.technik@fixflow.test");
+  await user.type(await screen.findByLabelText("Imię i nazwisko"), "Ewa Lis");
+  await user.type(screen.getByLabelText("E-mail"), "ewa.technik@fixflow.test");
   await user.selectOptions(screen.getByLabelText("Rola"), "Technician");
   await user.type(screen.getByLabelText("Hasło początkowe"), "Serwis#2026");
   await user.type(screen.getByLabelText("Powtórz hasło"), "Serwis#2026");
@@ -50,6 +51,7 @@ describe("CreateUserPage", () => {
       const created: UserResponse = {
         id: "00000000-0000-4000-8000-0000000000b1",
         email: request.email,
+        fullName: request.fullName,
         role: request.role,
         isActive: true,
       };
@@ -64,7 +66,12 @@ describe("CreateUserPage", () => {
       await screen.findByRole("heading", { name: "Użytkownicy", level: 1 }),
     ).toBeInTheDocument();
     expect(received).toEqual([
-      { email: "ewa.technik@fixflow.test", role: "Technician", password: "Serwis#2026" },
+      {
+        email: "ewa.technik@fixflow.test",
+        fullName: "Ewa Lis",
+        role: "Technician",
+        password: "Serwis#2026",
+      },
     ]);
     expect(router.state.location.pathname).toBe("/users");
   });

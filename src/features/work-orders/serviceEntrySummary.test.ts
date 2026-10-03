@@ -19,17 +19,43 @@ describe("serviceEntrySummary", () => {
 
   it("subtracts parts returned by a correction at the price of their use", () => {
     const summary = summarizeServiceEntries([
-      createServiceEntryResponse({ parts: [{ partId, quantity: 3, unitPrice: 148.5 }] }),
+      createServiceEntryResponse({
+        parts: [
+          {
+            partId,
+            partName: "Czujnik ciśnienia wody",
+            catalogNumber: "VIE-7828749",
+            quantity: 3,
+            unitPrice: 148.5,
+          },
+        ],
+      }),
       createServiceEntryResponse({
         workStartedAt: "2026-07-15T07:00:00Z",
         workFinishedAt: "2026-07-15T07:45:00Z",
-        parts: [{ partId, quantity: 1, unitPrice: 0.1 }],
+        parts: [
+          {
+            partId,
+            partName: "Czujnik ciśnienia wody",
+            catalogNumber: "VIE-7828749",
+            quantity: 1,
+            unitPrice: 0.1,
+          },
+        ],
       }),
       createServiceEntryResponse({
         isCorrection: true,
         workStartedAt: null,
         workFinishedAt: null,
-        parts: [{ partId, quantity: 1, unitPrice: 148.5 }],
+        parts: [
+          {
+            partId,
+            partName: "Czujnik ciśnienia wody",
+            catalogNumber: "VIE-7828749",
+            quantity: 1,
+            unitPrice: 148.5,
+          },
+        ],
       }),
     ]);
 

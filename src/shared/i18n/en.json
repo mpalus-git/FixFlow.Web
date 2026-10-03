@@ -606,6 +606,7 @@
       "inactive": "Inactive"
     },
     "columns": {
+      "fullName": "Full name",
       "email": "Email",
       "role": "Role",
       "status": "Status",

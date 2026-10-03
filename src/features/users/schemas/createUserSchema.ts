@@ -1,14 +1,17 @@
 import { z } from "zod";
 import type { components } from "@/shared/api/schema";
-import { newPasswordSchema, validationMessages } from "@/shared/lib/validation";
+import { newPasswordSchema, requiredText, validationMessages } from "@/shared/lib/validation";
 import { isRole } from "@/shared/session/currentUser";
 
 type CreateUserRequest = components["schemas"]["CreateUserRequest"];
 
-export const createUserFields = ["email", "password", "role"] as const;
+export const createUserFields = ["email", "fullName", "password", "role"] as const;
+
+export const fullNameMaxLength = 100;
 
 export const createUserSchema = z
   .object({
+    fullName: requiredText(fullNameMaxLength),
     email: z
       .string()
       .trim()
@@ -28,6 +31,7 @@ export type CreateUserFormInput = z.input<typeof createUserSchema>;
 export type CreateUserFormValues = z.output<typeof createUserSchema>;
 
 export const emptyCreateUserFormValues: CreateUserFormInput = {
+  fullName: "",
   email: "",
   role: "",
   password: "",
@@ -35,5 +39,10 @@ export const emptyCreateUserFormValues: CreateUserFormInput = {
 };
 
 export function toCreateUserRequest(values: CreateUserFormValues): CreateUserRequest {
-  return { email: values.email, role: values.role, password: values.password };
+  return {
+    email: values.email,
+    fullName: values.fullName,
+    role: values.role,
+    password: values.password,
+  };
 }
