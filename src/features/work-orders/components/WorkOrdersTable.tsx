@@ -62,6 +62,7 @@ export type WorkOrdersTableProps = {
   showTechnician: boolean;
   showActions: boolean;
   detailsBasePath: WorkOrderDetailsBasePath;
+  label: string;
 };
 
 export function WorkOrdersTable({
@@ -72,6 +73,7 @@ export function WorkOrdersTable({
   showTechnician,
   showActions,
   detailsBasePath,
+  label,
 }: WorkOrdersTableProps) {
   const columnIds = useMemo(
     () => [
@@ -101,6 +103,7 @@ export function WorkOrdersTable({
   return (
     <DataTable
       table={table}
+      label={label}
       isUpdating={isUpdating}
       sorting={sorting}
       cellClassName={cellClassName}

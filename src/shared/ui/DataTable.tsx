@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 export type DataTableProps<TFeatures extends TableFeatures, TData extends RowData> = {
   table: ReactTable<TFeatures, TData>;
+  label: string;
   isUpdating: boolean;
   cellClassName?: (columnId: string) => string;
   sorting?: readonly ColumnSort[];
@@ -25,13 +26,14 @@ function defaultCellClassName(): string {
 
 export function DataTable<TFeatures extends TableFeatures, TData extends RowData>({
   table,
+  label,
   isUpdating,
   cellClassName = defaultCellClassName,
   sorting,
 }: DataTableProps<TFeatures, TData>) {
   return (
     <div className="overflow-hidden rounded-xl border" aria-busy={isUpdating}>
-      <Table className={isUpdating ? "opacity-60 transition-opacity" : undefined}>
+      <Table label={label} className={isUpdating ? "opacity-60 transition-opacity" : undefined}>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>

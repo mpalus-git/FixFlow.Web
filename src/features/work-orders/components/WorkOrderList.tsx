@@ -70,6 +70,7 @@ export function WorkOrderList({ scope }: WorkOrderListProps) {
           showTechnician={isDispatcherScope}
           showActions={isDispatcherScope}
           detailsBasePath={isDispatcherScope ? "/work-orders" : "/my-work-orders"}
+          label={t(isDispatcherScope ? "workOrders.title" : "myWorkOrders.title")}
         />
         <PaginationControls
           page={page}

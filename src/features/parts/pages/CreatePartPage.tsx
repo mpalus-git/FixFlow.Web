@@ -5,6 +5,7 @@ import { useCreatePartMutation } from "@/features/parts/api/partMutations";
 import { PartForm } from "@/features/parts/components/PartForm";
 import { emptyPartFormValues, toCreatePartRequest } from "@/features/parts/schemas/partSchema";
 import { Card, CardContent } from "@/shared/ui/card";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 export function CreatePartPage() {
   const { t } = useTranslation();
@@ -13,6 +14,7 @@ export function CreatePartPage() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-6">
+      <PageTitle title={t("parts.create.title")} />
       <h1 className="text-2xl font-semibold tracking-tight">{t("parts.create.title")}</h1>
       <Card>
         <CardContent>

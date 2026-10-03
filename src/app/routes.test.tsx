@@ -1,7 +1,8 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
+import { changeLanguage } from "@/shared/i18n/i18n";
 import { endSession } from "@/shared/session/sessionStore";
 import { createAuthTokens } from "@/test/authTokens";
 import { renderApp } from "@/test/renderApp";
@@ -9,8 +10,9 @@ import { server } from "@/test/server";
 import { mockCurrentUser, signInAs } from "@/test/signedInUser";
 
 describe("routes", () => {
-  afterEach(() => {
+  afterEach(async () => {
     endSession();
+    await changeLanguage("pl");
     localStorage.clear();
   });
 
@@ -32,6 +34,24 @@ describe("routes", () => {
       "href",
       "/",
     );
+  });
+
+  it("titles the browser tab after the current page", async () => {
+    signInAs("Dispatcher");
+    renderApp("/does-not-exist");
+
+    await waitFor(() => {
+      expect(document.title).toBe("Nie znaleziono strony - FixFlow");
+    });
+  });
+
+  it("titles the login page and keeps the title in English", async () => {
+    await changeLanguage("en");
+    renderApp("/login");
+
+    await waitFor(() => {
+      expect(document.title).toBe("Sign in - FixFlow");
+    });
   });
 
   it("returns to the requested page after logging in", async () => {

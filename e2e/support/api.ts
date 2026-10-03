@@ -108,3 +108,12 @@ export async function findWorkOrderId(
   }
   return workOrder.id;
 }
+
+export async function findPartId(api: ApiClient): Promise<string> {
+  const page = expectData(await api.GET("/api/v1/parts", { params: { query: { pageSize: 1 } } }));
+  const part = page.items[0];
+  if (part === undefined) {
+    throw new Error("No part in demo data");
+  }
+  return part.id;
+}

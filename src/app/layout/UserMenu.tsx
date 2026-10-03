@@ -22,7 +22,7 @@ export function UserMenu() {
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" aria-label={t("userMenu.label")}>
           <UserIcon aria-hidden="true" />

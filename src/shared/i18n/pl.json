@@ -1,6 +1,8 @@
 {
   "app": {
-    "name": "FixFlow"
+    "name": "FixFlow",
+    "pageTitle": "{{title}} - FixFlow",
+    "pageTitleWithSubject": "{{title}}: {{subject}} - FixFlow"
   },
   "common": {
     "close": "Zamknij",
@@ -25,7 +27,8 @@
   "language": {
     "label": "Język",
     "pl": "Polski",
-    "en": "English"
+    "en": "English",
+    "current": "Język: {{language}}"
   },
   "theme": {
     "label": "Motyw",
@@ -341,7 +344,8 @@
       "description": "Urządzenie zniknie z list, a historia zleceń zostanie zachowana. Nie będzie można zakładać dla niego nowych zleceń, a jego numer seryjny pozostanie zajęty.",
       "confirm": "Archiwizuj",
       "archived": "Zarchiwizowano urządzenie {{serialNumber}}."
-    }
+    },
+    "clientPagination": "Paginacja urządzeń"
   },
   "workOrders": {
     "title": "Zlecenia",
@@ -458,7 +462,8 @@
         "description": "Wpisy dodaje przypisany technik w aplikacji mobilnej."
       },
       "totalWorkTime": "Czas pracy łącznie:",
-      "totalPartsValue": "Części netto łącznie:"
+      "totalPartsValue": "Części netto łącznie:",
+      "parts": "Zużyte części"
     },
     "protocol": {
       "download": "Pobierz protokół",
@@ -476,7 +481,8 @@
       "assigned": "Przypisano technika.",
       "changed": "Zmieniono technika."
     },
-    "deviceName": "{{serialNumber}} · {{model}}"
+    "deviceName": "{{serialNumber}} · {{model}}",
+    "historyPagination": "Paginacja zleceń"
   },
   "parts": {
     "title": "Części",

@@ -12,6 +12,7 @@ import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { VersionConflictDialog } from "@/shared/ui/VersionConflictDialog";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 export function EditDevicePage() {
   const { t } = useTranslation();
@@ -46,6 +47,7 @@ export function EditDevicePage() {
   return (
     <div className="flex max-w-3xl flex-col gap-6">
       <div className="flex flex-col gap-1">
+        <PageTitle title={t("devices.edit.title")} subject={device.serialNumber} />
         <h1 className="text-2xl font-semibold tracking-tight">{t("devices.edit.title")}</h1>
         <p className="text-muted-foreground">{device.serialNumber}</p>
       </div>

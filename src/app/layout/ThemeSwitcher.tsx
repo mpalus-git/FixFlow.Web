@@ -25,7 +25,7 @@ export function ThemeSwitcher() {
   const TriggerIcon = themeIcons[resolvedTheme];
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" aria-label={t("theme.label")}>
           <TriggerIcon aria-hidden="true" />

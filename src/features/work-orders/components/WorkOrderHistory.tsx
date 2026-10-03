@@ -82,12 +82,17 @@ export function WorkOrderHistory({ filter }: WorkOrderHistoryProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <DataTable table={table} isUpdating={historyQuery.isPlaceholderData} />
+      <DataTable
+        table={table}
+        label={t("workOrders.title")}
+        isUpdating={historyQuery.isPlaceholderData}
+      />
       <PaginationControls
         page={page}
         pageSize={workOrderHistoryPageSize}
         totalCount={historyPage.totalCount}
         onPageChange={setPage}
+        label={t("workOrders.historyPagination")}
       />
     </div>
   );

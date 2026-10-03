@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
@@ -66,6 +66,16 @@ describe("EditClientPage", () => {
     ).toBeInTheDocument();
     expect(router.state.location.pathname).toBe(`/clients/${client.id}`);
     expect(receivedIfMatch).toEqual(['"1"']);
+  });
+
+  it("titles the browser tab with the edited client name", async () => {
+    mockEmptyClientCardLists();
+    server.use(http.get(clientUrl, () => HttpResponse.json(client, { headers: { ETag: '"1"' } })));
+    renderApp(editPath);
+
+    await waitFor(() => {
+      expect(document.title).toBe("Edycja klienta: Piekarnia Kowalski - FixFlow");
+    });
   });
 
   it("offers to load the current version after a conflict and never overwrites it", async () => {

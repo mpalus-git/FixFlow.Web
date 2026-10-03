@@ -18,9 +18,12 @@ export function LanguageSwitcher() {
   const language = useLanguage();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" aria-label={t("language.label")}>
+        <Button
+          variant="ghost"
+          aria-label={t("language.current", { language: language.toUpperCase() })}
+        >
           <LanguagesIcon aria-hidden="true" />
           <span className="uppercase">{language}</span>
         </Button>

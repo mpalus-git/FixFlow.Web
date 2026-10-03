@@ -17,6 +17,7 @@ function renderTable(sort: WorkOrderSort, showTechnician = true) {
         showTechnician={showTechnician}
         showActions={false}
         detailsBasePath="/work-orders"
+        label="Zlecenia"
       />
     </MemoryRouter>,
   );

@@ -85,12 +85,17 @@ export function ClientDevicesList({ clientId }: ClientDevicesListProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <DataTable table={table} isUpdating={devicesQuery.isPlaceholderData} />
+      <DataTable
+        table={table}
+        label={t("devices.title")}
+        isUpdating={devicesQuery.isPlaceholderData}
+      />
       <PaginationControls
         page={page}
         pageSize={devicesPageSize}
         totalCount={devicePage.totalCount}
         onPageChange={setPage}
+        label={t("devices.clientPagination")}
       />
     </div>
   );

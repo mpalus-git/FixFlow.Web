@@ -89,5 +89,12 @@ export function PartsTable({ parts, isUpdating, onRestock, onArchive }: PartsTab
     getRowId: (part) => part.id,
   });
 
-  return <DataTable table={table} isUpdating={isUpdating} cellClassName={cellClassName} />;
+  return (
+    <DataTable
+      table={table}
+      label={t("parts.title")}
+      isUpdating={isUpdating}
+      cellClassName={cellClassName}
+    />
+  );
 }

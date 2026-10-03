@@ -21,6 +21,7 @@ import {
 import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { Skeleton } from "@/shared/ui/skeleton";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 function DashboardSkeleton() {
   const { t } = useTranslation();
@@ -117,6 +118,7 @@ export function DashboardPage() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-col gap-1">
+          <PageTitle title={t("dashboard.title")} />
           <h1 className="text-2xl font-semibold tracking-tight">{t("dashboard.title")}</h1>
           {summary === undefined ? null : (
             <p className="text-sm text-muted-foreground">

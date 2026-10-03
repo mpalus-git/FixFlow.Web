@@ -17,6 +17,7 @@ import { Button } from "@/shared/ui/button";
 import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 export function DispatchPage() {
   const { t } = useTranslation();
@@ -88,6 +89,7 @@ export function DispatchPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
+        <PageTitle title={t("dispatch.title")} />
         <h1 className="text-2xl font-semibold tracking-tight">{t("dispatch.title")}</h1>
         <div className="flex flex-wrap items-center gap-2">
           <Button

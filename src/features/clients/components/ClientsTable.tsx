@@ -72,5 +72,12 @@ export function ClientsTable({ clients, isUpdating, onArchive }: ClientsTablePro
     getRowId: (client) => client.id,
   });
 
-  return <DataTable table={table} isUpdating={isUpdating} cellClassName={cellClassName} />;
+  return (
+    <DataTable
+      table={table}
+      label={t("clients.title")}
+      isUpdating={isUpdating}
+      cellClassName={cellClassName}
+    />
+  );
 }

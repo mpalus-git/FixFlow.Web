@@ -94,6 +94,15 @@ export default defineConfig([
     },
   },
   {
+    files: ["src/shared/ui/table.tsx", "src/features/dispatch/components/DispatchWeekTable.tsx"],
+    rules: {
+      "jsx-a11y/no-noninteractive-tabindex": [
+        "error",
+        { tags: [], roles: ["tabpanel", "group"], allowExpressionValues: true },
+      ],
+    },
+  },
+  {
     files: ["e2e/**/*.ts"],
     languageOptions: {
       globals: globals.node,

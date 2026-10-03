@@ -5,6 +5,7 @@ import type { DispatchBoard } from "@/features/dispatch/dispatchBoard";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatCalendarDate, formatCalendarWeekday } from "@/shared/lib/dateTime";
 import { Badge } from "@/shared/ui/badge";
+import { useHorizontalOverflow } from "@/shared/ui/useHorizontalOverflow";
 
 export function dispatchCellId(technicianId: string, day: string): string {
   return `${technicianId}/${day}`;
@@ -19,9 +20,16 @@ export type DispatchWeekTableProps = {
 export function DispatchWeekTable({ board, today, dropStateFor }: DispatchWeekTableProps) {
   const { t } = useTranslation();
   const language = useLanguage();
+  const { ref, isOverflowing } = useHorizontalOverflow<HTMLDivElement>();
 
   return (
-    <div className="relative overflow-x-auto rounded-xl border">
+    <div
+      ref={ref}
+      role="group"
+      aria-label={t("dispatch.title")}
+      tabIndex={isOverflowing ? 0 : undefined}
+      className="relative overflow-x-auto rounded-xl border focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    >
       <table className="w-full min-w-[60rem] table-fixed border-collapse text-sm">
         <caption className="sr-only">{t("dispatch.title")}</caption>
         <thead>

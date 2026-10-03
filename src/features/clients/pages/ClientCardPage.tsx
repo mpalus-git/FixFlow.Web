@@ -17,6 +17,7 @@ import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 type ClientResponse = components["schemas"]["ClientResponse"];
 
@@ -43,6 +44,7 @@ export function ClientCardPage() {
     <div className="flex flex-col gap-8">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex flex-col gap-2">
+          <PageTitle title={client.name} />
           <h1 className="text-2xl font-semibold tracking-tight">{client.name}</h1>
           {isArchived ? <Badge variant="secondary">{t("clients.card.archived")}</Badge> : null}
         </div>
