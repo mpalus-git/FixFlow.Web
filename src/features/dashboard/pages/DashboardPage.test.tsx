@@ -1,6 +1,7 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
+import { dashboardRefreshIntervalMs } from "@/features/dashboard/api/dashboardQueries";
 import type { components } from "@/shared/api/schema";
 import { formatDateTime } from "@/shared/lib/dateTime";
 import { endSession } from "@/shared/session/sessionStore";
@@ -27,6 +28,7 @@ describe("DashboardPage", () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     endSession();
     localStorage.clear();
   });
@@ -122,6 +124,23 @@ describe("DashboardPage", () => {
 
     await screen.findByRole("list", { name: "Zlecenia wymagające uwagi" });
     await userEvent.setup().click(screen.getByRole("button", { name: "Odśwież" }));
+
+    await vi.waitFor(() => {
+      expect(requestCount()).toBe(2);
+    });
+  });
+
+  it("refreshes the summary in the background every minute", async () => {
+    vi.useFakeTimers({
+      shouldAdvanceTime: true,
+      toFake: ["setTimeout", "clearTimeout", "setInterval", "clearInterval"],
+    });
+    const requestCount = mockDashboardSummary();
+    renderApp("/");
+    await screen.findByRole("list", { name: "Zlecenia wymagające uwagi" });
+    expect(requestCount()).toBe(1);
+
+    await vi.advanceTimersByTimeAsync(dashboardRefreshIntervalMs);
 
     await vi.waitFor(() => {
       expect(requestCount()).toBe(2);
