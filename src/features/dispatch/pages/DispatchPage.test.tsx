@@ -132,7 +132,12 @@ describe("DispatchPage", () => {
     renderApp(`/dispatch?week=${addCalendarDays(nextWeek, 2)}`);
 
     expect(await screen.findByText(weekRange(nextWeek))).toBeInTheDocument();
-    expect(weekRequests).toEqual([weekQuery(nextWeek)]);
+    await vi.waitFor(
+      () => {
+        expect(weekRequests).toEqual([weekQuery(nextWeek)]);
+      },
+      { timeout: 5000 },
+    );
   });
 
   it("explains that there is no technician to plan for", async () => {
