@@ -21,9 +21,9 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
         {
           path: "/login",
           middleware: [createRedirectSignedIn(queryClient)],
-          lazy: {
-            Component: async () => (await import("@/features/auth/pages/LoginPage")).LoginPage,
-          },
+          lazy: async () => ({
+            Component: (await import("@/features/auth/pages/LoginPage")).LoginPage,
+          }),
         },
       ],
     },
@@ -37,10 +37,9 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
         {
           index: true,
           middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
-          lazy: {
-            Component: async () =>
-              (await import("@/features/dashboard/pages/DashboardPage")).DashboardPage,
-          },
+          lazy: async () => ({
+            Component: (await import("@/features/dashboard/pages/DashboardPage")).DashboardPage,
+          }),
         },
         {
           path: "my-work-orders",
@@ -49,10 +48,10 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           children: [
             {
               index: true,
-              lazy: {
-                Component: async () =>
-                  (await import("@/features/work-orders/pages/MyWorkOrdersPage")).MyWorkOrdersPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/work-orders/pages/MyWorkOrdersPage"))
+                  .MyWorkOrdersPage,
+              }),
             },
             {
               path: ":workOrderId",
@@ -75,18 +74,17 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           children: [
             {
               index: true,
-              lazy: {
-                Component: async () =>
-                  (await import("@/features/work-orders/pages/WorkOrdersPage")).WorkOrdersPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/work-orders/pages/WorkOrdersPage"))
+                  .WorkOrdersPage,
+              }),
             },
             {
               path: "new",
-              lazy: {
-                Component: async () =>
-                  (await import("@/features/work-orders/pages/CreateWorkOrderPage"))
-                    .CreateWorkOrderPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/work-orders/pages/CreateWorkOrderPage"))
+                  .CreateWorkOrderPage,
+              }),
             },
             {
               path: ":workOrderId",
@@ -118,10 +116,9 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           path: "dispatch",
           ErrorBoundary: RouteErrorBoundary,
           middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
-          lazy: {
-            Component: async () =>
-              (await import("@/features/dispatch/pages/DispatchPage")).DispatchPage,
-          },
+          lazy: async () => ({
+            Component: (await import("@/features/dispatch/pages/DispatchPage")).DispatchPage,
+          }),
         },
         {
           path: "clients",
@@ -130,17 +127,16 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           children: [
             {
               index: true,
-              lazy: {
-                Component: async () =>
-                  (await import("@/features/clients/pages/ClientsPage")).ClientsPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/clients/pages/ClientsPage")).ClientsPage,
+              }),
             },
             {
               path: "new",
-              lazy: {
-                Component: async () =>
-                  (await import("@/features/clients/pages/CreateClientPage")).CreateClientPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/clients/pages/CreateClientPage"))
+                  .CreateClientPage,
+              }),
             },
             {
               path: ":clientId",
@@ -184,10 +180,9 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           children: [
             {
               index: true,
-              lazy: {
-                Component: async () =>
-                  (await import("@/features/devices/pages/DevicesPage")).DevicesPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/devices/pages/DevicesPage")).DevicesPage,
+              }),
             },
             {
               path: ":deviceId",
@@ -220,16 +215,15 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           children: [
             {
               index: true,
-              lazy: {
-                Component: async () => (await import("@/features/parts/pages/PartsPage")).PartsPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/parts/pages/PartsPage")).PartsPage,
+              }),
             },
             {
               path: "new",
-              lazy: {
-                Component: async () =>
-                  (await import("@/features/parts/pages/CreatePartPage")).CreatePartPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/parts/pages/CreatePartPage")).CreatePartPage,
+              }),
             },
             {
               path: ":partId/edit",
@@ -249,25 +243,23 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           children: [
             {
               index: true,
-              lazy: {
-                Component: async () => (await import("@/features/users/pages/UsersPage")).UsersPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/users/pages/UsersPage")).UsersPage,
+              }),
             },
             {
               path: "new",
-              lazy: {
-                Component: async () =>
-                  (await import("@/features/users/pages/CreateUserPage")).CreateUserPage,
-              },
+              lazy: async () => ({
+                Component: (await import("@/features/users/pages/CreateUserPage")).CreateUserPage,
+              }),
             },
           ],
         },
         {
           path: "profile",
-          lazy: {
-            Component: async () =>
-              (await import("@/features/profile/pages/ProfilePage")).ProfilePage,
-          },
+          lazy: async () => ({
+            Component: (await import("@/features/profile/pages/ProfilePage")).ProfilePage,
+          }),
         },
         {
           path: "*",
