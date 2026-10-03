@@ -102,6 +102,8 @@
     "wakingTitle": "Serwer demo się uruchamia",
     "sessionBannerTitle": "Brak połączenia z serwerem",
     "sessionBannerDescription": "Serwer demo mógł zostać uśpiony - uruchomienie potrwa do minuty. Ponawiam automatycznie.",
+    "slowBannerTitle": "Czekam na odpowiedź serwera",
+    "slowBannerDescription": "Serwer demo mógł zostać uśpiony po 15 minutach bezczynności - uruchomienie potrwa do minuty.",
     "wakingDescription": "Darmowy serwer usypia po 15 minutach bezczynności. Uruchomienie potrwa do minuty.",
     "progressLabel": "Postęp uruchamiania serwera",
     "elapsed": "Minęło {{seconds}} s",

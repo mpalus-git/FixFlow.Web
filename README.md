@@ -179,6 +179,8 @@ Firma działa w Polsce, więc wszystkie daty są wyświetlane w strefie Europe/W
 
 Przy starcie panel wywołuje `GET /api/v1/system/ready`, które budzi zarówno usługę na Render, jak i bazę. Nie używa `/health/ready`, bo lista EasyPrivacy (domyślnie włączona m.in. w Brave Shields i uBlock Origin) blokuje żądania do `onrender.com/health`. Jeśli odpowiedź nie przyjdzie w 3 sekundy, pojawia się ekran z paskiem postępu i ponawianiem co 3 sekundy, a po 90 sekundach komunikat z przyciskiem ponowienia. Formularz logowania renderuje się dopiero, gdy API odpowiada.
 
+Uśpiony Render nie zwraca błędu, tylko trzyma żądanie bez odpowiedzi do czasu startu (ok. 40 sekund). Dlatego w trakcie sesji pod nagłówkiem pojawia się pasek z wyjaśnieniem, gdy żądanie czeka na odpowiedź dłużej niż 5 sekund albo gdy panel ponawia zapytania po braku połączenia (co 3 sekundy, do 90 sekund).
+
 ### Przechowywanie tokenów
 
 Access token jest trzymany wyłącznie w pamięci. Refresh token trafia do `localStorage`, bo API zwraca go w treści odpowiedzi i ciasteczko `httpOnly` nie jest możliwe bez zmian po stronie serwera. To świadomy kompromis: token w `localStorage` może odczytać skrypt wstrzyknięty przez XSS. Ryzyko ogranicza:
