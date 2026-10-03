@@ -1,17 +1,16 @@
 import { z } from "zod";
 import type { components } from "@/shared/api/schema";
-import { newPasswordSchema, requiredText, validationMessages } from "@/shared/lib/validation";
+import { fullNameSchema } from "@/features/users/schemas/userNameSchema";
+import { newPasswordSchema, validationMessages } from "@/shared/lib/validation";
 import { isRole } from "@/shared/session/currentUser";
 
 type CreateUserRequest = components["schemas"]["CreateUserRequest"];
 
 export const createUserFields = ["email", "fullName", "password", "role"] as const;
 
-export const fullNameMaxLength = 100;
-
 export const createUserSchema = z
   .object({
-    fullName: requiredText(fullNameMaxLength),
+    fullName: fullNameSchema,
     email: z
       .string()
       .trim()

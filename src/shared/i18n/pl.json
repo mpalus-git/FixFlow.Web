@@ -638,6 +638,7 @@
     },
     "demoAccount": "Konto demo",
     "actions": {
+      "changeName": "Zmień imię i nazwisko",
       "label": "Akcje konta {{email}}",
       "deactivate": "Dezaktywuj",
       "activate": "Aktywuj",
@@ -666,6 +667,12 @@
       "confirmNewPassword": "Powtórz nowe hasło",
       "submit": "Ustaw hasło",
       "done": "Ustawiono nowe hasło dla {{email}}."
+    },
+    "changeName": {
+      "title": "Imię i nazwisko dla {{email}}",
+      "description": "Nazwa jest widoczna w panelu zamiast adresu e-mail, na tablicy dispatch i w protokołach serwisowych.",
+      "submit": "Zapisz",
+      "done": "Zmieniono imię i nazwisko dla {{email}}."
     }
   }
 }

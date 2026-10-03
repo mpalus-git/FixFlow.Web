@@ -3,8 +3,10 @@ import { userKeys } from "@/features/users/api/userQueries";
 import { apiClient } from "@/shared/api/apiClient";
 import { unwrap } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
+import { sessionQueryKeys } from "@/shared/session/currentUser";
 
 type CreateUserRequest = components["schemas"]["CreateUserRequest"];
+type UserResponse = components["schemas"]["UserResponse"];
 type UserPage = components["schemas"]["PagedResponseOfUserResponse"];
 
 export function useCreateUserMutation() {
@@ -60,6 +62,39 @@ export function useResetUserPasswordMutation() {
         params: { path: { userId } },
         body: { newPassword },
       });
+    },
+  });
+}
+
+export type UserNameChange = {
+  userId: string;
+  fullName: string;
+};
+
+export function useChangeUserNameMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ userId, fullName }: UserNameChange) =>
+      unwrap(
+        await apiClient.PUT("/api/v1/users/{userId}", {
+          params: { path: { userId } },
+          body: { fullName },
+        }),
+      ),
+    onSuccess: async (updated: UserResponse) => {
+      queryClient.setQueriesData<UserPage>({ queryKey: userKeys.lists() }, (userPage) =>
+        userPage === undefined
+          ? userPage
+          : {
+              ...userPage,
+              items: userPage.items.map((user) => (user.id === updated.id ? updated : user)),
+            },
+      );
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: userKeys.all }),
+        queryClient.invalidateQueries({ queryKey: sessionQueryKeys.currentUser }),
+      ]);
     },
   });
 }
