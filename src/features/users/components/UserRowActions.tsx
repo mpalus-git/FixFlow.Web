@@ -1,4 +1,4 @@
-import { EllipsisIcon, KeyRoundIcon, UserCheckIcon, UserXIcon } from "lucide-react";
+import { EllipsisIcon, KeyRoundIcon, PencilIcon, UserCheckIcon, UserXIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { UserAccountProtection } from "@/features/users/userRules";
 import type { components } from "@/shared/api/schema";
@@ -19,6 +19,7 @@ export type UserRowActionsProps = {
   onDeactivate: (user: UserResponse) => void;
   onActivate: (user: UserResponse) => void;
   onResetPassword: (user: UserResponse) => void;
+  onChangeName: (user: UserResponse) => void;
 };
 
 export function UserRowActions({
@@ -27,6 +28,7 @@ export function UserRowActions({
   onDeactivate,
   onActivate,
   onResetPassword,
+  onChangeName,
 }: UserRowActionsProps) {
   const { t } = useTranslation();
 
@@ -42,6 +44,14 @@ export function UserRowActions({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="max-w-72">
+        <DropdownMenuItem
+          onSelect={() => {
+            onChangeName(user);
+          }}
+        >
+          <PencilIcon aria-hidden="true" />
+          {t("users.actions.changeName")}
+        </DropdownMenuItem>
         {user.isActive ? (
           <DropdownMenuItem
             variant="destructive"

@@ -54,6 +54,7 @@ export type UsersTableProps = {
   onDeactivate: (user: UserResponse) => void;
   onActivate: (user: UserResponse) => void;
   onResetPassword: (user: UserResponse) => void;
+  onChangeName: (user: UserResponse) => void;
 };
 
 export function UsersTable({
@@ -63,6 +64,7 @@ export function UsersTable({
   onDeactivate,
   onActivate,
   onResetPassword,
+  onChangeName,
 }: UsersTableProps) {
   const { t } = useTranslation();
   const columns = useMemo(() => {
@@ -111,12 +113,13 @@ export function UsersTable({
               onDeactivate={onDeactivate}
               onActivate={onActivate}
               onResetPassword={onResetPassword}
+              onChangeName={onChangeName}
             />
           </div>
         ),
       }),
     ]);
-  }, [t, currentUserId, onDeactivate, onActivate, onResetPassword]);
+  }, [t, currentUserId, onDeactivate, onActivate, onResetPassword, onChangeName]);
   const table = useTable({
     features,
     columns,
