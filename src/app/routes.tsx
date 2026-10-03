@@ -1,6 +1,5 @@
 import type { QueryClient } from "@tanstack/react-query";
 import type { RouteObject } from "react-router";
-import { AppLayout } from "@/app/layout/AppLayout";
 import { PublicLayout } from "@/app/layout/PublicLayout";
 import { NotFoundPage } from "@/app/NotFoundPage";
 import { RouteErrorBoundary } from "@/app/RouteErrorBoundary";
@@ -29,7 +28,9 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
     },
     {
       path: "/",
-      Component: AppLayout,
+      lazy: async () => ({
+        Component: (await import("@/app/layout/AppLayout")).AppLayout,
+      }),
       ErrorBoundary: RouteErrorBoundary,
       HydrateFallback: ListSkeleton,
       middleware: [createRequireSession(queryClient)],
