@@ -27,7 +27,7 @@ export function EditDevicePage() {
 
   if (editedVersion === undefined) {
     return deviceQuery.isError ? (
-      <ErrorState onRetry={() => void deviceQuery.refetch()} />
+      <ErrorState error={deviceQuery.error} onRetry={() => void deviceQuery.refetch()} />
     ) : (
       <ListSkeleton rows={4} />
     );

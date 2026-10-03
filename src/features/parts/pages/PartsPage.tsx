@@ -47,7 +47,7 @@ export function PartsPage() {
 
   function renderContent() {
     if (partsQuery.isError) {
-      return <ErrorState onRetry={() => void partsQuery.refetch()} />;
+      return <ErrorState error={partsQuery.error} onRetry={() => void partsQuery.refetch()} />;
     }
     if (partPage === undefined) {
       return <ListSkeleton />;

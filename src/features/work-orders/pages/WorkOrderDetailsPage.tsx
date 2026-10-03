@@ -34,7 +34,7 @@ export function WorkOrderDetailsPage() {
 
   if (workOrder === undefined) {
     return workOrderQuery.isError ? (
-      <ErrorState onRetry={() => void workOrderQuery.refetch()} />
+      <ErrorState error={workOrderQuery.error} onRetry={() => void workOrderQuery.refetch()} />
     ) : (
       <ListSkeleton rows={4} />
     );

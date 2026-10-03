@@ -21,7 +21,7 @@ export function ServiceEntryList({ workOrderId }: ServiceEntryListProps) {
   const entries = entriesQuery.data;
 
   if (entriesQuery.isError) {
-    return <ErrorState onRetry={() => void entriesQuery.refetch()} />;
+    return <ErrorState error={entriesQuery.error} onRetry={() => void entriesQuery.refetch()} />;
   }
   if (entries === undefined) {
     return <ListSkeleton rows={2} />;

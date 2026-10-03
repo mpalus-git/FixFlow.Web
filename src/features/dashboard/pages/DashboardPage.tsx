@@ -49,7 +49,7 @@ export function DashboardPage() {
 
   function renderContent() {
     if (summaryQuery.isError) {
-      return <ErrorState onRetry={() => void summaryQuery.refetch()} />;
+      return <ErrorState error={summaryQuery.error} onRetry={() => void summaryQuery.refetch()} />;
     }
     if (summary === undefined) {
       return <DashboardSkeleton />;

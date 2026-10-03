@@ -40,7 +40,10 @@
     "loading": "Ładowanie…",
     "retry": "Spróbuj ponownie",
     "errorTitle": "Nie udało się wczytać danych",
-    "errorDescription": "Sprawdź połączenie i spróbuj ponownie."
+    "errorDescription": "Spróbuj ponownie za chwilę.",
+    "errorNetwork": "Brak połączenia z serwerem. Sprawdź połączenie i spróbuj ponownie.",
+    "errorServer": "Błąd serwera. Spróbuj ponownie za chwilę.",
+    "errorForbidden": "Nie masz uprawnień do tych danych."
   },
   "dashboard": {
     "title": "Pulpit",

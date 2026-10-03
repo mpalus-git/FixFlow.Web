@@ -27,7 +27,7 @@ export function EditClientPage() {
 
   if (editedVersion === undefined) {
     return clientQuery.isError ? (
-      <ErrorState onRetry={() => void clientQuery.refetch()} />
+      <ErrorState error={clientQuery.error} onRetry={() => void clientQuery.refetch()} />
     ) : (
       <ListSkeleton rows={6} />
     );

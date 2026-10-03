@@ -40,7 +40,10 @@
     "loading": "Loading…",
     "retry": "Try again",
     "errorTitle": "Could not load data",
-    "errorDescription": "Check your connection and try again."
+    "errorDescription": "Try again in a moment.",
+    "errorNetwork": "Cannot connect to the server. Check your connection and try again.",
+    "errorServer": "Server error. Try again in a moment.",
+    "errorForbidden": "You do not have permission to view this data."
   },
   "dashboard": {
     "title": "Dashboard",

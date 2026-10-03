@@ -44,7 +44,7 @@ export function ClientsPage() {
 
   function renderContent() {
     if (clientsQuery.isError) {
-      return <ErrorState onRetry={() => void clientsQuery.refetch()} />;
+      return <ErrorState error={clientsQuery.error} onRetry={() => void clientsQuery.refetch()} />;
     }
     if (clientPage === undefined) {
       return <ListSkeleton />;

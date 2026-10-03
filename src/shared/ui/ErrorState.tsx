@@ -1,14 +1,32 @@
 import { RefreshCwIcon, TriangleAlertIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { ApiError } from "@/shared/api/apiError";
 import { Button } from "@/shared/ui/button";
 
 export type ErrorStateProps = {
   title?: string;
   description?: string;
+  error?: unknown;
   onRetry: () => void;
 };
 
-export function ErrorState({ title, description, onRetry }: ErrorStateProps) {
+function descriptionKeyFor(error: unknown) {
+  if (!(error instanceof ApiError)) {
+    return "states.errorDescription";
+  }
+  switch (error.kind) {
+    case "network":
+      return "states.errorNetwork";
+    case "server":
+      return "states.errorServer";
+    case "forbidden":
+      return "states.errorForbidden";
+    default:
+      return "states.errorDescription";
+  }
+}
+
+export function ErrorState({ title, description, error, onRetry }: ErrorStateProps) {
   const { t } = useTranslation();
 
   return (
@@ -19,7 +37,7 @@ export function ErrorState({ title, description, onRetry }: ErrorStateProps) {
       <TriangleAlertIcon aria-hidden="true" className="size-10 text-destructive" />
       <h2 className="text-base font-medium">{title ?? t("states.errorTitle")}</h2>
       <p className="max-w-sm text-sm text-muted-foreground">
-        {description ?? t("states.errorDescription")}
+        {description ?? t(descriptionKeyFor(error))}
       </p>
       <Button variant="outline" onClick={onRetry}>
         <RefreshCwIcon aria-hidden="true" />

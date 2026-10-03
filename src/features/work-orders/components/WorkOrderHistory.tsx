@@ -64,7 +64,7 @@ export function WorkOrderHistory({ filter }: WorkOrderHistoryProps) {
   });
 
   if (historyQuery.isError) {
-    return <ErrorState onRetry={() => void historyQuery.refetch()} />;
+    return <ErrorState error={historyQuery.error} onRetry={() => void historyQuery.refetch()} />;
   }
   if (historyPage === undefined) {
     return <ListSkeleton rows={3} />;
