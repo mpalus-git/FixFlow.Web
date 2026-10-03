@@ -96,6 +96,8 @@
   "serverWake": {
     "checking": "Łączenie z serwerem…",
     "wakingTitle": "Serwer demo się uruchamia",
+    "sessionBannerTitle": "Brak połączenia z serwerem",
+    "sessionBannerDescription": "Serwer demo mógł zostać uśpiony - uruchomienie potrwa do minuty. Ponawiam automatycznie.",
     "wakingDescription": "Darmowy serwer usypia po 15 minutach bezczynności. Uruchomienie potrwa do minuty.",
     "progressLabel": "Postęp uruchamiania serwera",
     "elapsed": "Minęło {{seconds}} s",
