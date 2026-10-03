@@ -2,6 +2,7 @@ import "@/shared/lib/zodConfig";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "@/app/App";
+import { startStaleChunkReload } from "@/app/staleChunkReload";
 import "@/app/index.css";
 import "@/shared/i18n/i18n";
 import { startSessionSync } from "@/shared/session/logout";
@@ -15,6 +16,7 @@ if (!rootElement) {
 
 startThemeSync();
 startSessionSync();
+startStaleChunkReload();
 
 createRoot(rootElement).render(
   <StrictMode>
