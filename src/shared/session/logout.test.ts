@@ -54,7 +54,10 @@ describe("logout", () => {
     await logout();
 
     expect(revokedTokens).toEqual(["refresh-current"]);
-    expect(useSessionStore.getState().status).toBe("anonymous");
+    expect(useSessionStore.getState()).toMatchObject({
+      status: "anonymous",
+      endReason: "signedOut",
+    });
     expect(readRefreshToken()).toBeNull();
     await vi.waitFor(() => {
       expect(otherTab.messages).toEqual(["logout"]);
@@ -117,6 +120,7 @@ describe("startSessionSync", () => {
     await vi.waitFor(() => {
       expect(useSessionStore.getState().status).toBe("anonymous");
     });
+    expect(useSessionStore.getState().endReason).toBe("signedOut");
     otherTab.close();
     stopSessionSync();
   });

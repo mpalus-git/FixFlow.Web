@@ -6,24 +6,32 @@ export type AuthTokens = components["schemas"]["AuthTokensResponse"];
 
 export type SessionStatus = "anonymous" | "authenticated";
 
+export type SessionEndReason = "expired" | "signedOut";
+
 type SessionState = {
   accessToken: string | null;
   status: SessionStatus;
+  endReason: SessionEndReason | null;
 };
 
 export const useSessionStore = create<SessionState>()(() => ({
   accessToken: null,
   status: "anonymous",
+  endReason: null,
 }));
 
 export function startSession(tokens: AuthTokens): void {
   writeRefreshToken(tokens.refreshToken);
-  useSessionStore.setState({ accessToken: tokens.accessToken, status: "authenticated" });
+  useSessionStore.setState({
+    accessToken: tokens.accessToken,
+    status: "authenticated",
+    endReason: null,
+  });
 }
 
-export function endSession(): void {
+export function endSession(reason: SessionEndReason = "expired"): void {
   clearRefreshToken();
-  useSessionStore.setState({ accessToken: null, status: "anonymous" });
+  useSessionStore.setState({ accessToken: null, status: "anonymous", endReason: reason });
 }
 
 export function getAccessToken(): string | null {

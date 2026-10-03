@@ -45,7 +45,7 @@ export async function logout(): Promise<void> {
       await revokeRefreshToken(refreshToken);
     }
   } finally {
-    endSession();
+    endSession("signedOut");
     const channel = openSessionChannel();
     channel?.postMessage(logoutMessage);
     channel?.close();
@@ -59,7 +59,7 @@ export function startSessionSync(): () => void {
   }
   channel.addEventListener("message", (event: MessageEvent<unknown>) => {
     if (event.data === logoutMessage) {
-      endSession();
+      endSession("signedOut");
     }
   });
   return () => {
