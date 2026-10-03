@@ -3,7 +3,6 @@ import { renderHook } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import type { ReactNode } from "react";
 import {
-  PartialTechnicianChangeError,
   useAssignTechnicianMutation,
   useChangeTechnicianMutation,
   useInvoiceWorkOrderMutation,
@@ -15,7 +14,6 @@ import { server } from "@/test/server";
 import { createWorkOrderResponse } from "@/test/workOrderFixtures";
 
 type AssignTechnicianRequest = components["schemas"]["AssignTechnicianRequest"];
-type ProblemDetails = components["schemas"]["ProblemDetails"];
 
 const newWorkOrder = createWorkOrderResponse({ status: "New", technicianId: null });
 const workOrderUrl = `${apiBaseUrl}/api/v1/work-orders/${newWorkOrder.id}`;
@@ -38,6 +36,10 @@ function mockActions(assignResponse: () => Response) {
     }),
     http.post<never, AssignTechnicianRequest>(`${workOrderUrl}/assign`, async ({ request }) => {
       calls.push(`assign ${(await request.json()).technicianId}`);
+      return assignResponse();
+    }),
+    http.post<never, AssignTechnicianRequest>(`${workOrderUrl}/reassign`, async ({ request }) => {
+      calls.push(`reassign ${(await request.json()).technicianId}`);
       return assignResponse();
     }),
   );
@@ -63,28 +65,17 @@ describe("work order action mutations", () => {
     });
   });
 
-  it("changes the technician by unassigning the current one first", async () => {
+  it("changes the technician in one request without unassigning first", async () => {
     const calls = mockActions(assignedResponse);
-    const { result } = renderWithQueryClient(() => useChangeTechnicianMutation());
+    const { queryClient, result } = renderWithQueryClient(() => useChangeTechnicianMutation());
 
     await result.current.mutateAsync({ workOrderId: newWorkOrder.id, technicianId });
 
-    expect(calls).toEqual(["unassign", `assign ${technicianId}`]);
-  });
-
-  it("reports a partial change when the new technician cannot be assigned", async () => {
-    mockActions(() => {
-      const problem: ProblemDetails = { status: 404, title: "WorkOrder.TechnicianNotFound" };
-      return HttpResponse.json(problem, { status: 404 });
+    expect(calls).toEqual([`reassign ${technicianId}`]);
+    expect(queryClient.getQueryData(workOrderKeys.detail(newWorkOrder.id))).toMatchObject({
+      data: { status: "Assigned", technicianId },
+      etag: '"3"',
     });
-    server.use(
-      http.get(workOrderUrl, () => HttpResponse.json(newWorkOrder, { headers: { ETag: '"2"' } })),
-    );
-    const { result } = renderWithQueryClient(() => useChangeTechnicianMutation());
-
-    await expect(
-      result.current.mutateAsync({ workOrderId: newWorkOrder.id, technicianId }),
-    ).rejects.toBeInstanceOf(PartialTechnicianChangeError);
   });
 
   it("invoices a completed work order", async () => {

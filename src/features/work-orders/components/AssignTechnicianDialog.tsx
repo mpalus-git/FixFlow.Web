@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { activeTechnicianOptionsQueryOptions } from "@/shared/api/technicianQueries";
 import {
-  PartialTechnicianChangeError,
   useAssignTechnicianMutation,
   useChangeTechnicianMutation,
 } from "@/features/work-orders/api/workOrderActionMutations";
@@ -58,12 +57,7 @@ export function AssignTechnicianDialog({
   }
 
   function showError(error: unknown) {
-    if (error instanceof PartialTechnicianChangeError) {
-      const reason =
-        error.cause instanceof ApiError ? describeApiError(error.cause, t) : t("errors.unexpected");
-      toast.error(t("workOrders.assign.partialChange", { reason }));
-      close();
-    } else if (error instanceof ApiError && error.errorCode === technicianNotFoundCode) {
+    if (error instanceof ApiError && error.errorCode === technicianNotFoundCode) {
       setFieldError(describeApiError(error, t));
       void queryClient.invalidateQueries({
         queryKey: activeTechnicianOptionsQueryOptions().queryKey,
