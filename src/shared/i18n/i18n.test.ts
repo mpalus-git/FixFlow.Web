@@ -22,6 +22,7 @@ describe("i18n", () => {
   afterEach(async () => {
     await changeLanguage("pl");
     localStorage.clear();
+    window.history.replaceState(null, "", "/");
   });
 
   it("keeps Polish and English translations with the same keys", () => {
@@ -62,5 +63,41 @@ describe("i18n", () => {
     await import("@/shared/i18n/i18n");
 
     expect(i18next.language).toBe("en");
+  });
+
+  it("takes the language from the address and keeps the rest of it", async () => {
+    window.history.replaceState(null, "", "/work-orders?lang=en&status=New#top");
+    vi.resetModules();
+
+    await import("@/shared/i18n/i18n");
+
+    expect(i18next.language).toBe("en");
+    expect(localStorage.getItem("fixflow.language")).toBe("en");
+    expect(`${window.location.pathname}${window.location.search}${window.location.hash}`).toBe(
+      "/work-orders?status=New#top",
+    );
+  });
+
+  it("prefers the language from the address over the saved choice", async () => {
+    localStorage.setItem("fixflow.language", "en");
+    window.history.replaceState(null, "", "/?lang=PL");
+    vi.resetModules();
+
+    await import("@/shared/i18n/i18n");
+
+    expect(i18next.language).toBe("pl");
+    expect(localStorage.getItem("fixflow.language")).toBe("pl");
+  });
+
+  it("ignores an unsupported language in the address", async () => {
+    localStorage.setItem("fixflow.language", "en");
+    window.history.replaceState(null, "", "/login?lang=de");
+    vi.resetModules();
+
+    await import("@/shared/i18n/i18n");
+
+    expect(i18next.language).toBe("en");
+    expect(localStorage.getItem("fixflow.language")).toBe("en");
+    expect(window.location.search).toBe("");
   });
 });
