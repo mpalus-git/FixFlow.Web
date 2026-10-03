@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { act, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
@@ -78,5 +78,61 @@ describe("AppLayout", () => {
 
     expect(await screen.findByRole("heading", { name: "Zaloguj się" })).toBeInTheDocument();
     expect(isRevoked).toBe(true);
+  });
+
+  it("does not keep the current page as the return path after signing out", async () => {
+    server.use(
+      http.post(`${apiBaseUrl}/api/v1/auth/logout`, () => new HttpResponse(null, { status: 204 })),
+    );
+    const user = userEvent.setup();
+    const router = renderApp("/profile");
+
+    await user.click(await screen.findByRole("button", { name: "Konto użytkownika" }));
+    await user.click(screen.getByRole("menuitem", { name: "Wyloguj" }));
+
+    expect(await screen.findByRole("heading", { name: "Zaloguj się" })).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe("/login");
+    expect(router.state.location.search).toBe("");
+  });
+
+  it("keeps the current page as the return path when the session expires", async () => {
+    const router = renderApp("/profile");
+    await screen.findByRole("button", { name: "Konto użytkownika" });
+
+    act(() => {
+      endSession("expired");
+    });
+
+    expect(await screen.findByRole("heading", { name: "Zaloguj się" })).toBeInTheDocument();
+    expect(router.state.location.search).toBe("?returnTo=%2Fprofile");
+  });
+
+  it("shows that signing out is in progress while the server answers slowly", async () => {
+    let answerRevoke = () => undefined;
+    server.use(
+      http.post(
+        `${apiBaseUrl}/api/v1/auth/logout`,
+        () =>
+          new Promise<Response>((resolve) => {
+            answerRevoke = () => {
+              resolve(new HttpResponse(null, { status: 204 }));
+            };
+          }),
+      ),
+    );
+    const user = userEvent.setup();
+    renderApp("/");
+
+    await user.click(await screen.findByRole("button", { name: "Konto użytkownika" }));
+    await user.click(screen.getByRole("menuitem", { name: "Wyloguj" }));
+
+    expect(await screen.findByRole("menuitem", { name: "Wylogowywanie…" })).toHaveAttribute(
+      "aria-disabled",
+      "true",
+    );
+
+    answerRevoke();
+
+    expect(await screen.findByRole("heading", { name: "Zaloguj się" })).toBeInTheDocument();
   });
 });

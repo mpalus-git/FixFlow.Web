@@ -40,7 +40,11 @@
     "loading": "Loading…",
     "retry": "Try again",
     "errorTitle": "Could not load data",
-    "errorDescription": "Check your connection and try again."
+    "errorDescription": "Try again in a moment.",
+    "errorNetwork": "Cannot connect to the server. Check your connection and try again.",
+    "errorServer": "Server error. Try again in a moment.",
+    "errorForbidden": "You do not have permission to view this data.",
+    "errorServerUnavailable": "The demo server is temporarily unavailable. Try again in a moment."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -87,11 +91,17 @@
   },
   "routeError": {
     "title": "Something went wrong",
-    "description": "Reload the page. If the problem persists, try again later."
+    "description": "Reload the page. If the problem persists, try again later.",
+    "rateLimitedTitle": "Too many sign-in attempts",
+    "rateLimitedDescription": "The server is temporarily limiting sign-in and session renewal. Try again in {{seconds}} s.",
+    "rateLimitedDescriptionWithoutDelay": "The server is temporarily limiting sign-in and session renewal. Try again in a moment.",
+    "retryIn": "Try again in {{seconds}} s"
   },
   "serverWake": {
     "checking": "Connecting to the server…",
     "wakingTitle": "The demo server is starting",
+    "sessionBannerTitle": "Cannot reach the server",
+    "sessionBannerDescription": "The demo server may have gone to sleep - starting it takes up to a minute. Retrying automatically.",
     "wakingDescription": "The free server sleeps after 15 minutes of inactivity. Starting it takes up to a minute.",
     "progressLabel": "Server startup progress",
     "elapsed": "{{seconds}} s elapsed",
@@ -140,7 +150,8 @@
   },
   "errors": {
     "server": "The server returned an error. Try again.",
-    "network": "Cannot connect to the server.",
+    "network": "Cannot connect to the server. The demo server may be asleep - try again in a moment.",
+    "serverUnavailable": "The demo server is starting. Try again in a moment.",
     "unexpected": "An unexpected error occurred."
   },
   "myWorkOrders": {
@@ -149,7 +160,8 @@
   "userMenu": {
     "label": "User account",
     "profile": "Profile",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "loggingOut": "Signing out…"
   },
   "roles": {
     "Admin": "Administrator",

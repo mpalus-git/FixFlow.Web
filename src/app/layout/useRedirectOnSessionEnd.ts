@@ -1,11 +1,12 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { buildLoginPath } from "@/shared/lib/returnTo";
+import { buildLoginPath, loginPath } from "@/shared/lib/returnTo";
 import { useSessionStore } from "@/shared/session/sessionStore";
 
 export function useRedirectOnSessionEnd() {
   const status = useSessionStore((state) => state.status);
+  const endReason = useSessionStore((state) => state.endReason);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { pathname, search, hash } = useLocation();
@@ -13,7 +14,9 @@ export function useRedirectOnSessionEnd() {
   useEffect(() => {
     if (status === "anonymous") {
       queryClient.clear();
-      void navigate(buildLoginPath(`${pathname}${search}${hash}`), { replace: true });
+      const target =
+        endReason === "signedOut" ? loginPath : buildLoginPath(`${pathname}${search}${hash}`);
+      void navigate(target, { replace: true });
     }
-  }, [status, queryClient, navigate, pathname, search, hash]);
+  }, [status, endReason, queryClient, navigate, pathname, search, hash]);
 }

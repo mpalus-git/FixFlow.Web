@@ -11,7 +11,8 @@ import {
   type LoginFormValues,
   loginSchema,
 } from "@/features/auth/schemas/loginSchema";
-import { ApiError } from "@/shared/api/apiError";
+import { ApiError, isServerUnreachable } from "@/shared/api/apiError";
+import { describeApiError } from "@/shared/api/describeApiError";
 import { applyFieldErrors } from "@/shared/api/applyFieldErrors";
 import { Alert, AlertDescription } from "@/shared/ui/alert";
 import { Button } from "@/shared/ui/button";
@@ -46,8 +47,8 @@ export function LoginForm({ onLoggedIn, demoAccounts = [] }: LoginFormProps) {
           ? t("auth.login.rateLimited")
           : t("auth.login.rateLimitedWithDelay", { seconds: error.retryAfterSeconds }),
       );
-    } else if (error.kind === "server" || error.kind === "network") {
-      toast.error(t(error.kind === "server" ? "errors.server" : "errors.network"), {
+    } else if (error.kind === "server" || isServerUnreachable(error)) {
+      toast.error(describeApiError(error, t), {
         action: { label: t("states.retry"), onClick: () => void submit() },
       });
     } else if (!applyFieldErrors(error, loginFields, form.setError)) {

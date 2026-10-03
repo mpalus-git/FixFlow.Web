@@ -9,7 +9,8 @@ import {
   type ChangePasswordFormValues,
   changePasswordSchema,
 } from "@/features/profile/schemas/changePasswordSchema";
-import { ApiError } from "@/shared/api/apiError";
+import { ApiError, isServerUnreachable } from "@/shared/api/apiError";
+import { describeApiError } from "@/shared/api/describeApiError";
 import { applyFieldErrors } from "@/shared/api/applyFieldErrors";
 import { Alert, AlertDescription } from "@/shared/ui/alert";
 import { Button } from "@/shared/ui/button";
@@ -39,8 +40,8 @@ export function ChangePasswordForm({ isDemoAccount }: ChangePasswordFormProps) {
           ? t("profile.password.rateLimited")
           : t("profile.password.rateLimitedWithDelay", { seconds: error.retryAfterSeconds }),
       );
-    } else if (error.kind === "server" || error.kind === "network") {
-      toast.error(t(error.kind === "server" ? "errors.server" : "errors.network"), {
+    } else if (error.kind === "server" || isServerUnreachable(error)) {
+      toast.error(describeApiError(error, t), {
         action: { label: t("states.retry"), onClick: () => void submit() },
       });
     } else if (!applyFieldErrors(error, changePasswordFields, form.setError)) {

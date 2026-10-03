@@ -1,7 +1,12 @@
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
-import { logout, sessionChannelName, startSessionSync } from "@/shared/session/logout";
+import {
+  logout,
+  revokeTimeoutMs,
+  sessionChannelName,
+  startSessionSync,
+} from "@/shared/session/logout";
 import { readRefreshToken } from "@/shared/session/refreshTokenStorage";
 import { endSession, startSession, useSessionStore } from "@/shared/session/sessionStore";
 import { createAuthTokens } from "@/test/authTokens";
@@ -31,6 +36,7 @@ describe("logout", () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     endSession();
     localStorage.clear();
   });
@@ -48,7 +54,10 @@ describe("logout", () => {
     await logout();
 
     expect(revokedTokens).toEqual(["refresh-current"]);
-    expect(useSessionStore.getState().status).toBe("anonymous");
+    expect(useSessionStore.getState()).toMatchObject({
+      status: "anonymous",
+      endReason: "signedOut",
+    });
     expect(readRefreshToken()).toBeNull();
     await vi.waitFor(() => {
       expect(otherTab.messages).toEqual(["logout"]);
@@ -64,6 +73,40 @@ describe("logout", () => {
     expect(useSessionStore.getState().status).toBe("anonymous");
     expect(readRefreshToken()).toBeNull();
   });
+
+  it("ends the session locally when the server does not answer in time", async () => {
+    let wasAborted = false;
+    server.use(
+      http.post(
+        logoutUrl,
+        ({ request }) =>
+          new Promise<Response>((_, reject) => {
+            request.signal.addEventListener("abort", () => {
+              wasAborted = true;
+              reject(new DOMException("Aborted", "AbortError"));
+            });
+          }),
+      ),
+    );
+    const otherTab = listenOnSessionChannel();
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+
+    const loggingOut = logout();
+    await vi.advanceTimersByTimeAsync(revokeTimeoutMs - 1);
+
+    expect(useSessionStore.getState().status).toBe("authenticated");
+
+    await vi.advanceTimersByTimeAsync(1);
+    await loggingOut;
+
+    expect(useSessionStore.getState().status).toBe("anonymous");
+    expect(readRefreshToken()).toBeNull();
+    expect(wasAborted).toBe(true);
+    await vi.waitFor(() => {
+      expect(otherTab.messages).toEqual(["logout"]);
+    });
+    otherTab.close();
+  });
 });
 
 describe("startSessionSync", () => {
@@ -77,6 +120,7 @@ describe("startSessionSync", () => {
     await vi.waitFor(() => {
       expect(useSessionStore.getState().status).toBe("anonymous");
     });
+    expect(useSessionStore.getState().endReason).toBe("signedOut");
     otherTab.close();
     stopSessionSync();
   });

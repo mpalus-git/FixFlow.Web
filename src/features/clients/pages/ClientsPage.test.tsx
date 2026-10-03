@@ -133,7 +133,9 @@ describe("ClientsPage", () => {
     server.use(http.get(clientsUrl, () => HttpResponse.json(problem, { status: 500 })));
     renderApp("/clients");
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("Nie udało się wczytać danych");
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("Nie udało się wczytać danych");
+    expect(alert).toHaveTextContent("Błąd serwera");
 
     mockClientList();
     await userEvent.setup().click(screen.getByRole("button", { name: "Spróbuj ponownie" }));

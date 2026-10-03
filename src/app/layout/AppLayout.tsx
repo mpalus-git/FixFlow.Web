@@ -6,6 +6,7 @@ import { AppBrand } from "@/app/layout/AppBrand";
 import { LanguageSwitcher } from "@/app/layout/LanguageSwitcher";
 import { SidebarNav } from "@/app/layout/SidebarNav";
 import { ThemeSwitcher } from "@/app/layout/ThemeSwitcher";
+import { ServerWakeBanner } from "@/app/layout/ServerWakeBanner";
 import { useRedirectOnSessionEnd } from "@/app/layout/useRedirectOnSessionEnd";
 import { UserMenu } from "@/app/layout/UserMenu";
 import { Button } from "@/shared/ui/button";
@@ -73,6 +74,7 @@ export function AppLayout() {
             <UserMenu />
           </div>
         </header>
+        <ServerWakeBanner />
         <main id="main-content" tabIndex={-1} className="flex-1 p-4 outline-none md:p-6">
           <div className="mx-auto w-full max-w-7xl">
             <Outlet />

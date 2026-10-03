@@ -36,6 +36,25 @@ describe("session middleware", () => {
     expect(await screen.findByRole("heading", { name: "Pulpit" })).toBeInTheDocument();
   });
 
+  it("explains the rate limit when the session cannot be restored yet", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    localStorage.setItem(refreshTokenStorageKey, "refresh-previous-visit");
+    server.use(
+      http.post(`${apiBaseUrl}/api/v1/auth/refresh`, () =>
+        HttpResponse.json(
+          { status: 429, title: "Too many requests" },
+          { status: 429, headers: { "Retry-After": "30" } },
+        ),
+      ),
+    );
+
+    renderApp("/");
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Zbyt wiele prób logowania");
+    expect(screen.getByRole("button", { name: "Spróbuj ponownie za 30 s" })).toBeDisabled();
+  });
+
   it("sends a technician from the dashboard to their work orders", async () => {
     signInAs("Technician");
 

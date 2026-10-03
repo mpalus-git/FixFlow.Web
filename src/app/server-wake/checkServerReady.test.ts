@@ -12,6 +12,16 @@ describe("checkServerReady", () => {
     expect(await checkServerReady(new AbortController().signal)).toBe(true);
   });
 
+  it("reads the whole response so the request finishes before the result is reported", async () => {
+    const response = new Response("Healthy");
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(response);
+
+    expect(await checkServerReady(new AbortController().signal)).toBe(true);
+    expect(response.bodyUsed).toBe(true);
+
+    fetchSpy.mockRestore();
+  });
+
   it("reports not ready while the sleeping server shows a loading page", async () => {
     server.use(
       http.get(readinessUrl, () =>

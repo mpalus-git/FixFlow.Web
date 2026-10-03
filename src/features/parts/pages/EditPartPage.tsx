@@ -29,7 +29,7 @@ export function EditPartPage() {
 
   if (editedVersion === undefined) {
     return partQuery.isError ? (
-      <ErrorState onRetry={() => void partQuery.refetch()} />
+      <ErrorState error={partQuery.error} onRetry={() => void partQuery.refetch()} />
     ) : (
       <ListSkeleton rows={4} />
     );

@@ -40,7 +40,11 @@
     "loading": "Ładowanie…",
     "retry": "Spróbuj ponownie",
     "errorTitle": "Nie udało się wczytać danych",
-    "errorDescription": "Sprawdź połączenie i spróbuj ponownie."
+    "errorDescription": "Spróbuj ponownie za chwilę.",
+    "errorNetwork": "Brak połączenia z serwerem. Sprawdź połączenie i spróbuj ponownie.",
+    "errorServer": "Błąd serwera. Spróbuj ponownie za chwilę.",
+    "errorForbidden": "Nie masz uprawnień do tych danych.",
+    "errorServerUnavailable": "Serwer demo jest chwilowo niedostępny. Spróbuj ponownie za chwilę."
   },
   "dashboard": {
     "title": "Pulpit",
@@ -87,11 +91,17 @@
   },
   "routeError": {
     "title": "Coś poszło nie tak",
-    "description": "Odśwież stronę. Jeśli problem się powtarza, spróbuj ponownie później."
+    "description": "Odśwież stronę. Jeśli problem się powtarza, spróbuj ponownie później.",
+    "rateLimitedTitle": "Zbyt wiele prób logowania",
+    "rateLimitedDescription": "Serwer chwilowo ogranicza logowanie i odnawianie sesji. Spróbuj ponownie za {{seconds}} s.",
+    "rateLimitedDescriptionWithoutDelay": "Serwer chwilowo ogranicza logowanie i odnawianie sesji. Spróbuj ponownie za chwilę.",
+    "retryIn": "Spróbuj ponownie za {{seconds}} s"
   },
   "serverWake": {
     "checking": "Łączenie z serwerem…",
     "wakingTitle": "Serwer demo się uruchamia",
+    "sessionBannerTitle": "Brak połączenia z serwerem",
+    "sessionBannerDescription": "Serwer demo mógł zostać uśpiony - uruchomienie potrwa do minuty. Ponawiam automatycznie.",
     "wakingDescription": "Darmowy serwer usypia po 15 minutach bezczynności. Uruchomienie potrwa do minuty.",
     "progressLabel": "Postęp uruchamiania serwera",
     "elapsed": "Minęło {{seconds}} s",
@@ -140,7 +150,8 @@
   },
   "errors": {
     "server": "Serwer zwrócił błąd. Spróbuj ponownie.",
-    "network": "Brak połączenia z serwerem.",
+    "network": "Brak połączenia z serwerem. Serwer demo mógł zostać uśpiony - spróbuj ponownie za chwilę.",
+    "serverUnavailable": "Serwer demo się uruchamia. Spróbuj ponownie za chwilę.",
     "unexpected": "Wystąpił nieoczekiwany błąd."
   },
   "myWorkOrders": {
@@ -149,7 +160,8 @@
   "userMenu": {
     "label": "Konto użytkownika",
     "profile": "Profil",
-    "logout": "Wyloguj"
+    "logout": "Wyloguj",
+    "loggingOut": "Wylogowywanie…"
   },
   "roles": {
     "Admin": "Administrator",

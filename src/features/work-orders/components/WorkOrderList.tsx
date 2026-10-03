@@ -41,7 +41,9 @@ export function WorkOrderList({ scope }: WorkOrderListProps) {
 
   function renderContent() {
     if (workOrdersQuery.isError) {
-      return <ErrorState onRetry={() => void workOrdersQuery.refetch()} />;
+      return (
+        <ErrorState error={workOrdersQuery.error} onRetry={() => void workOrdersQuery.refetch()} />
+      );
     }
     if (workOrderPage === undefined) {
       return <ListSkeleton />;

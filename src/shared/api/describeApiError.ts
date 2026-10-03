@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next";
-import type { ApiError } from "@/shared/api/apiError";
+import { type ApiError, isServerUnreachable } from "@/shared/api/apiError";
 
 const errorCodeMessageKeys = {
   "Client.Archived": "apiErrors.clientArchived",
@@ -39,8 +39,8 @@ export function describeApiError(error: ApiError, t: TFunction): string {
   if (error.kind === "server") {
     return t("errors.server");
   }
-  if (error.kind === "network") {
-    return t("errors.network");
+  if (isServerUnreachable(error)) {
+    return t(error.kind === "network" ? "errors.network" : "errors.serverUnavailable");
   }
   return error.detail ?? t("errors.unexpected");
 }

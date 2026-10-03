@@ -32,6 +32,7 @@ export function DispatchPage() {
     if (queries.some((query) => query.isError)) {
       return (
         <ErrorState
+          error={queries.find((query) => query.isError)?.error}
           onRetry={() => {
             for (const query of queries) {
               if (query.isError) {

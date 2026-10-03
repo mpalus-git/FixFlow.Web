@@ -8,6 +8,7 @@ export type ApiErrorKind =
   | "preconditionRequired"
   | "rateLimited"
   | "server"
+  | "serverUnavailable"
   | "network"
   | "unexpected";
 
@@ -54,12 +55,23 @@ const kindsByStatus: Readonly<Record<number, ApiErrorKind>> = {
   429: "rateLimited",
 };
 
-function kindFromStatus(status: number): ApiErrorKind {
-  return kindsByStatus[status] ?? (status >= 500 ? "server" : "unexpected");
-}
+const gatewayStatuses = new Set([502, 503, 504]);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function kindFromResponse(status: number, body: unknown): ApiErrorKind {
+  if (gatewayStatuses.has(status) && !isRecord(body)) {
+    return "serverUnavailable";
+  }
+  return kindsByStatus[status] ?? (status >= 500 ? "server" : "unexpected");
+}
+
+export function isServerUnreachable(error: unknown): boolean {
+  return (
+    error instanceof ApiError && (error.kind === "network" || error.kind === "serverUnavailable")
+  );
 }
 
 function readString(record: Record<string, unknown>, key: string): string | undefined {
@@ -91,7 +103,7 @@ export function toApiError(response: Response, body: unknown): ApiError {
   const retryAfterSeconds = parseRetryAfter(response.headers.get("Retry-After"));
 
   return new ApiError({
-    kind: kindFromStatus(response.status),
+    kind: kindFromResponse(response.status, body),
     status: response.status,
     fieldErrors: readFieldErrors(problem.errors),
     ...(detail === undefined ? {} : { detail }),

@@ -73,14 +73,17 @@ describe("createApiClient", () => {
     expect(error).toMatchObject({ kind: "notFound", errorCode: "User.NotFound" });
   });
 
-  it("throws a server error when the sleeping server answers with an HTML page", async () => {
+  it("throws an unavailable server error when the sleeping server answers with an HTML page", async () => {
     server.use(
       http.get(currentUserUrl, () =>
         HttpResponse.html("<html>Application loading</html>", { status: 503 }),
       ),
     );
 
-    expect(await getCurrentUserError()).toMatchObject({ kind: "server", status: 503 });
+    expect(await getCurrentUserError()).toMatchObject({
+      kind: "serverUnavailable",
+      status: 503,
+    });
   });
 
   it("throws a network error when the request cannot reach the server", async () => {

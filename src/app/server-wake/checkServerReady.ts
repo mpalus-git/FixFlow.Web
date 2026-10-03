@@ -8,6 +8,7 @@ export const checkServerReady: ServerReadyCheck = async (signal) => {
       signal,
       cache: "no-store",
     });
+    await response.text();
     return response.ok;
   } catch {
     return false;

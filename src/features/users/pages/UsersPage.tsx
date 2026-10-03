@@ -66,7 +66,7 @@ export function UsersPage() {
 
   function renderContent() {
     if (usersQuery.isError) {
-      return <ErrorState onRetry={() => void usersQuery.refetch()} />;
+      return <ErrorState error={usersQuery.error} onRetry={() => void usersQuery.refetch()} />;
     }
     if (userPage === undefined || currentUser === undefined) {
       return <ListSkeleton />;

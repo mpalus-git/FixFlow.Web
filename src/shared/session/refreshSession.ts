@@ -25,7 +25,7 @@ function isRejectedRefreshToken(error: unknown): boolean {
 async function refreshWithLatestToken(): Promise<boolean> {
   const refreshToken = readRefreshToken();
   if (refreshToken === null) {
-    endSession();
+    endSession("expired");
     return false;
   }
   try {
@@ -36,7 +36,7 @@ async function refreshWithLatestToken(): Promise<boolean> {
     return true;
   } catch (error) {
     if (isRejectedRefreshToken(error)) {
-      endSession();
+      endSession("expired");
       return false;
     }
     throw error;

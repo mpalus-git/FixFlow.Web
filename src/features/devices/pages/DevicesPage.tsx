@@ -35,7 +35,7 @@ export function DevicesPage() {
 
   function renderContent() {
     if (devicesQuery.isError) {
-      return <ErrorState onRetry={() => void devicesQuery.refetch()} />;
+      return <ErrorState error={devicesQuery.error} onRetry={() => void devicesQuery.refetch()} />;
     }
     if (devicePage === undefined) {
       return <ListSkeleton />;
