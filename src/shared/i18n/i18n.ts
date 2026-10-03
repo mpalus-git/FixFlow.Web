@@ -11,6 +11,22 @@ import pl from "@/shared/i18n/pl.json";
 import { readStorage, writeStorage } from "@/shared/lib/storage";
 
 const languageStorageKey = "fixflow.language";
+const languageParam = "lang";
+
+function takeLanguageFromAddress(): Language | null {
+  const url = new URL(window.location.href);
+  const requested = url.searchParams.get(languageParam)?.toLowerCase();
+  if (requested === undefined) {
+    return null;
+  }
+  url.searchParams.delete(languageParam);
+  window.history.replaceState(window.history.state, "", url);
+  if (!isLanguage(requested)) {
+    return null;
+  }
+  writeStorage(languageStorageKey, requested);
+  return requested;
+}
 
 function readStoredLanguage(): Language {
   const stored = readStorage(languageStorageKey);
@@ -26,7 +42,7 @@ void i18next.use(initReactI18next).init({
     pl: { translation: pl },
     en: { translation: en },
   },
-  lng: readStoredLanguage(),
+  lng: takeLanguageFromAddress() ?? readStoredLanguage(),
   fallbackLng: defaultLanguage,
   supportedLngs: supportedLanguages,
   interpolation: { escapeValue: false },

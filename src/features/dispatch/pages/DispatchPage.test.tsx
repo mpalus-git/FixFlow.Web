@@ -1,6 +1,7 @@
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
+import { dispatchRefreshIntervalMs } from "@/features/dispatch/api/dispatchQueries";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import {
@@ -46,14 +47,27 @@ const assignedToAnna = createWorkOrderListItem({
   dueDate: toUtcIso(`${addCalendarDays(currentWeek, 4)}T10:00`),
 });
 
+const newNextWeek = createWorkOrderListItem({
+  id: "9f8e7d6c-5b4a-4f3e-8d2c-1b0a9f8e7d6c",
+  number: "ZL/2026/0077",
+  clientName: "Kawiarnia Rynek",
+  status: "New",
+  dueDate: toUtcIso(`${addCalendarDays(nextWeek, 2)}T10:00`),
+});
+
 function pageOf(items: WorkOrderPage["items"]): WorkOrderPage {
   return { items, page: 1, pageSize: 100, totalCount: items.length };
 }
 
 function mockBoard({
   technicians = [annaUser],
+  unassigned = [],
   weekStatus = 200,
-}: { technicians?: UserResponse[]; weekStatus?: number } = {}) {
+}: {
+  technicians?: UserResponse[];
+  unassigned?: WorkOrderPage["items"];
+  weekStatus?: number;
+} = {}) {
   const weekRequests: string[] = [];
   server.use(
     http.get(`${apiBaseUrl}/api/v1/users`, () => {
@@ -68,7 +82,7 @@ function mockBoard({
     http.get(`${apiBaseUrl}/api/v1/work-orders`, ({ request }) => {
       const query = new URL(request.url).searchParams;
       if (query.get("status") === "New") {
-        return HttpResponse.json(pageOf([]));
+        return HttpResponse.json(pageOf(unassigned));
       }
       weekRequests.push(`${query.get("dueFrom") ?? ""}..${query.get("dueTo") ?? ""}`);
       if (weekStatus !== 200) {
@@ -88,6 +102,7 @@ describe("DispatchPage", () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     endSession();
     localStorage.clear();
   });
@@ -157,5 +172,36 @@ describe("DispatchPage", () => {
     await user.click(screen.getByRole("button", { name: "Spróbuj ponownie" }));
 
     expect(await screen.findByRole("row", { name: /Anna Nowak/ })).toBeInTheDocument();
+  });
+
+  it("refreshes the board in the background while nothing is being dragged", async () => {
+    vi.useFakeTimers({
+      shouldAdvanceTime: true,
+      toFake: ["setTimeout", "clearTimeout", "setInterval", "clearInterval"],
+    });
+    const weekRequests = mockBoard({ unassigned: [newNextWeek] });
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime.bind(vi) });
+    renderApp("/dispatch");
+    const handle = await screen.findByRole("button", { name: /Przenieś zlecenie ZL\/2026\/0077/ });
+    expect(weekRequests).toHaveLength(1);
+
+    await vi.advanceTimersByTimeAsync(dispatchRefreshIntervalMs);
+
+    await vi.waitFor(() => {
+      expect(weekRequests).toHaveLength(2);
+    });
+
+    handle.focus();
+    await user.keyboard("[Space]");
+    await vi.advanceTimersByTimeAsync(dispatchRefreshIntervalMs * 2);
+
+    expect(weekRequests).toHaveLength(2);
+
+    await user.keyboard("[Escape]");
+    await vi.advanceTimersByTimeAsync(dispatchRefreshIntervalMs);
+
+    await vi.waitFor(() => {
+      expect(weekRequests).toHaveLength(3);
+    });
   });
 });

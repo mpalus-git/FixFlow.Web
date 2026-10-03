@@ -56,9 +56,10 @@ type ActiveDrag = { workOrderId: string; startedAt: Date };
 export type DispatchBoardGridProps = {
   board: DispatchBoard;
   weekStart: string;
+  onDraggingChange: (isDragging: boolean) => void;
 };
 
-export function DispatchBoardGrid({ board, weekStart }: DispatchBoardGridProps) {
+export function DispatchBoardGrid({ board, weekStart, onDraggingChange }: DispatchBoardGridProps) {
   const { t } = useTranslation();
   const language = useLanguage();
   const moveMutation = useMoveWorkOrderMutation();
@@ -153,6 +154,7 @@ export function DispatchBoardGrid({ board, weekStart }: DispatchBoardGridProps) 
 
   function handleDragEnd({ active, over }: DragEndEvent) {
     setActiveDrag(null);
+    onDraggingChange(false);
     const workOrder = workOrders.get(String(active.id));
     const dropTarget = over === null ? undefined : targets.get(String(over.id));
     if (
@@ -187,9 +189,11 @@ export function DispatchBoardGrid({ board, weekStart }: DispatchBoardGridProps) 
       }}
       onDragStart={({ active }) => {
         setActiveDrag({ workOrderId: String(active.id), startedAt: new Date() });
+        onDraggingChange(true);
       }}
       onDragCancel={() => {
         setActiveDrag(null);
+        onDraggingChange(false);
       }}
       onDragEnd={handleDragEnd}
     >

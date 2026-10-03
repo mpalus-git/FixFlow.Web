@@ -1,8 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useIsMutating, useQuery } from "@tanstack/react-query";
 import { cn } from "cn";
 import { ChevronLeftIcon, ChevronRightIcon, UsersIcon } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  dispatchKeys,
+  dispatchRefreshIntervalMs,
   unassignedWorkOrdersQueryOptions,
   weekWorkOrdersQueryOptions,
 } from "@/features/dispatch/api/dispatchQueries";
@@ -23,8 +26,11 @@ export function DispatchPage() {
   const { t } = useTranslation();
   const language = useLanguage();
   const { weekStart, currentWeekStart, setWeekStart } = useDispatchWeekParam();
-  const weekQuery = useQuery(weekWorkOrdersQueryOptions(weekStart));
-  const unassignedQuery = useQuery(unassignedWorkOrdersQueryOptions());
+  const [isDragging, setIsDragging] = useState(false);
+  const isMoving = useIsMutating({ mutationKey: dispatchKeys.move() }) > 0;
+  const refetchInterval = isDragging || isMoving ? false : dispatchRefreshIntervalMs;
+  const weekQuery = useQuery({ ...weekWorkOrdersQueryOptions(weekStart), refetchInterval });
+  const unassignedQuery = useQuery({ ...unassignedWorkOrdersQueryOptions(), refetchInterval });
   const techniciansQuery = useQuery(technicianOptionsQueryOptions());
   const queries = [weekQuery, unassignedQuery, techniciansQuery];
 
@@ -82,7 +88,7 @@ export function DispatchPage() {
         {hasAssignedWork ? null : (
           <p className="text-sm text-muted-foreground">{t("dispatch.emptyWeek")}</p>
         )}
-        <DispatchBoardGrid board={board} weekStart={weekStart} />
+        <DispatchBoardGrid board={board} weekStart={weekStart} onDraggingChange={setIsDragging} />
       </div>
     );
   }

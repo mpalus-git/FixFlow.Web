@@ -216,7 +216,7 @@ CI uruchamia lint, kontrolę typów, kontrolę wygenerowanych typów, build, tes
 - Dane demo są wspólne, więc zmiany innych odwiedzających są widoczne do nocnego resetu.
 - Licznik opóźnionych na pulpicie opiera się na fladze `IsOverdue` odświeżanej co godzinę (dłużej, gdy Render śpi) i może chwilowo różnić się od podsumowania techników, które liczy opóźnienie na bieżąco.
 - Pola wyboru klienta i urządzenia w formularzu zlecenia, lista techników oraz tablica dispatch pobierają najwyżej 100 pozycji (limit strony w API). Przy większej skali potrzebne byłoby wyszukiwanie po stronie serwera; tablica pokazuje wtedy ostrzeżenie.
-- Brak aktualizacji na żywo: dane odświeżają się przy akcjach i po powrocie do karty, a równoległą zmianę innego dyspozytora wykrywa dopiero ETag przy zapisie.
+- Brak aktualizacji na żywo: tablica dispatch odświeża się w tle co 30 s, a pulpit co minutę (tylko w widocznej karcie, tablica nie w trakcie przeciągania), pozostałe widoki przy akcjach i po powrocie do karty. Zmianę innego dyspozytora, która pojawi się między odświeżeniami, wykrywa ETag albo porównanie stanu przed zapisem.
 - Panel technika jest tylko do odczytu. Wpisy serwisowe dodaje aplikacja mobilna, która jeszcze nie powstała, więc w demo pochodzą z danych startowych.
 - Lista użytkowników nie ma wyszukiwania ani sortowania, bo API ich nie udostępnia.
 
