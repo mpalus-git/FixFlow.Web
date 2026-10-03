@@ -33,6 +33,20 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), tailwindcss(), apiPreconnect(env.VITE_API_URL)],
     server: proxyTarget ? { proxy: createApiProxy(proxyTarget) } : {},
+    build: {
+      rolldownOptions: {
+        output: {
+          codeSplitting: {
+            groups: [
+              {
+                name: "react",
+                test: /\/node_modules\/(react|react-dom|scheduler|react-router)\//,
+              },
+            ],
+          },
+        },
+      },
+    },
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
