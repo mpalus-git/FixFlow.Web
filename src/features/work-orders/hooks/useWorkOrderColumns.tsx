@@ -14,7 +14,7 @@ import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrde
 import type { ReturnPathState } from "@/features/work-orders/hooks/useReturnPath";
 import type { components } from "@/shared/api/schema";
 import { useLanguage } from "@/shared/i18n/useLanguage";
-import { formatDateTime } from "@/shared/lib/dateTime";
+import { formatDate, formatTime } from "@/shared/lib/dateTime";
 import { Badge } from "@/shared/ui/badge";
 import { SortableHeader } from "@/shared/ui/SortableHeader";
 
@@ -88,7 +88,12 @@ export function useWorkOrderColumns(
       columnHelper.accessor("dueDate", {
         id: "dueDate",
         header: sortableHeader(t("workOrders.columns.dueDate")),
-        cell: (info) => formatDateTime(info.getValue(), language),
+        cell: (info) => (
+          <time dateTime={info.getValue()} className="tabular-nums">
+            {formatDate(info.getValue(), language)}{" "}
+            <span className="block">{formatTime(info.getValue(), language)}</span>
+          </time>
+        ),
       }),
       columnHelper.accessor("clientName", {
         id: "clientName",

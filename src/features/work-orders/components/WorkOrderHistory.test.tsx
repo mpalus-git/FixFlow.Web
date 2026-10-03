@@ -63,7 +63,7 @@ describe("WorkOrderHistory", () => {
     mockHistory({ items: [createWorkOrderListItem()], page: 1, pageSize: 10, totalCount: 1 });
     renderHistory();
 
-    const row = (await screen.findByText("16.07.2026 00:30")).closest("tr");
+    const row = (await screen.findByRole("cell", { name: "16.07.2026 00:30" })).closest("tr");
     const cells = within(row ?? document.body);
 
     expect(cells.getByText("SN-2024-0001")).toBeInTheDocument();
@@ -115,7 +115,7 @@ describe("WorkOrderHistory", () => {
     });
     renderHistory(`/devices/${deviceId}`, { deviceId });
 
-    expect(await screen.findByText("16.07.2026 00:30")).toBeInTheDocument();
+    expect(await screen.findByRole("cell", { name: "16.07.2026 00:30" })).toBeInTheDocument();
     expect(screen.queryByRole("columnheader", { name: "Urządzenie" })).toBeNull();
     expect(requests[0]?.get("deviceId")).toBe(deviceId);
     expect(requests[0]?.has("clientId")).toBe(false);
