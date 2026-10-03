@@ -6,10 +6,13 @@ import { addCalendarDays } from "@/shared/lib/dateTime";
 
 export const dispatchBoardLimit = 100;
 
+export const dispatchRefreshIntervalMs = 30_000;
+
 export const dispatchKeys = {
   all: [...queryKeyRoots.workOrders, "list", "dispatch"] as const,
   week: (weekStart: string) => [...dispatchKeys.all, "week", weekStart] as const,
   unassigned: () => [...dispatchKeys.all, "unassigned"] as const,
+  move: () => [...dispatchKeys.all, "move"] as const,
 };
 
 export function weekWorkOrdersQueryOptions(weekStart: string) {

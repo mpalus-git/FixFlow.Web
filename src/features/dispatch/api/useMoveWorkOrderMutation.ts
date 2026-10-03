@@ -123,6 +123,7 @@ export function useMoveWorkOrderMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey: dispatchKeys.move(),
     mutationFn: ({ workOrder, target }: MoveWorkOrderVariables) =>
       applyPlan(workOrder, planDispatchMove(workOrder, target)),
     onMutate: (variables) => moveOnBoard(queryClient, variables),

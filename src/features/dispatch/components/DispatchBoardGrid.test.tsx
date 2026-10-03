@@ -81,6 +81,7 @@ function layoutRect(element: Element): DOMRect {
 }
 
 function renderBoard(unassigned: DispatchWorkOrder[], week: DispatchWorkOrder[]) {
+  const onDraggingChange = vi.fn<(isDragging: boolean) => void>();
   vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(function (this: Element) {
     return layoutRect(this);
   });
@@ -92,10 +93,11 @@ function renderBoard(unassigned: DispatchWorkOrder[], week: DispatchWorkOrder[])
   });
   renderWithProviders(
     <MemoryRouter>
-      <DispatchBoardGrid board={board} weekStart={weekStart} />
+      <DispatchBoardGrid board={board} weekStart={weekStart} onDraggingChange={onDraggingChange} />
       <Toaster />
     </MemoryRouter>,
   );
+  return onDraggingChange;
 }
 
 function mockAssign(respond: () => Response) {
@@ -120,11 +122,15 @@ function annaRow() {
   return screen.getByRole("row", { name: /Anna Nowak/ });
 }
 
-async function dragNewOrderWithKeyboard(keys: string) {
-  const user = userEvent.setup();
+function focusNewOrderHandle() {
   screen
     .getByRole("button", { name: "Przenieś zlecenie ZL/2026/0042, Hotel Zamek, 02.10.2026 10:00" })
     .focus();
+}
+
+async function dragNewOrderWithKeyboard(keys: string) {
+  const user = userEvent.setup();
+  focusNewOrderHandle();
   await user.keyboard(`[Space]${keys}[Space]`);
 }
 
@@ -165,6 +171,20 @@ describe("DispatchBoardGrid", () => {
     await vi.waitFor(() => {
       expect(assigned).toEqual([anna]);
     });
+  });
+
+  it("reports when a work order is picked up and when the drag is cancelled", async () => {
+    const user = userEvent.setup();
+    const onDraggingChange = renderBoard([newOrder], []);
+    focusNewOrderHandle();
+
+    await user.keyboard("[Space]");
+
+    expect(onDraggingChange).toHaveBeenLastCalledWith(true);
+
+    await user.keyboard("[Escape]");
+
+    expect(onDraggingChange).toHaveBeenLastCalledWith(false);
   });
 
   it("does not move a work order dropped on a past day", async () => {
