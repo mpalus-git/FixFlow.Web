@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
@@ -73,6 +73,15 @@ describe("ClientCardPage", () => {
     expect(await within(devices).findByRole("cell", { name: "SN-2024-0001" })).toBeVisible();
     const history = screen.getByRole("region", { name: "Historia zleceń" });
     expect(await within(history).findByText("Kocioł nie grzeje wody użytkowej")).toBeVisible();
+  });
+
+  it("titles the browser tab with the client name", async () => {
+    mockCard();
+    renderApp(cardPath);
+
+    await waitFor(() => {
+      expect(document.title).toBe("Piekarnia Kowalski - FixFlow");
+    });
   });
 
   it("names the device and work order pagination differently", async () => {

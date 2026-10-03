@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
@@ -92,6 +92,17 @@ describe("WorkOrderDetailsPage", () => {
       `/work-orders/${workOrder.id}/edit`,
     );
     expect(relatedResourceRequests).toEqual([]);
+  });
+
+  it("titles the browser tab with the work order number", async () => {
+    signInAs("Dispatcher");
+    const workOrder = createWorkOrderResponse();
+    mockDetails(workOrder);
+    renderApp(`/work-orders/${workOrder.id}`);
+
+    await waitFor(() => {
+      expect(document.title).toBe("Zlecenie ZL/2026/0042 - FixFlow");
+    });
   });
 
   it("shows the technician their own work order read-only without links to other areas", async () => {

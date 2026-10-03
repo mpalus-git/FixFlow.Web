@@ -20,6 +20,7 @@ import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
+import { PageTitle } from "@/shared/ui/PageTitle";
 
 export function WorkOrderDetailsPage() {
   const { t } = useTranslation();
@@ -50,6 +51,7 @@ export function WorkOrderDetailsPage() {
         </Button>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="flex flex-col gap-2">
+            <PageTitle title={t("workOrders.details.title", { number: workOrder.number })} />
             <h1 className="text-2xl font-semibold tracking-tight">
               {t("workOrders.details.title", { number: workOrder.number })}
             </h1>
