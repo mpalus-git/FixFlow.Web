@@ -1,6 +1,5 @@
 import { MapPinIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { PartLabel } from "@/features/parts";
 import { partValue, signedQuantity, workMinutes } from "@/features/work-orders/serviceEntrySummary";
 import type { components } from "@/shared/api/schema";
 import { useLanguage } from "@/shared/i18n/useLanguage";
@@ -112,7 +111,10 @@ export function ServiceEntryCard({ entry }: ServiceEntryCardProps) {
               {entry.parts.map((part) => (
                 <TableRow key={part.partId}>
                   <TableCell>
-                    <PartLabel partId={part.partId} />
+                    <span className="flex flex-col">
+                      <span className="font-medium">{part.partName}</span>
+                      <span className="text-muted-foreground">{part.catalogNumber}</span>
+                    </span>
                   </TableCell>
                   <TableCell className="text-right">{signedQuantity(entry, part)}</TableCell>
                   <TableCell className="text-right">

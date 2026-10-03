@@ -21,6 +21,7 @@ import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 
 const clientHistoryColumnIds: readonly WorkOrderColumnId[] = [
+  "number",
   "dueDate",
   "device",
   "description",

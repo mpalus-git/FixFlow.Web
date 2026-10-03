@@ -338,15 +338,13 @@
       "description": "The device will disappear from lists and its work order history is kept. No new work orders can be created for it and its serial number stays reserved.",
       "confirm": "Archive",
       "archived": "Device {{serialNumber}} has been archived."
-    },
-    "name": "{{serialNumber}} · {{manufacturer}} {{model}}",
-    "openDevice": "Open device"
+    }
   },
   "workOrders": {
     "title": "Work orders",
     "search": {
       "label": "Search work orders",
-      "placeholder": "Fault description, serial number or client"
+      "placeholder": "Work order number, fault description, serial number or client"
     },
     "empty": {
       "title": "No work orders",
@@ -370,6 +368,7 @@
       "Critical": "Critical"
     },
     "columns": {
+      "number": "Number",
       "dueDate": "Due",
       "client": "Client",
       "device": "Device",
@@ -436,7 +435,7 @@
     },
     "details": {
       "timeline": "Work order progress",
-      "title": "Work order details",
+      "title": "Work order {{number}}",
       "back": "Back",
       "edit": "Edit",
       "serviceEntries": "Service entries"
@@ -474,10 +473,10 @@
       "assigned": "Technician assigned.",
       "changed": "Technician changed.",
       "partialChange": "The previous technician was unassigned, but the new one could not be assigned: {{reason}} The work order is now New."
-    }
+    },
+    "deviceName": "{{serialNumber}} · {{model}}"
   },
   "parts": {
-    "unknown": "Unknown part",
     "title": "Parts",
     "lowStockHint_one": "Parts with {{count}} unit or fewer left are marked as low stock.",
     "lowStockHint_other": "Parts with {{count}} units or fewer left are marked as low stock.",

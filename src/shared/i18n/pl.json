@@ -340,15 +340,13 @@
       "description": "Urządzenie zniknie z list, a historia zleceń zostanie zachowana. Nie będzie można zakładać dla niego nowych zleceń, a jego numer seryjny pozostanie zajęty.",
       "confirm": "Archiwizuj",
       "archived": "Zarchiwizowano urządzenie {{serialNumber}}."
-    },
-    "name": "{{serialNumber}} · {{manufacturer}} {{model}}",
-    "openDevice": "Przejdź do urządzenia"
+    }
   },
   "workOrders": {
     "title": "Zlecenia",
     "search": {
       "label": "Szukaj zleceń",
-      "placeholder": "Opis usterki, numer seryjny lub klient"
+      "placeholder": "Numer zlecenia, opis usterki, numer seryjny lub klient"
     },
     "empty": {
       "title": "Brak zleceń",
@@ -372,6 +370,7 @@
       "Critical": "Krytyczny"
     },
     "columns": {
+      "number": "Numer",
       "dueDate": "Termin",
       "client": "Klient",
       "device": "Urządzenie",
@@ -438,7 +437,7 @@
     },
     "details": {
       "timeline": "Przebieg zlecenia",
-      "title": "Szczegóły zlecenia",
+      "title": "Zlecenie {{number}}",
       "back": "Wróć",
       "edit": "Edytuj",
       "serviceEntries": "Wpisy serwisowe"
@@ -476,10 +475,10 @@
       "assigned": "Przypisano technika.",
       "changed": "Zmieniono technika.",
       "partialChange": "Odpięto poprzedniego technika, ale nie udało się przypisać nowego: {{reason}} Zlecenie ma teraz status Nowe."
-    }
+    },
+    "deviceName": "{{serialNumber}} · {{model}}"
   },
   "parts": {
-    "unknown": "Nieznana część",
     "title": "Części",
     "lowStockHint_one": "Części, których zostało {{count}} sztuka lub mniej, są oznaczone jako niski stan.",
     "lowStockHint_few": "Części, których zostały {{count}} sztuki lub mniej, są oznaczone jako niski stan.",

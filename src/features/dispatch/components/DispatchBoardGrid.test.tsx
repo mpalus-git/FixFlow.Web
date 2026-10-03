@@ -122,7 +122,9 @@ function annaRow() {
 
 async function dragNewOrderWithKeyboard(keys: string) {
   const user = userEvent.setup();
-  screen.getByRole("button", { name: "Przenieś zlecenie Hotel Zamek, 02.10.2026 10:00" }).focus();
+  screen
+    .getByRole("button", { name: "Przenieś zlecenie ZL/2026/0042, Hotel Zamek, 02.10.2026 10:00" })
+    .focus();
   await user.keyboard(`[Space]${keys}[Space]`);
 }
 

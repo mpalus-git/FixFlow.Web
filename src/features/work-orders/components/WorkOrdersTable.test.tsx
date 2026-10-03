@@ -35,10 +35,11 @@ describe("WorkOrdersTable", () => {
     expect(screen.getByRole("columnheader", { name: "Termin" })).not.toHaveAttribute("aria-sort");
   });
 
-  it("links the due date to the work order details", () => {
+  it("links the work order number to its details and shows the due date", () => {
     renderTable({ sortBy: "DueDate", sortDirection: "Asc" });
 
-    expect(screen.getByRole("link", { name: "16.07.2026 00:30" })).toHaveAttribute(
+    expect(screen.getByRole("cell", { name: "16.07.2026 00:30" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "ZL/2026/0042" })).toHaveAttribute(
       "href",
       `/work-orders/${createWorkOrderListItem().id}`,
     );

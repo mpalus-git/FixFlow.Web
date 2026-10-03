@@ -13,7 +13,7 @@ import { formatDateTime, formatTime } from "@/shared/lib/dateTime";
 const cardClassName = "rounded-lg border bg-card p-1.5 text-sm text-card-foreground shadow-xs";
 
 export function workOrderLabel(workOrder: DispatchWorkOrder, language: Language): string {
-  return `${workOrder.clientName}, ${formatDateTime(workOrder.dueDate, language)}`;
+  return `${workOrder.number}, ${workOrder.clientName}, ${formatDateTime(workOrder.dueDate, language)}`;
 }
 
 type CardBodyProps = {
@@ -62,6 +62,7 @@ function CardBody({ workOrder, showDate, handle, linked }: CardBodyProps) {
         </span>
       )}
       <span className="truncate text-xs text-muted-foreground">{workOrder.deviceModel}</span>
+      <span className="text-xs text-muted-foreground tabular-nums">{workOrder.number}</span>
       <div className="flex flex-wrap gap-1">
         <WorkOrderPriorityBadge priority={workOrder.priority} />
         {canDragWorkOrder(workOrder) ? null : <WorkOrderStatusBadge status={workOrder.status} />}
