@@ -71,6 +71,7 @@ describe("AppLayout", () => {
     renderApp("/");
 
     await user.click(await screen.findByRole("button", { name: "Konto użytkownika" }));
+    expect(screen.getByText("Dispatcher Test")).toBeInTheDocument();
     expect(screen.getByText("dispatcher@fixflow.test")).toBeInTheDocument();
     expect(screen.getByText("Dyspozytor")).toBeInTheDocument();
     await user.click(screen.getByRole("menuitem", { name: "Wyloguj" }));

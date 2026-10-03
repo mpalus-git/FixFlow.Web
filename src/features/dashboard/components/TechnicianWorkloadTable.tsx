@@ -47,7 +47,7 @@ export function TechnicianWorkloadTable({ technicians }: TechnicianWorkloadTable
                 to={`/work-orders?technician=${technician.technicianId}`}
                 className="font-medium [overflow-wrap:anywhere] underline-offset-4 hover:underline"
               >
-                {technician.email}
+                {technician.fullName}
               </Link>
             </TableHead>
             <TableCell className={numericCell}>{technician.assignedCount}</TableCell>

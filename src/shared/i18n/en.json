@@ -157,6 +157,7 @@
     "title": "Profile",
     "account": {
       "title": "Account details",
+      "fullName": "Full name",
       "email": "Email",
       "role": "Role"
     },
