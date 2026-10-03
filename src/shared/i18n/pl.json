@@ -340,9 +340,7 @@
       "description": "Urządzenie zniknie z list, a historia zleceń zostanie zachowana. Nie będzie można zakładać dla niego nowych zleceń, a jego numer seryjny pozostanie zajęty.",
       "confirm": "Archiwizuj",
       "archived": "Zarchiwizowano urządzenie {{serialNumber}}."
-    },
-    "name": "{{serialNumber}} · {{manufacturer}} {{model}}",
-    "openDevice": "Przejdź do urządzenia"
+    }
   },
   "workOrders": {
     "title": "Zlecenia",
@@ -477,7 +475,8 @@
       "assigned": "Przypisano technika.",
       "changed": "Zmieniono technika.",
       "partialChange": "Odpięto poprzedniego technika, ale nie udało się przypisać nowego: {{reason}} Zlecenie ma teraz status Nowe."
-    }
+    },
+    "deviceName": "{{serialNumber}} · {{model}}"
   },
   "parts": {
     "title": "Części",

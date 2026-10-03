@@ -338,9 +338,7 @@
       "description": "The device will disappear from lists and its work order history is kept. No new work orders can be created for it and its serial number stays reserved.",
       "confirm": "Archive",
       "archived": "Device {{serialNumber}} has been archived."
-    },
-    "name": "{{serialNumber}} · {{manufacturer}} {{model}}",
-    "openDevice": "Open device"
+    }
   },
   "workOrders": {
     "title": "Work orders",
@@ -475,7 +473,8 @@
       "assigned": "Technician assigned.",
       "changed": "Technician changed.",
       "partialChange": "The previous technician was unassigned, but the new one could not be assigned: {{reason}} The work order is now New."
-    }
+    },
+    "deviceName": "{{serialNumber}} · {{model}}"
   },
   "parts": {
     "title": "Parts",

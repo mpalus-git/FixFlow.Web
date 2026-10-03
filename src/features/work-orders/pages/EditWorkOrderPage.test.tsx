@@ -4,8 +4,6 @@ import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { endSession } from "@/shared/session/sessionStore";
-import { createClientResponse } from "@/test/clientFixtures";
-import { createDeviceResponse } from "@/test/deviceFixtures";
 import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
 import { signInAs } from "@/test/signedInUser";
@@ -44,13 +42,7 @@ function mockWorkOrderApi(initial: WorkOrderResponse, listItems: WorkOrderPage["
       current = { workOrder: { ...current.workOrder, ...body }, etag: '"2"' };
       return HttpResponse.json(current.workOrder, { headers: { ETag: current.etag } });
     }),
-    http.get(`${apiBaseUrl}/api/v1/devices/${initial.deviceId}`, () =>
-      HttpResponse.json(createDeviceResponse(), { headers: { ETag: '"1"' } }),
-    ),
     http.get(`${workOrderUrl}/service-entries`, () => HttpResponse.json([])),
-    http.get(`${apiBaseUrl}/api/v1/clients/${createDeviceResponse().clientId}`, () =>
-      HttpResponse.json(createClientResponse(), { headers: { ETag: '"1"' } }),
-    ),
     http.get(`${apiBaseUrl}/api/v1/work-orders`, () => HttpResponse.json(workOrderPage)),
     http.get(`${apiBaseUrl}/api/v1/users`, () => HttpResponse.json(userPage)),
   );
@@ -78,7 +70,7 @@ describe("EditWorkOrderPage", () => {
     const user = userEvent.setup();
 
     expect(
-      await screen.findByRole("link", { name: "SN-2024-0001 · Viessmann Vitodens 200-W" }),
+      await screen.findByRole("link", { name: "SN-2024-0001 · Vitodens 200-W" }),
     ).toHaveAttribute("href", `/devices/${overdueWorkOrder.deviceId}`);
     await user.selectOptions(screen.getByLabelText("Priorytet"), "Krytyczny");
     await user.click(screen.getByRole("button", { name: "Zapisz zmiany" }));

@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
-import { DeviceNameLink } from "@/features/devices";
 import { useUpdateWorkOrderMutation } from "@/features/work-orders/api/workOrderMutations";
 import { workOrderQueryOptions } from "@/features/work-orders/api/workOrderQueries";
 import { WorkOrderForm } from "@/features/work-orders/components/WorkOrderForm";
+import { WorkOrderDeviceName } from "@/features/work-orders/components/WorkOrderDeviceName";
 import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrderStatusBadge";
 import { useReturnPath } from "@/features/work-orders/hooks/useReturnPath";
 import {
@@ -59,7 +59,7 @@ export function EditWorkOrderPage() {
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold tracking-tight">{t("workOrders.edit.title")}</h1>
         <div className="flex flex-wrap items-center gap-2 text-muted-foreground">
-          <DeviceNameLink deviceId={workOrder.deviceId} />
+          <WorkOrderDeviceName workOrder={workOrder} linked />
           <WorkOrderStatusBadge status={workOrder.status} />
         </div>
       </div>

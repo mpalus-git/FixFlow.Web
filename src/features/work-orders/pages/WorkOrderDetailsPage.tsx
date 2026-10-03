@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon, PencilIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router";
-import { DeviceClientName, DeviceNameLink } from "@/features/devices";
 import { workOrderQueryOptions } from "@/features/work-orders/api/workOrderQueries";
 import { ServiceEntryList } from "@/features/work-orders/components/ServiceEntryList";
+import { WorkOrderDeviceName } from "@/features/work-orders/components/WorkOrderDeviceName";
 import { ServiceProtocolButton } from "@/features/work-orders/components/ServiceProtocolButton";
 import { WorkOrderActions } from "@/features/work-orders/components/WorkOrderActions";
 import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOrderPriorityBadge";
@@ -86,11 +86,20 @@ export function WorkOrderDetailsPage() {
           <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_1fr]">
             <dt className="text-muted-foreground">{t("workOrders.columns.device")}</dt>
             <dd>
-              <DeviceNameLink deviceId={workOrder.deviceId} linked={!isTechnician} />
+              <WorkOrderDeviceName workOrder={workOrder} linked={!isTechnician} />
             </dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.client")}</dt>
             <dd>
-              <DeviceClientName deviceId={workOrder.deviceId} linked={!isTechnician} />
+              {isTechnician ? (
+                workOrder.clientName
+              ) : (
+                <Link
+                  to={`/clients/${workOrder.clientId}`}
+                  className="underline-offset-4 hover:underline"
+                >
+                  {workOrder.clientName}
+                </Link>
+              )}
             </dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.technician")}</dt>
             <dd>{workOrder.technicianName ?? t("workOrders.unassigned")}</dd>

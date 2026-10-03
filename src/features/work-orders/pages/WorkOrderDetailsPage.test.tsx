@@ -3,8 +3,6 @@ import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { endSession } from "@/shared/session/sessionStore";
-import { createClientResponse } from "@/test/clientFixtures";
-import { createDeviceResponse } from "@/test/deviceFixtures";
 import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
 import { createUser, signInAs } from "@/test/signedInUser";
@@ -14,11 +12,11 @@ type WorkOrderResponse = components["schemas"]["WorkOrderResponse"];
 type UserPage = components["schemas"]["PagedResponseOfUserResponse"];
 type ProblemDetails = components["schemas"]["ProblemDetails"];
 
-const device = createDeviceResponse();
 const otherTechnicianId = "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d";
 
 function mockDetails(workOrder: WorkOrderResponse) {
   const userListRequests: Request[] = [];
+  const relatedResourceRequests: string[] = [];
   const userPage: UserPage = {
     items: [
       {
@@ -42,18 +40,18 @@ function mockDetails(workOrder: WorkOrderResponse) {
         createServiceEntryResponse({ technicianId: workOrder.technicianId ?? "" }),
       ]),
     ),
-    http.get(`${apiBaseUrl}/api/v1/devices/${device.id}`, () =>
-      HttpResponse.json(device, { headers: { ETag: '"1"' } }),
-    ),
-    http.get(`${apiBaseUrl}/api/v1/clients/${device.clientId}`, () =>
-      HttpResponse.json(createClientResponse(), { headers: { ETag: '"1"' } }),
+    ...["devices", "clients", "parts"].map((resource) =>
+      http.get(`${apiBaseUrl}/api/v1/${resource}/:id`, ({ request }) => {
+        relatedResourceRequests.push(new URL(request.url).pathname);
+        return new HttpResponse(null, { status: 500 });
+      }),
     ),
     http.get(`${apiBaseUrl}/api/v1/users`, ({ request }) => {
       userListRequests.push(request);
       return HttpResponse.json(userPage);
     }),
   );
-  return userListRequests;
+  return { userListRequests, relatedResourceRequests };
 }
 
 describe("WorkOrderDetailsPage", () => {
@@ -71,16 +69,19 @@ describe("WorkOrderDetailsPage", () => {
       technicianName: "Anna Nowak",
       dueDate: "2026-10-05T08:00:00Z",
     });
-    mockDetails(workOrder);
+    const { relatedResourceRequests } = mockDetails(workOrder);
     renderApp(`/work-orders/${workOrder.id}`);
 
     expect(
       await screen.findByRole("heading", { name: "Zlecenie ZL/2026/0042", level: 1 }),
     ).toBeInTheDocument();
     expect(
-      await screen.findByRole("link", { name: "SN-2024-0001 · Viessmann Vitodens 200-W" }),
-    ).toHaveAttribute("href", `/devices/${device.id}`);
-    expect(await screen.findByRole("link", { name: "Piekarnia Kowalski" })).toBeInTheDocument();
+      await screen.findByRole("link", { name: "SN-2024-0001 · Vitodens 200-W" }),
+    ).toHaveAttribute("href", `/devices/${workOrder.deviceId}`);
+    expect(screen.getByRole("link", { name: "Piekarnia Kowalski" })).toHaveAttribute(
+      "href",
+      `/clients/${workOrder.clientId}`,
+    );
     expect(await screen.findByText("Anna Nowak")).toBeInTheDocument();
     expect(screen.getByText("Jan Kowalski")).toBeInTheDocument();
     expect(screen.getByText("05.10.2026 10:00")).toBeInTheDocument();
@@ -90,6 +91,7 @@ describe("WorkOrderDetailsPage", () => {
       "href",
       `/work-orders/${workOrder.id}/edit`,
     );
+    expect(relatedResourceRequests).toEqual([]);
   });
 
   it("shows the technician their own work order read-only without links to other areas", async () => {
@@ -101,16 +103,18 @@ describe("WorkOrderDetailsPage", () => {
       technicianName: "Jan Kowalski",
       startedAt: "2026-07-14T06:45:00Z",
     });
-    const userListRequests = mockDetails(workOrder);
+    const { userListRequests, relatedResourceRequests } = mockDetails(workOrder);
     renderApp(`/my-work-orders/${workOrder.id}`);
 
     expect(await screen.findByText("Piekarnia Kowalski")).toBeInTheDocument();
-    expect(screen.getByText("SN-2024-0001 · Viessmann Vitodens 200-W")).toBeInTheDocument();
+    expect(screen.getByText("SN-2024-0001 · Vitodens 200-W")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /SN-2024-0001|Piekarnia/ })).not.toBeInTheDocument();
+    expect(await screen.findByText("Wymieniono czujnik ciśnienia")).toBeInTheDocument();
     expect(screen.getAllByText("Jan Kowalski")).toHaveLength(2);
     expect(screen.queryByRole("link", { name: "Edytuj" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Wróć" })).toHaveAttribute("href", "/my-work-orders");
     expect(userListRequests).toHaveLength(0);
+    expect(relatedResourceRequests).toEqual([]);
   });
 
   it("does not offer editing a completed work order", async () => {
