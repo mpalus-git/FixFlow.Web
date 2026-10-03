@@ -102,6 +102,8 @@
     "wakingTitle": "The demo server is starting",
     "sessionBannerTitle": "Cannot reach the server",
     "sessionBannerDescription": "The demo server may have gone to sleep - starting it takes up to a minute. Retrying automatically.",
+    "slowBannerTitle": "Waiting for the server",
+    "slowBannerDescription": "The demo server may have gone to sleep after 15 minutes of inactivity - starting it takes up to a minute.",
     "wakingDescription": "The free server sleeps after 15 minutes of inactivity. Starting it takes up to a minute.",
     "progressLabel": "Server startup progress",
     "elapsed": "{{seconds}} s elapsed",
