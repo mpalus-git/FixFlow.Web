@@ -76,7 +76,7 @@ test("production content security policy does not block the application", async 
   await page.goto(`/work-orders/${workOrder.id}`);
   await page.getByRole("button", { name: "Przypisz technika" }).click();
   const dialog = page.getByRole("dialog", { name: "Przypisz technika" });
-  await dialog.getByLabel("Technik").selectOption({ label: "technician@fixflow.local" });
+  await dialog.getByLabel("Technik").selectOption({ label: "Jan Kowalski" });
   await dialog.getByRole("button", { name: "Przypisz" }).click();
   await expect(page.getByText("Przypisano technika.")).toBeVisible();
 

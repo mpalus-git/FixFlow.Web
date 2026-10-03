@@ -70,7 +70,7 @@ describe("WorkOrderHistory", () => {
     expect(cells.getByText("Vitodens 200-W")).toBeInTheDocument();
     expect(cells.getByText("Wysoki")).toBeInTheDocument();
     expect(cells.getByText("Przypisane")).toBeInTheDocument();
-    expect(cells.getByText("technician@fixflow.test")).toBeInTheDocument();
+    expect(cells.getByText("Jan Kowalski")).toBeInTheDocument();
     expect(cells.queryByText("Po terminie")).toBeNull();
   });
 
@@ -81,6 +81,7 @@ describe("WorkOrderHistory", () => {
           status: "New",
           technicianId: null,
           technicianEmail: null,
+          technicianName: null,
           isOverdue: true,
         }),
       ],

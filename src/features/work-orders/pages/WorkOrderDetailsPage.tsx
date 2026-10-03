@@ -11,7 +11,6 @@ import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOr
 import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrderStatusBadge";
 import { WorkOrderStatusTimeline } from "@/features/work-orders/components/WorkOrderStatusTimeline";
 import { useReturnPath } from "@/features/work-orders/hooks/useReturnPath";
-import { useTechnicianLabel } from "@/features/work-orders/hooks/useTechnicianLabel";
 import { canEditWorkOrder } from "@/features/work-orders/workOrderRules";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatDateTime } from "@/shared/lib/dateTime";
@@ -29,7 +28,6 @@ export function WorkOrderDetailsPage() {
   const user = useCurrentUser();
   const isTechnician = user?.role === "Technician";
   const returnPath = useReturnPath(isTechnician ? "/my-work-orders" : "/work-orders");
-  const technicianLabel = useTechnicianLabel();
   const workOrderQuery = useQuery(workOrderQueryOptions(workOrderId));
   const workOrder = workOrderQuery.data?.data;
 
@@ -91,7 +89,7 @@ export function WorkOrderDetailsPage() {
               <DeviceClientName deviceId={workOrder.deviceId} linked={!isTechnician} />
             </dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.technician")}</dt>
-            <dd>{technicianLabel(workOrder.technicianId)}</dd>
+            <dd>{workOrder.technicianName ?? t("workOrders.unassigned")}</dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.dueDate")}</dt>
             <dd>{formatDateTime(workOrder.dueDate, language)}</dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.description")}</dt>
@@ -109,7 +107,7 @@ export function WorkOrderDetailsPage() {
         <h2 id="work-order-entries-heading" className="text-lg font-semibold">
           {t("workOrders.details.serviceEntries")}
         </h2>
-        <ServiceEntryList workOrderId={workOrder.id} technicianLabel={technicianLabel} />
+        <ServiceEntryList workOrderId={workOrder.id} />
       </section>
     </div>
   );

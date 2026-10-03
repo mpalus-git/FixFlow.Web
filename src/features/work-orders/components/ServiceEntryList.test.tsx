@@ -58,9 +58,7 @@ function renderEntries(entries: ServiceEntryResponse[]) {
       HttpResponse.json(part, { headers: { ETag: '"1"' } }),
     ),
   );
-  renderWithProviders(
-    <ServiceEntryList workOrderId={workOrderId} technicianLabel={() => "jan@fixflow.test"} />,
-  );
+  renderWithProviders(<ServiceEntryList workOrderId={workOrderId} />);
 }
 
 describe("ServiceEntryList", () => {
@@ -69,7 +67,7 @@ describe("ServiceEntryList", () => {
 
     const entry = (await screen.findAllByRole("listitem"))[0] ?? document.body;
     expect(within(entry).getByText("14.07.2026 09:00 – 10:30")).toBeInTheDocument();
-    expect(within(entry).getByText("jan@fixflow.test")).toBeInTheDocument();
+    expect(within(entry).getByText("Jan Kowalski")).toBeInTheDocument();
     expect(
       within(entry).getByRole("link", { name: /Pokaż miejsce pracy na mapie/ }),
     ).toHaveAttribute(
@@ -110,7 +108,7 @@ describe("ServiceEntryList", () => {
 
   it("offers a retry when the entries cannot be loaded", async () => {
     server.use(http.get(entriesUrl, () => HttpResponse.json(null, { status: 500 })));
-    renderWithProviders(<ServiceEntryList workOrderId={workOrderId} technicianLabel={() => ""} />);
+    renderWithProviders(<ServiceEntryList workOrderId={workOrderId} />);
 
     expect(await screen.findByRole("button", { name: "Spróbuj ponownie" })).toBeInTheDocument();
   });

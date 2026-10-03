@@ -121,7 +121,7 @@ export function useWorkOrderColumns(
         header: sortableHeader(t("workOrders.columns.status")),
         cell: (info) => <WorkOrderStatusBadge status={info.getValue()} />,
       }),
-      columnHelper.accessor("technicianEmail", {
+      columnHelper.accessor("technicianName", {
         id: "technician",
         header: t("workOrders.columns.technician"),
         enableSorting: false,

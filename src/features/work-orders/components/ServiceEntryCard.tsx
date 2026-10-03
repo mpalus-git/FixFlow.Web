@@ -24,10 +24,9 @@ function mapUrl(latitude: number, longitude: number): string {
 
 export type ServiceEntryCardProps = {
   entry: ServiceEntryResponse;
-  technicianLabel: string;
 };
 
-export function ServiceEntryCard({ entry, technicianLabel }: ServiceEntryCardProps) {
+export function ServiceEntryCard({ entry }: ServiceEntryCardProps) {
   const { t } = useTranslation();
   const language = useLanguage();
   const minutes = workMinutes(entry);
@@ -64,7 +63,7 @@ export function ServiceEntryCard({ entry, technicianLabel }: ServiceEntryCardPro
               })}
             </span>
           )}
-          <span className="text-muted-foreground">{technicianLabel}</span>
+          <span className="text-muted-foreground">{entry.technicianName}</span>
         </div>
         <p className="whitespace-pre-line">{entry.note}</p>
         {entry.latitude !== null && entry.longitude !== null ? (

@@ -44,8 +44,8 @@ function TechnicianFilter({ technicianId, onChange }: TechnicianFilterProps) {
         {techniciansQuery.data?.map((technician) => (
           <NativeSelectOption key={technician.id} value={technician.id}>
             {technician.isActive
-              ? technician.email
-              : t("workOrders.filters.inactiveTechnician", { email: technician.email })}
+              ? technician.fullName
+              : t("workOrders.filters.inactiveTechnician", { name: technician.fullName })}
           </NativeSelectOption>
         ))}
       </NativeSelect>

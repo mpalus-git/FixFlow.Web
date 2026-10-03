@@ -390,7 +390,7 @@
       "allStatuses": "Wszystkie statusy",
       "technician": "Technik",
       "allTechnicians": "Wszyscy technicy",
-      "inactiveTechnician": "{{email}} (nieaktywny)",
+      "inactiveTechnician": "{{name}} (nieaktywny)",
       "techniciansLoading": "Wczytywanie techników…",
       "techniciansError": "Nie udało się wczytać techników",
       "dueFrom": "Termin od",
@@ -440,8 +440,7 @@
       "title": "Szczegóły zlecenia",
       "back": "Wróć",
       "edit": "Edytuj",
-      "serviceEntries": "Wpisy serwisowe",
-      "unknownTechnician": "Technik spoza listy"
+      "serviceEntries": "Wpisy serwisowe"
     },
     "serviceEntries": {
       "correction": "Korekta",

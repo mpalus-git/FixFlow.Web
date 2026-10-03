@@ -388,7 +388,7 @@
       "allStatuses": "All statuses",
       "technician": "Technician",
       "allTechnicians": "All technicians",
-      "inactiveTechnician": "{{email}} (inactive)",
+      "inactiveTechnician": "{{name}} (inactive)",
       "techniciansLoading": "Loading technicians…",
       "techniciansError": "Could not load technicians",
       "dueFrom": "Due from",
@@ -438,8 +438,7 @@
       "title": "Work order details",
       "back": "Back",
       "edit": "Edit",
-      "serviceEntries": "Service entries",
-      "unknownTechnician": "Unlisted technician"
+      "serviceEntries": "Service entries"
     },
     "serviceEntries": {
       "correction": "Correction",
