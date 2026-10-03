@@ -24,13 +24,15 @@ describe("UsersPage", () => {
     localStorage.clear();
   });
 
-  it("lists accounts with their role and status and marks the signed-in account", async () => {
+  it("lists accounts by full name with their email, role and status", async () => {
     signInAs("Admin");
     mockUserList();
     renderApp("/users");
 
     await screen.findByText("jan.technik@fixflow.test");
 
+    expect(rowOf("jan.technik@fixflow.test").getByText("Jan Kowalski")).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Imię i nazwisko" })).toBeInTheDocument();
     expect(rowOf("admin@fixflow.test").getByText("Twoje konto")).toBeInTheDocument();
     expect(rowOf("anna.dyspozytor@fixflow.test").getAllByText("Dyspozytor")).not.toHaveLength(0);
     expect(rowOf("jan.technik@fixflow.test").getAllByText("Aktywne")).not.toHaveLength(0);
