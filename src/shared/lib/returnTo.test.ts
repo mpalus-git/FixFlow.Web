@@ -1,16 +1,33 @@
 import { buildLoginPath, readReturnTo } from "@/shared/lib/returnTo";
 
 describe("readReturnTo", () => {
-  it("accepts a path inside the application", () => {
-    expect(readReturnTo("/clients?page=2#top")).toBe("/clients?page=2#top");
-  });
-
-  it.each([null, "https://evil.test", "//evil.test", "clients", "/login?returnTo=/clients"])(
-    "rejects %s",
+  it.each(["/clients?page=2#top", "/work-orders?status=New&search=pompa", "/"])(
+    "accepts the application path %s",
     (value) => {
-      expect(readReturnTo(value)).toBeNull();
+      expect(readReturnTo(value)).toBe(value);
     },
   );
+
+  it.each([
+    null,
+    "https://evil.test",
+    "//evil.test",
+    "/\\evil.test",
+    "/\\/evil.test",
+    "/\t/evil.test",
+    "/\n/evil.test",
+    "//[",
+    "javascript:alert(1)",
+    "clients",
+    "/login",
+    "/login?returnTo=/clients",
+  ])("rejects %j", (value) => {
+    expect(readReturnTo(value)).toBeNull();
+  });
+
+  it("returns the normalized path", () => {
+    expect(readReturnTo("/clients/../work-orders")).toBe("/work-orders");
+  });
 });
 
 describe("buildLoginPath", () => {

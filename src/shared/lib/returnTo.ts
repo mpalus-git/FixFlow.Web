@@ -1,10 +1,23 @@
 export const loginPath = "/login";
 
 export function readReturnTo(value: string | null): string | null {
-  if (value === null || !value.startsWith("/") || value.startsWith("//")) {
+  if (!value?.startsWith("/")) {
     return null;
   }
-  return value.startsWith(loginPath) ? null : value;
+  const { origin } = window.location;
+  const url = parseUrl(value, origin);
+  if (url?.origin !== origin || url.pathname === loginPath) {
+    return null;
+  }
+  return `${url.pathname}${url.search}${url.hash}`;
+}
+
+function parseUrl(value: string, base: string): URL | null {
+  try {
+    return new URL(value, base);
+  } catch {
+    return null;
+  }
 }
 
 export function buildLoginPath(returnTo: string): string {

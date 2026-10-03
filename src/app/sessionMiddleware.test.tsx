@@ -63,6 +63,15 @@ describe("session middleware", () => {
     expect(router.state.location.pathname).toBe("/my-work-orders");
   });
 
+  it("keeps a signed-in user inside the application when returnTo points to another site", async () => {
+    signInAs("Technician");
+
+    const router = renderApp("/login?returnTo=%2F%5Cevil.test");
+
+    expect(await screen.findByRole("heading", { name: "Moje zlecenia" })).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe("/my-work-orders");
+  });
+
   it("returns to the login page when the session ends", async () => {
     signInAs("Dispatcher");
     const router = renderApp("/");
