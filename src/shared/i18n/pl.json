@@ -348,7 +348,7 @@
     "title": "Zlecenia",
     "search": {
       "label": "Szukaj zleceń",
-      "placeholder": "Opis usterki, numer seryjny lub klient"
+      "placeholder": "Numer zlecenia, opis usterki, numer seryjny lub klient"
     },
     "empty": {
       "title": "Brak zleceń",
@@ -372,6 +372,7 @@
       "Critical": "Krytyczny"
     },
     "columns": {
+      "number": "Numer",
       "dueDate": "Termin",
       "client": "Klient",
       "device": "Urządzenie",
@@ -438,7 +439,7 @@
     },
     "details": {
       "timeline": "Przebieg zlecenia",
-      "title": "Szczegóły zlecenia",
+      "title": "Zlecenie {{number}}",
       "back": "Wróć",
       "edit": "Edytuj",
       "serviceEntries": "Wpisy serwisowe"

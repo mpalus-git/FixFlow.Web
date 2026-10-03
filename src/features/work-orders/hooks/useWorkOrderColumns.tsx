@@ -24,6 +24,7 @@ export const workOrderTableFeatures = tableFeatures({ rowSortingFeature });
 const columnHelper = createColumnHelper<typeof workOrderTableFeatures, WorkOrderListItem>();
 
 export type WorkOrderColumnId =
+  | "number"
   | "dueDate"
   | "clientName"
   | "device"
@@ -65,23 +66,29 @@ export function useWorkOrderColumns(
   return useMemo(() => {
     const returnPathState: ReturnPathState = { returnTo: `${pathname}${search}` };
     const allColumns = columnHelper.columns([
-      columnHelper.accessor("dueDate", {
-        id: "dueDate",
-        header: sortableHeader(t("workOrders.columns.dueDate")),
+      columnHelper.accessor("number", {
+        id: "number",
+        header: t("workOrders.columns.number"),
+        enableSorting: false,
         cell: ({ row }) => (
           <div className="flex flex-col items-start gap-1">
             <Link
               to={`${detailsBasePath}/${row.original.id}`}
               state={returnPathState}
-              className="font-medium underline-offset-4 hover:underline"
+              className="font-medium tabular-nums underline-offset-4 hover:underline"
             >
-              {formatDateTime(row.original.dueDate, language)}
+              {row.original.number}
             </Link>
             {row.original.isOverdue ? (
               <Badge variant="destructive">{t("workOrders.overdue")}</Badge>
             ) : null}
           </div>
         ),
+      }),
+      columnHelper.accessor("dueDate", {
+        id: "dueDate",
+        header: sortableHeader(t("workOrders.columns.dueDate")),
+        cell: (info) => formatDateTime(info.getValue(), language),
       }),
       columnHelper.accessor("clientName", {
         id: "clientName",

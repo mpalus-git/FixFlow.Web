@@ -346,7 +346,7 @@
     "title": "Work orders",
     "search": {
       "label": "Search work orders",
-      "placeholder": "Fault description, serial number or client"
+      "placeholder": "Work order number, fault description, serial number or client"
     },
     "empty": {
       "title": "No work orders",
@@ -370,6 +370,7 @@
       "Critical": "Critical"
     },
     "columns": {
+      "number": "Number",
       "dueDate": "Due",
       "client": "Client",
       "device": "Device",
@@ -436,7 +437,7 @@
     },
     "details": {
       "timeline": "Work order progress",
-      "title": "Work order details",
+      "title": "Work order {{number}}",
       "back": "Back",
       "edit": "Edit",
       "serviceEntries": "Service entries"

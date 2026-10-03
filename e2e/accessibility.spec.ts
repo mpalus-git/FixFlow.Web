@@ -33,7 +33,7 @@ const screens: Screen[] = [
   {
     name: "work order details",
     role: "dispatcher",
-    heading: "Szczegóły zlecenia",
+    heading: "Zlecenie ZL/",
     path: async (api) => `/work-orders/${await findWorkOrderId(api, "Completed")}`,
   },
   {

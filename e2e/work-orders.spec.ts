@@ -27,15 +27,17 @@ test("dispatcher creates a work order and finds it on the list", async ({ page }
   await page.getByRole("button", { name: "Utwórz zlecenie" }).click();
 
   await expect(page).toHaveURL(/\/work-orders\/[0-9a-f-]{36}$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Szczegóły zlecenia" })).toBeVisible();
+  const heading = page.getByRole("heading", { level: 1, name: /^Zlecenie ZL\/\d{4}\/\d{4}$/ });
+  await expect(heading).toBeVisible();
+  const number = (await heading.textContent())?.replace("Zlecenie ", "") ?? "";
   const details = page.getByRole("definition");
   await expect(details.filter({ hasText: description })).toBeVisible();
   await expect(details.filter({ hasText: client.name })).toBeVisible();
   await expect(details.filter({ hasText: formatDateTime(toUtcIso(dueDate), "pl") })).toBeVisible();
 
   await page.getByRole("link", { name: "Wróć" }).click();
-  await page.getByLabel("Szukaj zleceń").fill(device.serialNumber);
-  const rows = page.getByRole("row").filter({ hasText: device.serialNumber });
+  await page.getByLabel("Szukaj zleceń").fill(number);
+  const rows = page.getByRole("row").filter({ hasText: number });
   await expect(rows).toHaveCount(1);
   await expect(rows.first()).toContainText("Nowe");
   await expect(rows.first()).toContainText("Wysoki");

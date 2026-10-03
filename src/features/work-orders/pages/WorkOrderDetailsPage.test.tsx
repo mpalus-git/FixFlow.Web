@@ -75,7 +75,7 @@ describe("WorkOrderDetailsPage", () => {
     renderApp(`/work-orders/${workOrder.id}`);
 
     expect(
-      await screen.findByRole("heading", { name: "Szczegóły zlecenia", level: 1 }),
+      await screen.findByRole("heading", { name: "Zlecenie ZL/2026/0042", level: 1 }),
     ).toBeInTheDocument();
     expect(
       await screen.findByRole("link", { name: "SN-2024-0001 · Viessmann Vitodens 200-W" }),

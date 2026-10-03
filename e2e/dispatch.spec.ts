@@ -28,7 +28,7 @@ test("dispatcher assigns a new work order by dragging it onto a technician's day
   });
 
   const unassigned = page.getByRole("region", { name: /Nieprzypisane/ });
-  const handle = unassigned.getByRole("button", { name: `Przenieś zlecenie ${client.name}, ` });
+  const handle = unassigned.getByRole("button", { name: `, ${client.name}, ` });
   const technicianRow = page
     .getByRole("row")
     .filter({ has: page.getByRole("rowheader", { name: "Jan Kowalski" }) });

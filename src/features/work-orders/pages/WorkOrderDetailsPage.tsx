@@ -51,7 +51,7 @@ export function WorkOrderDetailsPage() {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="flex flex-col gap-2">
             <h1 className="text-2xl font-semibold tracking-tight">
-              {t("workOrders.details.title")}
+              {t("workOrders.details.title", { number: workOrder.number })}
             </h1>
             <div className="flex flex-wrap items-center gap-2">
               <WorkOrderStatusBadge status={workOrder.status} />

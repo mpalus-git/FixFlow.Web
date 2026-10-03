@@ -72,7 +72,7 @@ function mockWorkOrder(initial: WorkOrderResponse, entries: ServiceEntryResponse
 async function openDetails(workOrder: WorkOrderResponse, role: Role = "Dispatcher") {
   signInAs(role);
   renderApp(`${role === "Technician" ? "/my-work-orders" : "/work-orders"}/${workOrder.id}`);
-  await screen.findByRole("heading", { name: "Szczegóły zlecenia", level: 1 });
+  await screen.findByRole("heading", { name: "Zlecenie ZL/2026/0042", level: 1 });
 }
 
 function actionButtonNames() {

@@ -15,6 +15,7 @@ import {
 import { DataTable } from "@/shared/ui/DataTable";
 
 const baseColumnIds: readonly WorkOrderColumnId[] = [
+  "number",
   "dueDate",
   "clientName",
   "device",
