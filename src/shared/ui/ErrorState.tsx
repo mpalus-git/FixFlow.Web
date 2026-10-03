@@ -7,6 +7,8 @@ export type ErrorStateProps = {
   title?: string;
   description?: string;
   error?: unknown;
+  retryLabel?: string;
+  isRetryDisabled?: boolean;
   onRetry: () => void;
 };
 
@@ -28,22 +30,28 @@ function descriptionKeyFor(error: unknown) {
   }
 }
 
-export function ErrorState({ title, description, error, onRetry }: ErrorStateProps) {
+export function ErrorState({
+  title,
+  description,
+  error,
+  retryLabel,
+  isRetryDisabled = false,
+  onRetry,
+}: ErrorStateProps) {
   const { t } = useTranslation();
 
   return (
-    <div
-      role="alert"
-      className="flex flex-col items-center gap-3 rounded-xl border border-destructive/30 px-6 py-12 text-center"
-    >
-      <TriangleAlertIcon aria-hidden="true" className="size-10 text-destructive" />
-      <h2 className="text-base font-medium">{title ?? t("states.errorTitle")}</h2>
-      <p className="max-w-sm text-sm text-muted-foreground">
-        {description ?? t(descriptionKeyFor(error))}
-      </p>
-      <Button variant="outline" onClick={onRetry}>
+    <div className="flex flex-col items-center gap-3 rounded-xl border border-destructive/30 px-6 py-12 text-center">
+      <div role="alert" className="flex flex-col items-center gap-3">
+        <TriangleAlertIcon aria-hidden="true" className="size-10 text-destructive" />
+        <h2 className="text-base font-medium">{title ?? t("states.errorTitle")}</h2>
+        <p className="max-w-sm text-sm text-muted-foreground">
+          {description ?? t(descriptionKeyFor(error))}
+        </p>
+      </div>
+      <Button variant="outline" disabled={isRetryDisabled} onClick={onRetry}>
         <RefreshCwIcon aria-hidden="true" />
-        {t("states.retry")}
+        {retryLabel ?? t("states.retry")}
       </Button>
     </div>
   );

@@ -91,7 +91,11 @@
   },
   "routeError": {
     "title": "Coś poszło nie tak",
-    "description": "Odśwież stronę. Jeśli problem się powtarza, spróbuj ponownie później."
+    "description": "Odśwież stronę. Jeśli problem się powtarza, spróbuj ponownie później.",
+    "rateLimitedTitle": "Zbyt wiele prób logowania",
+    "rateLimitedDescription": "Serwer chwilowo ogranicza logowanie i odnawianie sesji. Spróbuj ponownie za {{seconds}} s.",
+    "rateLimitedDescriptionWithoutDelay": "Serwer chwilowo ogranicza logowanie i odnawianie sesji. Spróbuj ponownie za chwilę.",
+    "retryIn": "Spróbuj ponownie za {{seconds}} s"
   },
   "serverWake": {
     "checking": "Łączenie z serwerem…",

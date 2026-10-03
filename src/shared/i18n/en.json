@@ -91,7 +91,11 @@
   },
   "routeError": {
     "title": "Something went wrong",
-    "description": "Reload the page. If the problem persists, try again later."
+    "description": "Reload the page. If the problem persists, try again later.",
+    "rateLimitedTitle": "Too many sign-in attempts",
+    "rateLimitedDescription": "The server is temporarily limiting sign-in and session renewal. Try again in {{seconds}} s.",
+    "rateLimitedDescriptionWithoutDelay": "The server is temporarily limiting sign-in and session renewal. Try again in a moment.",
+    "retryIn": "Try again in {{seconds}} s"
   },
   "serverWake": {
     "checking": "Connecting to the server…",
