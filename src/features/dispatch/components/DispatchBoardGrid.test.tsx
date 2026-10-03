@@ -117,7 +117,7 @@ function mockAssign(respond: () => Response) {
 }
 
 function annaRow() {
-  return screen.getByRole("row", { name: /anna@fixflow\.test/ });
+  return screen.getByRole("row", { name: /Anna Nowak/ });
 }
 
 async function dragNewOrderWithKeyboard(keys: string) {

@@ -32,6 +32,7 @@ import {
   canDropWorkOrder,
   type DispatchBoard,
   type DispatchTarget,
+  type DispatchTechnician,
   type DispatchWorkOrder,
 } from "@/features/dispatch/dispatchBoard";
 import { describeMoveError } from "@/features/dispatch/describeMoveError";
@@ -48,7 +49,7 @@ const unassignedId = "unassigned";
 const collisionDetection: CollisionDetection = (args) =>
   args.pointerCoordinates === null ? closestCenter(args) : pointerWithin(args);
 
-type DropTarget = { target: DispatchTarget; label: string; technicianEmail: string | null };
+type DropTarget = { target: DispatchTarget; label: string; technician: DispatchTechnician | null };
 
 type ActiveDrag = { workOrderId: string; startedAt: Date };
 
@@ -82,7 +83,7 @@ export function DispatchBoardGrid({ board, weekStart }: DispatchBoardGridProps) 
       {
         target: { kind: "unassigned" },
         label: t("dispatch.unassigned.title"),
-        technicianEmail: null,
+        technician: null,
       },
     ],
     ...board.rows.flatMap(({ technician }) =>
@@ -90,8 +91,8 @@ export function DispatchBoardGrid({ board, weekStart }: DispatchBoardGridProps) 
         dispatchCellId(technician.id, day),
         {
           target: { kind: "cell", technicianId: technician.id, day },
-          label: t("dispatch.cell", { technician: technician.email, day: dayLabel(day) }),
-          technicianEmail: technician.email,
+          label: t("dispatch.cell", { technician: technician.fullName, day: dayLabel(day) }),
+          technician,
         },
       ]),
     ),
@@ -165,7 +166,7 @@ export function DispatchBoardGrid({ board, weekStart }: DispatchBoardGridProps) 
       {
         workOrder,
         target: dropTarget.target,
-        technicianEmail: dropTarget.technicianEmail,
+        technician: dropTarget.technician,
         weekStart,
       },
       {

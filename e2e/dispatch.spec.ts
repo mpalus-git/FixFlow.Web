@@ -31,7 +31,7 @@ test("dispatcher assigns a new work order by dragging it onto a technician's day
   const handle = unassigned.getByRole("button", { name: `Przenieś zlecenie ${client.name}, ` });
   const technicianRow = page
     .getByRole("row")
-    .filter({ has: page.getByRole("rowheader", { name: "technician@fixflow.local" }) });
+    .filter({ has: page.getByRole("rowheader", { name: "Jan Kowalski" }) });
   const targetCell = technicianRow.getByRole("cell").nth(dayIndex);
 
   await handle.hover();

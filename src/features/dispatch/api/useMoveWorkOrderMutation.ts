@@ -3,6 +3,7 @@ import { dispatchKeys } from "@/features/dispatch/api/dispatchQueries";
 import {
   type DispatchMovePlan,
   type DispatchTarget,
+  type DispatchTechnician,
   type DispatchWorkOrder,
   planDispatchMove,
 } from "@/features/dispatch/dispatchBoard";
@@ -17,7 +18,7 @@ type WorkOrderPage = components["schemas"]["PagedResponseOfWorkOrderListItemResp
 export type MoveWorkOrderVariables = {
   workOrder: DispatchWorkOrder;
   target: DispatchTarget;
-  technicianEmail: string | null;
+  technician: DispatchTechnician | null;
   weekStart: string;
 };
 
@@ -103,15 +104,16 @@ function replaceOrRemove(
 }
 
 function movedWorkOrder(
-  { workOrder, target, technicianEmail }: MoveWorkOrderVariables,
+  { workOrder, target, technician }: MoveWorkOrderVariables,
   plan: DispatchMovePlan,
 ): DispatchWorkOrder {
-  const assigned = target.kind === "cell";
+  const assigned = target.kind === "cell" && technician !== null;
   return {
     ...workOrder,
     status: assigned ? "Assigned" : "New",
     technicianId: assigned ? target.technicianId : null,
-    technicianEmail: assigned ? technicianEmail : null,
+    technicianEmail: assigned ? technician.email : null,
+    technicianName: assigned ? technician.fullName : null,
     dueDate: plan.dueDate ?? workOrder.dueDate,
     isOverdue: plan.dueDate === null ? workOrder.isOverdue : false,
   };

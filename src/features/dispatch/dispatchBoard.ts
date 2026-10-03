@@ -7,13 +7,13 @@ import {
 } from "@/shared/lib/dateTime";
 
 export type DispatchWorkOrder = components["schemas"]["WorkOrderListItemResponse"];
-type Technician = components["schemas"]["UserResponse"];
+export type DispatchTechnician = components["schemas"]["UserResponse"];
 
 export type DispatchTarget =
   { kind: "unassigned" } | { kind: "cell"; technicianId: string; day: string };
 
 export type DispatchRow = {
-  technician: Technician;
+  technician: DispatchTechnician;
   workOrdersByDay: Record<string, DispatchWorkOrder[]>;
 };
 
@@ -33,7 +33,7 @@ type DispatchBoardSource = {
   weekStart: string;
   weekWorkOrders: readonly DispatchWorkOrder[];
   unassignedWorkOrders: readonly DispatchWorkOrder[];
-  technicians: readonly Technician[];
+  technicians: readonly DispatchTechnician[];
 };
 
 function byDueDate(left: DispatchWorkOrder, right: DispatchWorkOrder): number {

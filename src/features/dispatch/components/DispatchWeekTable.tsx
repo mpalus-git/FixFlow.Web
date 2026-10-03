@@ -6,24 +6,6 @@ import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatCalendarDate, formatCalendarWeekday } from "@/shared/lib/dateTime";
 import { Badge } from "@/shared/ui/badge";
 
-type TechnicianEmailProps = {
-  email: string;
-};
-
-function TechnicianEmail({ email }: TechnicianEmailProps) {
-  const at = email.indexOf("@");
-  if (at < 0) {
-    return <span className="block [overflow-wrap:anywhere]">{email}</span>;
-  }
-  return (
-    <span className="block [overflow-wrap:anywhere]">
-      {email.slice(0, at)}
-      <wbr />
-      {email.slice(at)}
-    </span>
-  );
-}
-
 export function dispatchCellId(technicianId: string, day: string): string {
   return `${technicianId}/${day}`;
 }
@@ -73,7 +55,7 @@ export function DispatchWeekTable({ board, today, dropStateFor }: DispatchWeekTa
                 scope="row"
                 className="sticky left-0 z-10 border-t bg-background p-2 text-left align-top font-normal"
               >
-                <TechnicianEmail email={technician.email} />
+                <span className="block [overflow-wrap:anywhere]">{technician.fullName}</span>
                 {technician.isActive ? null : (
                   <Badge variant="outline" className="mt-1 text-muted-foreground">
                     {t("dispatch.inactiveTechnician")}
