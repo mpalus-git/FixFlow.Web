@@ -36,6 +36,7 @@ function applyTheme(theme: ResolvedTheme): void {
   const root = document.documentElement;
   root.classList.toggle("dark", theme === "dark");
   root.style.colorScheme = theme;
+  root.dataset.theme = theme;
 }
 
 export const useThemeStore = create<ThemeState>()((set) => {

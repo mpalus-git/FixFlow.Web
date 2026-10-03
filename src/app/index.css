@@ -132,6 +132,13 @@
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    background-color: oklch(0.145 0 0);
+    color-scheme: dark;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

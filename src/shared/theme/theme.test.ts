@@ -9,6 +9,7 @@ describe("theme", () => {
     useThemeStore.getState().setPreference("system");
     localStorage.clear();
     document.documentElement.className = "";
+    delete document.documentElement.dataset.theme;
   });
 
   function isDark() {
@@ -33,6 +34,17 @@ describe("theme", () => {
 
     expect(isDark()).toBe(false);
     expect(localStorage.getItem("fixflow.theme")).toBe("light");
+  });
+
+  it("marks the document as themed so the pre-start dark background no longer applies", () => {
+    mockColorScheme(true);
+    expect(document.documentElement).not.toHaveAttribute("data-theme");
+
+    stopThemeSync = startThemeSync();
+    expect(document.documentElement).toHaveAttribute("data-theme", "dark");
+
+    useThemeStore.getState().setPreference("light");
+    expect(document.documentElement).toHaveAttribute("data-theme", "light");
   });
 
   it("reacts to a system change in system mode", () => {
