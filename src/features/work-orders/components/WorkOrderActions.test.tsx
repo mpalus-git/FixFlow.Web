@@ -33,7 +33,15 @@ function mockWorkOrder(initial: WorkOrderResponse, entries: ServiceEntryResponse
     return respond();
   };
   const userPage: UserPage = {
-    items: [{ id: technicianId, email: "anna@fixflow.test", role: "Technician", isActive: true }],
+    items: [
+      {
+        id: technicianId,
+        email: "anna@fixflow.test",
+        fullName: "Anna Nowak",
+        role: "Technician",
+        isActive: true,
+      },
+    ],
     page: 1,
     pageSize: 100,
     totalCount: 1,

@@ -95,12 +95,13 @@ describe("DashboardPage", () => {
 
     expect(rows.map((row) => row.textContent)).toEqual([
       "TechnikPrzypisaneW realizacjiOpóźnioneW tym tygodniu",
-      "anna.kowalczyk@fixflow.test3112",
-      "tomasz.wojcik@fixflow.test2101",
+      "Anna Kowalczyk3112",
+      "Tomasz Wójcik2101",
     ]);
-    expect(
-      within(table).getByRole("link", { name: "anna.kowalczyk@fixflow.test" }),
-    ).toHaveAttribute("href", "/work-orders?technician=00000000-0000-4000-8000-0000000000a2");
+    expect(within(table).getByRole("link", { name: "Anna Kowalczyk" })).toHaveAttribute(
+      "href",
+      "/work-orders?technician=00000000-0000-4000-8000-0000000000a2",
+    );
     expect(screen.getByRole("link", { name: "Tablica tygodnia" })).toHaveAttribute(
       "href",
       "/dispatch?week=2026-09-28",

@@ -35,6 +35,7 @@ const anna = "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d";
 const annaUser: UserResponse = {
   id: anna,
   email: "anna@fixflow.test",
+  fullName: "Anna Nowak",
   role: "Technician",
   isActive: true,
 };
@@ -95,7 +96,7 @@ describe("DispatchPage", () => {
     const weekRequests = mockBoard();
     renderApp("/dispatch");
 
-    const annaRow = await screen.findByRole("row", { name: /anna@fixflow\.test/ });
+    const annaRow = await screen.findByRole("row", { name: /Anna Nowak/ });
     expect(within(annaRow).getByRole("link", { name: "Hotel Zamek" })).toBeInTheDocument();
     expect(screen.getByText(weekRange(currentWeek))).toBeInTheDocument();
     expect(
@@ -110,7 +111,7 @@ describe("DispatchPage", () => {
     const weekRequests = mockBoard();
     const user = userEvent.setup();
     const router = renderApp("/dispatch");
-    await screen.findByRole("row", { name: /anna@fixflow\.test/ });
+    await screen.findByRole("row", { name: /Anna Nowak/ });
 
     await user.click(screen.getByRole("button", { name: "Następny tydzień" }));
 
@@ -150,6 +151,6 @@ describe("DispatchPage", () => {
     mockBoard();
     await user.click(screen.getByRole("button", { name: "Spróbuj ponownie" }));
 
-    expect(await screen.findByRole("row", { name: /anna@fixflow\.test/ })).toBeInTheDocument();
+    expect(await screen.findByRole("row", { name: /Anna Nowak/ })).toBeInTheDocument();
   });
 });

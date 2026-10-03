@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import { toast } from "sonner";
 import { useChangeUserStatusMutation } from "@/features/users/api/userMutations";
 import { userListQueryOptions, usersPageSize } from "@/features/users/api/userQueries";
+import { ChangeUserNameDialog } from "@/features/users/components/ChangeUserNameDialog";
 import { DeactivateUserDialog } from "@/features/users/components/DeactivateUserDialog";
 import { ResetPasswordDialog } from "@/features/users/components/ResetPasswordDialog";
 import { UserFilters } from "@/features/users/components/UserFilters";
@@ -37,6 +38,7 @@ export function UsersPage() {
   const changeStatusMutation = useChangeUserStatusMutation();
   const [userToDeactivate, setUserToDeactivate] = useState<UserResponse | null>(null);
   const [userToResetPassword, setUserToResetPassword] = useState<UserResponse | null>(null);
+  const [userToRename, setUserToRename] = useState<UserResponse | null>(null);
 
   function activate(user: UserResponse) {
     changeStatusMutation.mutate(
@@ -92,6 +94,7 @@ export function UsersPage() {
           onDeactivate={setUserToDeactivate}
           onActivate={activate}
           onResetPassword={setUserToResetPassword}
+          onChangeName={setUserToRename}
         />
         <PaginationControls
           page={page}
@@ -124,6 +127,12 @@ export function UsersPage() {
         onClear={clearFilters}
       />
       {renderContent()}
+      <ChangeUserNameDialog
+        user={userToRename}
+        onClose={() => {
+          setUserToRename(null);
+        }}
+      />
       <ResetPasswordDialog
         user={userToResetPassword}
         onClose={() => {

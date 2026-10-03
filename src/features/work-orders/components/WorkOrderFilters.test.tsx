@@ -24,10 +24,17 @@ const noFilters: WorkOrderListFilters = {
 function mockTechnicians() {
   const userPage: UserPage = {
     items: [
-      { id: activeTechnicianId, email: "anna@fixflow.test", role: "Technician", isActive: true },
+      {
+        id: activeTechnicianId,
+        email: "anna@fixflow.test",
+        fullName: "Anna Nowak",
+        role: "Technician",
+        isActive: true,
+      },
       {
         id: inactiveTechnicianId,
         email: "piotr@fixflow.test",
+        fullName: "Piotr Zieliński",
         role: "Technician",
         isActive: false,
       },
@@ -69,8 +76,8 @@ describe("WorkOrderFilters", () => {
     const onChange = renderFilters(noFilters);
     const technicianSelect = screen.getByLabelText("Technik");
 
-    await screen.findByRole("option", { name: "piotr@fixflow.test (nieaktywny)" });
-    await user.selectOptions(technicianSelect, "anna@fixflow.test");
+    await screen.findByRole("option", { name: "Piotr Zieliński (nieaktywny)" });
+    await user.selectOptions(technicianSelect, "Anna Nowak");
 
     expect(onChange).toHaveBeenCalledWith({ technicianId: activeTechnicianId });
   });
@@ -80,7 +87,7 @@ describe("WorkOrderFilters", () => {
     const user = userEvent.setup();
     const onChange = renderFilters({ ...noFilters, technicianId: activeTechnicianId });
 
-    await screen.findByRole("option", { name: "anna@fixflow.test" });
+    await screen.findByRole("option", { name: "Anna Nowak" });
     await user.selectOptions(screen.getByLabelText("Technik"), "Wszyscy technicy");
 
     expect(onChange).toHaveBeenCalledWith({ technicianId: null });

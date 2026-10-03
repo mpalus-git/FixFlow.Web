@@ -24,6 +24,8 @@ export function ProfilePage() {
         </CardHeader>
         <CardContent>
           <dl className="grid gap-3 text-sm sm:grid-cols-[auto_1fr] sm:gap-x-6">
+            <dt className="text-muted-foreground">{t("profile.account.fullName")}</dt>
+            <dd className="font-medium">{user.fullName}</dd>
             <dt className="text-muted-foreground">{t("profile.account.email")}</dt>
             <dd className="font-medium break-all">{user.email}</dd>
             <dt className="text-muted-foreground">{t("profile.account.role")}</dt>

@@ -8,11 +8,6 @@ type TechnicianWorkloadResponse = components["schemas"]["TechnicianWorkloadRespo
 const axisTick = { fill: "var(--muted-foreground)", fontSize: 12 };
 const rowHeight = 44;
 
-function shortName(email: string): string {
-  const atIndex = email.indexOf("@");
-  return atIndex > 0 ? email.slice(0, atIndex) : email;
-}
-
 type LegendItemProps = {
   color: string;
   label: string;
@@ -34,7 +29,7 @@ export type TechnicianWorkloadChartProps = {
 export function TechnicianWorkloadChart({ technicians }: TechnicianWorkloadChartProps) {
   const { t } = useTranslation();
   const data = technicians.map((technician) => ({
-    name: shortName(technician.email),
+    name: technician.fullName,
     assigned: technician.assignedCount,
     inProgress: technician.inProgressCount,
     total: technician.assignedCount + technician.inProgressCount,
@@ -65,7 +60,7 @@ export function TechnicianWorkloadChart({ technicians }: TechnicianWorkloadChart
         <YAxis
           type="category"
           dataKey="name"
-          width={120}
+          width={140}
           tick={axisTick}
           axisLine={false}
           tickLine={false}

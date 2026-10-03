@@ -26,6 +26,7 @@ export function createDashboardSummary(
       {
         technicianId: "00000000-0000-4000-8000-0000000000a2",
         email: "anna.kowalczyk@fixflow.test",
+        fullName: "Anna Kowalczyk",
         assignedCount: 3,
         inProgressCount: 1,
         overdueCount: 1,
@@ -34,6 +35,7 @@ export function createDashboardSummary(
       {
         technicianId: "00000000-0000-4000-8000-0000000000a3",
         email: "tomasz.wojcik@fixflow.test",
+        fullName: "Tomasz Wójcik",
         assignedCount: 2,
         inProgressCount: 1,
         overdueCount: 0,

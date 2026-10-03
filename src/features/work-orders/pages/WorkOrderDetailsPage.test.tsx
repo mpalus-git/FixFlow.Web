@@ -21,7 +21,13 @@ function mockDetails(workOrder: WorkOrderResponse) {
   const userListRequests: Request[] = [];
   const userPage: UserPage = {
     items: [
-      { id: otherTechnicianId, email: "anna@fixflow.test", role: "Technician", isActive: true },
+      {
+        id: otherTechnicianId,
+        email: "anna@fixflow.test",
+        fullName: "Anna Nowak",
+        role: "Technician",
+        isActive: true,
+      },
     ],
     page: 1,
     pageSize: 100,
@@ -61,6 +67,8 @@ describe("WorkOrderDetailsPage", () => {
     const workOrder = createWorkOrderResponse({
       status: "Assigned",
       technicianId: otherTechnicianId,
+      technicianEmail: "anna@fixflow.test",
+      technicianName: "Anna Nowak",
       dueDate: "2026-10-05T08:00:00Z",
     });
     mockDetails(workOrder);
@@ -73,7 +81,8 @@ describe("WorkOrderDetailsPage", () => {
       await screen.findByRole("link", { name: "SN-2024-0001 · Viessmann Vitodens 200-W" }),
     ).toHaveAttribute("href", `/devices/${device.id}`);
     expect(await screen.findByRole("link", { name: "Piekarnia Kowalski" })).toBeInTheDocument();
-    expect(await screen.findAllByText("anna@fixflow.test")).toHaveLength(2);
+    expect(await screen.findByText("Anna Nowak")).toBeInTheDocument();
+    expect(screen.getByText("Jan Kowalski")).toBeInTheDocument();
     expect(screen.getByText("05.10.2026 10:00")).toBeInTheDocument();
     expect(screen.getByRole("listitem", { current: "step" })).toHaveTextContent("Przypisane");
     expect(screen.getByText("Wymieniono czujnik ciśnienia")).toBeInTheDocument();
@@ -88,6 +97,8 @@ describe("WorkOrderDetailsPage", () => {
     const workOrder = createWorkOrderResponse({
       status: "InProgress",
       technicianId: createUser("Technician").id,
+      technicianEmail: "technician@fixflow.test",
+      technicianName: "Jan Kowalski",
       startedAt: "2026-07-14T06:45:00Z",
     });
     const userListRequests = mockDetails(workOrder);
@@ -96,7 +107,7 @@ describe("WorkOrderDetailsPage", () => {
     expect(await screen.findByText("Piekarnia Kowalski")).toBeInTheDocument();
     expect(screen.getByText("SN-2024-0001 · Viessmann Vitodens 200-W")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /SN-2024-0001|Piekarnia/ })).not.toBeInTheDocument();
-    expect(screen.getAllByText("technician@fixflow.test")).toHaveLength(2);
+    expect(screen.getAllByText("Jan Kowalski")).toHaveLength(2);
     expect(screen.queryByRole("link", { name: "Edytuj" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Wróć" })).toHaveAttribute("href", "/my-work-orders");
     expect(userListRequests).toHaveLength(0);

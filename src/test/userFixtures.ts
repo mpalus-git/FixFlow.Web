@@ -16,18 +16,21 @@ export const userAccounts: UserResponse[] = [
   {
     id: "00000000-0000-4000-8000-0000000000a1",
     email: "anna.dyspozytor@fixflow.test",
+    fullName: "Anna Wiśniewska",
     role: "Dispatcher",
     isActive: true,
   },
   {
     id: "00000000-0000-4000-8000-0000000000a2",
     email: "jan.technik@fixflow.test",
+    fullName: "Jan Kowalski",
     role: "Technician",
     isActive: true,
   },
   {
     id: "00000000-0000-4000-8000-0000000000a3",
     email: "piotr.technik@fixflow.test",
+    fullName: "Piotr Zieliński",
     role: "Technician",
     isActive: false,
   },

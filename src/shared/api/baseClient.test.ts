@@ -43,6 +43,7 @@ describe("createApiClient", () => {
     const user: UserResponse = {
       id: "0b6f0c9e-0d6e-4a57-9d55-6a1f3f0f2a10",
       email: "dispatcher@fixflow.test",
+      fullName: "Dorota Dyspozytor",
       role: "Dispatcher",
       isActive: true,
     };

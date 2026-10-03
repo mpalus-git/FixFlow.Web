@@ -157,6 +157,7 @@
     "title": "Profil",
     "account": {
       "title": "Dane konta",
+      "fullName": "Imię i nazwisko",
       "email": "E-mail",
       "role": "Rola"
     },
@@ -390,7 +391,7 @@
       "allStatuses": "Wszystkie statusy",
       "technician": "Technik",
       "allTechnicians": "Wszyscy technicy",
-      "inactiveTechnician": "{{email}} (nieaktywny)",
+      "inactiveTechnician": "{{name}} (nieaktywny)",
       "techniciansLoading": "Wczytywanie techników…",
       "techniciansError": "Nie udało się wczytać techników",
       "dueFrom": "Termin od",
@@ -440,8 +441,7 @@
       "title": "Szczegóły zlecenia",
       "back": "Wróć",
       "edit": "Edytuj",
-      "serviceEntries": "Wpisy serwisowe",
-      "unknownTechnician": "Technik spoza listy"
+      "serviceEntries": "Wpisy serwisowe"
     },
     "serviceEntries": {
       "correction": "Korekta",
@@ -612,6 +612,7 @@
       "inactive": "Nieaktywne"
     },
     "columns": {
+      "fullName": "Imię i nazwisko",
       "email": "E-mail",
       "role": "Rola",
       "status": "Status",
@@ -637,6 +638,7 @@
     },
     "demoAccount": "Konto demo",
     "actions": {
+      "changeName": "Zmień imię i nazwisko",
       "label": "Akcje konta {{email}}",
       "deactivate": "Dezaktywuj",
       "activate": "Aktywuj",
@@ -665,6 +667,12 @@
       "confirmNewPassword": "Powtórz nowe hasło",
       "submit": "Ustaw hasło",
       "done": "Ustawiono nowe hasło dla {{email}}."
+    },
+    "changeName": {
+      "title": "Imię i nazwisko dla {{email}}",
+      "description": "Nazwa jest widoczna w panelu zamiast adresu e-mail, na tablicy dispatch i w protokołach serwisowych.",
+      "submit": "Zapisz",
+      "done": "Zmieniono imię i nazwisko dla {{email}}."
     }
   }
 }

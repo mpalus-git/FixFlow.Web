@@ -30,7 +30,8 @@ export function UserMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-56">
         <DropdownMenuLabel className="flex flex-col gap-0.5">
-          <span className="truncate font-medium text-foreground">{user.email}</span>
+          <span className="truncate font-medium text-foreground">{user.fullName}</span>
+          <span className="truncate text-xs font-normal">{user.email}</span>
           <span className="text-xs font-normal">{t(`roles.${user.role}`)}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

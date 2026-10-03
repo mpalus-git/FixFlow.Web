@@ -21,6 +21,7 @@ describe("ProfilePage", () => {
     expect(await screen.findByRole("heading", { name: "Profil", level: 1 })).toBeInTheDocument();
     expect(router.state.location.pathname).toBe("/profile");
     const main = screen.getByRole("main");
+    expect(within(main).getByText("Dispatcher Test")).toBeInTheDocument();
     expect(within(main).getByText("dispatcher@fixflow.test")).toBeInTheDocument();
     expect(within(main).getByText("Dyspozytor")).toBeInTheDocument();
   });

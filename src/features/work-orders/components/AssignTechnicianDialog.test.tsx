@@ -23,8 +23,20 @@ function mockApi(assignResponse?: () => Response) {
   const calls: string[] = [];
   const userPage: UserPage = {
     items: [
-      { id: anna, email: "anna@fixflow.test", role: "Technician", isActive: true },
-      { id: piotr, email: "piotr@fixflow.test", role: "Technician", isActive: true },
+      {
+        id: anna,
+        email: "anna@fixflow.test",
+        fullName: "Anna Nowak",
+        role: "Technician",
+        isActive: true,
+      },
+      {
+        id: piotr,
+        email: "piotr@fixflow.test",
+        fullName: "Piotr Zieliński",
+        role: "Technician",
+        isActive: true,
+      },
     ],
     page: 1,
     pageSize: 100,
@@ -76,9 +88,9 @@ describe("AssignTechnicianDialog", () => {
     const onOpenChange = renderDialog(null);
     const user = userEvent.setup();
 
-    await screen.findByRole("option", { name: "anna@fixflow.test" });
+    await screen.findByRole("option", { name: "Anna Nowak" });
     expect(screen.getByLabelText("Technik")).toHaveFocus();
-    await user.selectOptions(screen.getByLabelText("Technik"), "anna@fixflow.test");
+    await user.selectOptions(screen.getByLabelText("Technik"), "Anna Nowak");
     await user.click(screen.getByRole("button", { name: "Przypisz" }));
 
     expect(await screen.findByText("Przypisano technika.")).toBeInTheDocument();
@@ -92,9 +104,9 @@ describe("AssignTechnicianDialog", () => {
     renderDialog(anna);
     const user = userEvent.setup();
 
-    await screen.findByRole("option", { name: "piotr@fixflow.test" });
-    expect(screen.queryByRole("option", { name: "anna@fixflow.test" })).not.toBeInTheDocument();
-    await user.selectOptions(screen.getByLabelText("Technik"), "piotr@fixflow.test");
+    await screen.findByRole("option", { name: "Piotr Zieliński" });
+    expect(screen.queryByRole("option", { name: "Anna Nowak" })).not.toBeInTheDocument();
+    await user.selectOptions(screen.getByLabelText("Technik"), "Piotr Zieliński");
     await user.click(screen.getByRole("button", { name: "Zmień technika" }));
 
     expect(await screen.findByText("Zmieniono technika.")).toBeInTheDocument();
@@ -105,7 +117,7 @@ describe("AssignTechnicianDialog", () => {
     const { calls } = mockApi();
     renderDialog(null);
 
-    await screen.findByRole("option", { name: "anna@fixflow.test" });
+    await screen.findByRole("option", { name: "Anna Nowak" });
     await userEvent.setup().click(screen.getByRole("button", { name: "Przypisz" }));
 
     expect(screen.getByText("To pole jest wymagane")).toBeInTheDocument();
@@ -124,8 +136,8 @@ describe("AssignTechnicianDialog", () => {
     const onOpenChange = renderDialog(null);
     const user = userEvent.setup();
 
-    await screen.findByRole("option", { name: "anna@fixflow.test" });
-    await user.selectOptions(screen.getByLabelText("Technik"), "anna@fixflow.test");
+    await screen.findByRole("option", { name: "Anna Nowak" });
+    await user.selectOptions(screen.getByLabelText("Technik"), "Anna Nowak");
     await user.click(screen.getByRole("button", { name: "Przypisz" }));
 
     expect(await screen.findByText("Wybrany technik nie jest już aktywny.")).toBeInTheDocument();

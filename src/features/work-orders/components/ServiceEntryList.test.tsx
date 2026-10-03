@@ -19,7 +19,15 @@ const workEntry = createServiceEntryResponse({
   photoUrls: ["https://photos.example.com/boiler.jpg"],
   latitude: 50.2649,
   longitude: 19.0238,
-  parts: [{ partId: part.id, quantity: 3, unitPrice: 148.5 }],
+  parts: [
+    {
+      partId: part.id,
+      partName: part.name,
+      catalogNumber: part.catalogNumber,
+      quantity: 3,
+      unitPrice: 148.5,
+    },
+  ],
 });
 const correction = createServiceEntryResponse({
   id: "7d6c5b4a-3928-4f7e-8d9c-0b1a2f3e4d5c",
@@ -28,7 +36,15 @@ const correction = createServiceEntryResponse({
   workStartedAt: null,
   workFinishedAt: null,
   createdAt: "2026-07-14T10:00:00Z",
-  parts: [{ partId: part.id, quantity: 1, unitPrice: 148.5 }],
+  parts: [
+    {
+      partId: part.id,
+      partName: part.name,
+      catalogNumber: part.catalogNumber,
+      quantity: 1,
+      unitPrice: 148.5,
+    },
+  ],
 });
 
 function money(amount: number): string {
@@ -42,9 +58,7 @@ function renderEntries(entries: ServiceEntryResponse[]) {
       HttpResponse.json(part, { headers: { ETag: '"1"' } }),
     ),
   );
-  renderWithProviders(
-    <ServiceEntryList workOrderId={workOrderId} technicianLabel={() => "jan@fixflow.test"} />,
-  );
+  renderWithProviders(<ServiceEntryList workOrderId={workOrderId} />);
 }
 
 describe("ServiceEntryList", () => {
@@ -53,7 +67,7 @@ describe("ServiceEntryList", () => {
 
     const entry = (await screen.findAllByRole("listitem"))[0] ?? document.body;
     expect(within(entry).getByText("14.07.2026 09:00 – 10:30")).toBeInTheDocument();
-    expect(within(entry).getByText("jan@fixflow.test")).toBeInTheDocument();
+    expect(within(entry).getByText("Jan Kowalski")).toBeInTheDocument();
     expect(
       within(entry).getByRole("link", { name: /Pokaż miejsce pracy na mapie/ }),
     ).toHaveAttribute(
@@ -94,7 +108,7 @@ describe("ServiceEntryList", () => {
 
   it("offers a retry when the entries cannot be loaded", async () => {
     server.use(http.get(entriesUrl, () => HttpResponse.json(null, { status: 500 })));
-    renderWithProviders(<ServiceEntryList workOrderId={workOrderId} technicianLabel={() => ""} />);
+    renderWithProviders(<ServiceEntryList workOrderId={workOrderId} />);
 
     expect(await screen.findByRole("button", { name: "Spróbuj ponownie" })).toBeInTheDocument();
   });

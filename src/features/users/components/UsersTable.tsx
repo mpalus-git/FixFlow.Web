@@ -18,7 +18,7 @@ function cellClassName(columnId: string): string {
   if (columnId === actionsColumnId) {
     return "sticky right-0 bg-background px-3";
   }
-  if (columnId === "email") {
+  if (columnId === "fullName") {
     return "min-w-40 px-3 whitespace-normal [overflow-wrap:anywhere]";
   }
   return "hidden px-3 md:table-cell";
@@ -54,6 +54,7 @@ export type UsersTableProps = {
   onDeactivate: (user: UserResponse) => void;
   onActivate: (user: UserResponse) => void;
   onResetPassword: (user: UserResponse) => void;
+  onChangeName: (user: UserResponse) => void;
 };
 
 export function UsersTable({
@@ -63,19 +64,21 @@ export function UsersTable({
   onDeactivate,
   onActivate,
   onResetPassword,
+  onChangeName,
 }: UsersTableProps) {
   const { t } = useTranslation();
   const columns = useMemo(() => {
     const roleLabel = (role: string) => (isRole(role) ? t(`roles.${role}`) : role);
     return columnHelper.columns([
-      columnHelper.accessor("email", {
-        id: "email",
-        header: t("users.columns.email"),
+      columnHelper.accessor("fullName", {
+        id: "fullName",
+        header: t("users.columns.fullName"),
         cell: ({ row }) => {
           const protection = userAccountProtection(row.original, currentUserId);
           return (
             <span className="flex flex-col">
-              <span className="font-medium">{row.original.email}</span>
+              <span className="font-medium">{row.original.fullName}</span>
+              <span className="text-muted-foreground">{row.original.email}</span>
               {protection === null ? null : (
                 <span className="text-muted-foreground">
                   {t(protection === "ownAccount" ? "users.currentAccount" : "users.demoAccount")}
@@ -110,12 +113,13 @@ export function UsersTable({
               onDeactivate={onDeactivate}
               onActivate={onActivate}
               onResetPassword={onResetPassword}
+              onChangeName={onChangeName}
             />
           </div>
         ),
       }),
     ]);
-  }, [t, currentUserId, onDeactivate, onActivate, onResetPassword]);
+  }, [t, currentUserId, onDeactivate, onActivate, onResetPassword, onChangeName]);
   const table = useTable({
     features,
     columns,

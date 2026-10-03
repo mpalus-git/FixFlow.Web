@@ -12,10 +12,9 @@ import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 
 export type ServiceEntryListProps = {
   workOrderId: string;
-  technicianLabel: (technicianId: string) => string;
 };
 
-export function ServiceEntryList({ workOrderId, technicianLabel }: ServiceEntryListProps) {
+export function ServiceEntryList({ workOrderId }: ServiceEntryListProps) {
   const { t } = useTranslation();
   const language = useLanguage();
   const entriesQuery = useQuery(serviceEntriesQueryOptions(workOrderId));
@@ -61,7 +60,7 @@ export function ServiceEntryList({ workOrderId, technicianLabel }: ServiceEntryL
       <ol className="flex flex-col gap-4">
         {entries.map((entry) => (
           <li key={entry.id}>
-            <ServiceEntryCard entry={entry} technicianLabel={technicianLabel(entry.technicianId)} />
+            <ServiceEntryCard entry={entry} />
           </li>
         ))}
       </ol>

@@ -6,6 +6,7 @@ import {
 import { validationMessages } from "@/shared/lib/validation";
 
 const validValues: CreateUserFormInput = {
+  fullName: " Ewa Lis ",
   email: " ewa.technik@fixflow.test ",
   role: "Technician",
   password: "Serwis#2026",
@@ -25,8 +26,18 @@ describe("createUserSchema", () => {
 
     expect(toCreateUserRequest(values)).toEqual({
       email: "ewa.technik@fixflow.test",
+      fullName: "Ewa Lis",
       role: "Technician",
       password: "Serwis#2026",
+    });
+  });
+
+  it("requires a full name of at most 100 characters", () => {
+    expect(errorsFor({ ...validValues, fullName: "  " })).toEqual({
+      fullName: validationMessages.required,
+    });
+    expect(errorsFor({ ...validValues, fullName: "E".repeat(101) })).toEqual({
+      fullName: validationMessages.tooLong,
     });
   });
 

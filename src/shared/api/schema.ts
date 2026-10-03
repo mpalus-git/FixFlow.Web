@@ -143,6 +143,22 @@ export type paths = {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/users/{userId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put: operations["UpdateUser"];
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/clients": {
     parameters: {
       query?: never;
@@ -281,6 +297,22 @@ export type paths = {
     get?: never;
     put?: never;
     post: operations["AssignTechnician"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/work-orders/{workOrderId}/reassign": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["ReassignTechnician"];
     delete?: never;
     options?: never;
     head?: never;
@@ -495,6 +527,7 @@ export type components = {
     };
     AssignTechnicianRequest: {
       technicianId: string;
+      dueDate?: null | string;
     };
     AuthTokensResponse: {
       accessToken: string;
@@ -544,6 +577,7 @@ export type components = {
     };
     CreateUserRequest: {
       email: string;
+      fullName: string;
       password: string;
       role: string;
     };
@@ -646,6 +680,10 @@ export type components = {
       instance?: null | string;
       errorCode?: null | string;
     };
+    ReassignTechnicianRequest: {
+      technicianId: string;
+      dueDate?: null | string;
+    };
     RefreshRequest: {
       refreshToken: string;
     };
@@ -661,6 +699,8 @@ export type components = {
     };
     ServiceEntryPartResponse: {
       partId: string;
+      partName: string;
+      catalogNumber: string;
       quantity: number;
       unitPrice: number;
     };
@@ -668,6 +708,7 @@ export type components = {
       id: string;
       workOrderId: string;
       technicianId: string;
+      technicianName: string;
       note: string;
       isCorrection: boolean;
       photoUrls: string[];
@@ -682,6 +723,7 @@ export type components = {
     TechnicianWorkloadResponse: {
       technicianId: string;
       email: string;
+      fullName: string;
       assignedCount: number;
       inProgressCount: number;
       overdueCount: number;
@@ -705,6 +747,9 @@ export type components = {
       catalogNumber: string;
       unitPrice: number;
     };
+    UpdateUserRequest: {
+      fullName: string;
+    };
     UpdateWorkOrderRequest: {
       description: string;
       priority: components["schemas"]["WorkOrderPriority"];
@@ -713,11 +758,13 @@ export type components = {
     UserResponse: {
       id: string;
       email: string;
+      fullName: string;
       role: string;
       isActive: boolean;
     };
     WorkOrderListItemResponse: {
       id: string;
+      number: string;
       deviceId: string;
       deviceSerialNumber: string;
       deviceModel: string;
@@ -728,6 +775,7 @@ export type components = {
       status: components["schemas"]["WorkOrderStatus"];
       technicianId: null | string;
       technicianEmail: null | string;
+      technicianName: null | string;
       dueDate: string;
       isOverdue: boolean;
       createdAt: string;
@@ -738,11 +786,18 @@ export type components = {
     WorkOrderPriority: "Low" | "Normal" | "High" | "Critical";
     WorkOrderResponse: {
       id: string;
+      number: string;
       deviceId: string;
+      deviceSerialNumber: string;
+      deviceModel: string;
+      clientId: string;
+      clientName: string;
       description: string;
       priority: components["schemas"]["WorkOrderPriority"];
       status: components["schemas"]["WorkOrderStatus"];
       technicianId: null | string;
+      technicianEmail: null | string;
+      technicianName: null | string;
       dueDate: string;
       isOverdue: boolean;
       createdAt: string;
@@ -1210,6 +1265,63 @@ export interface operations {
           [name: string]: unknown;
         };
         content?: never;
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
+  UpdateUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        userId: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdateUserRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["UserResponse"];
+        };
       };
       400: {
         headers: {
@@ -2028,6 +2140,72 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["AssignTechnicianRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          ETag?: string;
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["WorkOrderResponse"];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
+  ReassignTechnician: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        workOrderId: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ReassignTechnicianRequest"];
       };
     };
     responses: {

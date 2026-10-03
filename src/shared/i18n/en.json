@@ -157,6 +157,7 @@
     "title": "Profile",
     "account": {
       "title": "Account details",
+      "fullName": "Full name",
       "email": "Email",
       "role": "Role"
     },
@@ -388,7 +389,7 @@
       "allStatuses": "All statuses",
       "technician": "Technician",
       "allTechnicians": "All technicians",
-      "inactiveTechnician": "{{email}} (inactive)",
+      "inactiveTechnician": "{{name}} (inactive)",
       "techniciansLoading": "Loading technicians…",
       "techniciansError": "Could not load technicians",
       "dueFrom": "Due from",
@@ -438,8 +439,7 @@
       "title": "Work order details",
       "back": "Back",
       "edit": "Edit",
-      "serviceEntries": "Service entries",
-      "unknownTechnician": "Unlisted technician"
+      "serviceEntries": "Service entries"
     },
     "serviceEntries": {
       "correction": "Correction",
@@ -606,6 +606,7 @@
       "inactive": "Inactive"
     },
     "columns": {
+      "fullName": "Full name",
       "email": "Email",
       "role": "Role",
       "status": "Status",
@@ -631,6 +632,7 @@
     },
     "demoAccount": "Demo account",
     "actions": {
+      "changeName": "Change full name",
       "label": "Actions for account {{email}}",
       "deactivate": "Deactivate",
       "activate": "Activate",
@@ -659,6 +661,12 @@
       "confirmNewPassword": "Repeat new password",
       "submit": "Set password",
       "done": "Set a new password for {{email}}."
+    },
+    "changeName": {
+      "title": "Full name of {{email}}",
+      "description": "The name is shown in the panel instead of the email address, on the dispatch board and in service protocols.",
+      "submit": "Save",
+      "done": "Changed the full name of {{email}}."
     }
   }
 }

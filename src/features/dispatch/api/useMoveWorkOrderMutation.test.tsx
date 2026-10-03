@@ -25,6 +25,7 @@ const newOrder = createWorkOrderListItem({
   status: "New",
   technicianId: null,
   technicianEmail: null,
+  technicianName: null,
   dueDate: "2026-09-29T08:00:00Z",
 });
 const workOrderUrl = `${apiBaseUrl}/api/v1/work-orders/${newOrder.id}`;
@@ -73,7 +74,13 @@ function setUp({
     result.current.mutateAsync({
       workOrder: newOrder,
       target: { kind: "cell", technicianId: anna, day },
-      technicianEmail: "anna@fixflow.test",
+      technician: {
+        id: anna,
+        email: "anna@fixflow.test",
+        fullName: "Anna Nowak",
+        role: "Technician",
+        isActive: true,
+      },
       weekStart,
     });
   return { queryClient, calls, boardDuringAssign, move };
@@ -94,7 +101,13 @@ describe("useMoveWorkOrderMutation", () => {
     await move("2026-09-29");
 
     expect(boardDuringAssign[0]?.items).toEqual([
-      { ...newOrder, status: "Assigned", technicianId: anna, technicianEmail: "anna@fixflow.test" },
+      {
+        ...newOrder,
+        status: "Assigned",
+        technicianId: anna,
+        technicianEmail: "anna@fixflow.test",
+        technicianName: "Anna Nowak",
+      },
     ]);
     expect(queryClient.getQueryData(dispatchKeys.unassigned())).toEqual(pageOf([]));
   });

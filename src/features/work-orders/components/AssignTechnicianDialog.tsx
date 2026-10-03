@@ -141,7 +141,7 @@ export function AssignTechnicianDialog({
               </NativeSelectOption>
               {technicians?.map((technician) => (
                 <NativeSelectOption key={technician.id} value={technician.id}>
-                  {technician.email}
+                  {technician.fullName}
                 </NativeSelectOption>
               ))}
             </NativeSelect>
