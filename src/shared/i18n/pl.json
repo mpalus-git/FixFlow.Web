@@ -270,6 +270,7 @@
     "workOrderClosed": "Zlecenie jest zakończone lub zafakturowane i nie można go zmieniać.",
     "workOrderDeviceArchived": "Nie można założyć zlecenia na zarchiwizowane urządzenie.",
     "workOrderNotFound": "Nie znaleziono zlecenia.",
+    "workOrderNotReassignable": "Zlecenie zostało już rozpoczęte, więc nie można zmienić technika ani terminu.",
     "workOrderNoServiceEntries": "Zlecenia bez wpisów serwisowych nie można zakończyć.",
     "workOrderNotCompleted": "Protokół jest dostępny tylko dla zakończonych lub zafakturowanych zleceń.",
     "concurrentModification": "Zlecenie zostało zmienione w międzyczasie. Wyświetlono aktualny stan, spróbuj ponownie.",
@@ -578,8 +579,7 @@
       "cancelled": "Anulowano przenoszenie zlecenia {{workOrder}}."
     },
     "errors": {
-      "changed": "Zlecenie zmieniło się w międzyczasie. Tablica pokazuje teraz aktualny stan.",
-      "partial": "Zlecenie zostało zmienione tylko częściowo: {{reason}}"
+      "changed": "Zlecenie zmieniło się w międzyczasie. Tablica pokazuje teraz aktualny stan."
     },
     "week": {
       "range": "{{from}} – {{to}}",

@@ -116,27 +116,36 @@ describe("planDispatchMove", () => {
   it("assigns a new work order and keeps the due date on its own day", () => {
     expect(
       planDispatchMove(newOrder, { kind: "cell", technicianId: anna, day: "2026-10-03" }),
-    ).toEqual({ dueDate: null, unassign: false, assignTo: anna });
+    ).toEqual({ kind: "assign", technicianId: anna, dueDate: null });
   });
 
-  it("moves the due date to another day keeping the Warsaw time", () => {
+  it("assigns a new work order with a new due date keeping the Warsaw time", () => {
+    expect(
+      planDispatchMove(newOrder, { kind: "cell", technicianId: anna, day: "2026-10-05" }),
+    ).toEqual({ kind: "assign", technicianId: anna, dueDate: "2026-10-05T07:00:00.000Z" });
+  });
+
+  it("moves an assigned work order to another day of the same technician", () => {
     expect(
       planDispatchMove(assignedToAnna, { kind: "cell", technicianId: anna, day: "2026-10-05" }),
-    ).toEqual({ dueDate: "2026-10-05T08:30:00.000Z", unassign: false, assignTo: null });
+    ).toEqual({ kind: "reassign", technicianId: anna, dueDate: "2026-10-05T08:30:00.000Z" });
   });
 
-  it("changes the technician by unassigning and assigning again", () => {
+  it("moves an assigned work order to another technician in one operation", () => {
     expect(
       planDispatchMove(assignedToAnna, { kind: "cell", technicianId: piotr, day: "2026-10-02" }),
-    ).toEqual({ dueDate: null, unassign: true, assignTo: piotr });
+    ).toEqual({ kind: "reassign", technicianId: piotr, dueDate: null });
   });
 
   it("unassigns an assigned work order dropped on the unassigned column", () => {
-    expect(planDispatchMove(assignedToAnna, { kind: "unassigned" })).toEqual({
-      dueDate: null,
-      unassign: true,
-      assignTo: null,
-    });
+    expect(planDispatchMove(assignedToAnna, { kind: "unassigned" })).toEqual({ kind: "unassign" });
+  });
+
+  it("plans nothing when the work order stays where it is", () => {
+    expect(planDispatchMove(newOrder, { kind: "unassigned" })).toBeNull();
+    expect(
+      planDispatchMove(assignedToAnna, { kind: "cell", technicianId: anna, day: "2026-10-02" }),
+    ).toBeNull();
   });
 });
 

@@ -22,6 +22,7 @@ const errorCodeMessageKeys = {
   "WorkOrder.NoServiceEntries": "apiErrors.workOrderNoServiceEntries",
   "WorkOrder.NotCompleted": "apiErrors.workOrderNotCompleted",
   "WorkOrder.NotFound": "apiErrors.workOrderNotFound",
+  "WorkOrder.NotReassignable": "apiErrors.workOrderNotReassignable",
   "WorkOrder.TechnicianNotFound": "apiErrors.workOrderTechnicianNotFound",
 } as const;
 
