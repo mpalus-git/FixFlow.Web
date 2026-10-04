@@ -4,7 +4,7 @@ import type { ServerReadyCheck } from "@/app/server-wake/checkServerReady";
 import { ServerWakeGate } from "@/app/server-wake/ServerWakeGate";
 
 function renderGate(checkReady: ServerReadyCheck) {
-  render(
+  return render(
     <ServerWakeGate checkReady={checkReady}>
       <p>Login form</p>
     </ServerWakeGate>,
@@ -34,10 +34,15 @@ describe("ServerWakeGate", () => {
     expect(screen.getByText("Login form")).toBeInTheDocument();
   });
 
+  it("renders nothing during the first seconds so the static splash stays visible", () => {
+    const { container } = renderGate(() => new Promise<boolean>(() => undefined));
+
+    expect(container).toBeEmptyDOMElement();
+  });
+
   it("explains that the demo server is starting when it answers slowly", async () => {
     renderGate(() => Promise.resolve(false));
 
-    expect(screen.getByRole("status")).toHaveTextContent("Łączenie z serwerem…");
     await advance(6_000);
 
     expect(screen.getByRole("heading", { name: "Serwer demo się uruchamia" })).toBeInTheDocument();

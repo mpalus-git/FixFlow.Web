@@ -14,8 +14,8 @@ export function App() {
     <QueryClientProvider client={queryClient}>
       <ServerWakeGate>
         <RouterProvider router={router} />
+        <Toaster />
       </ServerWakeGate>
-      <Toaster />
     </QueryClientProvider>
   );
 }
