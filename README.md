@@ -177,7 +177,7 @@ Firma działa w Polsce, więc wszystkie daty są wyświetlane w strefie Europe/W
 
 ### Uśpiony serwer
 
-Przy starcie panel wywołuje `GET /api/v1/system/ready`, które budzi zarówno usługę na Render, jak i bazę. Nie używa `/health/ready`, bo lista EasyPrivacy (domyślnie włączona m.in. w Brave Shields i uBlock Origin) blokuje żądania do `onrender.com/health`. Jeśli odpowiedź nie przyjdzie w 3 sekundy, pojawia się ekran z paskiem postępu i ponawianiem co 3 sekundy, a po 90 sekundach komunikat z przyciskiem ponowienia. Formularz logowania renderuje się dopiero, gdy API odpowiada.
+Przy starcie panel wywołuje `GET /api/v1/system/ready`, które budzi zarówno usługę na Render, jak i bazę. Nie używa `/health/ready`, bo lista EasyPrivacy (domyślnie włączona m.in. w Brave Shields i uBlock Origin) blokuje żądania do `onrender.com/health`. Do tego czasu widać statyczny ekran startowy z `index.html`. Jeśli odpowiedź nie przyjdzie w 3 sekundy, pojawia się ekran z paskiem postępu i ponawianiem co 3 sekundy, a po 90 sekundach komunikat z przyciskiem ponowienia. Formularz logowania renderuje się dopiero, gdy API odpowiada.
 
 Uśpiony Render nie zwraca błędu, tylko trzyma żądanie bez odpowiedzi do czasu startu (ok. 40 sekund). Dlatego w trakcie sesji pod nagłówkiem pojawia się pasek z wyjaśnieniem, gdy żądanie czeka na odpowiedź dłużej niż 5 sekund albo gdy panel ponawia zapytania po braku połączenia (co 3 sekundy, do 90 sekund).
 
@@ -210,6 +210,17 @@ Jedno miejsce mapuje odpowiedzi ProblemDetails na błąd aplikacji: błędy wali
 | E2E | Playwright, axe-core | prawdziwe API z obrazu Docker: logowanie, utworzenie zlecenia, przypisanie technika przeciągnięciem, konflikt 412 w dwóch kontekstach przeglądarki, uśpiony serwer, brak naruszeń dostępności poziomu serious i critical na głównych ekranach w obu motywach, działanie aplikacji pod produkcyjną polityką CSP |
 
 CI uruchamia lint, kontrolę typów, kontrolę wygenerowanych typów, build, testy w trzech shardach z raportem pokrycia w podsumowaniu joba oraz testy e2e na obrazie `ghcr.io/mpalus-git/fixflow.api` z PostgreSQL 18 i losowymi sekretami.
+
+## Lighthouse
+
+Pomiar strony logowania na produkcji (Lighthouse 13.5.0, Chromium 153, domyślna symulacja sieci i procesora, mediana z kilku przebiegów, 2026-10-04):
+
+| Urządzenie | Wydajność | Dostępność | Dobre praktyki | SEO | FCP | LCP | TBT | CLS | Speed Index |
+|---|---|---|---|---|---|---|---|---|---|
+| Mobile | 100 | 100 | 100 | 100 | 1,0 s | 1,0 s | 10 ms | 0 | 1,0 s |
+| Desktop | 100 | 100 | 100 | 100 | 0,3 s | 0,3 s | 0 ms | 0 | 0,3 s |
+
+Arkusz stylów jest wbudowany w `index.html`, a obok `#root` stoi statyczny ekran startowy z nazwą aplikacji. Przeglądarka maluje go zaraz po pobraniu dokumentu, zanim dotrą skrypty, a znika on regułą CSS, gdy React wyrenderuje pierwszą treść. To ten ekran jest elementem LCP. Formularz logowania pojawia się po pobraniu skryptów i odpowiedzi API, czyli w symulacji wolnego 4G po ok. 3 s (tyle wynosiło LCP, zanim powstał ekran startowy).
 
 ## Ograniczenia
 
