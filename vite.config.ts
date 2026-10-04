@@ -26,12 +26,39 @@ function apiPreconnect(apiUrl: string | undefined): Plugin {
   };
 }
 
+function inlineEntryStylesheet(): Plugin {
+  return {
+    name: "fixflow-inline-entry-stylesheet",
+    apply: "build",
+    transformIndexHtml: {
+      order: "post",
+      handler(html, context) {
+        const bundle = context.bundle;
+        if (!bundle) {
+          return html;
+        }
+        return html.replace(
+          /<link rel="stylesheet"[^>]*href="\/([^"]+\.css)"[^>]*>/g,
+          (tag, fileName: string) => {
+            const asset = bundle[fileName];
+            if (asset?.type !== "asset" || typeof asset.source !== "string") {
+              return tag;
+            }
+            Reflect.deleteProperty(bundle, fileName);
+            return `<style>${asset.source}</style>`;
+          },
+        );
+      },
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   const proxyTarget = env.API_PROXY_TARGET;
 
   return {
-    plugins: [react(), tailwindcss(), apiPreconnect(env.VITE_API_URL)],
+    plugins: [react(), tailwindcss(), apiPreconnect(env.VITE_API_URL), inlineEntryStylesheet()],
     server: proxyTarget ? { proxy: createApiProxy(proxyTarget) } : {},
     build: {
       rolldownOptions: {

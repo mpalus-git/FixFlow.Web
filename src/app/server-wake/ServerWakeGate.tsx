@@ -22,17 +22,16 @@ export function ServerWakeGate({ children, checkReady }: ServerWakeGateProps) {
     return children;
   }
 
+  if (status === "checking") {
+    return null;
+  }
+
   const progress = Math.round(Math.min(elapsedMs / expectedWakeMs, maxShownProgress) * 100);
 
   return (
     <main className="flex min-h-svh items-center justify-center p-4">
       <div className="flex w-full max-w-md flex-col items-center gap-6 text-center">
         <AppBrand />
-        {status === "checking" ? (
-          <p role="status" className="text-sm text-muted-foreground">
-            {t("serverWake.checking")}
-          </p>
-        ) : null}
         {status === "waking" ? (
           <div className="flex w-full flex-col items-center gap-4">
             <h1 className="text-xl font-semibold tracking-tight">{t("serverWake.wakingTitle")}</h1>

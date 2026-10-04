@@ -98,7 +98,6 @@
     "retryIn": "Try again in {{seconds}} s"
   },
   "serverWake": {
-    "checking": "Connecting to the server…",
     "wakingTitle": "The demo server is starting",
     "sessionBannerTitle": "Cannot reach the server",
     "sessionBannerDescription": "The demo server may have gone to sleep - starting it takes up to a minute. Retrying automatically.",

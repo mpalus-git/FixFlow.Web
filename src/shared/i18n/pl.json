@@ -98,7 +98,6 @@
     "retryIn": "Spróbuj ponownie za {{seconds}} s"
   },
   "serverWake": {
-    "checking": "Łączenie z serwerem…",
     "wakingTitle": "Serwer demo się uruchamia",
     "sessionBannerTitle": "Brak połączenia z serwerem",
     "sessionBannerDescription": "Serwer demo mógł zostać uśpiony - uruchomienie potrwa do minuty. Ponawiam automatycznie.",
