@@ -3,6 +3,8 @@ import type { Role } from "@/shared/session/currentUser";
 
 export type WorkOrderStatus = components["schemas"]["WorkOrderStatus"];
 
+type WorkOrderEventResponse = components["schemas"]["WorkOrderEventResponse"];
+
 export const workOrderStatuses = [
   "New",
   "Assigned",
@@ -16,6 +18,17 @@ export const openWorkOrderStatuses = [
   "Assigned",
   "InProgress",
 ] as const satisfies readonly WorkOrderStatus[];
+
+export function latestAssignmentTime(events: readonly WorkOrderEventResponse[]): string | null {
+  let latest: string | null = null;
+  for (const event of events) {
+    const isAssignment = event.type === "Assigned" || event.type === "Reassigned";
+    if (isAssignment && (latest === null || Date.parse(event.occurredAt) > Date.parse(latest))) {
+      latest = event.occurredAt;
+    }
+  }
+  return latest;
+}
 
 export function orderedStatuses(values: readonly string[]): WorkOrderStatus[] {
   return workOrderStatuses.filter((status) => values.includes(status));

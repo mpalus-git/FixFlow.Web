@@ -2,7 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon, PencilIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router";
-import { workOrderQueryOptions } from "@/features/work-orders/api/workOrderQueries";
+import {
+  workOrderEventsQueryOptions,
+  workOrderQueryOptions,
+} from "@/features/work-orders/api/workOrderQueries";
 import { ClientSignature } from "@/features/work-orders/components/ClientSignature";
 import { ServiceEntryList } from "@/features/work-orders/components/ServiceEntryList";
 import { WorkOrderDeviceName } from "@/features/work-orders/components/WorkOrderDeviceName";
@@ -13,7 +16,7 @@ import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOr
 import { WorkOrderStatusBadge } from "@/features/work-orders/components/WorkOrderStatusBadge";
 import { WorkOrderStatusTimeline } from "@/features/work-orders/components/WorkOrderStatusTimeline";
 import { useReturnPath } from "@/features/work-orders/hooks/useReturnPath";
-import { canEditWorkOrder } from "@/features/work-orders/workOrderRules";
+import { canEditWorkOrder, latestAssignmentTime } from "@/features/work-orders/workOrderRules";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatDateTime } from "@/shared/lib/dateTime";
 import { formatAddress } from "@/shared/lib/formatAddress";
@@ -33,6 +36,10 @@ export function WorkOrderDetailsPage() {
   const isTechnician = user?.role === "Technician";
   const returnPath = useReturnPath(isTechnician ? "/my-work-orders" : "/work-orders");
   const workOrderQuery = useQuery(workOrderQueryOptions(workOrderId));
+  const assignedAtQuery = useQuery({
+    ...workOrderEventsQueryOptions(workOrderId),
+    select: latestAssignmentTime,
+  });
   const workOrder = workOrderQuery.data?.data;
 
   if (workOrder === undefined) {
@@ -149,7 +156,10 @@ export function WorkOrderDetailsPage() {
             <h2 id="work-order-timeline-heading" className="text-lg font-semibold">
               {t("workOrders.details.timeline")}
             </h2>
-            <WorkOrderStatusTimeline workOrder={workOrder} />
+            <WorkOrderStatusTimeline
+              workOrder={workOrder}
+              assignedAt={assignedAtQuery.data ?? null}
+            />
           </section>
           <section aria-labelledby="work-order-history-heading" className="flex flex-col gap-4">
             <h2 id="work-order-history-heading" className="text-lg font-semibold">

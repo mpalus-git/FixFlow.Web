@@ -8,12 +8,16 @@ import { formatDateTime } from "@/shared/lib/dateTime";
 
 type WorkOrderResponse = components["schemas"]["WorkOrderResponse"];
 
-function reachedAt(workOrder: WorkOrderResponse, status: WorkOrderStatus): string | null {
+function reachedAt(
+  workOrder: WorkOrderResponse,
+  assignedAt: string | null,
+  status: WorkOrderStatus,
+): string | null {
   switch (status) {
     case "New":
       return workOrder.createdAt;
     case "Assigned":
-      return null;
+      return assignedAt;
     case "InProgress":
       return workOrder.startedAt;
     case "Completed":
@@ -25,9 +29,13 @@ function reachedAt(workOrder: WorkOrderResponse, status: WorkOrderStatus): strin
 
 export type WorkOrderStatusTimelineProps = {
   workOrder: WorkOrderResponse;
+  assignedAt?: string | null;
 };
 
-export function WorkOrderStatusTimeline({ workOrder }: WorkOrderStatusTimelineProps) {
+export function WorkOrderStatusTimeline({
+  workOrder,
+  assignedAt = null,
+}: WorkOrderStatusTimelineProps) {
   const { t } = useTranslation();
   const language = useLanguage();
   const currentIndex = workOrderStatuses.indexOf(workOrder.status);
@@ -40,7 +48,7 @@ export function WorkOrderStatusTimeline({ workOrder }: WorkOrderStatusTimelinePr
       {workOrderStatuses.map((status, index) => {
         const isCurrent = index === currentIndex;
         const isReached = index <= currentIndex;
-        const timestamp = isReached ? reachedAt(workOrder, status) : null;
+        const timestamp = isReached ? reachedAt(workOrder, assignedAt, status) : null;
 
         return (
           <li
