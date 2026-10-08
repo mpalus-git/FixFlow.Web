@@ -127,7 +127,6 @@
   "auth": {
     "login": {
       "title": "Zaloguj się",
-      "description": "Panel dyspozytora systemu FixFlow",
       "email": "E-mail",
       "password": "Hasło",
       "submit": "Zaloguj się",
@@ -136,6 +135,22 @@
       "rateLimited": "Zbyt wiele prób logowania. Spróbuj ponownie za chwilę.",
       "rateLimitedWithDelay": "Zbyt wiele prób logowania. Spróbuj ponownie za {{seconds}} s.",
       "orEmail": "lub zaloguj się e-mailem"
+    },
+    "intro": {
+      "tagline": "System obsługi zleceń serwisowych w terenie.",
+      "checklistTitle": "Co sprawdzić w demo",
+      "dispatch": {
+        "title": "Tablica dispatch",
+        "description": "Przypisywanie zleceń przeciąganiem, także z klawiatury"
+      },
+      "details": {
+        "title": "Szczegóły zlecenia",
+        "description": "Oś statusów, historia zmian i protokół PDF"
+      },
+      "technician": {
+        "title": "Widok technika",
+        "description": "Wyłącznie własne zlecenia, bez edycji"
+      }
     },
     "demo": {
       "heading": "Wypróbuj bez zakładania konta",

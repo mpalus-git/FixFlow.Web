@@ -127,7 +127,6 @@
   "auth": {
     "login": {
       "title": "Sign in",
-      "description": "FixFlow dispatcher panel",
       "email": "Email",
       "password": "Password",
       "submit": "Sign in",
@@ -136,6 +135,22 @@
       "rateLimited": "Too many sign-in attempts. Try again in a moment.",
       "rateLimitedWithDelay": "Too many sign-in attempts. Try again in {{seconds}} s.",
       "orEmail": "or sign in with email"
+    },
+    "intro": {
+      "tagline": "Field service work order management.",
+      "checklistTitle": "What to check in the demo",
+      "dispatch": {
+        "title": "Dispatch board",
+        "description": "Assign work orders by drag and drop, also with the keyboard"
+      },
+      "details": {
+        "title": "Work order details",
+        "description": "Status timeline, change history and PDF report"
+      },
+      "technician": {
+        "title": "Technician view",
+        "description": "Own work orders only, read-only"
+      }
     },
     "demo": {
       "heading": "Try it without an account",
