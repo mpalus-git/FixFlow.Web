@@ -7,8 +7,10 @@ import { LanguageSwitcher } from "@/app/layout/LanguageSwitcher";
 import { SidebarNav } from "@/app/layout/SidebarNav";
 import { ThemeSwitcher } from "@/app/layout/ThemeSwitcher";
 import { ServerWakeBanner } from "@/app/layout/ServerWakeBanner";
+import { usePreloadNavigationPages } from "@/app/layout/usePreloadNavigationPages";
 import { useRedirectOnSessionEnd } from "@/app/layout/useRedirectOnSessionEnd";
 import { UserMenu } from "@/app/layout/UserMenu";
+import { useCurrentUser } from "@/shared/session/currentUser";
 import { Button } from "@/shared/ui/button";
 import {
   Sheet,
@@ -23,6 +25,7 @@ export function AppLayout() {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   useRedirectOnSessionEnd();
+  usePreloadNavigationPages(useCurrentUser()?.role);
 
   return (
     <div className="flex min-h-svh">
