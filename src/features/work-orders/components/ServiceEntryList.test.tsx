@@ -96,9 +96,7 @@ describe("ServiceEntryList", () => {
   it("explains that entries come from the technician's mobile app", async () => {
     renderEntries([]);
 
-    expect(
-      await screen.findByRole("heading", { name: "Brak wpisów serwisowych" }),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Brak wpisów serwisowych")).toBeInTheDocument();
   });
 
   it("offers a retry when the entries cannot be loaded", async () => {

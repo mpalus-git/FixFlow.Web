@@ -74,13 +74,15 @@ export function ClientDevicesList({ clientId }: ClientDevicesListProps) {
   });
 
   if (devicesQuery.isError) {
-    return <ErrorState error={devicesQuery.error} onRetry={() => void devicesQuery.refetch()} />;
+    return (
+      <ErrorState compact error={devicesQuery.error} onRetry={() => void devicesQuery.refetch()} />
+    );
   }
   if (devicePage === undefined) {
     return <ListSkeleton rows={3} />;
   }
   if (devicePage.totalCount === 0) {
-    return <EmptyState icon={CpuIcon} title={t("devices.clientEmpty")} />;
+    return <EmptyState compact icon={CpuIcon} title={t("devices.clientEmpty")} />;
   }
 
   return (

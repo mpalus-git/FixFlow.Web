@@ -63,7 +63,11 @@ export function DashboardPage() {
             </CardHeader>
             <CardContent>
               {totalCount === 0 ? (
-                <EmptyState icon={ClipboardListIcon} title={t("dashboard.statusChart.empty")} />
+                <EmptyState
+                  compact
+                  icon={ClipboardListIcon}
+                  title={t("dashboard.statusChart.empty")}
+                />
               ) : (
                 <StatusChart statusCounts={summary.statusCounts} />
               )}
@@ -89,7 +93,7 @@ export function DashboardPage() {
             </CardHeader>
             <CardContent>
               {summary.technicians.length === 0 ? (
-                <EmptyState icon={UsersIcon} title={t("dashboard.workload.empty")} />
+                <EmptyState compact icon={UsersIcon} title={t("dashboard.workload.empty")} />
               ) : (
                 <TechnicianWorkloadTable technicians={summary.technicians} />
               )}

@@ -64,7 +64,9 @@ export function WorkOrderHistory({ filter }: WorkOrderHistoryProps) {
   });
 
   if (historyQuery.isError) {
-    return <ErrorState error={historyQuery.error} onRetry={() => void historyQuery.refetch()} />;
+    return (
+      <ErrorState compact error={historyQuery.error} onRetry={() => void historyQuery.refetch()} />
+    );
   }
   if (historyPage === undefined) {
     return <ListSkeleton rows={3} />;
@@ -72,6 +74,7 @@ export function WorkOrderHistory({ filter }: WorkOrderHistoryProps) {
   if (historyPage.totalCount === 0) {
     return (
       <EmptyState
+        compact
         icon={ClipboardListIcon}
         title={t(
           isDeviceHistory ? "workOrders.deviceHistoryEmpty" : "workOrders.clientHistoryEmpty",

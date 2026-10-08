@@ -100,9 +100,7 @@ describe("WorkOrderHistory", () => {
     mockHistory({ items: [], page: 1, pageSize: 10, totalCount: 0 });
     renderHistory();
 
-    expect(
-      await screen.findByRole("heading", { name: "Klient nie ma jeszcze zleceń" }),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Klient nie ma jeszcze zleceń")).toBeInTheDocument();
   });
 
   it("shows the history of one device without repeating the device column", async () => {
@@ -125,8 +123,6 @@ describe("WorkOrderHistory", () => {
     mockHistory({ items: [], page: 1, pageSize: 10, totalCount: 0 });
     renderHistory("/devices/1", { deviceId: "7c1e5b2a-3d4f-4a6b-8c9d-0e1f2a3b4c5d" });
 
-    expect(
-      await screen.findByRole("heading", { name: "Urządzenie nie ma jeszcze zleceń" }),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Urządzenie nie ma jeszcze zleceń")).toBeInTheDocument();
   });
 });

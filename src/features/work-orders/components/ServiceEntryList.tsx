@@ -21,7 +21,9 @@ export function ServiceEntryList({ workOrderId }: ServiceEntryListProps) {
   const entries = entriesQuery.data;
 
   if (entriesQuery.isError) {
-    return <ErrorState error={entriesQuery.error} onRetry={() => void entriesQuery.refetch()} />;
+    return (
+      <ErrorState compact error={entriesQuery.error} onRetry={() => void entriesQuery.refetch()} />
+    );
   }
   if (entries === undefined) {
     return <ListSkeleton rows={2} />;
@@ -29,6 +31,7 @@ export function ServiceEntryList({ workOrderId }: ServiceEntryListProps) {
   if (entries.length === 0) {
     return (
       <EmptyState
+        compact
         icon={WrenchIcon}
         title={t("workOrders.serviceEntries.empty.title")}
         description={t("workOrders.serviceEntries.empty.description")}
