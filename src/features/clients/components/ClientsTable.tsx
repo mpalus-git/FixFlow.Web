@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { ClientRowActions } from "@/features/clients/components/ClientRowActions";
-import { formatAddress } from "@/features/clients/formatAddress";
+import { formatAddress } from "@/shared/lib/formatAddress";
 import type { components } from "@/shared/api/schema";
 import { DataTable } from "@/shared/ui/DataTable";
 

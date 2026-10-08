@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router";
 import { clientQueryOptions } from "@/features/clients/api/clientQueries";
 import { ArchiveClientDialog } from "@/features/clients/components/ArchiveClientDialog";
-import { formatAddress } from "@/features/clients/formatAddress";
+import { formatAddress } from "@/shared/lib/formatAddress";
 import { ClientDevicesList } from "@/features/devices";
 import { WorkOrderHistory } from "@/features/work-orders";
 import type { components } from "@/shared/api/schema";

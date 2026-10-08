@@ -3,6 +3,7 @@ import { ArrowLeftIcon, PencilIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router";
 import { workOrderQueryOptions } from "@/features/work-orders/api/workOrderQueries";
+import { ClientSignature } from "@/features/work-orders/components/ClientSignature";
 import { ServiceEntryList } from "@/features/work-orders/components/ServiceEntryList";
 import { WorkOrderDeviceName } from "@/features/work-orders/components/WorkOrderDeviceName";
 import { ServiceProtocolButton } from "@/features/work-orders/components/ServiceProtocolButton";
@@ -14,6 +15,7 @@ import { useReturnPath } from "@/features/work-orders/hooks/useReturnPath";
 import { canEditWorkOrder } from "@/features/work-orders/workOrderRules";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatDateTime } from "@/shared/lib/dateTime";
+import { formatAddress } from "@/shared/lib/formatAddress";
 import { useCurrentUser } from "@/shared/session/currentUser";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
@@ -103,12 +105,36 @@ export function WorkOrderDetailsPage() {
                 </Link>
               )}
             </dd>
+            <dt className="text-muted-foreground">{t("workOrders.details.clientAddress")}</dt>
+            <dd>{formatAddress(workOrder.clientAddress)}</dd>
+            <dt className="text-muted-foreground">{t("workOrders.details.clientContactPerson")}</dt>
+            <dd>{workOrder.clientContactPerson}</dd>
+            <dt className="text-muted-foreground">{t("workOrders.details.clientPhone")}</dt>
+            <dd>
+              <a
+                className="underline-offset-4 hover:underline"
+                href={`tel:${workOrder.clientPhone}`}
+              >
+                {workOrder.clientPhone}
+              </a>
+            </dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.technician")}</dt>
             <dd>{workOrder.technicianName ?? t("workOrders.unassigned")}</dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.dueDate")}</dt>
             <dd>{formatDateTime(workOrder.dueDate, language)}</dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.description")}</dt>
             <dd className="whitespace-pre-line">{workOrder.description}</dd>
+            {workOrder.clientSignaturePhotoId === null ? null : (
+              <>
+                <dt className="text-muted-foreground">{t("workOrders.details.clientSignature")}</dt>
+                <dd>
+                  <ClientSignature
+                    key={workOrder.clientSignaturePhotoId}
+                    photoId={workOrder.clientSignaturePhotoId}
+                  />
+                </dd>
+              </>
+            )}
           </dl>
         </CardContent>
       </Card>

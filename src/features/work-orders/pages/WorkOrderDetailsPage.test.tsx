@@ -82,6 +82,12 @@ describe("WorkOrderDetailsPage", () => {
       "href",
       `/clients/${workOrder.clientId}`,
     );
+    expect(screen.getByText("Długa 12, 00-950 Warszawa")).toBeInTheDocument();
+    expect(screen.getByText("Anna Kowalska")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "+48 600 100 200" })).toHaveAttribute(
+      "href",
+      "tel:+48 600 100 200",
+    );
     expect(await screen.findByText("Anna Nowak")).toBeInTheDocument();
     expect(screen.getByText("Jan Kowalski")).toBeInTheDocument();
     expect(screen.getByText("05.10.2026 10:00")).toBeInTheDocument();
@@ -91,7 +97,28 @@ describe("WorkOrderDetailsPage", () => {
       "href",
       `/work-orders/${workOrder.id}/edit`,
     );
+    expect(screen.queryByText("Podpis klienta")).not.toBeInTheDocument();
     expect(relatedResourceRequests).toEqual([]);
+  });
+
+  it("shows the client signature given at completion", async () => {
+    signInAs("Dispatcher");
+    const photoId = "9f8e7d6c-5b4a-4321-8fed-cba987654321";
+    const workOrder = createWorkOrderResponse({
+      status: "Completed",
+      technicianId: otherTechnicianId,
+      technicianName: "Anna Nowak",
+      startedAt: "2026-07-14T06:45:00Z",
+      completedAt: "2026-07-14T09:00:00Z",
+      clientSignaturePhotoId: photoId,
+    });
+    mockDetails(workOrder);
+    renderApp(`/work-orders/${workOrder.id}`);
+
+    expect(
+      await screen.findByRole("img", { name: "Podpis klienta, otwiera się w nowej karcie" }),
+    ).toHaveAttribute("src", `${apiBaseUrl}/api/v1/photos/${photoId}`);
+    expect(screen.getByText("Podpis klienta")).toBeInTheDocument();
   });
 
   it("titles the browser tab with the work order number", async () => {
@@ -120,6 +147,8 @@ describe("WorkOrderDetailsPage", () => {
     expect(await screen.findByText("Piekarnia Kowalski")).toBeInTheDocument();
     expect(screen.getByText("SN-2024-0001 · Vitodens 200-W")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /SN-2024-0001|Piekarnia/ })).not.toBeInTheDocument();
+    expect(screen.getByText("Długa 12, 00-950 Warszawa")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "+48 600 100 200" })).toBeInTheDocument();
     expect(await screen.findByText("Wymieniono czujnik ciśnienia")).toBeInTheDocument();
     expect(screen.getAllByText("Jan Kowalski")).toHaveLength(2);
     expect(screen.queryByRole("link", { name: "Edytuj" })).not.toBeInTheDocument();

@@ -456,7 +456,15 @@
       "title": "Work order {{number}}",
       "back": "Back",
       "edit": "Edit",
-      "serviceEntries": "Service entries"
+      "serviceEntries": "Service entries",
+      "clientAddress": "Address",
+      "clientContactPerson": "Contact person",
+      "clientPhone": "Phone",
+      "clientSignature": "Client signature"
+    },
+    "signature": {
+      "image": "Client signature, opens in a new tab",
+      "loadError": "The client signature could not be loaded."
     },
     "serviceEntries": {
       "correction": "Correction",
