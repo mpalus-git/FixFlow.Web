@@ -5,6 +5,7 @@ import { mockColorScheme } from "@/test/mockColorScheme";
 import { server } from "@/test/server";
 
 configure({ asyncUtilTimeout: 10_000 });
+window.scrollTo = () => undefined;
 mockColorScheme(false);
 
 beforeAll(() => {

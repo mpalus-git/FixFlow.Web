@@ -467,6 +467,8 @@
     },
     "details": {
       "timeline": "Przebieg zlecenia",
+      "stepDone": "etap ukończony",
+      "stepPending": "etap oczekuje",
       "title": "Zlecenie {{number}}",
       "back": "Wróć",
       "edit": "Edytuj",

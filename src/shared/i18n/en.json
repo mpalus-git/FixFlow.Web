@@ -465,6 +465,8 @@
     },
     "details": {
       "timeline": "Work order progress",
+      "stepDone": "step completed",
+      "stepPending": "step pending",
       "title": "Work order {{number}}",
       "back": "Back",
       "edit": "Edit",

@@ -100,8 +100,9 @@ function StatusFilter({ statuses, onChange }: StatusFilterProps) {
           variant="outline"
           size="sm"
           aria-pressed={isOpenOnly}
+          className="aria-pressed:border-primary aria-pressed:bg-primary/10 aria-pressed:text-primary"
           onClick={() => {
-            onChange([...openWorkOrderStatuses]);
+            onChange(isOpenOnly ? [] : [...openWorkOrderStatuses]);
           }}
         >
           {t("workOrders.filters.openOnly")}

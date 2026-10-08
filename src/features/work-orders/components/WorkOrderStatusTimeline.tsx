@@ -77,6 +77,11 @@ export function WorkOrderStatusTimeline({
                   {formatDateTime(timestamp, language)}
                 </span>
               )}
+              {isCurrent ? null : (
+                <span className="sr-only">
+                  {t(isReached ? "workOrders.details.stepDone" : "workOrders.details.stepPending")}
+                </span>
+              )}
             </span>
           </li>
         );

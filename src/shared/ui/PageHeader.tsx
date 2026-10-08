@@ -16,7 +16,9 @@ export function PageHeader({ title, subject, description, actions, back }: PageH
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex min-w-0 flex-col gap-1">
           <PageTitle title={title} subject={subject} />
-          <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+          <h1 tabIndex={-1} className="text-2xl font-semibold tracking-tight outline-none">
+            {title}
+          </h1>
           {description === undefined ? null : (
             <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
               {description}
