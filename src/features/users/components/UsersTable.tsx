@@ -32,10 +32,7 @@ function UserStatusBadge({ isActive }: UserStatusBadgeProps) {
   const { t } = useTranslation();
 
   return isActive ? (
-    <Badge
-      variant="secondary"
-      className="bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200"
-    >
+    <Badge variant="secondary" className="bg-success text-success-foreground">
       {t("users.status.active")}
     </Badge>
   ) : (

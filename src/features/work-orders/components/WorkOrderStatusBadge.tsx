@@ -11,15 +11,15 @@ const statusStyles: Record<
   New: { variant: "secondary" },
   Assigned: {
     variant: "secondary",
-    className: "bg-sky-100 text-sky-900 dark:bg-sky-950 dark:text-sky-200",
+    className: "bg-status-assigned text-status-assigned-foreground",
   },
   InProgress: {
     variant: "secondary",
-    className: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
+    className: "bg-status-in-progress text-status-in-progress-foreground",
   },
   Completed: {
     variant: "secondary",
-    className: "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200",
+    className: "bg-status-completed text-status-completed-foreground",
   },
   Invoiced: { variant: "outline", className: "text-muted-foreground" },
 };

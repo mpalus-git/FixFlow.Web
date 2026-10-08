@@ -77,9 +77,7 @@ export function DashboardStatTiles({ summary }: DashboardStatTilesProps) {
         value={summary.overdueCount}
         to="/work-orders?overdue=true"
         icon={TriangleAlertIcon}
-        {...(summary.overdueCount > 0
-          ? { iconClassName: "text-amber-600 dark:text-amber-400" }
-          : {})}
+        {...(summary.overdueCount > 0 ? { iconClassName: "text-warning-strong" } : {})}
       />
       <StatTile
         label={t("dashboard.tiles.outOfStock")}
@@ -87,9 +85,7 @@ export function DashboardStatTiles({ summary }: DashboardStatTilesProps) {
         value={summary.outOfStockPartCount}
         to="/parts?stock=out"
         icon={PackageXIcon}
-        {...(summary.outOfStockPartCount > 0
-          ? { iconClassName: "text-amber-600 dark:text-amber-400" }
-          : {})}
+        {...(summary.outOfStockPartCount > 0 ? { iconClassName: "text-warning-strong" } : {})}
       />
     </ul>
   );

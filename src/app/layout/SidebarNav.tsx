@@ -110,7 +110,7 @@ export function SidebarNav({ onNavigate }: SidebarNavProps) {
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:ring-sidebar-ring/50",
                   isActive
                     ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
-                    : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )
               }
             >

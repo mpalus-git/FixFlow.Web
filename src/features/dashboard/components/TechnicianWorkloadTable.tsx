@@ -55,10 +55,7 @@ export function TechnicianWorkloadTable({ technicians }: TechnicianWorkloadTable
             <TableCell className={numericCell}>
               <span className="inline-flex items-center gap-1">
                 {technician.overdueCount > 0 ? (
-                  <TriangleAlertIcon
-                    aria-hidden="true"
-                    className="size-3.5 text-amber-600 dark:text-amber-400"
-                  />
+                  <TriangleAlertIcon aria-hidden="true" className="size-3.5 text-warning-strong" />
                 ) : null}
                 {technician.overdueCount}
               </span>
