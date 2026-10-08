@@ -20,7 +20,7 @@ const priorityStyles: Record<
   High: {
     icon: ChevronUpIcon,
     variant: "secondary",
-    className: "bg-orange-100 text-orange-900 dark:bg-orange-950 dark:text-orange-200",
+    className: "bg-priority-high text-priority-high-foreground",
   },
   Critical: { icon: ChevronsUpIcon, variant: "destructive" },
 };
