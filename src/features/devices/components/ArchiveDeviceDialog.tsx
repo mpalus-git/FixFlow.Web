@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useArchiveDeviceMutation } from "@/features/devices/api/deviceMutations";
-import { ApiError } from "@/shared/api/apiError";
 import { describeApiError } from "@/shared/api/describeApiError";
 import type { components } from "@/shared/api/schema";
 import {
@@ -36,9 +35,7 @@ export function ArchiveDeviceDialog({ device, onClose, onArchived }: ArchiveDevi
         onArchived?.();
       },
       onError: (error) => {
-        toast.error(
-          error instanceof ApiError ? describeApiError(error, t) : t("errors.unexpected"),
-        );
+        toast.error(describeApiError(error, t));
       },
     });
   }

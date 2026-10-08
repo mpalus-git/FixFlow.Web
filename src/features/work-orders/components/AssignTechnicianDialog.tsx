@@ -63,7 +63,7 @@ export function AssignTechnicianDialog({
         queryKey: activeTechnicianOptionsQueryOptions().queryKey,
       });
     } else {
-      toast.error(error instanceof ApiError ? describeApiError(error, t) : t("errors.unexpected"));
+      toast.error(describeApiError(error, t));
       close();
     }
   }

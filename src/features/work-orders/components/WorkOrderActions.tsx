@@ -18,7 +18,6 @@ import { serviceEntriesQueryOptions } from "@/features/work-orders/api/workOrder
 import { AssignTechnicianDialog } from "@/features/work-orders/components/AssignTechnicianDialog";
 import { ConfirmActionDialog } from "@/features/work-orders/components/ConfirmActionDialog";
 import { availableWorkOrderActions } from "@/features/work-orders/workOrderRules";
-import { ApiError } from "@/shared/api/apiError";
 import { describeApiError } from "@/shared/api/describeApiError";
 import type { components } from "@/shared/api/schema";
 import type { Role } from "@/shared/session/currentUser";
@@ -47,7 +46,7 @@ export function WorkOrderActions({ workOrder, role }: WorkOrderActionsProps) {
   const canComplete = entriesQuery.data !== undefined && entriesQuery.data.length > 0;
 
   function showError(error: unknown) {
-    toast.error(error instanceof ApiError ? describeApiError(error, t) : t("errors.unexpected"));
+    toast.error(describeApiError(error, t));
   }
 
   function closeDialog(open: boolean) {

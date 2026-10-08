@@ -15,7 +15,6 @@ import {
   hasActiveUserFilters,
   useUserListSearchParams,
 } from "@/features/users/hooks/useUserListSearchParams";
-import { ApiError } from "@/shared/api/apiError";
 import { describeApiError } from "@/shared/api/describeApiError";
 import type { components } from "@/shared/api/schema";
 import { useKeepPageInRange } from "@/shared/lib/useKeepPageInRange";
@@ -49,9 +48,7 @@ export function UsersPage() {
           toast.success(t("users.activate.activated", { email: user.email }));
         },
         onError: (error) => {
-          toast.error(
-            error instanceof ApiError ? describeApiError(error, t) : t("errors.unexpected"),
-          );
+          toast.error(describeApiError(error, t));
         },
       },
     );

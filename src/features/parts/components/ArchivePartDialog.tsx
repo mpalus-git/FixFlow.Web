@@ -19,10 +19,7 @@ import {
 type PartResponse = components["schemas"]["PartResponse"];
 
 function describeArchiveError(error: unknown, t: TFunction): string {
-  if (!(error instanceof ApiError)) {
-    return t("errors.unexpected");
-  }
-  return error.errorCode === "Persistence.ConcurrentModification"
+  return error instanceof ApiError && error.errorCode === "Persistence.ConcurrentModification"
     ? t("parts.archive.concurrent")
     : describeApiError(error, t);
 }
