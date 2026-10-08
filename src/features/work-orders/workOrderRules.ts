@@ -1,9 +1,27 @@
 import type { components } from "@/shared/api/schema";
 import type { Role } from "@/shared/session/currentUser";
 
-type WorkOrderStatus = components["schemas"]["WorkOrderStatus"];
+export type WorkOrderStatus = components["schemas"]["WorkOrderStatus"];
 
-const editableStatuses: readonly WorkOrderStatus[] = ["New", "Assigned", "InProgress"];
+export const workOrderStatuses = [
+  "New",
+  "Assigned",
+  "InProgress",
+  "Completed",
+  "Invoiced",
+] as const satisfies readonly WorkOrderStatus[];
+
+export const openWorkOrderStatuses = [
+  "New",
+  "Assigned",
+  "InProgress",
+] as const satisfies readonly WorkOrderStatus[];
+
+export function orderedStatuses(values: readonly string[]): WorkOrderStatus[] {
+  return workOrderStatuses.filter((status) => values.includes(status));
+}
+
+const editableStatuses: readonly WorkOrderStatus[] = openWorkOrderStatuses;
 
 export function canEditWorkOrder(status: WorkOrderStatus): boolean {
   return editableStatuses.includes(status);

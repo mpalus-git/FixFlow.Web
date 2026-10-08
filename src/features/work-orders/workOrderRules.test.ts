@@ -1,6 +1,7 @@
 import {
   availableWorkOrderActions,
   canEditWorkOrder,
+  orderedStatuses,
   type WorkOrderActionAvailability,
 } from "@/features/work-orders/workOrderRules";
 
@@ -41,5 +42,14 @@ describe("canEditWorkOrder", () => {
     ["Invoiced", false],
   ] as const)("allows editing a work order in the %s status: %s", (status, editable) => {
     expect(canEditWorkOrder(status)).toBe(editable);
+  });
+});
+
+describe("orderedStatuses", () => {
+  it("returns known statuses in workflow order without duplicates", () => {
+    expect(orderedStatuses(["Completed", "Bogus", "New", "Completed", "new"])).toEqual([
+      "New",
+      "Completed",
+    ]);
   });
 });
