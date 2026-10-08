@@ -132,11 +132,7 @@ export function WorkOrderFilters({
   const overdueId = useId();
 
   return (
-    <div
-      role="group"
-      aria-label={t("workOrders.filters.label")}
-      className="flex flex-col gap-3 rounded-xl border p-3"
-    >
+    <div role="group" aria-label={t("workOrders.filters.label")} className="flex flex-col gap-3">
       <StatusFilter
         statuses={filters.status}
         onChange={(status) => {

@@ -79,7 +79,9 @@ export function WorkOrderEventList({ workOrderId }: WorkOrderEventListProps) {
   const events = eventsQuery.data;
 
   if (eventsQuery.isError) {
-    return <ErrorState error={eventsQuery.error} onRetry={() => void eventsQuery.refetch()} />;
+    return (
+      <ErrorState compact error={eventsQuery.error} onRetry={() => void eventsQuery.refetch()} />
+    );
   }
   if (events === undefined) {
     return <ListSkeleton rows={3} />;
@@ -87,6 +89,7 @@ export function WorkOrderEventList({ workOrderId }: WorkOrderEventListProps) {
   if (events.length === 0) {
     return (
       <EmptyState
+        compact
         icon={HistoryIcon}
         title={t("workOrders.events.empty.title")}
         description={t("workOrders.events.empty.description")}

@@ -9,6 +9,7 @@ export type ErrorStateProps = {
   error?: unknown;
   retryLabel?: string;
   isRetryDisabled?: boolean;
+  compact?: boolean;
   onRetry: () => void;
 };
 
@@ -36,23 +37,50 @@ export function ErrorState({
   error,
   retryLabel,
   isRetryDisabled = false,
+  compact = false,
   onRetry,
 }: ErrorStateProps) {
   const { t } = useTranslation();
+  const heading = title ?? t("states.errorTitle");
+  const message = description ?? t(descriptionKeyFor(error));
+  const retryButton = (
+    <Button
+      variant="outline"
+      size={compact ? "sm" : "default"}
+      disabled={isRetryDisabled}
+      onClick={onRetry}
+    >
+      <RefreshCwIcon aria-hidden="true" />
+      {retryLabel ?? t("states.retry")}
+    </Button>
+  );
+
+  if (compact) {
+    return (
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 py-1 text-sm">
+        <div role="alert" className="flex items-start gap-2">
+          <TriangleAlertIcon
+            aria-hidden="true"
+            className="mt-0.5 size-4 shrink-0 text-destructive"
+          />
+          <div className="flex flex-col gap-0.5">
+            <p className="font-medium">{heading}</p>
+            <p className="text-muted-foreground">{message}</p>
+          </div>
+        </div>
+        {retryButton}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center gap-3 rounded-xl border border-destructive/30 px-6 py-12 text-center">
       <div role="alert" className="flex flex-col items-center gap-3">
         <TriangleAlertIcon aria-hidden="true" className="size-10 text-destructive" />
-        <h2 className="text-base font-medium">{title ?? t("states.errorTitle")}</h2>
-        <p className="max-w-sm text-sm text-muted-foreground">
-          {description ?? t(descriptionKeyFor(error))}
-        </p>
+        <h2 className="text-base font-medium">{heading}</h2>
+        <p className="max-w-sm text-sm text-muted-foreground">{message}</p>
       </div>
-      <Button variant="outline" disabled={isRetryDisabled} onClick={onRetry}>
-        <RefreshCwIcon aria-hidden="true" />
-        {retryLabel ?? t("states.retry")}
-      </Button>
+      {retryButton}
     </div>
   );
 }

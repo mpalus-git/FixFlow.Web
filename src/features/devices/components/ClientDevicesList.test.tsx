@@ -68,9 +68,7 @@ describe("ClientDevicesList", () => {
     mockDevices({ items: [], page: 1, pageSize: 10, totalCount: 0 });
     renderList();
 
-    expect(
-      await screen.findByRole("heading", { name: "Klient nie ma jeszcze urządzeń" }),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Klient nie ma jeszcze urządzeń")).toBeInTheDocument();
   });
 
   it("offers a retry when the devices cannot be loaded", async () => {

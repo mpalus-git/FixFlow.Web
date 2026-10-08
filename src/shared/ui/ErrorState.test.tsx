@@ -48,4 +48,16 @@ describe("ErrorState", () => {
 
     expect(onRetry).toHaveBeenCalledOnce();
   });
+
+  it("keeps the alert and the retry button in the compact variant", async () => {
+    const user = userEvent.setup();
+    const onRetry = vi.fn();
+    render(<ErrorState compact error={new ApiError({ kind: "server" })} onRetry={onRetry} />);
+
+    expect(screen.getByRole("alert")).toHaveTextContent("Błąd serwera");
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Spróbuj ponownie" }));
+
+    expect(onRetry).toHaveBeenCalledOnce();
+  });
 });

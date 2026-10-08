@@ -8,12 +8,16 @@ import { formatDateTime } from "@/shared/lib/dateTime";
 
 type WorkOrderResponse = components["schemas"]["WorkOrderResponse"];
 
-function reachedAt(workOrder: WorkOrderResponse, status: WorkOrderStatus): string | null {
+function reachedAt(
+  workOrder: WorkOrderResponse,
+  assignedAt: string | null,
+  status: WorkOrderStatus,
+): string | null {
   switch (status) {
     case "New":
       return workOrder.createdAt;
     case "Assigned":
-      return null;
+      return assignedAt;
     case "InProgress":
       return workOrder.startedAt;
     case "Completed":
@@ -25,9 +29,13 @@ function reachedAt(workOrder: WorkOrderResponse, status: WorkOrderStatus): strin
 
 export type WorkOrderStatusTimelineProps = {
   workOrder: WorkOrderResponse;
+  assignedAt?: string | null;
 };
 
-export function WorkOrderStatusTimeline({ workOrder }: WorkOrderStatusTimelineProps) {
+export function WorkOrderStatusTimeline({
+  workOrder,
+  assignedAt = null,
+}: WorkOrderStatusTimelineProps) {
   const { t } = useTranslation();
   const language = useLanguage();
   const currentIndex = workOrderStatuses.indexOf(workOrder.status);
@@ -35,18 +43,18 @@ export function WorkOrderStatusTimeline({ workOrder }: WorkOrderStatusTimelinePr
   return (
     <ol
       aria-label={t("workOrders.details.timeline")}
-      className="grid gap-3 sm:grid-cols-5 sm:gap-2"
+      className="grid gap-3 sm:grid-cols-5 sm:gap-2 xl:grid-cols-1 xl:gap-3"
     >
       {workOrderStatuses.map((status, index) => {
         const isCurrent = index === currentIndex;
         const isReached = index <= currentIndex;
-        const timestamp = isReached ? reachedAt(workOrder, status) : null;
+        const timestamp = isReached ? reachedAt(workOrder, assignedAt, status) : null;
 
         return (
           <li
             key={status}
             aria-current={isCurrent ? "step" : undefined}
-            className="flex items-start gap-3 sm:flex-col sm:gap-2"
+            className="flex items-start gap-3 sm:flex-col sm:gap-2 xl:flex-row xl:gap-3"
           >
             <span
               aria-hidden="true"

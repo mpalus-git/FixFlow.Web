@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { WorkOrderStatusTimeline } from "@/features/work-orders/components/WorkOrderStatusTimeline";
-import { createWorkOrderResponse } from "@/test/workOrderFixtures";
+import { latestAssignmentTime } from "@/features/work-orders/workOrderRules";
+import { createWorkOrderEventResponse, createWorkOrderResponse } from "@/test/workOrderFixtures";
 
 function steps() {
   return within(screen.getByRole("list", { name: "Przebieg zlecenia" })).getAllByRole("listitem");
@@ -26,6 +27,27 @@ describe("WorkOrderStatusTimeline", () => {
     expect(assigned).not.toHaveAttribute("aria-current");
     expect(completed).toHaveTextContent("Zakończone");
     expect(completed).not.toHaveTextContent(/\d{2}:\d{2}/);
+  });
+
+  it("shows when the technician was last assigned according to the event history", () => {
+    const events = [
+      createWorkOrderEventResponse({ type: "Created", occurredAt: "2026-07-10T08:00:00Z" }),
+      createWorkOrderEventResponse({ type: "Assigned", occurredAt: "2026-07-11T07:00:00Z" }),
+      createWorkOrderEventResponse({ type: "Reassigned", occurredAt: "2026-07-12T09:30:00Z" }),
+      createWorkOrderEventResponse({ type: "Started", occurredAt: "2026-07-13T06:00:00Z" }),
+    ];
+    render(
+      <WorkOrderStatusTimeline
+        workOrder={createWorkOrderResponse({ status: "InProgress" })}
+        assignedAt={latestAssignmentTime(events)}
+      />,
+    );
+
+    expect(steps()[1]).toHaveTextContent("Przypisane12.07.2026 11:30");
+  });
+
+  it("leaves the assignment time empty when the history has no assignment", () => {
+    expect(latestAssignmentTime([createWorkOrderEventResponse({ type: "Created" })])).toBeNull();
   });
 
   it("ends on the invoiced status of a closed work order", () => {
