@@ -1,9 +1,10 @@
 import { MenuIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Outlet, ScrollRestoration } from "react-router";
+import { Outlet, ScrollRestoration, useNavigation } from "react-router";
 import { AppBrand } from "@/app/layout/AppBrand";
 import { LanguageSwitcher } from "@/app/layout/LanguageSwitcher";
+import { NavigationProgress } from "@/app/layout/NavigationProgress";
 import { SidebarNav } from "@/app/layout/SidebarNav";
 import { ThemeSwitcher } from "@/app/layout/ThemeSwitcher";
 import { ServerWakeBanner } from "@/app/layout/ServerWakeBanner";
@@ -26,6 +27,7 @@ export function AppLayout() {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isNavigatingFromMenu = useRef(false);
+  const isPageLoading = useNavigation().state === "loading";
   useRedirectOnSessionEnd();
   useFocusPageHeading();
   usePreloadNavigationPages(useCurrentUser()?.role);
@@ -90,9 +92,15 @@ export function AppLayout() {
             <ThemeSwitcher />
             <UserMenu />
           </div>
+          <NavigationProgress />
         </header>
         <ServerWakeBanner />
-        <main id="main-content" tabIndex={-1} className="flex-1 p-4 outline-none md:p-6">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          aria-busy={isPageLoading}
+          className="flex-1 p-4 outline-none md:p-6"
+        >
           <div className="mx-auto w-full max-w-7xl">
             <Outlet />
           </div>
