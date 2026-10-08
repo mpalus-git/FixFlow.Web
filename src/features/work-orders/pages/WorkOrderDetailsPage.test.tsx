@@ -82,6 +82,12 @@ describe("WorkOrderDetailsPage", () => {
       "href",
       `/clients/${workOrder.clientId}`,
     );
+    expect(screen.getByText("Długa 12, 00-950 Warszawa")).toBeInTheDocument();
+    expect(screen.getByText("Anna Kowalska")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "+48 600 100 200" })).toHaveAttribute(
+      "href",
+      "tel:+48 600 100 200",
+    );
     expect(await screen.findByText("Anna Nowak")).toBeInTheDocument();
     expect(screen.getByText("Jan Kowalski")).toBeInTheDocument();
     expect(screen.getByText("05.10.2026 10:00")).toBeInTheDocument();
@@ -120,6 +126,8 @@ describe("WorkOrderDetailsPage", () => {
     expect(await screen.findByText("Piekarnia Kowalski")).toBeInTheDocument();
     expect(screen.getByText("SN-2024-0001 · Vitodens 200-W")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /SN-2024-0001|Piekarnia/ })).not.toBeInTheDocument();
+    expect(screen.getByText("Długa 12, 00-950 Warszawa")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "+48 600 100 200" })).toBeInTheDocument();
     expect(await screen.findByText("Wymieniono czujnik ciśnienia")).toBeInTheDocument();
     expect(screen.getAllByText("Jan Kowalski")).toHaveLength(2);
     expect(screen.queryByRole("link", { name: "Edytuj" })).not.toBeInTheDocument();

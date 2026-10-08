@@ -456,7 +456,10 @@
       "title": "Work order {{number}}",
       "back": "Back",
       "edit": "Edit",
-      "serviceEntries": "Service entries"
+      "serviceEntries": "Service entries",
+      "clientAddress": "Address",
+      "clientContactPerson": "Contact person",
+      "clientPhone": "Phone"
     },
     "serviceEntries": {
       "correction": "Correction",

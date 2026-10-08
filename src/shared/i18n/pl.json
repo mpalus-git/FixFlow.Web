@@ -458,7 +458,10 @@
       "title": "Zlecenie {{number}}",
       "back": "Wróć",
       "edit": "Edytuj",
-      "serviceEntries": "Wpisy serwisowe"
+      "serviceEntries": "Wpisy serwisowe",
+      "clientAddress": "Adres",
+      "clientContactPerson": "Osoba kontaktowa",
+      "clientPhone": "Telefon"
     },
     "serviceEntries": {
       "correction": "Korekta",

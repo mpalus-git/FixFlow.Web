@@ -14,6 +14,7 @@ import { useReturnPath } from "@/features/work-orders/hooks/useReturnPath";
 import { canEditWorkOrder } from "@/features/work-orders/workOrderRules";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatDateTime } from "@/shared/lib/dateTime";
+import { formatAddress } from "@/shared/lib/formatAddress";
 import { useCurrentUser } from "@/shared/session/currentUser";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
@@ -102,6 +103,19 @@ export function WorkOrderDetailsPage() {
                   {workOrder.clientName}
                 </Link>
               )}
+            </dd>
+            <dt className="text-muted-foreground">{t("workOrders.details.clientAddress")}</dt>
+            <dd>{formatAddress(workOrder.clientAddress)}</dd>
+            <dt className="text-muted-foreground">{t("workOrders.details.clientContactPerson")}</dt>
+            <dd>{workOrder.clientContactPerson}</dd>
+            <dt className="text-muted-foreground">{t("workOrders.details.clientPhone")}</dt>
+            <dd>
+              <a
+                className="underline-offset-4 hover:underline"
+                href={`tel:${workOrder.clientPhone}`}
+              >
+                {workOrder.clientPhone}
+              </a>
             </dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.technician")}</dt>
             <dd>{workOrder.technicianName ?? t("workOrders.unassigned")}</dd>
