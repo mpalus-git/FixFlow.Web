@@ -553,6 +553,13 @@
       "title": "Brak wyników",
       "description": "Żadna część nie pasuje do „{{search}}”."
     },
+    "filters": {
+      "outOfStockOnly": "Tylko brakujące"
+    },
+    "allInStock": {
+      "title": "Wszystkie części są na stanie",
+      "description": "Żadna część w katalogu nie ma zerowego stanu magazynowego."
+    },
     "stock": {
       "low": "Niski stan",
       "out": "Brak",

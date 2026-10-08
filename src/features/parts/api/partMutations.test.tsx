@@ -26,7 +26,7 @@ const otherPart = createPartResponse({
   catalogNumber: "FLT-AC-100",
 });
 const partUrl = `${apiBaseUrl}/api/v1/parts/${part.id}`;
-const listKey = partKeys.list({ page: 1, search: "" });
+const listKey = partKeys.list({ page: 1, search: "", outOfStockOnly: false });
 
 function pageOf(items: PartPage["items"]): PartPage {
   return { items, page: 1, pageSize: 20, totalCount: items.length };

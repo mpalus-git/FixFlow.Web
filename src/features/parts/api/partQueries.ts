@@ -8,6 +8,7 @@ export const partsPageSize = 20;
 export type PartListParams = {
   page: number;
   search: string;
+  outOfStockOnly: boolean;
 };
 
 export const partKeys = {
@@ -18,9 +19,9 @@ export const partKeys = {
   detail: (partId: string) => [...partKeys.details(), partId] as const,
 };
 
-export function partListQueryOptions({ page, search }: PartListParams) {
+export function partListQueryOptions({ page, search, outOfStockOnly }: PartListParams) {
   return queryOptions({
-    queryKey: partKeys.list({ page, search }),
+    queryKey: partKeys.list({ page, search, outOfStockOnly }),
     queryFn: async ({ signal }) =>
       unwrap(
         await apiClient.GET("/api/v1/parts", {
@@ -29,6 +30,7 @@ export function partListQueryOptions({ page, search }: PartListParams) {
               page,
               pageSize: partsPageSize,
               ...(search === "" ? {} : { search }),
+              ...(outOfStockOnly ? { inStock: false } : {}),
             },
           },
           signal,

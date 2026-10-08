@@ -7,7 +7,7 @@ import { server } from "@/test/server";
 
 type PartPage = components["schemas"]["PagedResponseOfPartResponse"];
 
-async function requestListWith(search: string) {
+async function requestListWith(search: string, outOfStockOnly = false) {
   const queries: Record<string, string>[] = [];
   server.use(
     http.get(`${apiBaseUrl}/api/v1/parts`, ({ request }) => {
@@ -16,7 +16,7 @@ async function requestListWith(search: string) {
       return HttpResponse.json(partPage);
     }),
   );
-  await new QueryClient().query(partListQueryOptions({ page: 2, search }));
+  await new QueryClient().query(partListQueryOptions({ page: 2, search, outOfStockOnly }));
   return queries;
 }
 
@@ -28,6 +28,12 @@ describe("partListQueryOptions", () => {
   it("searches by name or catalog number with the text from the search box", async () => {
     expect(await requestListWith("filtr")).toEqual([
       { page: "2", pageSize: "20", search: "filtr" },
+    ]);
+  });
+
+  it("asks only for parts out of stock when that filter is on", async () => {
+    expect(await requestListWith("", true)).toEqual([
+      { page: "2", pageSize: "20", inStock: "false" },
     ]);
   });
 });
