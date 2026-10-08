@@ -3,7 +3,7 @@ import { checkServerReady, type ServerReadyCheck } from "@/app/server-wake/check
 
 export type ServerWakeStatus = "checking" | "waking" | "ready" | "unavailable";
 
-export const serverWakeTimings = {
+const serverWakeTimings = {
   slowResponseMs: 3_000,
   retryIntervalMs: 3_000,
   giveUpAfterMs: 90_000,

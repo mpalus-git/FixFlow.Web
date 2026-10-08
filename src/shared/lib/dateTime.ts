@@ -3,7 +3,7 @@ import { addDays, format, startOfISOWeek } from "date-fns";
 import { enUS, pl } from "date-fns/locale";
 import type { Language } from "@/shared/i18n/languages";
 
-export const appTimeZone = "Europe/Warsaw";
+const appTimeZone = "Europe/Warsaw";
 
 const dateFnsLocales = { pl, en: enUS };
 

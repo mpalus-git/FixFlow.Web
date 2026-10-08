@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 export type PageTitleProps = {
   title: string;
-  subject?: string;
+  subject?: string | undefined;
 };
 
 export function PageTitle({ title, subject }: PageTitleProps) {

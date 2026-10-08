@@ -4,7 +4,7 @@ import { clearRefreshToken, writeRefreshToken } from "@/shared/session/refreshTo
 
 export type AuthTokens = components["schemas"]["AuthTokensResponse"];
 
-export type SessionStatus = "anonymous" | "authenticated";
+type SessionStatus = "anonymous" | "authenticated";
 
 export type SessionEndReason = "expired" | "signedOut";
 

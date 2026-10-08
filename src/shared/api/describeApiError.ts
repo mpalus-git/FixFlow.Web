@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next";
-import { type ApiError, isServerUnreachable } from "@/shared/api/apiError";
+import { ApiError, isServerUnreachable } from "@/shared/api/apiError";
 
 const errorCodeMessageKeys = {
   "Client.Archived": "apiErrors.clientArchived",
@@ -32,7 +32,10 @@ function isKnownErrorCode(errorCode: string): errorCode is KnownErrorCode {
   return Object.keys(errorCodeMessageKeys).includes(errorCode);
 }
 
-export function describeApiError(error: ApiError, t: TFunction): string {
+export function describeApiError(error: unknown, t: TFunction): string {
+  if (!(error instanceof ApiError)) {
+    return t("errors.unexpected");
+  }
   if (error.errorCode !== null && isKnownErrorCode(error.errorCode)) {
     return t(errorCodeMessageKeys[error.errorCode]);
   }

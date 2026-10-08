@@ -9,7 +9,7 @@ type UserPage = components["schemas"]["PagedResponseOfUserResponse"];
 
 export const usersUrl = `${apiBaseUrl}/api/v1/users`;
 
-export const signedInAdmin = createUser("Admin");
+const signedInAdmin = createUser("Admin");
 
 export const userAccounts: UserResponse[] = [
   signedInAdmin,

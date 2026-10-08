@@ -3,13 +3,13 @@ import { XIcon } from "lucide-react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import { technicianOptionsQueryOptions } from "@/shared/api/technicianQueries";
+import type { WorkOrderListFilters } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
 import {
   openWorkOrderStatuses,
   orderedStatuses,
-  type WorkOrderListFilters,
   type WorkOrderStatus,
   workOrderStatuses,
-} from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
+} from "@/features/work-orders/workOrderRules";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";

@@ -1,20 +1,12 @@
 import { z } from "zod";
-import type { components, operations } from "@/shared/api/schema";
+import { orderedStatuses, type WorkOrderStatus } from "@/features/work-orders/workOrderRules";
+import type { operations } from "@/shared/api/schema";
 import { isCalendarDate } from "@/shared/lib/dateTime";
 import { pageValue, readPageParam, useSearchParamsUpdate } from "@/shared/lib/useListSearchParams";
 
 type ListWorkOrdersQuery = NonNullable<operations["ListWorkOrders"]["parameters"]["query"]>;
-export type WorkOrderStatus = components["schemas"]["WorkOrderStatus"];
 export type WorkOrderSortBy = NonNullable<ListWorkOrdersQuery["sortBy"]>;
-export type SortDirection = NonNullable<ListWorkOrdersQuery["sortDirection"]>;
-
-export const workOrderStatuses = [
-  "New",
-  "Assigned",
-  "InProgress",
-  "Completed",
-  "Invoiced",
-] as const satisfies readonly WorkOrderStatus[];
+type SortDirection = NonNullable<ListWorkOrdersQuery["sortDirection"]>;
 
 const workOrderSortFields = [
   "DueDate",
@@ -23,12 +15,6 @@ const workOrderSortFields = [
   "Status",
   "ClientName",
 ] as const satisfies readonly WorkOrderSortBy[];
-
-export const openWorkOrderStatuses = [
-  "New",
-  "Assigned",
-  "InProgress",
-] as const satisfies readonly WorkOrderStatus[];
 
 export type WorkOrderListFilters = {
   status: readonly WorkOrderStatus[];
@@ -67,10 +53,6 @@ const technicianIdSchema = z.uuid();
 function parseParam<T>(schema: z.ZodType<T>, value: string | null): T | null {
   const result = schema.safeParse(value);
   return result.success ? result.data : null;
-}
-
-export function orderedStatuses(values: readonly string[]): WorkOrderStatus[] {
-  return workOrderStatuses.filter((status) => values.includes(status));
 }
 
 function readCalendarDate(value: string | null): string | null {

@@ -12,7 +12,7 @@ export type DispatchTechnician = components["schemas"]["UserResponse"];
 export type DispatchTarget =
   { kind: "unassigned" } | { kind: "cell"; technicianId: string; day: string };
 
-export type DispatchRow = {
+type DispatchRow = {
   technician: DispatchTechnician;
   workOrdersByDay: Record<string, DispatchWorkOrder[]>;
 };

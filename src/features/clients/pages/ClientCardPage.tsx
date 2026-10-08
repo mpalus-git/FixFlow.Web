@@ -17,7 +17,7 @@ import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 type ClientResponse = components["schemas"]["ClientResponse"];
 
@@ -42,33 +42,34 @@ export function ClientCardPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex flex-col gap-2">
-          <PageTitle title={client.name} />
-          <h1 className="text-2xl font-semibold tracking-tight">{client.name}</h1>
-          {isArchived ? <Badge variant="secondary">{t("clients.card.archived")}</Badge> : null}
-        </div>
-        {isArchived ? null : (
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" asChild>
-              <Link to={`/clients/${client.id}/edit`}>
-                <PencilIcon aria-hidden="true" />
-                {t("clients.actions.edit")}
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              className="text-destructive"
-              onClick={() => {
-                setClientToArchive(client);
-              }}
-            >
-              <ArchiveIcon aria-hidden="true" />
-              {t("clients.actions.archive")}
-            </Button>
-          </div>
-        )}
-      </div>
+      <PageHeader
+        title={client.name}
+        description={
+          isArchived ? <Badge variant="secondary">{t("clients.card.archived")}</Badge> : undefined
+        }
+        actions={
+          isArchived ? undefined : (
+            <>
+              <Button variant="outline" asChild>
+                <Link to={`/clients/${client.id}/edit`}>
+                  <PencilIcon aria-hidden="true" />
+                  {t("clients.actions.edit")}
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                className="text-destructive"
+                onClick={() => {
+                  setClientToArchive(client);
+                }}
+              >
+                <ArchiveIcon aria-hidden="true" />
+                {t("clients.actions.archive")}
+              </Button>
+            </>
+          )
+        }
+      />
       <Card>
         <CardContent>
           <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_1fr]">

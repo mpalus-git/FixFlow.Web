@@ -54,8 +54,7 @@ export function DeactivateUserDialog({ user, onClose }: DeactivateUserDialogProp
           } else {
             setDeactivationError({
               kind: "other",
-              message:
-                error instanceof ApiError ? describeApiError(error, t) : t("errors.unexpected"),
+              message: describeApiError(error, t),
             });
           }
         },

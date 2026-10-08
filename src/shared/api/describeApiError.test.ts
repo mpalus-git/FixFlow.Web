@@ -3,6 +3,10 @@ import { ApiError } from "@/shared/api/apiError";
 import { describeApiError } from "@/shared/api/describeApiError";
 
 describe("describeApiError", () => {
+  it("describes an error that did not come from the API as unexpected", () => {
+    expect(describeApiError(new TypeError("boom"), i18next.t)).toBe(i18next.t("errors.unexpected"));
+  });
+
   it("translates a known error code", () => {
     const error = new ApiError({
       kind: "conflict",

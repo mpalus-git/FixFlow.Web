@@ -22,7 +22,7 @@ async function readBody(response: Response): Promise<unknown> {
   }
 }
 
-export const errorMiddleware: Middleware = {
+const errorMiddleware: Middleware = {
   async onResponse({ response }) {
     if (!response.ok) {
       throw toApiError(response, await readBody(response));

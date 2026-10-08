@@ -3,7 +3,6 @@ import { FileDownIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { apiClient } from "@/shared/api/apiClient";
-import { ApiError } from "@/shared/api/apiError";
 import { unwrap } from "@/shared/api/baseClient";
 import { describeApiError } from "@/shared/api/describeApiError";
 import type { components } from "@/shared/api/schema";
@@ -40,7 +39,7 @@ export function ServiceProtocolButton({
       saveBlob(pdf, protocolFileName(workOrderNumber));
     },
     onError: (error) => {
-      toast.error(error instanceof ApiError ? describeApiError(error, t) : t("errors.unexpected"), {
+      toast.error(describeApiError(error, t), {
         action: {
           label: t("states.retry"),
           onClick: () => {

@@ -1,5 +1,3 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -11,19 +9,21 @@ import { Alert, AlertDescription } from "@/shared/ui/alert";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
+import { useVersionedResource } from "@/shared/api/useVersionedResource";
 import { VersionConflictDialog } from "@/shared/ui/VersionConflictDialog";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function EditDevicePage() {
   const { t } = useTranslation();
   const { deviceId = "" } = useParams();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const deviceQuery = useQuery(deviceQueryOptions(deviceId));
+  const {
+    query: deviceQuery,
+    editedVersion,
+    conflictDialogProps,
+    openConflict,
+  } = useVersionedResource(deviceQueryOptions(deviceId));
   const updateDeviceMutation = useUpdateDeviceMutation();
-  const [loadedVersion, setLoadedVersion] = useState(deviceQuery.data);
-  const [isConflictOpen, setIsConflictOpen] = useState(false);
-  const editedVersion = loadedVersion ?? deviceQuery.data;
 
   if (editedVersion === undefined) {
     return deviceQuery.isError ? (
@@ -33,24 +33,16 @@ export function EditDevicePage() {
     );
   }
 
-  async function loadCurrentVersion() {
-    try {
-      setLoadedVersion(await queryClient.query({ ...deviceQueryOptions(deviceId), staleTime: 0 }));
-    } catch {
-      toast.error(t("states.errorTitle"));
-    }
-  }
-
   const device = editedVersion.data;
   const isArchived = device.archivedAt !== null;
 
   return (
     <div className="flex max-w-3xl flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <PageTitle title={t("devices.edit.title")} subject={device.serialNumber} />
-        <h1 className="text-2xl font-semibold tracking-tight">{t("devices.edit.title")}</h1>
-        <p className="text-muted-foreground">{device.serialNumber}</p>
-      </div>
+      <PageHeader
+        title={t("devices.edit.title")}
+        subject={device.serialNumber}
+        description={device.serialNumber}
+      />
       {isArchived ? (
         <Alert role="note">
           <AlertDescription>{t("apiErrors.deviceArchived")}</AlertDescription>
@@ -73,17 +65,11 @@ export function EditDevicePage() {
               toast.success(t("devices.edit.saved"));
               await navigate(`/devices/${deviceId}`);
             }}
-            onVersionConflict={() => {
-              setIsConflictOpen(true);
-            }}
+            onVersionConflict={openConflict}
           />
         </CardContent>
       </Card>
-      <VersionConflictDialog
-        open={isConflictOpen}
-        onOpenChange={setIsConflictOpen}
-        onReload={() => void loadCurrentVersion()}
-      />
+      <VersionConflictDialog {...conflictDialogProps} />
     </div>
   );
 }

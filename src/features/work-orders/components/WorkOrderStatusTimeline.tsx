@@ -1,13 +1,12 @@
 import { cn } from "cn";
 import { CheckIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { workOrderStatuses } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
+import { type WorkOrderStatus, workOrderStatuses } from "@/features/work-orders/workOrderRules";
 import type { components } from "@/shared/api/schema";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatDateTime } from "@/shared/lib/dateTime";
 
 type WorkOrderResponse = components["schemas"]["WorkOrderResponse"];
-type WorkOrderStatus = components["schemas"]["WorkOrderStatus"];
 
 function reachedAt(workOrder: WorkOrderResponse, status: WorkOrderStatus): string | null {
   switch (status) {

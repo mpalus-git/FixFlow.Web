@@ -4,7 +4,7 @@ import { unwrap } from "@/shared/api/baseClient";
 import { queryKeyRoots } from "@/shared/api/queryKeyRoots";
 import { addCalendarDays } from "@/shared/lib/dateTime";
 
-export const dispatchBoardLimit = 100;
+const dispatchBoardLimit = 100;
 
 export const dispatchRefreshIntervalMs = 30_000;
 

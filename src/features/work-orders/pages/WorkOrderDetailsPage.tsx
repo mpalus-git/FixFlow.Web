@@ -23,7 +23,7 @@ import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function WorkOrderDetailsPage() {
   const { t } = useTranslation();
@@ -45,28 +45,27 @@ export function WorkOrderDetailsPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-3">
-        <Button variant="ghost" size="sm" className="-ml-2.5 w-fit" asChild>
-          <Link to={returnPath}>
-            <ArrowLeftIcon aria-hidden="true" />
-            {t("workOrders.details.back")}
-          </Link>
-        </Button>
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="flex flex-col gap-2">
-            <PageTitle title={t("workOrders.details.title", { number: workOrder.number })} />
-            <h1 className="text-2xl font-semibold tracking-tight">
-              {t("workOrders.details.title", { number: workOrder.number })}
-            </h1>
-            <div className="flex flex-wrap items-center gap-2">
-              <WorkOrderStatusBadge status={workOrder.status} />
-              <WorkOrderPriorityBadge priority={workOrder.priority} />
-              {workOrder.isOverdue ? (
-                <Badge variant="destructive">{t("workOrders.overdue")}</Badge>
-              ) : null}
-            </div>
-          </div>
-          <div className="flex flex-wrap items-start gap-2">
+      <PageHeader
+        title={t("workOrders.details.title", { number: workOrder.number })}
+        back={
+          <Button variant="ghost" size="sm" className="-ml-2.5 w-fit" asChild>
+            <Link to={returnPath}>
+              <ArrowLeftIcon aria-hidden="true" />
+              {t("workOrders.details.back")}
+            </Link>
+          </Button>
+        }
+        description={
+          <>
+            <WorkOrderStatusBadge status={workOrder.status} />
+            <WorkOrderPriorityBadge priority={workOrder.priority} />
+            {workOrder.isOverdue ? (
+              <Badge variant="destructive">{t("workOrders.overdue")}</Badge>
+            ) : null}
+          </>
+        }
+        actions={
+          <>
             {user === undefined ? null : (
               <WorkOrderActions workOrder={workOrder} role={user.role} />
             )}
@@ -83,9 +82,9 @@ export function WorkOrderDetailsPage() {
                 </Link>
               </Button>
             ) : null}
-          </div>
-        </div>
-      </div>
+          </>
+        }
+      />
       <Card>
         <CardContent>
           <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_1fr]">
