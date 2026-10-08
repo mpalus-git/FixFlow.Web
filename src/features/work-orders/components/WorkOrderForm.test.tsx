@@ -11,7 +11,7 @@ import { ApiError } from "@/shared/api/apiError";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { createClientResponse } from "@/test/clientFixtures";
-import { createDeviceListItem } from "@/test/deviceFixtures";
+import { createDeviceListItem, createDeviceResponse } from "@/test/deviceFixtures";
 import { renderWithProviders } from "@/test/renderWithProviders";
 import { server } from "@/test/server";
 
@@ -64,10 +64,12 @@ function renderForm({
 
 async function fillValidWorkOrder() {
   const user = userEvent.setup();
-  await screen.findByRole("option", { name: client.name });
-  await user.selectOptions(screen.getByLabelText("Klient"), client.name);
-  await screen.findByRole("option", { name: "SN-2024-0001 · Viessmann Vitodens 200-W" });
-  await user.selectOptions(screen.getByLabelText("Urządzenie"), device.id);
+  await user.click(screen.getByRole("combobox", { name: "Klient" }));
+  await user.click(await screen.findByRole("option", { name: client.name }));
+  await user.click(screen.getByRole("combobox", { name: "Urządzenie" }));
+  await user.click(
+    await screen.findByRole("option", { name: "SN-2024-0001 · Viessmann Vitodens 200-W" }),
+  );
   await user.type(screen.getByLabelText("Opis usterki"), "Kocioł nie grzeje wody");
   await user.selectOptions(screen.getByLabelText("Priorytet"), "Krytyczny");
   fireEvent.change(screen.getByLabelText("Termin"), { target: { value: "2030-01-15T10:00" } });
@@ -79,10 +81,42 @@ describe("WorkOrderForm", () => {
     mockSelectionOptions();
     renderForm({ selectsDevice: true });
 
-    await screen.findByRole("option", { name: client.name });
     await userEvent.setup().click(screen.getByRole("button", { name: "Zapisz" }));
 
     expect(await screen.findAllByText("To pole jest wymagane")).toHaveLength(4);
+  });
+
+  it("searches clients on the server and fills in the client and device given in the address", async () => {
+    const clientSearches: (string | null)[] = [];
+    server.use(
+      http.get(`${apiBaseUrl}/api/v1/clients`, ({ request }) => {
+        clientSearches.push(new URL(request.url).searchParams.get("search"));
+        const clientPage: ClientPage = { items: [], page: 1, pageSize: 20, totalCount: 0 };
+        return HttpResponse.json(clientPage);
+      }),
+      http.get(`${apiBaseUrl}/api/v1/clients/:clientId`, () => HttpResponse.json(client)),
+      http.get(`${apiBaseUrl}/api/v1/devices/:deviceId`, () =>
+        HttpResponse.json(createDeviceResponse()),
+      ),
+    );
+    const user = userEvent.setup();
+    renderForm({
+      selectsDevice: true,
+      defaultValues: { ...emptyWorkOrderFormValues(), clientId: client.id, deviceId: device.id },
+    });
+
+    const clientField = screen.getByRole("combobox", { name: "Klient" });
+    await vi.waitFor(() => {
+      expect(clientField).toHaveValue(client.name);
+    });
+    expect(screen.getByRole("combobox", { name: "Urządzenie" })).toHaveValue(
+      "SN-2024-0001 · Viessmann Vitodens 200-W",
+    );
+    await user.click(clientField);
+    await user.type(clientField, "Hotel");
+
+    expect(await screen.findByText("Brak wyników")).toBeInTheDocument();
+    expect(clientSearches).toContain("Hotel");
   });
 
   it("offers the devices of the chosen client and submits the work order", async () => {

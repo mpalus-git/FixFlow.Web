@@ -1,9 +1,8 @@
 import { SearchIcon } from "lucide-react";
 import { useEffect, useEffectEvent, useId, useState } from "react";
+import { searchDebounceMs } from "@/shared/lib/useDebouncedValue";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
-
-const searchDebounceMs = 300;
 
 export type SearchInputProps = {
   label: string;

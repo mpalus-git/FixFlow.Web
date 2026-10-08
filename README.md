@@ -228,7 +228,7 @@ Arkusz stylów jest wbudowany w `index.html`, a obok `#root` stoi statyczny ekra
 - Darmowy plan Render: zimny start do minuty oraz limit 10 logowań i odświeżeń sesji na minutę z jednego adresu IP, wspólny dla wszystkich użytkowników za tym samym NAT. Każde przeładowanie strony zużywa jedno odświeżenie.
 - Dane demo są wspólne, więc zmiany innych odwiedzających są widoczne do nocnego resetu.
 - Licznik opóźnionych na pulpicie opiera się na fladze `IsOverdue` odświeżanej co godzinę (dłużej, gdy Render śpi) i może chwilowo różnić się od podsumowania techników, które liczy opóźnienie na bieżąco.
-- Pola wyboru klienta i urządzenia w formularzu zlecenia, lista techników oraz tablica dispatch pobierają najwyżej 100 pozycji (limit strony w API). Przy większej skali potrzebne byłoby wyszukiwanie po stronie serwera; tablica pokazuje wtedy ostrzeżenie.
+- Lista techników oraz tablica dispatch pobierają najwyżej 100 pozycji (limit strony w API). Przy większej skali potrzebne byłoby wyszukiwanie po stronie serwera; tablica pokazuje wtedy ostrzeżenie.
 - Brak aktualizacji na żywo: tablica dispatch odświeża się w tle co 30 s, a pulpit co minutę (tylko w widocznej karcie, tablica nie w trakcie przeciągania), pozostałe widoki przy akcjach i po powrocie do karty. Zmianę innego dyspozytora, która pojawi się między odświeżeniami, wykrywa ETag albo porównanie stanu przed zapisem.
 - Panel technika jest tylko do odczytu. Wpisy serwisowe dodaje aplikacja mobilna, która jeszcze nie powstała, więc w demo pochodzą z danych startowych.
 - Lista użytkowników nie ma wyszukiwania ani sortowania, bo API ich nie udostępnia.
@@ -237,7 +237,6 @@ Arkusz stylów jest wbudowany w `index.html`, a obok `#root` stoi statyczny ekra
 
 - Refresh token w ciasteczku `httpOnly`, ustawianym przez API albo przez cienki BFF na tej samej domenie. Usunęłoby to największe ryzyko opisane wyżej.
 - Aktualizacje tablicy dispatch na żywo (SSE albo SignalR), gdy pracuje na niej kilku dyspozytorów naraz.
-- Wybór klienta i urządzenia jako pole z wyszukiwaniem po stronie serwera zamiast listy do 100 pozycji.
 - Testy regresji wizualnej w obu motywach, obok obecnych testów zachowania i dostępności.
 
 ## Licencja

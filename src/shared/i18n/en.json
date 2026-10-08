@@ -427,8 +427,9 @@
       "clear": "Clear filters"
     },
     "form": {
-      "chooseClient": "Choose a client",
-      "chooseDevice": "Choose a device",
+      "searchClient": "Search clients by name",
+      "searchDevice": "Serial number, manufacturer or model",
+      "noMatchingOptions": "No results",
       "chooseClientFirst": "Choose a client first",
       "noClients": "No active clients",
       "noDevices": "The client has no active devices",

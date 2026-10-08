@@ -94,6 +94,12 @@ export default defineConfig([
     },
   },
   {
+    files: ["src/shared/ui/Combobox.tsx"],
+    rules: {
+      "jsx-a11y/click-events-have-key-events": "off",
+    },
+  },
+  {
     files: ["src/shared/ui/table.tsx", "src/features/dispatch/components/DispatchWeekTable.tsx"],
     rules: {
       "jsx-a11y/no-noninteractive-tabindex": [

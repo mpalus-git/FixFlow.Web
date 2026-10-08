@@ -17,10 +17,14 @@ test("dispatcher creates a work order and finds it on the list", async ({ page }
 
   await signIn(page, dispatcher, { path: "/login?returnTo=%2Fwork-orders" });
   await page.getByRole("link", { name: "Nowe zlecenie" }).click();
-  await page.getByLabel("Klient", { exact: true }).selectOption({ label: client.name });
+  await page.getByRole("combobox", { name: "Klient" }).fill(client.name);
+  await page.getByRole("option", { name: client.name }).click();
+  await page.getByRole("combobox", { name: "Urządzenie" }).fill(device.serialNumber);
   await page
-    .getByLabel("Urządzenie", { exact: true })
-    .selectOption({ label: `${device.serialNumber} · ${device.manufacturer} ${device.model}` });
+    .getByRole("option", {
+      name: `${device.serialNumber} · ${device.manufacturer} ${device.model}`,
+    })
+    .click();
   await page.getByLabel("Opis usterki").fill(description);
   await page.getByLabel("Priorytet").selectOption({ label: "Wysoki" });
   await page.getByLabel("Termin").fill(dueDate);
