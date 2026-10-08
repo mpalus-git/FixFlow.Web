@@ -53,26 +53,18 @@
     "tiles": {
       "label": "Needs attention",
       "unassigned": "To assign",
-      "unassignedHint": "New work orders without a technician",
       "inProgress": "In progress",
-      "inProgressHint": "Technicians working on site",
       "toInvoice": "To invoice",
-      "toInvoiceHint": "Completed, waiting for an invoice",
       "overdue": "Overdue",
-      "overdueHint": "Due date passed before completion",
-      "outOfStock": "Parts out of stock",
-      "outOfStockHint": "To restock in the warehouse"
+      "outOfStock": "Parts out of stock"
     },
     "statusChart": {
       "title": "Work orders by status",
-      "description": "All work orders in the system, in handling order",
       "series": "Work orders",
       "status": "Status",
       "empty": "There are no work orders yet"
     },
     "workload": {
-      "title": "Technician workload",
-      "description": "Open work orders of active technicians",
       "technician": "Technician",
       "assigned": "Assigned",
       "inProgress": "In progress",
