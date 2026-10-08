@@ -1,89 +1,8 @@
 import { cn } from "cn";
-import {
-  Building2Icon,
-  CalendarRangeIcon,
-  ClipboardListIcon,
-  CpuIcon,
-  LayoutDashboardIcon,
-  PackageIcon,
-  UsersIcon,
-} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router";
-import { type Role, useCurrentUser } from "@/shared/session/currentUser";
-
-const navItems: readonly {
-  to: string;
-  labelKey:
-    | "nav.dashboard"
-    | "nav.workOrders"
-    | "nav.dispatch"
-    | "nav.myWorkOrders"
-    | "nav.clients"
-    | "nav.devices"
-    | "nav.parts"
-    | "nav.users";
-  icon: typeof LayoutDashboardIcon;
-  end: boolean;
-  roles: readonly Role[];
-}[] = [
-  {
-    to: "/",
-    labelKey: "nav.dashboard",
-    icon: LayoutDashboardIcon,
-    end: true,
-    roles: ["Admin", "Dispatcher"],
-  },
-  {
-    to: "/work-orders",
-    labelKey: "nav.workOrders",
-    icon: ClipboardListIcon,
-    end: false,
-    roles: ["Admin", "Dispatcher"],
-  },
-  {
-    to: "/dispatch",
-    labelKey: "nav.dispatch",
-    icon: CalendarRangeIcon,
-    end: false,
-    roles: ["Admin", "Dispatcher"],
-  },
-  {
-    to: "/clients",
-    labelKey: "nav.clients",
-    icon: Building2Icon,
-    end: false,
-    roles: ["Admin", "Dispatcher"],
-  },
-  {
-    to: "/devices",
-    labelKey: "nav.devices",
-    icon: CpuIcon,
-    end: false,
-    roles: ["Admin", "Dispatcher"],
-  },
-  {
-    to: "/parts",
-    labelKey: "nav.parts",
-    icon: PackageIcon,
-    end: false,
-    roles: ["Admin", "Dispatcher"],
-  },
-  {
-    to: "/users",
-    labelKey: "nav.users",
-    icon: UsersIcon,
-    end: false,
-    roles: ["Admin"],
-  },
-  {
-    to: "/my-work-orders",
-    labelKey: "nav.myWorkOrders",
-    icon: ClipboardListIcon,
-    end: false,
-    roles: ["Technician"],
-  },
-];
+import { navItemsFor } from "@/app/layout/navItems";
+import { useCurrentUser } from "@/shared/session/currentUser";
 
 export type SidebarNavProps = {
   onNavigate?: () => void;
@@ -92,9 +11,7 @@ export type SidebarNavProps = {
 export function SidebarNav({ onNavigate }: SidebarNavProps) {
   const { t } = useTranslation();
   const user = useCurrentUser();
-  const visibleItems = navItems.filter(
-    (item) => user !== undefined && item.roles.includes(user.role),
-  );
+  const visibleItems = user === undefined ? [] : navItemsFor(user.role);
 
   return (
     <nav aria-label={t("nav.label")}>

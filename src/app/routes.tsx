@@ -2,6 +2,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import type { RouteObject } from "react-router";
 import { PublicLayout } from "@/app/layout/PublicLayout";
 import { NotFoundPage } from "@/app/NotFoundPage";
+import { navigationPages } from "@/app/navigationPages";
 import { RouteErrorBoundary } from "@/app/RouteErrorBoundary";
 import {
   createRedirectSignedIn,
@@ -40,7 +41,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           index: true,
           middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
           lazy: async () => ({
-            Component: (await import("@/features/dashboard/pages/DashboardPage")).DashboardPage,
+            Component: (await navigationPages.dashboard()).DashboardPage,
           }),
         },
         {
@@ -51,8 +52,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               index: true,
               lazy: async () => ({
-                Component: (await import("@/features/work-orders/pages/MyWorkOrdersPage"))
-                  .MyWorkOrdersPage,
+                Component: (await navigationPages.myWorkOrders()).MyWorkOrdersPage,
               }),
             },
             {
@@ -80,8 +80,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               index: true,
               lazy: async () => ({
-                Component: (await import("@/features/work-orders/pages/WorkOrdersPage"))
-                  .WorkOrdersPage,
+                Component: (await navigationPages.workOrders()).WorkOrdersPage,
               }),
             },
             {
@@ -128,7 +127,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
           ErrorBoundary: RouteErrorBoundary,
           middleware: [createRequireRole(queryClient, ["Admin", "Dispatcher"])],
           lazy: async () => ({
-            Component: (await import("@/features/dispatch/pages/DispatchPage")).DispatchPage,
+            Component: (await navigationPages.dispatch()).DispatchPage,
           }),
         },
         {
@@ -139,7 +138,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               index: true,
               lazy: async () => ({
-                Component: (await import("@/features/clients/pages/ClientsPage")).ClientsPage,
+                Component: (await navigationPages.clients()).ClientsPage,
               }),
             },
             {
@@ -201,7 +200,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               index: true,
               lazy: async () => ({
-                Component: (await import("@/features/devices/pages/DevicesPage")).DevicesPage,
+                Component: (await navigationPages.devices()).DevicesPage,
               }),
             },
             {
@@ -242,7 +241,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               index: true,
               lazy: async () => ({
-                Component: (await import("@/features/parts/pages/PartsPage")).PartsPage,
+                Component: (await navigationPages.parts()).PartsPage,
               }),
             },
             {
@@ -274,7 +273,7 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               index: true,
               lazy: async () => ({
-                Component: (await import("@/features/users/pages/UsersPage")).UsersPage,
+                Component: (await navigationPages.users()).UsersPage,
               }),
             },
             {
