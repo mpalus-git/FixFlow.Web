@@ -64,10 +64,12 @@ function renderForm({
 
 async function fillValidWorkOrder() {
   const user = userEvent.setup();
-  await screen.findByRole("option", { name: client.name });
-  await user.selectOptions(screen.getByLabelText("Klient"), client.name);
-  await screen.findByRole("option", { name: "SN-2024-0001 · Viessmann Vitodens 200-W" });
-  await user.selectOptions(screen.getByLabelText("Urządzenie"), device.id);
+  await user.click(screen.getByRole("combobox", { name: "Klient" }));
+  await user.click(await screen.findByRole("option", { name: client.name }));
+  await user.click(screen.getByRole("combobox", { name: "Urządzenie" }));
+  await user.click(
+    await screen.findByRole("option", { name: "SN-2024-0001 · Viessmann Vitodens 200-W" }),
+  );
   await user.type(screen.getByLabelText("Opis usterki"), "Kocioł nie grzeje wody");
   await user.selectOptions(screen.getByLabelText("Priorytet"), "Krytyczny");
   fireEvent.change(screen.getByLabelText("Termin"), { target: { value: "2030-01-15T10:00" } });
@@ -79,7 +81,6 @@ describe("WorkOrderForm", () => {
     mockSelectionOptions();
     renderForm({ selectsDevice: true });
 
-    await screen.findByRole("option", { name: client.name });
     await userEvent.setup().click(screen.getByRole("button", { name: "Zapisz" }));
 
     expect(await screen.findAllByText("To pole jest wymagane")).toHaveLength(4);

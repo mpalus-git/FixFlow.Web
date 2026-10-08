@@ -429,8 +429,9 @@
       "clear": "Wyczyść filtry"
     },
     "form": {
-      "chooseClient": "Wybierz klienta",
-      "chooseDevice": "Wybierz urządzenie",
+      "searchClient": "Wyszukaj klienta po nazwie",
+      "searchDevice": "Numer seryjny, producent lub model",
+      "noMatchingOptions": "Brak wyników",
       "chooseClientFirst": "Najpierw wybierz klienta",
       "noClients": "Brak aktywnych klientów",
       "noDevices": "Klient nie ma aktywnych urządzeń",

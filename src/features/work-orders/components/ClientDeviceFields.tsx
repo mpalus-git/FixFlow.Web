@@ -1,14 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { type Control, useController } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   clientOptionsQueryOptions,
   deviceOptionsQueryOptions,
+  selectedClientQueryOptions,
+  selectedDeviceQueryOptions,
 } from "@/features/work-orders/api/selectionQueries";
 import type { WorkOrderFormValues } from "@/features/work-orders/schemas/workOrderSchema";
+import { Combobox, type ComboboxOption } from "@/shared/ui/Combobox";
 import { FieldError } from "@/shared/ui/FieldError";
 import { Label } from "@/shared/ui/label";
-import { NativeSelect, NativeSelectOption } from "@/shared/ui/native-select";
+
+type DeviceLabelFields = {
+  serialNumber: string;
+  manufacturer: string;
+  model: string;
+};
 
 export type ClientDeviceFieldsProps = {
   control: Control<WorkOrderFormValues>;
@@ -26,93 +35,114 @@ export function ClientDeviceFields({ control }: ClientDeviceFieldsProps) {
   } = useController({ control, name: "deviceId" });
   const clientError = clientFieldError?.message;
   const deviceError = deviceFieldError?.message;
-  const clientsQuery = useQuery(clientOptionsQueryOptions());
-  const devicesQuery = useQuery(deviceOptionsQueryOptions(clientId));
-  const clients = clientsQuery.data;
-  const devices = clientId === "" ? undefined : devicesQuery.data;
+  const [clientSearch, setClientSearch] = useState("");
+  const [deviceSearch, setDeviceSearch] = useState("");
+  const [chosenClient, setChosenClient] = useState<ComboboxOption | null>(null);
+  const [chosenDevice, setChosenDevice] = useState<ComboboxOption | null>(null);
+  const clientsQuery = useQuery(clientOptionsQueryOptions(clientSearch));
+  const devicesQuery = useQuery(deviceOptionsQueryOptions(clientId, deviceSearch));
+  const isClientKnown = chosenClient?.value === clientId;
+  const isDeviceKnown = chosenDevice?.value === deviceId;
+  const selectedClientQuery = useQuery(selectedClientQueryOptions(clientId, !isClientKnown));
+  const selectedDeviceQuery = useQuery(selectedDeviceQueryOptions(deviceId, !isDeviceKnown));
 
-  function clientPlaceholder() {
-    if (clientsQuery.isError) {
-      return t("workOrders.form.optionsError");
-    }
-    if (clients === undefined) {
-      return t("workOrders.form.loadingOptions");
-    }
-    return clients.length === 0
-      ? t("workOrders.form.noClients")
-      : t("workOrders.form.chooseClient");
+  function deviceLabel(device: DeviceLabelFields) {
+    return t("workOrders.form.deviceOption", {
+      serialNumber: device.serialNumber,
+      manufacturer: device.manufacturer,
+      model: device.model,
+    });
   }
 
-  function devicePlaceholder() {
+  function selectedClient(): ComboboxOption | null {
     if (clientId === "") {
-      return t("workOrders.form.chooseClientFirst");
+      return null;
     }
-    if (devicesQuery.isError) {
-      return t("workOrders.form.optionsError");
+    if (isClientKnown) {
+      return chosenClient;
     }
-    if (devices === undefined) {
-      return t("workOrders.form.loadingOptions");
+    const client = selectedClientQuery.data;
+    return client === undefined ? null : { value: client.id, label: client.name };
+  }
+
+  function selectedDevice(): ComboboxOption | null {
+    if (deviceId === "") {
+      return null;
     }
-    return devices.length === 0
-      ? t("workOrders.form.noDevices")
-      : t("workOrders.form.chooseDevice");
+    if (isDeviceKnown) {
+      return chosenDevice;
+    }
+    const device = selectedDeviceQuery.data;
+    return device === undefined ? null : { value: device.id, label: deviceLabel(device) };
   }
 
   return (
     <>
       <div className="flex flex-col gap-2">
         <Label htmlFor="work-order-clientId">{t("workOrders.columns.client")}</Label>
-        <NativeSelect
+        <Combobox
           id="work-order-clientId"
-          className="w-full"
-          disabled={clients === undefined}
-          aria-invalid={clientError !== undefined}
-          aria-describedby="work-order-clientId-error"
           name="clientId"
-          ref={clientRef}
-          value={clientId}
-          onBlur={blurClient}
-          onChange={(event) => {
-            changeClient(event.target.value);
-            changeDevice("");
+          label={t("workOrders.columns.client")}
+          inputRef={clientRef}
+          selected={selectedClient()}
+          options={clientsQuery.data?.map((client) => ({ value: client.id, label: client.name }))}
+          isError={clientsQuery.isError}
+          placeholder={t("workOrders.form.searchClient")}
+          loadingText={t("workOrders.form.loadingOptions")}
+          emptyText={t(
+            clientSearch === "" ? "workOrders.form.noClients" : "workOrders.form.noMatchingOptions",
+          )}
+          errorText={t("workOrders.form.optionsError")}
+          invalid={clientError !== undefined}
+          describedBy="work-order-clientId-error"
+          onQueryChange={setClientSearch}
+          onSelect={(option) => {
+            setChosenClient(option);
+            changeClient(option.value);
+            if (option.value !== clientId) {
+              changeDevice("");
+            }
           }}
-        >
-          <NativeSelectOption value="">{clientPlaceholder()}</NativeSelectOption>
-          {clients?.map((clientOption) => (
-            <NativeSelectOption key={clientOption.id} value={clientOption.id}>
-              {clientOption.name}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onBlur={blurClient}
+        />
         <FieldError id="work-order-clientId-error" message={clientError} />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="work-order-deviceId">{t("workOrders.columns.device")}</Label>
-        <NativeSelect
+        <Combobox
           id="work-order-deviceId"
-          className="w-full"
-          disabled={devices === undefined || devices.length === 0}
-          aria-invalid={deviceError !== undefined}
-          aria-describedby="work-order-deviceId-error"
           name="deviceId"
-          ref={deviceRef}
-          value={deviceId}
-          onBlur={blurDevice}
-          onChange={(event) => {
-            changeDevice(event.target.value);
+          label={t("workOrders.columns.device")}
+          inputRef={deviceRef}
+          selected={selectedDevice()}
+          options={
+            clientId === ""
+              ? undefined
+              : devicesQuery.data?.map((device) => ({
+                  value: device.id,
+                  label: deviceLabel(device),
+                }))
+          }
+          isError={devicesQuery.isError}
+          disabled={clientId === ""}
+          placeholder={t(
+            clientId === "" ? "workOrders.form.chooseClientFirst" : "workOrders.form.searchDevice",
+          )}
+          loadingText={t("workOrders.form.loadingOptions")}
+          emptyText={t(
+            deviceSearch === "" ? "workOrders.form.noDevices" : "workOrders.form.noMatchingOptions",
+          )}
+          errorText={t("workOrders.form.optionsError")}
+          invalid={deviceError !== undefined}
+          describedBy="work-order-deviceId-error"
+          onQueryChange={setDeviceSearch}
+          onSelect={(option) => {
+            setChosenDevice(option);
+            changeDevice(option.value);
           }}
-        >
-          <NativeSelectOption value="">{devicePlaceholder()}</NativeSelectOption>
-          {devices?.map((deviceOption) => (
-            <NativeSelectOption key={deviceOption.id} value={deviceOption.id}>
-              {t("workOrders.form.deviceOption", {
-                serialNumber: deviceOption.serialNumber,
-                manufacturer: deviceOption.manufacturer,
-                model: deviceOption.model,
-              })}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onBlur={blurDevice}
+        />
         <FieldError id="work-order-deviceId-error" message={deviceError} />
       </div>
     </>

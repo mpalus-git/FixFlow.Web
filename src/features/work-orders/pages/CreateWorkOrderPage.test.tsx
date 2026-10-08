@@ -47,10 +47,10 @@ function mockApi() {
 
 async function fillAndSubmit() {
   const user = userEvent.setup();
-  await screen.findByRole("option", { name: client.name });
-  await user.selectOptions(screen.getByLabelText("Klient"), client.name);
-  await screen.findByRole("option", { name: /SN-2024-0001/ });
-  await user.selectOptions(screen.getByLabelText("Urządzenie"), device.id);
+  await user.click(await screen.findByRole("combobox", { name: "Klient" }));
+  await user.click(await screen.findByRole("option", { name: client.name }));
+  await user.click(screen.getByRole("combobox", { name: "Urządzenie" }));
+  await user.click(await screen.findByRole("option", { name: /SN-2024-0001/ }));
   await user.type(screen.getByLabelText("Opis usterki"), "Kocioł nie grzeje wody");
   fireEvent.change(screen.getByLabelText("Termin"), { target: { value: "2030-01-15T10:00" } });
   await user.click(screen.getByRole("button", { name: "Utwórz zlecenie" }));

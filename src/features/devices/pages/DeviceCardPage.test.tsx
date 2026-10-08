@@ -132,8 +132,10 @@ describe("DeviceCardPage", () => {
     const user = userEvent.setup();
 
     await user.click(await screen.findByRole("link", { name: "Nowe zlecenie" }));
-    await screen.findByRole("option", { name: /SN-2024-0001/ });
-    expect(screen.getByLabelText("Urządzenie")).toHaveValue(device.id);
+    const deviceField = await screen.findByRole("combobox", { name: "Urządzenie" });
+    await vi.waitFor(() => {
+      expect(deviceField).toHaveValue("SN-2024-0001 · Viessmann Vitodens 200-W");
+    });
     await user.type(screen.getByLabelText("Opis usterki"), "Przegląd okresowy");
     fireEvent.change(screen.getByLabelText("Termin"), { target: { value: "2030-01-15T10:00" } });
     await user.click(screen.getByRole("button", { name: "Utwórz zlecenie" }));
