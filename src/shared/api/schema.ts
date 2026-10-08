@@ -150,7 +150,7 @@ export type paths = {
       path?: never;
       cookie?: never;
     };
-    get?: never;
+    get: operations["GetUser"];
     put: operations["UpdateUser"];
     post?: never;
     delete?: never;
@@ -249,6 +249,22 @@ export type paths = {
     get?: never;
     put?: never;
     post: operations["ArchiveDevice"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/devices/{deviceId}/work-orders": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["ListDeviceWorkOrders"];
+    put?: never;
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -399,6 +415,22 @@ export type paths = {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/work-orders/{workOrderId}/events": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["ListWorkOrderEvents"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/parts": {
     parameters: {
       query?: never;
@@ -479,6 +511,38 @@ export type paths = {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/work-orders/{workOrderId}/service-entries/{serviceEntryId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetServiceEntry"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/photos/{photoId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetPhoto"];
+    put: operations["UploadPhoto"];
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/dashboard/summary": {
     parameters: {
       query?: never;
@@ -524,6 +588,7 @@ export type components = {
       latitude?: null | number;
       longitude?: null | number;
       parts?: null | components["schemas"]["ServiceEntryPartRequest"][];
+      id?: null | string;
     };
     AssignTechnicianRequest: {
       technicianId: string;
@@ -554,6 +619,10 @@ export type components = {
       email: null | string;
       createdAt: string;
       archivedAt: null | string;
+    };
+    CompleteWorkOrderRequest: {
+      completedAt?: null | string;
+      clientSignaturePhotoId?: null | string;
     };
     CreateClientRequest: {
       name: string;
@@ -593,6 +662,7 @@ export type components = {
       weekEnd: string;
       statusCounts: components["schemas"]["WorkOrderStatusCountResponse"][];
       overdueCount: number;
+      outOfStockPartCount: number;
       technicians: components["schemas"]["TechnicianWorkloadResponse"][];
     };
     DeviceListItemResponse: {
@@ -615,6 +685,18 @@ export type components = {
       installationDate: string;
       createdAt: string;
       archivedAt: null | string;
+    };
+    DeviceWorkOrderHistoryItemResponse: {
+      id: string;
+      number: string;
+      status: components["schemas"]["WorkOrderStatus"];
+      priority: components["schemas"]["WorkOrderPriority"];
+      description: string;
+      technicianName: null | string;
+      createdAt: string;
+      startedAt: null | string;
+      completedAt: null | string;
+      serviceEntryCount: number;
     };
     HttpValidationProblemDetails: {
       type?: null | string;
@@ -645,6 +727,12 @@ export type components = {
       pageSize: number;
       totalCount: number;
     };
+    PagedResponseOfDeviceWorkOrderHistoryItemResponse: {
+      items: components["schemas"]["DeviceWorkOrderHistoryItemResponse"][];
+      page: number;
+      pageSize: number;
+      totalCount: number;
+    };
     PagedResponseOfPartResponse: {
       items: components["schemas"]["PartResponse"][];
       page: number;
@@ -671,6 +759,11 @@ export type components = {
       unitPrice: number;
       createdAt: string;
       archivedAt: null | string;
+    };
+    PhotoResponse: {
+      id: string;
+      sizeBytes: number;
+      uploadedAt: string;
     };
     ProblemDetails: {
       type?: null | string;
@@ -719,6 +812,9 @@ export type components = {
       parts: components["schemas"]["ServiceEntryPartResponse"][];
       createdAt: string;
     };
+    StartWorkRequest: {
+      startedAt?: null | string;
+    };
     Stream: string;
     TechnicianWorkloadResponse: {
       technicianId: string;
@@ -762,6 +858,25 @@ export type components = {
       role: string;
       isActive: boolean;
     };
+    WorkOrderEventResponse: {
+      id: string;
+      type: components["schemas"]["WorkOrderEventType"];
+      occurredAt: string;
+      actorId: null | string;
+      actorName: null | string;
+      technicianId: null | string;
+      technicianName: null | string;
+      dueDate: string;
+    };
+    WorkOrderEventType:
+      | "Created"
+      | "Updated"
+      | "Assigned"
+      | "Reassigned"
+      | "Unassigned"
+      | "Started"
+      | "Completed"
+      | "Invoiced";
     WorkOrderListItemResponse: {
       id: string;
       number: string;
@@ -770,6 +885,9 @@ export type components = {
       deviceModel: string;
       clientId: string;
       clientName: string;
+      clientAddress: components["schemas"]["ClientAddress"];
+      clientContactPerson: string;
+      clientPhone: string;
       description: string;
       priority: components["schemas"]["WorkOrderPriority"];
       status: components["schemas"]["WorkOrderStatus"];
@@ -792,6 +910,9 @@ export type components = {
       deviceModel: string;
       clientId: string;
       clientName: string;
+      clientAddress: components["schemas"]["ClientAddress"];
+      clientContactPerson: string;
+      clientPhone: string;
       description: string;
       priority: components["schemas"]["WorkOrderPriority"];
       status: components["schemas"]["WorkOrderStatus"];
@@ -804,6 +925,7 @@ export type components = {
       startedAt: null | string;
       completedAt: null | string;
       invoicedAt: null | string;
+      clientSignaturePhotoId: null | string;
     };
     WorkOrderStatus: "New" | "Assigned" | "InProgress" | "Completed" | "Invoiced";
     WorkOrderStatusCountResponse: {
@@ -940,7 +1062,7 @@ export interface operations {
           "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
         };
       };
-      401: {
+      429: {
         headers: {
           [name: string]: unknown;
         };
@@ -1272,6 +1394,51 @@ export interface operations {
         };
         content: {
           "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
+  GetUser: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        userId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["UserResponse"];
         };
       };
       401: {
@@ -1894,12 +2061,60 @@ export interface operations {
       };
     };
   };
+  ListDeviceWorkOrders: {
+    parameters: {
+      query?: {
+        page?: number;
+        pageSize?: number;
+      };
+      header?: never;
+      path: {
+        deviceId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["PagedResponseOfDeviceWorkOrderHistoryItemResponse"];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
   ListWorkOrders: {
     parameters: {
       query?: {
         page?: number;
         pageSize?: number;
-        status?: components["schemas"]["WorkOrderStatus"];
+        status?: components["schemas"]["WorkOrderStatus"][];
         technicianId?: string;
         deviceId?: string;
         clientId?: string;
@@ -2323,7 +2538,11 @@ export interface operations {
       };
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody?: {
+      content: {
+        "application/json": null | components["schemas"]["StartWorkRequest"];
+      };
+    };
     responses: {
       200: {
         headers: {
@@ -2332,6 +2551,14 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["WorkOrderResponse"];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
         };
       };
       401: {
@@ -2377,7 +2604,11 @@ export interface operations {
       };
       cookie?: never;
     };
-    requestBody?: never;
+    requestBody?: {
+      content: {
+        "application/json": null | components["schemas"]["CompleteWorkOrderRequest"];
+      };
+    };
     responses: {
       200: {
         headers: {
@@ -2386,6 +2617,14 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["WorkOrderResponse"];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
         };
       };
       401: {
@@ -2513,12 +2752,50 @@ export interface operations {
       };
     };
   };
+  ListWorkOrderEvents: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        workOrderId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["WorkOrderEventResponse"][];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
   ListParts: {
     parameters: {
       query?: {
         page?: number;
         pageSize?: number;
         search?: string;
+        inStock?: boolean;
       };
       header?: never;
       path?: never;
@@ -2899,6 +3176,14 @@ export interface operations {
       };
     };
     responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ServiceEntryResponse"];
+        };
+      };
       201: {
         headers: {
           [name: string]: unknown;
@@ -2940,6 +3225,160 @@ export interface operations {
         };
       };
       409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
+  GetServiceEntry: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        workOrderId: string;
+        serviceEntryId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ServiceEntryResponse"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
+  GetPhoto: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        photoId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "image/jpeg": components["schemas"]["Stream"];
+        };
+      };
+      304: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+    };
+  };
+  UploadPhoto: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        photoId: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "image/jpeg": components["schemas"]["Stream"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["PhotoResponse"];
+        };
+      };
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["PhotoResponse"];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      413: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/problem+json": components["schemas"]["ProblemDetails"];
+        };
+      };
+      415: {
         headers: {
           [name: string]: unknown;
         };

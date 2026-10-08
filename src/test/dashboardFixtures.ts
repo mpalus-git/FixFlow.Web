@@ -22,6 +22,7 @@ export function createDashboardSummary(
       { status: "Invoiced", count: 9 },
     ],
     overdueCount: 1,
+    outOfStockPartCount: 1,
     technicians: [
       {
         technicianId: "00000000-0000-4000-8000-0000000000a2",

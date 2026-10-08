@@ -100,7 +100,7 @@ export async function findWorkOrderId(
   status: Schemas["WorkOrderStatus"],
 ): Promise<string> {
   const page = expectData(
-    await api.GET("/api/v1/work-orders", { params: { query: { status, pageSize: 1 } } }),
+    await api.GET("/api/v1/work-orders", { params: { query: { status: [status], pageSize: 1 } } }),
   );
   const workOrder = page.items[0];
   if (workOrder === undefined) {
