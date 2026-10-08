@@ -2,7 +2,7 @@ import type { Middleware } from "openapi-fetch";
 import { refreshSession } from "@/shared/session/refreshSession";
 import { getAccessToken } from "@/shared/session/sessionStore";
 
-const publicPaths = new Set(["/api/v1/auth/login", "/api/v1/auth/refresh"]);
+const publicPaths = new Set(["/api/v1/auth/login", "/api/v1/auth/refresh", "/api/v1/auth/logout"]);
 
 const requestsToRetry = new Map<string, Request>();
 

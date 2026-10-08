@@ -65,6 +65,26 @@ describe("logout", () => {
     otherTab.close();
   });
 
+  it("revokes without an access token so an expired session is not refreshed first", async () => {
+    const authorizationHeaders: (string | null)[] = [];
+    let refreshCount = 0;
+    server.use(
+      http.post(logoutUrl, ({ request }) => {
+        authorizationHeaders.push(request.headers.get("Authorization"));
+        return new HttpResponse(null, { status: 204 });
+      }),
+      http.post(`${apiBaseUrl}/api/v1/auth/refresh`, () => {
+        refreshCount += 1;
+        return HttpResponse.json(createAuthTokens("next"));
+      }),
+    );
+
+    await logout();
+
+    expect(authorizationHeaders).toEqual([null]);
+    expect(refreshCount).toBe(0);
+  });
+
   it("clears the session even when the server cannot be reached", async () => {
     server.use(http.post(logoutUrl, () => HttpResponse.error()));
 
