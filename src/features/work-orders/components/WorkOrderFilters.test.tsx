@@ -89,13 +89,18 @@ describe("WorkOrderFilters", () => {
     expect(onChange).toHaveBeenCalledWith({ status: ["New", "Assigned", "InProgress"] });
   });
 
-  it("marks the open statuses button as pressed when exactly those are chosen", () => {
-    renderFilters({ ...noFilters, status: ["New", "Assigned", "InProgress"] }, false);
-
-    expect(screen.getByRole("button", { name: "Tylko otwarte" })).toHaveAttribute(
-      "aria-pressed",
-      "true",
+  it("turns the open statuses toggle off by clearing the status filter", async () => {
+    const user = userEvent.setup();
+    const onChange = renderFilters(
+      { ...noFilters, status: ["New", "Assigned", "InProgress"] },
+      false,
     );
+    const toggle = screen.getByRole("button", { name: "Tylko otwarte" });
+
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
+    await user.click(toggle);
+
+    expect(onChange).toHaveBeenCalledWith({ status: [] });
   });
 
   it("offers active and deactivated technicians and filters by the chosen one", async () => {
