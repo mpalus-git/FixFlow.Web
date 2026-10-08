@@ -17,7 +17,7 @@ import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 import { SearchInput } from "@/shared/ui/SearchInput";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function DevicesPage() {
   const { t } = useTranslation();
@@ -79,8 +79,7 @@ export function DevicesPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageTitle title={t("devices.title")} />
-      <h1 className="text-2xl font-semibold tracking-tight">{t("devices.title")}</h1>
+      <PageHeader title={t("devices.title")} />
       <SearchInput
         label={t("devices.search.label")}
         placeholder={t("devices.search.placeholder")}

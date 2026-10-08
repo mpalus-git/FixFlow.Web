@@ -7,7 +7,7 @@ import {
   workOrderListPath,
 } from "@/features/work-orders/hooks/useReturnPath";
 import { Button } from "@/shared/ui/button";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function WorkOrdersPage() {
   const { t } = useTranslation();
@@ -16,16 +16,17 @@ export function WorkOrdersPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <PageTitle title={t("workOrders.title")} />
-        <h1 className="text-2xl font-semibold tracking-tight">{t("workOrders.title")}</h1>
-        <Button asChild>
-          <Link to={`${workOrderListPath}/new`} state={returnPathState}>
-            <PlusIcon aria-hidden="true" />
-            {t("workOrders.create.title")}
-          </Link>
-        </Button>
-      </div>
+      <PageHeader
+        title={t("workOrders.title")}
+        actions={
+          <Button asChild>
+            <Link to={`${workOrderListPath}/new`} state={returnPathState}>
+              <PlusIcon aria-hidden="true" />
+              {t("workOrders.create.title")}
+            </Link>
+          </Button>
+        }
+      />
       <WorkOrderList scope="all" />
     </div>
   );

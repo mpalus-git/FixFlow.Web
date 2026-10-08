@@ -18,7 +18,7 @@ import { Label } from "@/shared/ui/label";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 import { SearchInput } from "@/shared/ui/SearchInput";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 type PartResponse = components["schemas"]["PartResponse"];
 
@@ -100,16 +100,11 @@ export function PartsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <PageTitle title={t("parts.title")} />
-          <h1 className="text-2xl font-semibold tracking-tight">{t("parts.title")}</h1>
-          <p className="text-sm text-muted-foreground">
-            {t("parts.lowStockHint", { count: lowStockThreshold })}
-          </p>
-        </div>
-        {addPartButton}
-      </div>
+      <PageHeader
+        title={t("parts.title")}
+        description={t("parts.lowStockHint", { count: lowStockThreshold })}
+        actions={addPartButton}
+      />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
         <SearchInput
           label={t("parts.search.label")}
