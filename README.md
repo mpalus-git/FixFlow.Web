@@ -48,29 +48,29 @@ FixFlow to system obsługi zleceń serwisowych w terenie dla firmy naprawiające
 
 Panel obsługuje trzy role:
 
-| Rola | Co widzi i robi |
-|---|---|
+| Rola       | Co widzi i robi                                                                                                                                                     |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Dispatcher | pulpit, zlecenia (tworzenie, edycja, przypisywanie, zakończenie awaryjne, fakturowanie), tablica dispatch, klienci, urządzenia, katalog części z przyjęciem dostawy |
-| Admin | to samo co dyspozytor oraz zarządzanie użytkownikami: zakładanie kont z rolą, dezaktywacja, aktywacja, reset hasła |
-| Technician | „Moje zlecenia” tylko do odczytu, ze szczegółami i wpisami serwisowymi; praca w terenie odbywa się w aplikacji mobilnej |
+| Admin      | to samo co dyspozytor oraz zarządzanie użytkownikami: zakładanie kont z rolą, dezaktywacja, aktywacja, reset hasła                                                  |
+| Technician | „Moje zlecenia” tylko do odczytu, ze szczegółami i wpisami serwisowymi; praca w terenie odbywa się w aplikacji mobilnej                                             |
 
 Zlecenie przechodzi przez statusy Nowe -> Przypisane -> W realizacji -> Zakończone -> Zafakturowane. Panel pokazuje tylko akcje dozwolone dla roli i bieżącego statusu, ale ostatnie słowo zawsze ma API.
 
 ## Stack
 
-| Obszar | Technologie |
-|---|---|
-| Podstawa | React 19, TypeScript 7 (strict, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`), Vite 8, Node.js 24, pnpm |
-| Routing | React Router 8 w trybie data: trasy leniwe per obszar, loadery, ochrona tras przez middleware |
-| Dane z API | openapi-typescript i openapi-fetch (typy generowane z kontraktu), TanStack Query 5 |
-| Tabele | TanStack Table (paginacja, sortowanie i filtrowanie po stronie serwera) |
-| Formularze | React Hook Form, Zod 4 |
-| UI | Tailwind CSS 4, shadcn/ui (Radix), lucide-react, Sonner, Recharts, dnd-kit |
-| Stan UI | Zustand (sesja, motyw) |
-| Daty i języki | date-fns z @date-fns/tz (Europe/Warsaw), i18next (polski i angielski) |
-| Jakość | ESLint 10 z typescript-eslint (reguły typowane), jsx-a11y, Prettier, własna reguła zakazu komentarzy |
-| Testy | Vitest, React Testing Library, MSW, Playwright, axe-core |
-| CI i wdrożenie | GitHub Actions, Vercel |
+| Obszar         | Technologie                                                                                                         |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Podstawa       | React 19, TypeScript 7 (strict, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`), Vite 8, Node.js 24, pnpm |
+| Routing        | React Router 8 w trybie data: trasy leniwe per obszar, loadery, ochrona tras przez middleware                       |
+| Dane z API     | openapi-typescript i openapi-fetch (typy generowane z kontraktu), TanStack Query 5                                  |
+| Tabele         | TanStack Table (paginacja, sortowanie i filtrowanie po stronie serwera)                                             |
+| Formularze     | React Hook Form, Zod 4                                                                                              |
+| UI             | Tailwind CSS 4, shadcn/ui (Radix), lucide-react, Sonner, dnd-kit                                                    |
+| Stan UI        | Zustand (sesja, motyw)                                                                                              |
+| Daty i języki  | date-fns z @date-fns/tz (Europe/Warsaw), i18next (polski i angielski)                                               |
+| Jakość         | ESLint 10 z typescript-eslint (reguły typowane), jsx-a11y, Prettier, własna reguła zakazu komentarzy                |
+| Testy          | Vitest, React Testing Library, MSW, Playwright, axe-core                                                            |
+| CI i wdrożenie | GitHub Actions, Vercel                                                                                              |
 
 ## Uruchomienie lokalne
 
@@ -114,15 +114,15 @@ API_PROXY_TARGET=http://localhost:8080
 
 ### Skrypty
 
-| Skrypt | Co robi |
-|---|---|
-| `pnpm dev` | serwer deweloperski |
-| `pnpm build`, `pnpm preview` | build produkcyjny i jego podgląd |
-| `pnpm lint` | ESLint i Prettier |
-| `pnpm typecheck` | kontrola typów TypeScript 7 |
-| `pnpm test` | testy jednostkowe i komponentów (Vitest) |
-| `pnpm e2e` | testy e2e (Playwright) na lokalnym API |
-| `pnpm check:comments` | zakaz komentarzy w CSS, HTML, YAML i tsconfig |
+| Skrypt                            | Co robi                                                                |
+| --------------------------------- | ---------------------------------------------------------------------- |
+| `pnpm dev`                        | serwer deweloperski                                                    |
+| `pnpm build`, `pnpm preview`      | build produkcyjny i jego podgląd                                       |
+| `pnpm lint`                       | ESLint i Prettier                                                      |
+| `pnpm typecheck`                  | kontrola typów TypeScript 7                                            |
+| `pnpm test`                       | testy jednostkowe i komponentów (Vitest)                               |
+| `pnpm e2e`                        | testy e2e (Playwright) na lokalnym API                                 |
+| `pnpm check:comments`             | zakaz komentarzy w CSS, HTML, YAML i tsconfig                          |
 | `pnpm api:sync`, `pnpm api:types` | pobranie aktualnego kontraktu z repozytorium API i wygenerowanie typów |
 
 ## Architektura katalogów
@@ -204,10 +204,10 @@ Jedno miejsce mapuje odpowiedzi ProblemDetails na błąd aplikacji: błędy wali
 
 ## Testy
 
-| Rodzaj | Narzędzia | Co obejmuje |
-|---|---|---|
-| Jednostkowe i komponentów | Vitest, React Testing Library, user-event, MSW | ok. 580 testów: sesja i równoległe odświeżanie (także między kartami), mapowanie ProblemDetails, daty i strefy, schematy Zod, widoczność akcji według roli i statusu, formularze z błędami z serwera i konfliktem 412, tablica dispatch z obsługą klawiatury |
-| E2E | Playwright, axe-core | prawdziwe API z obrazu Docker: logowanie, utworzenie zlecenia, przypisanie technika przeciągnięciem, konflikt 412 w dwóch kontekstach przeglądarki, uśpiony serwer, brak naruszeń dostępności poziomu serious i critical na głównych ekranach w obu motywach, działanie aplikacji pod produkcyjną polityką CSP |
+| Rodzaj                    | Narzędzia                                      | Co obejmuje                                                                                                                                                                                                                                                                                                    |
+| ------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Jednostkowe i komponentów | Vitest, React Testing Library, user-event, MSW | ok. 580 testów: sesja i równoległe odświeżanie (także między kartami), mapowanie ProblemDetails, daty i strefy, schematy Zod, widoczność akcji według roli i statusu, formularze z błędami z serwera i konfliktem 412, tablica dispatch z obsługą klawiatury                                                   |
+| E2E                       | Playwright, axe-core                           | prawdziwe API z obrazu Docker: logowanie, utworzenie zlecenia, przypisanie technika przeciągnięciem, konflikt 412 w dwóch kontekstach przeglądarki, uśpiony serwer, brak naruszeń dostępności poziomu serious i critical na głównych ekranach w obu motywach, działanie aplikacji pod produkcyjną polityką CSP |
 
 CI uruchamia lint, kontrolę typów, kontrolę wygenerowanych typów, build, testy w trzech shardach z raportem pokrycia w podsumowaniu joba oraz testy e2e na obrazie `ghcr.io/mpalus-git/fixflow.api` z PostgreSQL 18 i losowymi sekretami.
 
@@ -215,10 +215,10 @@ CI uruchamia lint, kontrolę typów, kontrolę wygenerowanych typów, build, tes
 
 Pomiar strony logowania na produkcji (Lighthouse 13.5.0, Chromium 153, domyślna symulacja sieci i procesora, mediana z kilku przebiegów, 2026-10-04):
 
-| Urządzenie | Wydajność | Dostępność | Dobre praktyki | SEO | FCP | LCP | TBT | CLS | Speed Index |
-|---|---|---|---|---|---|---|---|---|---|
-| Mobile | 100 | 100 | 100 | 100 | 1,0 s | 1,0 s | 10 ms | 0 | 1,0 s |
-| Desktop | 100 | 100 | 100 | 100 | 0,3 s | 0,3 s | 0 ms | 0 | 0,3 s |
+| Urządzenie | Wydajność | Dostępność | Dobre praktyki | SEO | FCP   | LCP   | TBT   | CLS | Speed Index |
+| ---------- | --------- | ---------- | -------------- | --- | ----- | ----- | ----- | --- | ----------- |
+| Mobile     | 100       | 100        | 100            | 100 | 1,0 s | 1,0 s | 10 ms | 0   | 1,0 s       |
+| Desktop    | 100       | 100        | 100            | 100 | 0,3 s | 0,3 s | 0 ms  | 0   | 0,3 s       |
 
 Arkusz stylów jest wbudowany w `index.html`, a obok `#root` stoi statyczny ekran startowy z nazwą aplikacji. Przeglądarka maluje go zaraz po pobraniu dokumentu, zanim dotrą skrypty, a znika on regułą CSS, gdy React wyrenderuje pierwszą treść. To ten ekran jest elementem LCP. Formularz logowania pojawia się po pobraniu skryptów i odpowiedzi API, czyli w symulacji wolnego 4G po ok. 3 s (tyle wynosiło LCP, zanim powstał ekran startowy).
 
