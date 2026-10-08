@@ -13,13 +13,17 @@ export type TechnicianAssignment = {
 
 async function storeVersion(queryClient: QueryClient, version: Versioned<WorkOrderResponse>) {
   queryClient.setQueryData(workOrderKeys.detail(version.data.id), version);
-  await queryClient.invalidateQueries({ queryKey: workOrderKeys.lists() });
+  await Promise.all([
+    queryClient.invalidateQueries({ queryKey: workOrderKeys.lists() }),
+    queryClient.invalidateQueries({ queryKey: workOrderKeys.events(version.data.id) }),
+  ]);
 }
 
 async function reloadWorkOrder(queryClient: QueryClient, workOrderId: string) {
   await Promise.all([
     queryClient.invalidateQueries({ queryKey: workOrderKeys.detail(workOrderId) }),
     queryClient.invalidateQueries({ queryKey: workOrderKeys.lists() }),
+    queryClient.invalidateQueries({ queryKey: workOrderKeys.events(workOrderId) }),
   ]);
 }
 

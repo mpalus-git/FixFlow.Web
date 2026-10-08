@@ -6,6 +6,7 @@ import { workOrderQueryOptions } from "@/features/work-orders/api/workOrderQueri
 import { ClientSignature } from "@/features/work-orders/components/ClientSignature";
 import { ServiceEntryList } from "@/features/work-orders/components/ServiceEntryList";
 import { WorkOrderDeviceName } from "@/features/work-orders/components/WorkOrderDeviceName";
+import { WorkOrderEventList } from "@/features/work-orders/components/WorkOrderEventList";
 import { ServiceProtocolButton } from "@/features/work-orders/components/ServiceProtocolButton";
 import { WorkOrderActions } from "@/features/work-orders/components/WorkOrderActions";
 import { WorkOrderPriorityBadge } from "@/features/work-orders/components/WorkOrderPriorityBadge";
@@ -143,6 +144,12 @@ export function WorkOrderDetailsPage() {
           {t("workOrders.details.timeline")}
         </h2>
         <WorkOrderStatusTimeline workOrder={workOrder} />
+      </section>
+      <section aria-labelledby="work-order-history-heading" className="flex flex-col gap-4">
+        <h2 id="work-order-history-heading" className="text-lg font-semibold">
+          {t("workOrders.details.history")}
+        </h2>
+        <WorkOrderEventList workOrderId={workOrder.id} />
       </section>
       <section aria-labelledby="work-order-entries-heading" className="flex flex-col gap-4">
         <h2 id="work-order-entries-heading" className="text-lg font-semibold">

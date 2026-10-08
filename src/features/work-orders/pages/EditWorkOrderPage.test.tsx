@@ -43,6 +43,7 @@ function mockWorkOrderApi(initial: WorkOrderResponse, listItems: WorkOrderPage["
       return HttpResponse.json(current.workOrder, { headers: { ETag: current.etag } });
     }),
     http.get(`${workOrderUrl}/service-entries`, () => HttpResponse.json([])),
+    http.get(`${workOrderUrl}/events`, () => HttpResponse.json([])),
     http.get(`${apiBaseUrl}/api/v1/work-orders`, () => HttpResponse.json(workOrderPage)),
     http.get(`${apiBaseUrl}/api/v1/users`, () => HttpResponse.json(userPage)),
   );

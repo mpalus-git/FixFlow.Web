@@ -69,10 +69,12 @@ describe("useUpdateWorkOrderMutation", () => {
       }),
     );
     const { queryClient, result } = renderWithQueryClient(() => useUpdateWorkOrderMutation());
+    queryClient.setQueryData(workOrderKeys.events(workOrder.id), []);
 
     await result.current.mutateAsync({ workOrderId: workOrder.id, etag: '"1"', request });
 
     expect(ifMatchHeaders).toEqual(['"1"']);
+    expect(queryClient.getQueryState(workOrderKeys.events(workOrder.id))?.isInvalidated).toBe(true);
     expect(queryClient.getQueryData(workOrderKeys.detail(workOrder.id))).toEqual({
       data: updatedWorkOrder,
       etag: '"2"',

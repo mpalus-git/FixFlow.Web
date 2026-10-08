@@ -2,13 +2,14 @@ import { QueryClient } from "@tanstack/react-query";
 import { http, HttpResponse } from "msw";
 import {
   serviceEntriesQueryOptions,
+  workOrderEventsQueryOptions,
   workOrderListQueryOptions,
 } from "@/features/work-orders/api/workOrderQueries";
 import type { WorkOrderListParams } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
 import { apiBaseUrl } from "@/shared/api/baseClient";
 import type { components } from "@/shared/api/schema";
 import { server } from "@/test/server";
-import { createServiceEntryResponse } from "@/test/workOrderFixtures";
+import { createServiceEntryResponse, createWorkOrderEventResponse } from "@/test/workOrderFixtures";
 
 type WorkOrderPage = components["schemas"]["PagedResponseOfWorkOrderListItemResponse"];
 
@@ -70,6 +71,22 @@ describe("workOrderListQueryOptions", () => {
       sortBy: "Priority",
       sortDirection: "Desc",
     });
+  });
+});
+
+describe("workOrderEventsQueryOptions", () => {
+  it("loads the history of changes of the work order", async () => {
+    const workOrderId = "5d4c3b2a-1f0e-4d9c-8b7a-6f5e4d3c2b1a";
+    const events = [
+      createWorkOrderEventResponse(),
+      createWorkOrderEventResponse({
+        id: "1f2e3d4c-5b6a-4798-8877-665544332211",
+        type: "Assigned",
+      }),
+    ];
+    server.use(http.get(`${workOrdersUrl}/${workOrderId}/events`, () => HttpResponse.json(events)));
+
+    expect(await new QueryClient().query(workOrderEventsQueryOptions(workOrderId))).toEqual(events);
   });
 });
 
