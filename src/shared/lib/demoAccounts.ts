@@ -1,4 +1,4 @@
-export type DemoRole = "Dispatcher" | "Technician";
+type DemoRole = "Dispatcher" | "Technician";
 
 export type DemoAccount = {
   role: DemoRole;

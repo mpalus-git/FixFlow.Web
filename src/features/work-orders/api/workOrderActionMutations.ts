@@ -6,7 +6,7 @@ import type { components } from "@/shared/api/schema";
 
 type WorkOrderResponse = components["schemas"]["WorkOrderResponse"];
 
-export type TechnicianAssignment = {
+type TechnicianAssignment = {
   workOrderId: string;
   technicianId: string;
 };

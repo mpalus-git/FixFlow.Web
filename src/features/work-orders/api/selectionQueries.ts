@@ -3,7 +3,7 @@ import { apiClient } from "@/shared/api/apiClient";
 import { unwrap } from "@/shared/api/baseClient";
 import { queryKeyRoots } from "@/shared/api/queryKeyRoots";
 
-export const selectionOptionsLimit = 100;
+const selectionOptionsLimit = 100;
 
 export function clientOptionsQueryOptions() {
   return queryOptions({

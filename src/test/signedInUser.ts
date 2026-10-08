@@ -8,7 +8,7 @@ import { server } from "@/test/server";
 
 type UserResponse = components["schemas"]["UserResponse"];
 
-export const currentUserUrl = `${apiBaseUrl}/api/v1/users/me`;
+const currentUserUrl = `${apiBaseUrl}/api/v1/users/me`;
 
 export function createUser(role: Role | "Auditor"): UserResponse {
   return {

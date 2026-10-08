@@ -8,7 +8,7 @@ type PartResponse = components["schemas"]["PartResponse"];
 type CreatePartRequest = components["schemas"]["CreatePartRequest"];
 type UpdatePartRequest = components["schemas"]["UpdatePartRequest"];
 
-export const maxStockQuantity = 100_000;
+const maxStockQuantity = 100_000;
 
 const pricePattern = /^\d{1,10}([.,]\d{1,2})?$/;
 const wholeNumberPattern = /^\d{1,6}$/;

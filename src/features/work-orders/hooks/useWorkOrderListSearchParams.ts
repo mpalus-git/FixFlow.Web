@@ -6,7 +6,7 @@ import { pageValue, readPageParam, useSearchParamsUpdate } from "@/shared/lib/us
 
 type ListWorkOrdersQuery = NonNullable<operations["ListWorkOrders"]["parameters"]["query"]>;
 export type WorkOrderSortBy = NonNullable<ListWorkOrdersQuery["sortBy"]>;
-export type SortDirection = NonNullable<ListWorkOrdersQuery["sortDirection"]>;
+type SortDirection = NonNullable<ListWorkOrdersQuery["sortDirection"]>;
 
 const workOrderSortFields = [
   "DueDate",

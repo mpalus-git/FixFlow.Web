@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { requiredText } from "@/shared/lib/validation";
 
-export const fullNameMaxLength = 100;
+const fullNameMaxLength = 100;
 
 export const fullNameSchema = requiredText(fullNameMaxLength);
 

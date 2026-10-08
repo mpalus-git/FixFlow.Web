@@ -3,7 +3,7 @@ import { useEffect, useEffectEvent, useId, useState } from "react";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 
-export const searchDebounceMs = 300;
+const searchDebounceMs = 300;
 
 export type SearchInputProps = {
   label: string;
