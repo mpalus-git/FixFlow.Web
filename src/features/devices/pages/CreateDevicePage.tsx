@@ -19,9 +19,9 @@ export function CreateDevicePage() {
       <PageHeader
         title={t("devices.create.title")}
         description={
-          <>
+          <span>
             {t("devices.create.forClient")} <ClientNameLink clientId={clientId} />
-          </>
+          </span>
         }
       />
       <Card>
