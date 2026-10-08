@@ -461,7 +461,12 @@
       "serviceEntries": "Wpisy serwisowe",
       "clientAddress": "Adres",
       "clientContactPerson": "Osoba kontaktowa",
-      "clientPhone": "Telefon"
+      "clientPhone": "Telefon",
+      "clientSignature": "Podpis klienta"
+    },
+    "signature": {
+      "image": "Podpis klienta, otwiera się w nowej karcie",
+      "loadError": "Nie udało się wczytać podpisu klienta."
     },
     "serviceEntries": {
       "correction": "Korekta",

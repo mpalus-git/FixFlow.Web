@@ -3,6 +3,7 @@ import { ArrowLeftIcon, PencilIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router";
 import { workOrderQueryOptions } from "@/features/work-orders/api/workOrderQueries";
+import { ClientSignature } from "@/features/work-orders/components/ClientSignature";
 import { ServiceEntryList } from "@/features/work-orders/components/ServiceEntryList";
 import { WorkOrderDeviceName } from "@/features/work-orders/components/WorkOrderDeviceName";
 import { ServiceProtocolButton } from "@/features/work-orders/components/ServiceProtocolButton";
@@ -123,6 +124,17 @@ export function WorkOrderDetailsPage() {
             <dd>{formatDateTime(workOrder.dueDate, language)}</dd>
             <dt className="text-muted-foreground">{t("workOrders.columns.description")}</dt>
             <dd className="whitespace-pre-line">{workOrder.description}</dd>
+            {workOrder.clientSignaturePhotoId === null ? null : (
+              <>
+                <dt className="text-muted-foreground">{t("workOrders.details.clientSignature")}</dt>
+                <dd>
+                  <ClientSignature
+                    key={workOrder.clientSignaturePhotoId}
+                    photoId={workOrder.clientSignaturePhotoId}
+                  />
+                </dd>
+              </>
+            )}
           </dl>
         </CardContent>
       </Card>

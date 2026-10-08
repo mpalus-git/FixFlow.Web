@@ -459,7 +459,12 @@
       "serviceEntries": "Service entries",
       "clientAddress": "Address",
       "clientContactPerson": "Contact person",
-      "clientPhone": "Phone"
+      "clientPhone": "Phone",
+      "clientSignature": "Client signature"
+    },
+    "signature": {
+      "image": "Client signature, opens in a new tab",
+      "loadError": "The client signature could not be loaded."
     },
     "serviceEntries": {
       "correction": "Correction",

@@ -97,7 +97,28 @@ describe("WorkOrderDetailsPage", () => {
       "href",
       `/work-orders/${workOrder.id}/edit`,
     );
+    expect(screen.queryByText("Podpis klienta")).not.toBeInTheDocument();
     expect(relatedResourceRequests).toEqual([]);
+  });
+
+  it("shows the client signature given at completion", async () => {
+    signInAs("Dispatcher");
+    const photoId = "9f8e7d6c-5b4a-4321-8fed-cba987654321";
+    const workOrder = createWorkOrderResponse({
+      status: "Completed",
+      technicianId: otherTechnicianId,
+      technicianName: "Anna Nowak",
+      startedAt: "2026-07-14T06:45:00Z",
+      completedAt: "2026-07-14T09:00:00Z",
+      clientSignaturePhotoId: photoId,
+    });
+    mockDetails(workOrder);
+    renderApp(`/work-orders/${workOrder.id}`);
+
+    expect(
+      await screen.findByRole("img", { name: "Podpis klienta, otwiera się w nowej karcie" }),
+    ).toHaveAttribute("src", `${apiBaseUrl}/api/v1/photos/${photoId}`);
+    expect(screen.getByText("Podpis klienta")).toBeInTheDocument();
   });
 
   it("titles the browser tab with the work order number", async () => {
