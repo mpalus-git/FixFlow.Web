@@ -8,15 +8,17 @@ export function readPageParam(value: string | null): number {
 export function useSearchParamsUpdate() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  function update(changes: Record<string, string | null>) {
+  function update(changes: Record<string, string | readonly string[] | null>) {
     setSearchParams(
       (current) => {
         const next = new URLSearchParams(current);
         for (const [key, value] of Object.entries(changes)) {
-          if (value === null || value === "") {
-            next.delete(key);
-          } else {
-            next.set(key, value);
+          next.delete(key);
+          const values = typeof value === "string" ? [value] : (value ?? []);
+          for (const item of values) {
+            if (item !== "") {
+              next.append(key, item);
+            }
           }
         }
         return next;
