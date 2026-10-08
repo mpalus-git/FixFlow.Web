@@ -35,7 +35,7 @@ export function WorkOrderStatusTimeline({ workOrder }: WorkOrderStatusTimelinePr
   return (
     <ol
       aria-label={t("workOrders.details.timeline")}
-      className="grid gap-3 sm:grid-cols-5 sm:gap-2"
+      className="grid gap-3 sm:grid-cols-5 sm:gap-2 xl:grid-cols-1 xl:gap-3"
     >
       {workOrderStatuses.map((status, index) => {
         const isCurrent = index === currentIndex;
@@ -46,7 +46,7 @@ export function WorkOrderStatusTimeline({ workOrder }: WorkOrderStatusTimelinePr
           <li
             key={status}
             aria-current={isCurrent ? "step" : undefined}
-            className="flex items-start gap-3 sm:flex-col sm:gap-2"
+            className="flex items-start gap-3 sm:flex-col sm:gap-2 xl:flex-row xl:gap-3"
           >
             <span
               aria-hidden="true"

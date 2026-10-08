@@ -153,7 +153,7 @@ describe("WorkOrderDetailsPage", () => {
     const { userListRequests, relatedResourceRequests } = mockDetails(workOrder);
     renderApp(`/my-work-orders/${workOrder.id}`);
 
-    expect(await screen.findByText("Piekarnia Kowalski")).toBeInTheDocument();
+    expect(await screen.findAllByText("Piekarnia Kowalski")).toHaveLength(2);
     expect(screen.getByText("SN-2024-0001 · Vitodens 200-W")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /SN-2024-0001|Piekarnia/ })).not.toBeInTheDocument();
     expect(screen.getByText("Długa 12, 00-950 Warszawa")).toBeInTheDocument();

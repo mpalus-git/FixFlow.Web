@@ -57,6 +57,7 @@ export function WorkOrderDetailsPage() {
         }
         description={
           <>
+            <span className="font-medium text-foreground">{workOrder.clientName}</span>
             <WorkOrderStatusBadge status={workOrder.status} />
             <WorkOrderPriorityBadge priority={workOrder.priority} />
             {workOrder.isOverdue ? (
@@ -85,77 +86,88 @@ export function WorkOrderDetailsPage() {
           </>
         }
       />
-      <Card>
-        <CardContent>
-          <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_1fr]">
-            <dt className="text-muted-foreground">{t("workOrders.columns.device")}</dt>
-            <dd>
-              <WorkOrderDeviceName workOrder={workOrder} linked={!isTechnician} />
-            </dd>
-            <dt className="text-muted-foreground">{t("workOrders.columns.client")}</dt>
-            <dd>
-              {isTechnician ? (
-                workOrder.clientName
-              ) : (
-                <Link
-                  to={`/clients/${workOrder.clientId}`}
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-8 xl:grid-cols-[minmax(0,1fr)_20rem] xl:grid-rows-[auto_1fr] xl:items-start">
+        <Card className="xl:col-start-1 xl:row-start-1">
+          <CardContent>
+            <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_1fr]">
+              <dt className="text-muted-foreground">{t("workOrders.columns.device")}</dt>
+              <dd>
+                <WorkOrderDeviceName workOrder={workOrder} linked={!isTechnician} />
+              </dd>
+              <dt className="text-muted-foreground">{t("workOrders.columns.client")}</dt>
+              <dd>
+                {isTechnician ? (
+                  workOrder.clientName
+                ) : (
+                  <Link
+                    to={`/clients/${workOrder.clientId}`}
+                    className="underline-offset-4 hover:underline"
+                  >
+                    {workOrder.clientName}
+                  </Link>
+                )}
+              </dd>
+              <dt className="text-muted-foreground">{t("workOrders.details.clientAddress")}</dt>
+              <dd>{formatAddress(workOrder.clientAddress)}</dd>
+              <dt className="text-muted-foreground">
+                {t("workOrders.details.clientContactPerson")}
+              </dt>
+              <dd>{workOrder.clientContactPerson}</dd>
+              <dt className="text-muted-foreground">{t("workOrders.details.clientPhone")}</dt>
+              <dd>
+                <a
                   className="underline-offset-4 hover:underline"
+                  href={`tel:${workOrder.clientPhone}`}
                 >
-                  {workOrder.clientName}
-                </Link>
+                  {workOrder.clientPhone}
+                </a>
+              </dd>
+              <dt className="text-muted-foreground">{t("workOrders.columns.technician")}</dt>
+              <dd>{workOrder.technicianName ?? t("workOrders.unassigned")}</dd>
+              <dt className="text-muted-foreground">{t("workOrders.columns.dueDate")}</dt>
+              <dd>{formatDateTime(workOrder.dueDate, language)}</dd>
+              <dt className="text-muted-foreground">{t("workOrders.columns.description")}</dt>
+              <dd className="whitespace-pre-line">{workOrder.description}</dd>
+              {workOrder.clientSignaturePhotoId === null ? null : (
+                <>
+                  <dt className="text-muted-foreground">
+                    {t("workOrders.details.clientSignature")}
+                  </dt>
+                  <dd>
+                    <ClientSignature
+                      key={workOrder.clientSignaturePhotoId}
+                      photoId={workOrder.clientSignaturePhotoId}
+                    />
+                  </dd>
+                </>
               )}
-            </dd>
-            <dt className="text-muted-foreground">{t("workOrders.details.clientAddress")}</dt>
-            <dd>{formatAddress(workOrder.clientAddress)}</dd>
-            <dt className="text-muted-foreground">{t("workOrders.details.clientContactPerson")}</dt>
-            <dd>{workOrder.clientContactPerson}</dd>
-            <dt className="text-muted-foreground">{t("workOrders.details.clientPhone")}</dt>
-            <dd>
-              <a
-                className="underline-offset-4 hover:underline"
-                href={`tel:${workOrder.clientPhone}`}
-              >
-                {workOrder.clientPhone}
-              </a>
-            </dd>
-            <dt className="text-muted-foreground">{t("workOrders.columns.technician")}</dt>
-            <dd>{workOrder.technicianName ?? t("workOrders.unassigned")}</dd>
-            <dt className="text-muted-foreground">{t("workOrders.columns.dueDate")}</dt>
-            <dd>{formatDateTime(workOrder.dueDate, language)}</dd>
-            <dt className="text-muted-foreground">{t("workOrders.columns.description")}</dt>
-            <dd className="whitespace-pre-line">{workOrder.description}</dd>
-            {workOrder.clientSignaturePhotoId === null ? null : (
-              <>
-                <dt className="text-muted-foreground">{t("workOrders.details.clientSignature")}</dt>
-                <dd>
-                  <ClientSignature
-                    key={workOrder.clientSignaturePhotoId}
-                    photoId={workOrder.clientSignaturePhotoId}
-                  />
-                </dd>
-              </>
-            )}
-          </dl>
-        </CardContent>
-      </Card>
-      <section aria-labelledby="work-order-timeline-heading" className="flex flex-col gap-4">
-        <h2 id="work-order-timeline-heading" className="text-lg font-semibold">
-          {t("workOrders.details.timeline")}
-        </h2>
-        <WorkOrderStatusTimeline workOrder={workOrder} />
-      </section>
-      <section aria-labelledby="work-order-history-heading" className="flex flex-col gap-4">
-        <h2 id="work-order-history-heading" className="text-lg font-semibold">
-          {t("workOrders.details.history")}
-        </h2>
-        <WorkOrderEventList workOrderId={workOrder.id} />
-      </section>
-      <section aria-labelledby="work-order-entries-heading" className="flex flex-col gap-4">
-        <h2 id="work-order-entries-heading" className="text-lg font-semibold">
-          {t("workOrders.details.serviceEntries")}
-        </h2>
-        <ServiceEntryList workOrderId={workOrder.id} />
-      </section>
+            </dl>
+          </CardContent>
+        </Card>
+        <div className="flex flex-col gap-8 xl:col-start-2 xl:row-span-2 xl:row-start-1">
+          <section aria-labelledby="work-order-timeline-heading" className="flex flex-col gap-4">
+            <h2 id="work-order-timeline-heading" className="text-lg font-semibold">
+              {t("workOrders.details.timeline")}
+            </h2>
+            <WorkOrderStatusTimeline workOrder={workOrder} />
+          </section>
+          <section aria-labelledby="work-order-history-heading" className="flex flex-col gap-4">
+            <h2 id="work-order-history-heading" className="text-lg font-semibold">
+              {t("workOrders.details.history")}
+            </h2>
+            <WorkOrderEventList workOrderId={workOrder.id} />
+          </section>
+        </div>
+        <section
+          aria-labelledby="work-order-entries-heading"
+          className="flex flex-col gap-4 xl:col-start-1 xl:row-start-2"
+        >
+          <h2 id="work-order-entries-heading" className="text-lg font-semibold">
+            {t("workOrders.details.serviceEntries")}
+          </h2>
+          <ServiceEntryList workOrderId={workOrder.id} />
+        </section>
+      </div>
     </div>
   );
 }
