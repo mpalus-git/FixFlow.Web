@@ -42,6 +42,7 @@ const annaUser: UserResponse = {
 };
 const assignedToAnna = createWorkOrderListItem({
   clientName: "Hotel Zamek",
+  clientAddress: { street: "Rynek", buildingNumber: "1", postalCode: "31-042", city: "Kraków" },
   status: "Assigned",
   technicianId: anna,
   dueDate: toUtcIso(`${addCalendarDays(currentWeek, 4)}T10:00`),
@@ -113,6 +114,7 @@ describe("DispatchPage", () => {
 
     const annaRow = await screen.findByRole("row", { name: /Anna Nowak/ });
     expect(within(annaRow).getByRole("link", { name: "Hotel Zamek" })).toBeInTheDocument();
+    expect(within(annaRow).getByText("Kraków")).toBeInTheDocument();
     expect(screen.getByText(weekRange(currentWeek))).toBeInTheDocument();
     expect(
       within(screen.getByRole("navigation", { name: "Nawigacja główna" })).getByRole("link", {

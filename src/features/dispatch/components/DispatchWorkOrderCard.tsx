@@ -61,6 +61,7 @@ function CardBody({ workOrder, showDate, handle, linked }: CardBodyProps) {
           {workOrder.clientName}
         </span>
       )}
+      <span className="truncate text-xs text-muted-foreground">{workOrder.clientAddress.city}</span>
       <span className="truncate text-xs text-muted-foreground">{workOrder.deviceModel}</span>
       <span className="text-xs text-muted-foreground tabular-nums">{workOrder.number}</span>
       <div className="flex flex-wrap gap-1">
