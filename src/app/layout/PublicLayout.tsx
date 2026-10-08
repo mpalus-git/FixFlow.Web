@@ -1,10 +1,11 @@
-import { Outlet } from "react-router";
+import { Outlet, ScrollRestoration } from "react-router";
 import { LanguageSwitcher } from "@/app/layout/LanguageSwitcher";
 import { ThemeSwitcher } from "@/app/layout/ThemeSwitcher";
 
 export function PublicLayout() {
   return (
     <div className="flex min-h-svh flex-col">
+      <ScrollRestoration />
       <header className="flex justify-end gap-1 p-3">
         <LanguageSwitcher />
         <ThemeSwitcher />

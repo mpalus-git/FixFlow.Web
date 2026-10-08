@@ -2,10 +2,19 @@ import { act, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
 import { apiBaseUrl } from "@/shared/api/baseClient";
+import type { components } from "@/shared/api/schema";
 import { endSession } from "@/shared/session/sessionStore";
+import { mockDashboardSummary } from "@/test/dashboardFixtures";
 import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
 import { signInAs } from "@/test/signedInUser";
+
+type ClientPage = components["schemas"]["PagedResponseOfClientResponse"];
+
+function mockEmptyClientList() {
+  const emptyPage: ClientPage = { items: [], page: 1, pageSize: 20, totalCount: 0 };
+  server.use(http.get(`${apiBaseUrl}/api/v1/clients`, () => HttpResponse.json(emptyPage)));
+}
 
 describe("AppLayout", () => {
   beforeEach(() => {
@@ -47,6 +56,35 @@ describe("AppLayout", () => {
     await user.click(within(menu).getByRole("link", { name: "Pulpit" }));
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("moves focus to the heading of the new page after following a link", async () => {
+    mockDashboardSummary();
+    mockEmptyClientList();
+    const user = userEvent.setup();
+    renderApp("/");
+
+    const navigation = await screen.findByRole("navigation", { name: "Nawigacja główna" });
+    expect(screen.getByRole("heading", { level: 1, name: "Pulpit" })).not.toHaveFocus();
+    await user.click(within(navigation).getByRole("link", { name: "Klienci" }));
+
+    const heading = await screen.findByRole("heading", { level: 1, name: "Klienci" });
+    await vi.waitFor(() => {
+      expect(heading).toHaveFocus();
+    });
+  });
+
+  it("keeps focus in the search field when only the list parameters change", async () => {
+    mockEmptyClientList();
+    const user = userEvent.setup();
+    const router = renderApp("/clients");
+
+    await user.type(await screen.findByRole("searchbox"), "Serwis");
+
+    await vi.waitFor(() => {
+      expect(router.state.location.search).toContain("search=Serwis");
+    });
+    expect(screen.getByRole("searchbox")).toHaveFocus();
   });
 
   it("shows only the navigation of the technician role", async () => {
