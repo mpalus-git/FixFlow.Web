@@ -39,6 +39,16 @@ const screens: Screen[] = [
   { name: "dashboard", role: "dispatcher", heading: "Pulpit", path: () => "/" },
   { name: "work order list", role: "dispatcher", heading: "Zlecenia", path: () => "/work-orders" },
   {
+    name: "new work order form with the client search open",
+    role: "dispatcher",
+    heading: "Nowe zlecenie",
+    path: () => "/work-orders/new",
+    prepare: async (page) => {
+      await page.getByRole("combobox", { name: "Klient" }).click();
+      await expect(page.getByRole("listbox").getByRole("option").first()).toBeVisible();
+    },
+  },
+  {
     name: "work order details",
     role: "dispatcher",
     heading: "Zlecenie ZL/",
