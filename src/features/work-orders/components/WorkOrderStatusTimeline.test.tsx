@@ -50,6 +50,19 @@ describe("WorkOrderStatusTimeline", () => {
     expect(latestAssignmentTime([createWorkOrderEventResponse({ type: "Created" })])).toBeNull();
   });
 
+  it("tells screen readers which steps are completed and which are still pending", () => {
+    render(
+      <WorkOrderStatusTimeline workOrder={createWorkOrderResponse({ status: "InProgress" })} />,
+    );
+
+    const [created, assigned, inProgress, completed, invoiced] = steps();
+    expect(created).toHaveTextContent("etap ukończony");
+    expect(assigned).toHaveTextContent("etap ukończony");
+    expect(inProgress).not.toHaveTextContent(/etap/);
+    expect(completed).toHaveTextContent("etap oczekuje");
+    expect(invoiced).toHaveTextContent("etap oczekuje");
+  });
+
   it("ends on the invoiced status of a closed work order", () => {
     render(
       <WorkOrderStatusTimeline
