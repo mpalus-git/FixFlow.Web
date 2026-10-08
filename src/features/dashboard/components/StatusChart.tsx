@@ -1,11 +1,16 @@
 import { useTranslation } from "react-i18next";
-import { Bar, BarChart, CartesianGrid, LabelList, Tooltip, XAxis, YAxis } from "recharts";
-import { ChartTooltip } from "@/features/dashboard/components/ChartTooltip";
 import type { components } from "@/shared/api/schema";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/shared/ui/table";
 
 type WorkOrderStatusCountResponse = components["schemas"]["WorkOrderStatusCountResponse"];
-
-const axisTick = { fill: "var(--muted-foreground)", fontSize: 12 };
 
 export type StatusChartProps = {
   statusCounts: WorkOrderStatusCountResponse[];
@@ -13,65 +18,42 @@ export type StatusChartProps = {
 
 export function StatusChart({ statusCounts }: StatusChartProps) {
   const { t } = useTranslation();
-  const data = statusCounts.map(({ status, count }) => ({
-    status,
-    label: t(`workOrders.status.${status}`),
-    count,
-  }));
+  const maxCount = Math.max(1, ...statusCounts.map(({ count }) => count));
 
   return (
-    <>
-      <BarChart
-        responsive
-        layout="vertical"
-        data={data}
-        style={{ width: "100%", height: 240 }}
-        margin={{ top: 4, right: 32, bottom: 4, left: 4 }}
-      >
-        <CartesianGrid horizontal={false} stroke="var(--border)" />
-        <XAxis
-          type="number"
-          allowDecimals={false}
-          tick={axisTick}
-          axisLine={false}
-          tickLine={false}
-        />
-        <YAxis
-          type="category"
-          dataKey="label"
-          width={104}
-          tick={axisTick}
-          axisLine={false}
-          tickLine={false}
-        />
-        <Tooltip cursor={{ fill: "var(--muted)" }} content={ChartTooltip} />
-        <Bar
-          dataKey="count"
-          name={t("dashboard.statusChart.series")}
-          fill="var(--chart-1)"
-          barSize={20}
-          radius={[0, 4, 4, 0]}
-        >
-          <LabelList dataKey="count" position="right" fill="var(--foreground)" fontSize={12} />
-        </Bar>
-      </BarChart>
-      <table className="sr-only">
-        <caption>{t("dashboard.statusChart.title")}</caption>
-        <thead>
-          <tr>
-            <th scope="col">{t("dashboard.statusChart.status")}</th>
-            <th scope="col">{t("dashboard.statusChart.series")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(({ status, label, count }) => (
-            <tr key={status}>
-              <th scope="row">{label}</th>
-              <td>{count}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+    <Table label={t("dashboard.statusChart.title")}>
+      <TableCaption className="sr-only">{t("dashboard.statusChart.title")}</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-0 px-3">{t("dashboard.statusChart.status")}</TableHead>
+          <TableHead className="px-3">{t("dashboard.statusChart.series")}</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {statusCounts.map(({ status, count }) => (
+          <TableRow key={status}>
+            <TableHead scope="row" className="px-3 font-normal">
+              {t(`workOrders.status.${status}`)}
+            </TableHead>
+            <TableCell className="px-3">
+              <span className="flex items-center gap-3">
+                <span aria-hidden="true" className="flex h-3 flex-1">
+                  {count > 0 ? (
+                    <span
+                      className="rounded-r-sm"
+                      style={{
+                        width: `${String((count / maxCount) * 100)}%`,
+                        backgroundColor: "var(--chart-1)",
+                      }}
+                    />
+                  ) : null}
+                </span>
+                <span className="w-8 text-right font-medium tabular-nums">{count}</span>
+              </span>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }

@@ -52,7 +52,7 @@ describe("DashboardPage", () => {
     ).toBeInTheDocument();
   });
 
-  it("describes the status chart with a table for screen readers", async () => {
+  it("shows the work order count of each status as a table with bars", async () => {
     mockDashboardSummary();
     renderApp("/");
 
