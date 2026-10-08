@@ -24,7 +24,7 @@ export function UserFilters({ filters, onChange, canClear, onClear }: UserFilter
     <div
       role="group"
       aria-label={t("users.filters.label")}
-      className="flex flex-col gap-3 rounded-xl border p-3 sm:flex-row sm:items-end"
+      className="flex flex-col gap-3 sm:flex-row sm:items-end"
     >
       <div className="flex flex-col gap-2 sm:w-56">
         <Label htmlFor={roleId}>{t("users.filters.role")}</Label>
