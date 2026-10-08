@@ -17,7 +17,7 @@ import { Button } from "@/shared/ui/button";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function DeviceCardPage() {
   const { t } = useTranslation();
@@ -39,39 +39,40 @@ export function DeviceCardPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex flex-col gap-2">
-          <PageTitle title={device.serialNumber} />
-          <h1 className="text-2xl font-semibold tracking-tight">{device.serialNumber}</h1>
-          <p className="text-muted-foreground">
+      <PageHeader
+        title={device.serialNumber}
+        description={
+          <>
             {device.manufacturer} {device.model}
-          </p>
-          {device.archivedAt === null ? null : (
-            <Badge variant="secondary">{t("devices.card.archived")}</Badge>
-          )}
-        </div>
-        {device.archivedAt === null ? (
-          <div className="flex flex-wrap gap-2">
-            <NewWorkOrderLink clientId={device.clientId} deviceId={device.id} />
-            <Button variant="outline" asChild>
-              <Link to={`/devices/${device.id}/edit`}>
-                <PencilIcon aria-hidden="true" />
-                {t("devices.actions.edit")}
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              className="text-destructive"
-              onClick={() => {
-                setDeviceToArchive(device);
-              }}
-            >
-              <ArchiveIcon aria-hidden="true" />
-              {t("devices.actions.archive")}
-            </Button>
-          </div>
-        ) : null}
-      </div>
+            {device.archivedAt === null ? null : (
+              <Badge variant="secondary">{t("devices.card.archived")}</Badge>
+            )}
+          </>
+        }
+        actions={
+          device.archivedAt === null ? (
+            <>
+              <NewWorkOrderLink clientId={device.clientId} deviceId={device.id} />
+              <Button variant="outline" asChild>
+                <Link to={`/devices/${device.id}/edit`}>
+                  <PencilIcon aria-hidden="true" />
+                  {t("devices.actions.edit")}
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                className="text-destructive"
+                onClick={() => {
+                  setDeviceToArchive(device);
+                }}
+              >
+                <ArchiveIcon aria-hidden="true" />
+                {t("devices.actions.archive")}
+              </Button>
+            </>
+          ) : undefined
+        }
+      />
       <Card>
         <CardContent>
           <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_1fr]">

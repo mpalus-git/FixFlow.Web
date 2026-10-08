@@ -109,7 +109,10 @@ export function DispatchPage() {
             >
               <ChevronLeftIcon aria-hidden="true" />
             </Button>
-            <p aria-live="polite" className="min-w-48 text-center text-sm font-medium tabular-nums">
+            <p
+              aria-live="polite"
+              className="min-w-48 text-center text-sm leading-8 font-medium tabular-nums"
+            >
               {t("dispatch.week.range", {
                 from: formatCalendarDate(weekStart, language),
                 to: formatCalendarDate(addCalendarDays(weekStart, 6), language),

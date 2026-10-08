@@ -24,7 +24,7 @@ export function PageHeader({ title, subject, description, actions, back }: PageH
           )}
         </div>
         {actions === undefined ? null : (
-          <div className="flex flex-wrap items-center gap-2">{actions}</div>
+          <div className="flex flex-wrap items-start gap-2">{actions}</div>
         )}
       </div>
     </div>
