@@ -407,7 +407,7 @@
     "filters": {
       "label": "Filtry zleceń",
       "status": "Status",
-      "allStatuses": "Wszystkie statusy",
+      "openOnly": "Tylko otwarte",
       "technician": "Technik",
       "allTechnicians": "Wszyscy technicy",
       "inactiveTechnician": "{{name}} (nieaktywny)",

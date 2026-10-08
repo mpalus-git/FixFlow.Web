@@ -14,7 +14,7 @@ const activeTechnicianId = "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d";
 const inactiveTechnicianId = "2b3c4d5e-6f7a-4b8c-9d0e-1f2a3b4c5d6e";
 
 const noFilters: WorkOrderListFilters = {
-  status: null,
+  status: [],
   technicianId: null,
   dueFrom: null,
   dueTo: null,
@@ -61,13 +61,41 @@ function renderFilters(filters: WorkOrderListFilters, showTechnicianFilter = tru
 }
 
 describe("WorkOrderFilters", () => {
-  it("filters by the chosen status", async () => {
+  it("adds a ticked status to the chosen ones in the order of the workflow", async () => {
     const user = userEvent.setup();
-    const onChange = renderFilters(noFilters, false);
+    const onChange = renderFilters({ ...noFilters, status: ["InProgress"] }, false);
 
-    await user.selectOptions(screen.getByLabelText("Status"), "W realizacji");
+    await user.click(screen.getByRole("checkbox", { name: "Nowe" }));
 
-    expect(onChange).toHaveBeenCalledWith({ status: "InProgress" });
+    expect(onChange).toHaveBeenCalledWith({ status: ["New", "InProgress"] });
+  });
+
+  it("removes an unticked status", async () => {
+    const user = userEvent.setup();
+    const onChange = renderFilters({ ...noFilters, status: ["New", "InProgress"] }, false);
+
+    await user.click(screen.getByRole("checkbox", { name: "W realizacji" }));
+
+    expect(onChange).toHaveBeenCalledWith({ status: ["New"] });
+  });
+
+  it("chooses all open statuses with one button", async () => {
+    const user = userEvent.setup();
+    const onChange = renderFilters({ ...noFilters, status: ["Completed"] }, false);
+
+    expect(screen.getByRole("group", { name: "Status" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Tylko otwarte" }));
+
+    expect(onChange).toHaveBeenCalledWith({ status: ["New", "Assigned", "InProgress"] });
+  });
+
+  it("marks the open statuses button as pressed when exactly those are chosen", () => {
+    renderFilters({ ...noFilters, status: ["New", "Assigned", "InProgress"] }, false);
+
+    expect(screen.getByRole("button", { name: "Tylko otwarte" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
   });
 
   it("offers active and deactivated technicians and filters by the chosen one", async () => {

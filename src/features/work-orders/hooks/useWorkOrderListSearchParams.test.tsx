@@ -20,7 +20,7 @@ describe("readWorkOrderListParams", () => {
       page: 2,
       search: "kocioł",
       filters: {
-        status: "InProgress",
+        status: ["InProgress"],
         technicianId,
         dueFrom: "2026-10-01",
         dueTo: "2026-10-07",
@@ -38,13 +38,21 @@ describe("readWorkOrderListParams", () => {
     );
 
     expect(params.filters).toEqual({
-      status: null,
+      status: [],
       technicianId: null,
       dueFrom: null,
       dueTo: null,
       overdueOnly: false,
     });
     expect(params.sort).toEqual({ sortBy: "DueDate", sortDirection: "Asc" });
+  });
+
+  it("reads several statuses in the order of the workflow without duplicates", () => {
+    const params = readWorkOrderListParams(
+      new URLSearchParams("status=Completed&status=New&status=Closed&status=New"),
+    );
+
+    expect(params.filters.status).toEqual(["New", "Completed"]);
   });
 
   it("drops the end of a due date range that is before its start", () => {
@@ -71,15 +79,15 @@ describe("useWorkOrderListSearchParams", () => {
     const result = renderListParams("/work-orders?page=3&status=New");
 
     act(() => {
-      result.current.list.setFilters({ status: "Assigned", overdueOnly: true });
+      result.current.list.setFilters({ status: ["Assigned", "InProgress"], overdueOnly: true });
     });
 
-    expect(result.current.location.search).toBe("?status=Assigned&overdue=true");
+    expect(result.current.location.search).toBe("?status=Assigned&status=InProgress&overdue=true");
   });
 
   it("clears filters and search but keeps the sorting", () => {
     const result = renderListParams(
-      `/work-orders?search=SN&status=New&technician=${technicianId}&dueFrom=2026-10-01&overdue=true&sort=Status`,
+      `/work-orders?search=SN&status=New&status=Assigned&technician=${technicianId}&dueFrom=2026-10-01&overdue=true&sort=Status`,
     );
 
     act(() => {
