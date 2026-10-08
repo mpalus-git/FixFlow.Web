@@ -60,9 +60,18 @@ export function Combobox({
     ? visibleOptions[Math.min(activeIndex, visibleOptions.length - 1)]
     : undefined;
 
+  const activeOptionId =
+    activeOption === undefined ? undefined : `${listboxId}-${activeOption.value}`;
+
   useEffect(() => {
     changeQuery(debouncedQuery.trim());
   }, [debouncedQuery]);
+
+  useEffect(() => {
+    if (activeOptionId !== undefined) {
+      document.getElementById(activeOptionId)?.scrollIntoView({ block: "nearest" });
+    }
+  }, [activeOptionId]);
 
   function open() {
     if (!isOpen) {
@@ -136,9 +145,7 @@ export function Combobox({
             aria-expanded={isOpen}
             aria-controls={listboxId}
             aria-autocomplete="list"
-            aria-activedescendant={
-              activeOption === undefined ? undefined : `${listboxId}-${activeOption.value}`
-            }
+            aria-activedescendant={activeOptionId}
             aria-invalid={invalid}
             aria-describedby={describedBy}
             disabled={disabled}
@@ -162,6 +169,7 @@ export function Combobox({
       </PopoverAnchor>
       <PopoverContent
         align="start"
+        tabIndex={0}
         className="max-h-72 w-(--radix-popover-trigger-width) gap-0 overflow-y-auto p-1"
         onOpenAutoFocus={(event) => {
           event.preventDefault();

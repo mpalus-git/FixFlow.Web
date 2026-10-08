@@ -6,6 +6,7 @@ import { server } from "@/test/server";
 
 configure({ asyncUtilTimeout: 10_000 });
 window.scrollTo = () => undefined;
+Element.prototype.scrollIntoView = () => undefined;
 mockColorScheme(false);
 
 beforeAll(() => {
