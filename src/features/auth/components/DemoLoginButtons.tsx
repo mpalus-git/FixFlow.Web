@@ -1,3 +1,4 @@
+import { ArrowRightIcon, CalendarRangeIcon, WrenchIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { type DemoAccount, demoDataResetUtc } from "@/shared/lib/demoAccounts";
 import { useLanguage } from "@/shared/i18n/useLanguage";
@@ -5,8 +6,12 @@ import { formatTime } from "@/shared/lib/dateTime";
 import { Button } from "@/shared/ui/button";
 
 const demoRoleTexts = {
-  Dispatcher: { label: "auth.demo.dispatcher", hint: "auth.demo.dispatcherHint" },
-  Technician: { label: "auth.demo.technician", hint: "auth.demo.technicianHint" },
+  Dispatcher: {
+    label: "auth.demo.dispatcher",
+    hint: "auth.demo.dispatcherHint",
+    Icon: CalendarRangeIcon,
+  },
+  Technician: { label: "auth.demo.technician", hint: "auth.demo.technicianHint", Icon: WrenchIcon },
 } as const;
 
 export type DemoLoginButtonsProps = {
@@ -33,7 +38,6 @@ export function DemoLoginButtons({ accounts, disabled, onSelect }: DemoLoginButt
       </h2>
       <div className="grid gap-2">
         {accounts.map((account) => {
-          const isDispatcher = account.role === "Dispatcher";
           const texts = demoRoleTexts[account.role];
           const labelId = `demo-login-${account.role}-label`;
           const hintId = `demo-login-${account.role}-hint`;
@@ -41,24 +45,25 @@ export function DemoLoginButtons({ accounts, disabled, onSelect }: DemoLoginButt
             <Button
               key={account.role}
               type="button"
-              variant={isDispatcher ? "default" : "outline"}
               disabled={disabled}
               aria-labelledby={labelId}
               aria-describedby={hintId}
-              className="h-auto flex-col items-start gap-0.5 px-3 py-2 text-left whitespace-normal"
+              className="h-auto justify-start gap-3 px-3 py-2.5 text-left whitespace-normal"
               onClick={() => {
                 onSelect(account);
               }}
             >
-              <span id={labelId}>{t(texts.label)}</span>
-              <span
-                id={hintId}
-                className={
-                  isDispatcher ? "text-xs font-normal" : "text-xs font-normal text-muted-foreground"
-                }
-              >
-                {t(texts.hint)}
+              <texts.Icon aria-hidden="true" className="size-5" />
+              <span className="flex flex-1 flex-col gap-0.5">
+                <span id={labelId}>{t(texts.label)}</span>
+                <span id={hintId} className="text-xs font-normal">
+                  {t(texts.hint)}
+                </span>
               </span>
+              <ArrowRightIcon
+                aria-hidden="true"
+                className="motion-safe:transition-transform motion-safe:group-hover/button:translate-x-0.5"
+              />
             </Button>
           );
         })}

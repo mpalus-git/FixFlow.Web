@@ -107,6 +107,21 @@ describe("LoginForm", () => {
     ).toBeTruthy();
   });
 
+  it("shows both demo accounts as equally styled enabled buttons", () => {
+    const demoAccounts = [
+      { role: "Dispatcher", email: "dispatcher@demo.test", password: "Demo-Password-1" },
+      { role: "Technician", email: "technician@demo.test", password: "Demo-Password-2" },
+    ] as const;
+    renderWithProviders(<LoginForm onLoggedIn={vi.fn()} demoAccounts={demoAccounts} />);
+
+    const dispatcherButton = screen.getByRole("button", { name: "Zaloguj jako dyspozytor" });
+    const technicianButton = screen.getByRole("button", { name: "Zaloguj jako technik" });
+
+    expect(dispatcherButton).toBeEnabled();
+    expect(technicianButton).toBeEnabled();
+    expect(technicianButton.className).toBe(dispatcherButton.className);
+  });
+
   it("logs in with the chosen demo account in one click", async () => {
     const receivedBodies: LoginRequest[] = [];
     server.use(
