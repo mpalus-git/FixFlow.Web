@@ -14,6 +14,14 @@ export function createWorkOrderListItem(
     deviceModel: "Vitodens 200-W",
     clientId: "3f1d2c4b-5a69-4e7d-8c1b-2a3b4c5d6e7f",
     clientName: "Piekarnia Kowalski",
+    clientAddress: {
+      street: "Długa",
+      buildingNumber: "12",
+      postalCode: "00-950",
+      city: "Warszawa",
+    },
+    clientContactPerson: "Anna Kowalska",
+    clientPhone: "+48 600 100 200",
     description: "Kocioł nie grzeje wody użytkowej",
     priority: "High",
     status: "Assigned",
@@ -41,6 +49,14 @@ export function createWorkOrderResponse(
     deviceModel: "Vitodens 200-W",
     clientId: "3f1d2c4b-5a69-4e7d-8c1b-2a3b4c5d6e7f",
     clientName: "Piekarnia Kowalski",
+    clientAddress: {
+      street: "Długa",
+      buildingNumber: "12",
+      postalCode: "00-950",
+      city: "Warszawa",
+    },
+    clientContactPerson: "Anna Kowalska",
+    clientPhone: "+48 600 100 200",
     description: "Kocioł nie grzeje wody użytkowej",
     priority: "High",
     status: "New",
@@ -53,6 +69,7 @@ export function createWorkOrderResponse(
     startedAt: null,
     completedAt: null,
     invoicedAt: null,
+    clientSignaturePhotoId: null,
     ...overrides,
   };
 }

@@ -41,7 +41,7 @@ function toListWorkOrdersQuery({
     pageSize: workOrderListPageSize,
     ...sort,
     ...(search === "" ? {} : { search }),
-    ...(filters.status === null ? {} : { status: filters.status }),
+    ...(filters.status === null ? {} : { status: [filters.status] }),
     ...(filters.technicianId === null ? {} : { technicianId: filters.technicianId }),
     ...(filters.dueFrom === null ? {} : { dueFrom: filters.dueFrom }),
     ...(filters.dueTo === null ? {} : { dueTo: filters.dueTo }),

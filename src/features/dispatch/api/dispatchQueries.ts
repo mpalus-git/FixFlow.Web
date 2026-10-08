@@ -46,7 +46,7 @@ export function unassignedWorkOrdersQueryOptions() {
         await apiClient.GET("/api/v1/work-orders", {
           params: {
             query: {
-              status: "New",
+              status: ["New"],
               page: 1,
               pageSize: dispatchBoardLimit,
               sortBy: "DueDate",
