@@ -61,8 +61,10 @@ describe("UsersPage", () => {
     }, 5000);
     expect(requests.at(-1)?.get("role")).toBe("Technician");
     expect(router.state.location.search).toBe("?role=Technician&status=inactive");
-    expect(await screen.findByText("piotr.technik@fixflow.test")).toBeInTheDocument();
-    expect(screen.queryByText("jan.technik@fixflow.test")).not.toBeInTheDocument();
+    await vi.waitFor(() => {
+      expect(screen.queryByText("jan.technik@fixflow.test")).not.toBeInTheDocument();
+    }, 5000);
+    expect(screen.getByText("piotr.technik@fixflow.test")).toBeInTheDocument();
   });
 
   it("explains when no account matches the filters", async () => {
