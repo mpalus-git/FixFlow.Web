@@ -11,7 +11,7 @@ import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { useVersionedResource } from "@/shared/api/useVersionedResource";
 import { VersionConflictDialog } from "@/shared/ui/VersionConflictDialog";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function EditClientPage() {
   const { t } = useTranslation();
@@ -38,11 +38,7 @@ export function EditClientPage() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <PageTitle title={t("clients.edit.title")} subject={client.name} />
-        <h1 className="text-2xl font-semibold tracking-tight">{t("clients.edit.title")}</h1>
-        <p className="text-muted-foreground">{client.name}</p>
-      </div>
+      <PageHeader title={t("clients.edit.title")} subject={client.name} description={client.name} />
       {isArchived ? (
         <Alert role="note">
           <AlertDescription>{t("apiErrors.clientArchived")}</AlertDescription>

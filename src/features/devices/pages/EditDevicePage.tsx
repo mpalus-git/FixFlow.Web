@@ -11,7 +11,7 @@ import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { useVersionedResource } from "@/shared/api/useVersionedResource";
 import { VersionConflictDialog } from "@/shared/ui/VersionConflictDialog";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function EditDevicePage() {
   const { t } = useTranslation();
@@ -38,11 +38,11 @@ export function EditDevicePage() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <PageTitle title={t("devices.edit.title")} subject={device.serialNumber} />
-        <h1 className="text-2xl font-semibold tracking-tight">{t("devices.edit.title")}</h1>
-        <p className="text-muted-foreground">{device.serialNumber}</p>
-      </div>
+      <PageHeader
+        title={t("devices.edit.title")}
+        subject={device.serialNumber}
+        description={device.serialNumber}
+      />
       {isArchived ? (
         <Alert role="note">
           <AlertDescription>{t("apiErrors.deviceArchived")}</AlertDescription>

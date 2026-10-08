@@ -19,7 +19,7 @@ import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { useVersionedResource } from "@/shared/api/useVersionedResource";
 import { VersionConflictDialog } from "@/shared/ui/VersionConflictDialog";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function EditWorkOrderPage() {
   const { t } = useTranslation();
@@ -47,14 +47,16 @@ export function EditWorkOrderPage() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-6">
-      <div className="flex flex-col gap-2">
-        <PageTitle title={t("workOrders.edit.title")} subject={workOrder.number} />
-        <h1 className="text-2xl font-semibold tracking-tight">{t("workOrders.edit.title")}</h1>
-        <div className="flex flex-wrap items-center gap-2 text-muted-foreground">
-          <WorkOrderDeviceName workOrder={workOrder} linked />
-          <WorkOrderStatusBadge status={workOrder.status} />
-        </div>
-      </div>
+      <PageHeader
+        title={t("workOrders.edit.title")}
+        subject={workOrder.number}
+        description={
+          <>
+            <WorkOrderDeviceName workOrder={workOrder} linked />
+            <WorkOrderStatusBadge status={workOrder.status} />
+          </>
+        }
+      />
       {isEditable ? null : (
         <Alert role="note">
           <AlertDescription>{t("apiErrors.workOrderClosed")}</AlertDescription>

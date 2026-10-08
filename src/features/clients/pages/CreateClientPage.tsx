@@ -5,7 +5,7 @@ import { useCreateClientMutation } from "@/features/clients/api/clientMutations"
 import { ClientForm } from "@/features/clients/components/ClientForm";
 import { emptyClientFormValues, toClientRequest } from "@/features/clients/schemas/clientSchema";
 import { Card, CardContent } from "@/shared/ui/card";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function CreateClientPage() {
   const { t } = useTranslation();
@@ -14,8 +14,7 @@ export function CreateClientPage() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-6">
-      <PageTitle title={t("clients.create.title")} />
-      <h1 className="text-2xl font-semibold tracking-tight">{t("clients.create.title")}</h1>
+      <PageHeader title={t("clients.create.title")} />
       <Card>
         <CardContent>
           <ClientForm
