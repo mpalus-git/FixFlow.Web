@@ -60,14 +60,11 @@
     },
     "statusChart": {
       "title": "Work orders by status",
-      "description": "All work orders in the system, in handling order",
       "series": "Work orders",
       "status": "Status",
       "empty": "There are no work orders yet"
     },
     "workload": {
-      "title": "Technician workload",
-      "description": "Open work orders of active technicians",
       "technician": "Technician",
       "assigned": "Assigned",
       "inProgress": "In progress",

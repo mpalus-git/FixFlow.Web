@@ -10,7 +10,7 @@ type DashboardSummaryResponse = components["schemas"]["DashboardSummaryResponse"
 const queueStripClassName =
   "grid divide-y overflow-hidden rounded-xl border bg-card lg:grid-cols-5 lg:divide-x lg:divide-y-0";
 const queueItemClassName =
-  "flex items-center justify-between gap-3 px-4 py-3 lg:flex-col lg:items-start lg:justify-start lg:gap-1";
+  "flex items-center justify-between gap-3 px-4 py-3 lg:flex-col lg:items-start lg:gap-1";
 
 type StatTileProps = {
   label: string;

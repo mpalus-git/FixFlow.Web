@@ -8,7 +8,6 @@ import {
   DashboardStatTilesSkeleton,
 } from "@/features/dashboard/components/DashboardStatTiles";
 import { StatusChart } from "@/features/dashboard/components/StatusChart";
-import { TechnicianWorkloadChart } from "@/features/dashboard/components/TechnicianWorkloadChart";
 import { TechnicianWorkloadTable } from "@/features/dashboard/components/TechnicianWorkloadTable";
 import { useLanguage } from "@/shared/i18n/useLanguage";
 import { formatCalendarDate, formatDateTime } from "@/shared/lib/dateTime";
@@ -32,9 +31,9 @@ function DashboardSkeleton() {
   return (
     <div role="status" aria-label={t("states.loading")} className="flex flex-col gap-6">
       <DashboardStatTilesSkeleton />
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Skeleton className="h-72 w-full rounded-xl" />
-        <Skeleton className="h-72 w-full rounded-xl" />
+      <div className="grid gap-6 xl:grid-cols-5">
+        <Skeleton className="h-80 w-full rounded-xl xl:col-span-2" />
+        <Skeleton className="h-80 w-full rounded-xl xl:col-span-3" />
       </div>
     </div>
   );
@@ -57,11 +56,10 @@ export function DashboardPage() {
     return (
       <>
         <DashboardStatTiles summary={summary} />
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card>
+        <div className="grid gap-6 xl:grid-cols-5">
+          <Card className="xl:col-span-2">
             <CardHeader>
               <CardTitle>{t("dashboard.statusChart.title")}</CardTitle>
-              <CardDescription>{t("dashboard.statusChart.description")}</CardDescription>
             </CardHeader>
             <CardContent>
               {totalCount === 0 ? (
@@ -71,22 +69,7 @@ export function DashboardPage() {
               )}
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("dashboard.workload.title")}</CardTitle>
-              <CardDescription>{t("dashboard.workload.description")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {summary.technicians.length === 0 ? (
-                <EmptyState icon={UsersIcon} title={t("dashboard.workload.empty")} />
-              ) : (
-                <TechnicianWorkloadChart technicians={summary.technicians} />
-              )}
-            </CardContent>
-          </Card>
-        </div>
-        {summary.technicians.length === 0 ? null : (
-          <Card>
+          <Card className="xl:col-span-3">
             <CardHeader>
               <CardTitle>{t("dashboard.technicians.title")}</CardTitle>
               <CardDescription>
@@ -105,10 +88,14 @@ export function DashboardPage() {
               </CardAction>
             </CardHeader>
             <CardContent>
-              <TechnicianWorkloadTable technicians={summary.technicians} />
+              {summary.technicians.length === 0 ? (
+                <EmptyState icon={UsersIcon} title={t("dashboard.workload.empty")} />
+              ) : (
+                <TechnicianWorkloadTable technicians={summary.technicians} />
+              )}
             </CardContent>
           </Card>
-        )}
+        </div>
       </>
     );
   }

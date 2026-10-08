@@ -60,14 +60,11 @@
     },
     "statusChart": {
       "title": "Zlecenia według statusu",
-      "description": "Wszystkie zlecenia w systemie, w kolejności obsługi",
       "series": "Zlecenia",
       "status": "Status",
       "empty": "W systemie nie ma jeszcze zleceń"
     },
     "workload": {
-      "title": "Obłożenie techników",
-      "description": "Otwarte zlecenia aktywnych techników",
       "technician": "Technik",
       "assigned": "Przypisane",
       "inProgress": "W realizacji",
