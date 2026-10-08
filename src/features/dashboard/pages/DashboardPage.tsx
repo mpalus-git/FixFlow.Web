@@ -105,22 +105,24 @@ export function DashboardPage() {
       <PageHeader
         title={t("dashboard.title")}
         description={
-          summary === undefined
-            ? undefined
-            : t("dashboard.generatedAt", { time: formatDateTime(summary.generatedAt, language) })
-        }
-        actions={
-          <Button
-            variant="outline"
-            disabled={summaryQuery.isFetching}
-            onClick={() => void summaryQuery.refetch()}
-          >
-            <RefreshCwIcon
-              aria-hidden="true"
-              className={summaryQuery.isFetching ? "animate-spin" : ""}
-            />
-            {t("dashboard.refresh")}
-          </Button>
+          summary === undefined ? undefined : (
+            <>
+              {t("dashboard.generatedAt", { time: formatDateTime(summary.generatedAt, language) })}
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                aria-label={t("dashboard.refresh")}
+                title={t("dashboard.refresh")}
+                disabled={summaryQuery.isFetching}
+                onClick={() => void summaryQuery.refetch()}
+              >
+                <RefreshCwIcon
+                  aria-hidden="true"
+                  className={summaryQuery.isFetching ? "animate-spin" : ""}
+                />
+              </Button>
+            </>
+          )
         }
       />
       {renderContent()}
