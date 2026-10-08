@@ -64,15 +64,19 @@ describe("WorkOrdersPage", () => {
 
   it("restores filters and sorting from the address", async () => {
     const requests = mockWorkOrders(1);
-    renderApp("/work-orders?status=Assigned&overdue=true&sort=Priority&direction=Desc");
+    renderApp(
+      "/work-orders?status=Assigned&status=InProgress&overdue=true&sort=Priority&direction=Desc",
+    );
 
     expect(await screen.findByRole("columnheader", { name: "Priorytet" })).toHaveAttribute(
       "aria-sort",
       "descending",
     );
-    expect(screen.getByLabelText("Status")).toHaveDisplayValue("Przypisane");
+    expect(screen.getByRole("checkbox", { name: "Przypisane" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "W realizacji" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Nowe" })).not.toBeChecked();
     expect(screen.getByRole("checkbox", { name: "Tylko po terminie" })).toBeChecked();
-    expect(requests[0]?.get("status")).toBe("Assigned");
+    expect(requests[0]?.getAll("status")).toEqual(["Assigned", "InProgress"]);
     expect(requests[0]?.get("isOverdue")).toBe("true");
     expect(requests[0]?.get("sortBy")).toBe("Priority");
   });
@@ -83,13 +87,13 @@ describe("WorkOrdersPage", () => {
     const user = userEvent.setup();
 
     await screen.findByRole("cell", { name: "Piekarnia Kowalski" });
-    await user.selectOptions(screen.getByLabelText("Status"), "Nowe");
+    await user.click(screen.getByRole("button", { name: "Tylko otwarte" }));
 
     await vi.waitFor(() => {
-      expect(requests.at(-1)?.get("status")).toBe("New");
+      expect(requests.at(-1)?.getAll("status")).toEqual(["New", "Assigned", "InProgress"]);
     });
     expect(requests.at(-1)?.get("page")).toBe("1");
-    expect(router.state.location.search).toBe("?status=New");
+    expect(router.state.location.search).toBe("?status=New&status=Assigned&status=InProgress");
   });
 
   it("sorts by the clicked column and keeps the sorting in the address", async () => {

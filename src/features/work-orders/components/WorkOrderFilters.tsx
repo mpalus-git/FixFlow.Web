@@ -4,7 +4,10 @@ import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import { technicianOptionsQueryOptions } from "@/shared/api/technicianQueries";
 import {
+  openWorkOrderStatuses,
+  orderedStatuses,
   type WorkOrderListFilters,
+  type WorkOrderStatus,
   workOrderStatuses,
 } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
 import { Button } from "@/shared/ui/button";
@@ -53,6 +56,61 @@ function TechnicianFilter({ technicianId, onChange }: TechnicianFilterProps) {
   );
 }
 
+type StatusFilterProps = {
+  statuses: readonly WorkOrderStatus[];
+  onChange: (statuses: WorkOrderStatus[]) => void;
+};
+
+function StatusFilter({ statuses, onChange }: StatusFilterProps) {
+  const { t } = useTranslation();
+  const id = useId();
+  const isOpenOnly =
+    statuses.length === openWorkOrderStatuses.length &&
+    openWorkOrderStatuses.every((status) => statuses.includes(status));
+
+  return (
+    <fieldset className="flex flex-col gap-2">
+      <legend className="mb-2 text-sm leading-none font-medium">
+        {t("workOrders.filters.status")}
+      </legend>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        {workOrderStatuses.map((status) => (
+          <div key={status} className="flex items-center gap-2">
+            <input
+              id={`${id}-${status}`}
+              type="checkbox"
+              className="size-4 accent-primary"
+              checked={statuses.includes(status)}
+              onChange={(event) => {
+                onChange(
+                  orderedStatuses(
+                    event.target.checked
+                      ? [...statuses, status]
+                      : statuses.filter((chosen) => chosen !== status),
+                  ),
+                );
+              }}
+            />
+            <Label htmlFor={`${id}-${status}`} className="font-normal">
+              {t(`workOrders.status.${status}`)}
+            </Label>
+          </div>
+        ))}
+        <Button
+          variant="outline"
+          size="sm"
+          aria-pressed={isOpenOnly}
+          onClick={() => {
+            onChange([...openWorkOrderStatuses]);
+          }}
+        >
+          {t("workOrders.filters.openOnly")}
+        </Button>
+      </div>
+    </fieldset>
+  );
+}
+
 export type WorkOrderFiltersProps = {
   filters: WorkOrderListFilters;
   onChange: (filters: Partial<WorkOrderListFilters>) => void;
@@ -69,7 +127,6 @@ export function WorkOrderFilters({
   onClear,
 }: WorkOrderFiltersProps) {
   const { t } = useTranslation();
-  const statusId = useId();
   const dueFromId = useId();
   const dueToId = useId();
   const overdueId = useId();
@@ -80,27 +137,13 @@ export function WorkOrderFilters({
       aria-label={t("workOrders.filters.label")}
       className="flex flex-col gap-3 rounded-xl border p-3"
     >
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor={statusId}>{t("workOrders.filters.status")}</Label>
-          <NativeSelect
-            id={statusId}
-            className="w-full"
-            value={filters.status ?? ""}
-            onChange={(event) => {
-              onChange({
-                status: workOrderStatuses.find((status) => status === event.target.value) ?? null,
-              });
-            }}
-          >
-            <NativeSelectOption value="">{t("workOrders.filters.allStatuses")}</NativeSelectOption>
-            {workOrderStatuses.map((status) => (
-              <NativeSelectOption key={status} value={status}>
-                {t(`workOrders.status.${status}`)}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
-        </div>
+      <StatusFilter
+        statuses={filters.status}
+        onChange={(status) => {
+          onChange({ status });
+        }}
+      />
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {showTechnicianFilter ? (
           <TechnicianFilter
             technicianId={filters.technicianId}

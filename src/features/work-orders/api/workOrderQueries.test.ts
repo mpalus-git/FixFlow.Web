@@ -18,7 +18,7 @@ const workOrdersUrl = `${apiBaseUrl}/api/v1/work-orders`;
 const noFilters: WorkOrderListParams = {
   page: 1,
   search: "",
-  filters: { status: null, technicianId: null, dueFrom: null, dueTo: null, overdueOnly: false },
+  filters: { status: [], technicianId: null, dueFrom: null, dueTo: null, overdueOnly: false },
   sort: { sortBy: "DueDate", sortDirection: "Asc" },
 };
 
@@ -50,7 +50,7 @@ describe("workOrderListQueryOptions", () => {
       page: 2,
       search: "kocioł",
       filters: {
-        status: "Assigned",
+        status: ["Assigned"],
         technicianId: "0b6f0c9e-0d6e-4a57-9d55-6a1f3f0f2a10",
         dueFrom: "2026-10-01",
         dueTo: "2026-10-07",
@@ -71,6 +71,28 @@ describe("workOrderListQueryOptions", () => {
       sortBy: "Priority",
       sortDirection: "Desc",
     });
+  });
+});
+
+describe("workOrderListQueryOptions with several statuses", () => {
+  it("repeats the status parameter for every chosen status", async () => {
+    const statuses: string[][] = [];
+    server.use(
+      http.get(workOrdersUrl, ({ request }) => {
+        statuses.push(new URL(request.url).searchParams.getAll("status"));
+        const workOrderPage: WorkOrderPage = { items: [], page: 1, pageSize: 20, totalCount: 0 };
+        return HttpResponse.json(workOrderPage);
+      }),
+    );
+
+    await new QueryClient().query(
+      workOrderListQueryOptions({
+        ...noFilters,
+        filters: { ...noFilters.filters, status: ["New", "Assigned", "InProgress"] },
+      }),
+    );
+
+    expect(statuses).toEqual([["New", "Assigned", "InProgress"]]);
   });
 });
 

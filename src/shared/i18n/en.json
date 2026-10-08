@@ -405,7 +405,7 @@
     "filters": {
       "label": "Work order filters",
       "status": "Status",
-      "allStatuses": "All statuses",
+      "openOnly": "Open only",
       "technician": "Technician",
       "allTechnicians": "All technicians",
       "inactiveTechnician": "{{name}} (inactive)",

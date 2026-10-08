@@ -42,7 +42,7 @@ describe("MyWorkOrdersPage", () => {
     renderApp("/my-work-orders");
 
     expect(await screen.findByRole("cell", { name: "Piekarnia Kowalski" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Status")).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Status" })).toBeInTheDocument();
     expect(screen.queryByLabelText("Technik")).not.toBeInTheDocument();
     expect(screen.queryByRole("columnheader", { name: "Technik" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /Edytuj zlecenie/ })).not.toBeInTheDocument();

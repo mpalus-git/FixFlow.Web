@@ -24,8 +24,14 @@ const workOrderSortFields = [
   "ClientName",
 ] as const satisfies readonly WorkOrderSortBy[];
 
+export const openWorkOrderStatuses = [
+  "New",
+  "Assigned",
+  "InProgress",
+] as const satisfies readonly WorkOrderStatus[];
+
 export type WorkOrderListFilters = {
-  status: WorkOrderStatus | null;
+  status: readonly WorkOrderStatus[];
   technicianId: string | null;
   dueFrom: string | null;
   dueTo: string | null;
@@ -47,14 +53,13 @@ export type WorkOrderListParams = {
 export const defaultWorkOrderSort: WorkOrderSort = { sortBy: "DueDate", sortDirection: "Asc" };
 
 const emptyFilters: WorkOrderListFilters = {
-  status: null,
+  status: [],
   technicianId: null,
   dueFrom: null,
   dueTo: null,
   overdueOnly: false,
 };
 
-const statusSchema = z.enum(workOrderStatuses);
 const sortBySchema = z.enum(workOrderSortFields);
 const sortDirectionSchema = z.enum(["Asc", "Desc"]);
 const technicianIdSchema = z.uuid();
@@ -62,6 +67,10 @@ const technicianIdSchema = z.uuid();
 function parseParam<T>(schema: z.ZodType<T>, value: string | null): T | null {
   const result = schema.safeParse(value);
   return result.success ? result.data : null;
+}
+
+export function orderedStatuses(values: readonly string[]): WorkOrderStatus[] {
+  return workOrderStatuses.filter((status) => values.includes(status));
 }
 
 function readCalendarDate(value: string | null): string | null {
@@ -76,7 +85,7 @@ export function readWorkOrderListParams(searchParams: URLSearchParams): WorkOrde
     page: readPageParam(searchParams.get("page")),
     search: searchParams.get("search") ?? "",
     filters: {
-      status: parseParam(statusSchema, searchParams.get("status")),
+      status: orderedStatuses(searchParams.getAll("status")),
       technicianId: parseParam(technicianIdSchema, searchParams.get("technician")),
       dueFrom,
       dueTo: dueFrom !== null && dueTo !== null && dueTo < dueFrom ? null : dueTo,
@@ -94,7 +103,7 @@ export function readWorkOrderListParams(searchParams: URLSearchParams): WorkOrde
 export function hasActiveFilters({ search, filters }: WorkOrderListParams): boolean {
   return (
     search !== "" ||
-    filters.status !== null ||
+    filters.status.length > 0 ||
     filters.technicianId !== null ||
     filters.dueFrom !== null ||
     filters.dueTo !== null ||
@@ -102,8 +111,10 @@ export function hasActiveFilters({ search, filters }: WorkOrderListParams): bool
   );
 }
 
-function filterValues(filters: Partial<WorkOrderListFilters>): Record<string, string | null> {
-  const values: Record<string, string | null> = {};
+function filterValues(
+  filters: Partial<WorkOrderListFilters>,
+): Record<string, string | readonly string[] | null> {
+  const values: Record<string, string | readonly string[] | null> = {};
   if (filters.status !== undefined) {
     values.status = filters.status;
   }
