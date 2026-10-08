@@ -464,6 +464,28 @@
       "clientPhone": "Telefon",
       "clientSignature": "Podpis klienta"
     },
+    "events": {
+      "label": "Historia zmian zlecenia",
+      "type": {
+        "Created": "Utworzono zlecenie",
+        "Updated": "Zmieniono dane zlecenia",
+        "Assigned": "Przypisano technika",
+        "Reassigned": "Przeniesiono zlecenie",
+        "Unassigned": "Odpięto technika",
+        "Started": "Rozpoczęto realizację",
+        "Completed": "Zakończono zlecenie",
+        "Invoiced": "Zafakturowano zlecenie"
+      },
+      "technician": "Technik:",
+      "dueDate": "Termin:",
+      "newDueDate": "Nowy termin:",
+      "actor": "Autor:",
+      "system": "zmiana systemowa",
+      "empty": {
+        "title": "Brak zapisanych zmian",
+        "description": "Zmiany zlecenia pojawią się tutaj po zapisaniu."
+      }
+    },
     "signature": {
       "image": "Podpis klienta, otwiera się w nowej karcie",
       "loadError": "Nie udało się wczytać podpisu klienta."

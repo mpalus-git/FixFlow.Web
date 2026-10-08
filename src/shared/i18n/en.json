@@ -462,6 +462,28 @@
       "clientPhone": "Phone",
       "clientSignature": "Client signature"
     },
+    "events": {
+      "label": "Work order change history",
+      "type": {
+        "Created": "Work order created",
+        "Updated": "Work order details changed",
+        "Assigned": "Technician assigned",
+        "Reassigned": "Work order moved",
+        "Unassigned": "Technician unassigned",
+        "Started": "Work started",
+        "Completed": "Work order completed",
+        "Invoiced": "Work order invoiced"
+      },
+      "technician": "Technician:",
+      "dueDate": "Due date:",
+      "newDueDate": "New due date:",
+      "actor": "By:",
+      "system": "system change",
+      "empty": {
+        "title": "No recorded changes",
+        "description": "Changes to the work order will appear here once saved."
+      }
+    },
     "signature": {
       "image": "Client signature, opens in a new tab",
       "loadError": "The client signature could not be loaded."
