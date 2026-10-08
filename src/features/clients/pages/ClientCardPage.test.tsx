@@ -75,6 +75,21 @@ describe("ClientCardPage", () => {
     expect(await within(history).findByText("Kocioł nie grzeje wody użytkowej")).toBeVisible();
   });
 
+  it("opens a new work order for the client and comes back to the card", async () => {
+    mockCard();
+    const user = userEvent.setup();
+    const router = renderApp(cardPath);
+
+    const newWorkOrder = await screen.findByRole("link", { name: "Nowe zlecenie" });
+    expect(newWorkOrder).toHaveAttribute("href", `/work-orders/new?clientId=${client.id}`);
+    await user.click(newWorkOrder);
+    await user.click(await screen.findByRole("link", { name: "Anuluj" }));
+
+    await vi.waitFor(() => {
+      expect(router.state.location.pathname).toBe(cardPath);
+    });
+  });
+
   it("titles the browser tab with the client name", async () => {
     mockCard();
     renderApp(cardPath);
@@ -115,6 +130,7 @@ describe("ClientCardPage", () => {
 
     expect(await screen.findByText("Zarchiwizowany")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Edytuj" })).toBeNull();
+    expect(screen.queryByRole("link", { name: "Nowe zlecenie" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Archiwizuj" })).toBeNull();
     expect(screen.queryByRole("link", { name: "Dodaj urządzenie" })).toBeNull();
     expect(screen.getByRole("note")).toHaveTextContent("zarchiwizowane razem z nim");
