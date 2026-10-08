@@ -65,6 +65,18 @@ describe("work order action mutations", () => {
     });
   });
 
+  it("refreshes the history of changes after an action", async () => {
+    mockActions(assignedResponse);
+    const { queryClient, result } = renderWithQueryClient(() => useAssignTechnicianMutation());
+    queryClient.setQueryData(workOrderKeys.events(newWorkOrder.id), []);
+
+    await result.current.mutateAsync({ workOrderId: newWorkOrder.id, technicianId });
+
+    expect(queryClient.getQueryState(workOrderKeys.events(newWorkOrder.id))?.isInvalidated).toBe(
+      true,
+    );
+  });
+
   it("changes the technician in one request without unassigning first", async () => {
     const calls = mockActions(assignedResponse);
     const { queryClient, result } = renderWithQueryClient(() => useChangeTechnicianMutation());

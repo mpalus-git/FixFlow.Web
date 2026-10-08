@@ -74,6 +74,24 @@ export function createWorkOrderResponse(
   };
 }
 
+type WorkOrderEventResponse = components["schemas"]["WorkOrderEventResponse"];
+
+export function createWorkOrderEventResponse(
+  overrides: Partial<WorkOrderEventResponse> = {},
+): WorkOrderEventResponse {
+  return {
+    id: "8e7d6c5b-4a39-4281-9f0e-1d2c3b4a5f6e",
+    type: "Created",
+    occurredAt: "2026-07-10T08:00:00Z",
+    actorId: "2c3d4e5f-6a7b-4c8d-9e0f-1a2b3c4d5e6f",
+    actorName: "Anna Wiśniewska",
+    technicianId: null,
+    technicianName: null,
+    dueDate: "2026-07-15T22:30:00Z",
+    ...overrides,
+  };
+}
+
 type ServiceEntryResponse = components["schemas"]["ServiceEntryResponse"];
 
 export function createServiceEntryResponse(

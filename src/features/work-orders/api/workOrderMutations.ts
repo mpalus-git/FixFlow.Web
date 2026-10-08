@@ -42,7 +42,10 @@ export function useUpdateWorkOrderMutation() {
       ),
     onSuccess: async (versionedWorkOrder, { workOrderId }) => {
       queryClient.setQueryData(workOrderKeys.detail(workOrderId), versionedWorkOrder);
-      await queryClient.invalidateQueries({ queryKey: workOrderKeys.lists() });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: workOrderKeys.lists() }),
+        queryClient.invalidateQueries({ queryKey: workOrderKeys.events(workOrderId) }),
+      ]);
     },
   });
 }

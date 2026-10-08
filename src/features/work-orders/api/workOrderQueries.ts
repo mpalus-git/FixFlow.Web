@@ -28,6 +28,7 @@ export const workOrderKeys = {
   detail: (workOrderId: string) => [...workOrderKeys.details(), workOrderId] as const,
   serviceEntries: (workOrderId: string) =>
     [...workOrderKeys.all, "serviceEntries", workOrderId] as const,
+  events: (workOrderId: string) => [...workOrderKeys.all, "events", workOrderId] as const,
 };
 
 function toListWorkOrdersQuery({
@@ -91,6 +92,19 @@ export function workOrderQueryOptions(workOrderId: string) {
     queryFn: async ({ signal }) =>
       unwrapVersioned(
         await apiClient.GET("/api/v1/work-orders/{workOrderId}", {
+          params: { path: { workOrderId } },
+          signal,
+        }),
+      ),
+  });
+}
+
+export function workOrderEventsQueryOptions(workOrderId: string) {
+  return queryOptions({
+    queryKey: workOrderKeys.events(workOrderId),
+    queryFn: async ({ signal }) =>
+      unwrap(
+        await apiClient.GET("/api/v1/work-orders/{workOrderId}/events", {
           params: { path: { workOrderId } },
           signal,
         }),
