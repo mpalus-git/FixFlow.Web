@@ -20,7 +20,7 @@ import { Button } from "@/shared/ui/button";
 import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 export function DispatchPage() {
   const { t } = useTranslation();
@@ -95,47 +95,48 @@ export function DispatchPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <PageTitle title={t("dispatch.title")} />
-        <h1 className="text-2xl font-semibold tracking-tight">{t("dispatch.title")}</h1>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            aria-label={t("dispatch.week.previous")}
-            onClick={() => {
-              setWeekStart(addCalendarDays(weekStart, -7));
-            }}
-          >
-            <ChevronLeftIcon aria-hidden="true" />
-          </Button>
-          <p aria-live="polite" className="min-w-48 text-center text-sm font-medium tabular-nums">
-            {t("dispatch.week.range", {
-              from: formatCalendarDate(weekStart, language),
-              to: formatCalendarDate(addCalendarDays(weekStart, 6), language),
-            })}
-          </p>
-          <Button
-            variant="outline"
-            size="icon"
-            aria-label={t("dispatch.week.next")}
-            onClick={() => {
-              setWeekStart(addCalendarDays(weekStart, 7));
-            }}
-          >
-            <ChevronRightIcon aria-hidden="true" />
-          </Button>
-          <Button
-            variant="outline"
-            disabled={weekStart === currentWeekStart}
-            onClick={() => {
-              setWeekStart(currentWeekStart);
-            }}
-          >
-            {t("dispatch.week.current")}
-          </Button>
-        </div>
-      </div>
+      <PageHeader
+        title={t("dispatch.title")}
+        actions={
+          <>
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label={t("dispatch.week.previous")}
+              onClick={() => {
+                setWeekStart(addCalendarDays(weekStart, -7));
+              }}
+            >
+              <ChevronLeftIcon aria-hidden="true" />
+            </Button>
+            <p aria-live="polite" className="min-w-48 text-center text-sm font-medium tabular-nums">
+              {t("dispatch.week.range", {
+                from: formatCalendarDate(weekStart, language),
+                to: formatCalendarDate(addCalendarDays(weekStart, 6), language),
+              })}
+            </p>
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label={t("dispatch.week.next")}
+              onClick={() => {
+                setWeekStart(addCalendarDays(weekStart, 7));
+              }}
+            >
+              <ChevronRightIcon aria-hidden="true" />
+            </Button>
+            <Button
+              variant="outline"
+              disabled={weekStart === currentWeekStart}
+              onClick={() => {
+                setWeekStart(currentWeekStart);
+              }}
+            >
+              {t("dispatch.week.current")}
+            </Button>
+          </>
+        }
+      />
       {renderContent()}
     </div>
   );

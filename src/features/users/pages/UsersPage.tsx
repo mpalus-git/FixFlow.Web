@@ -24,7 +24,7 @@ import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
-import { PageTitle } from "@/shared/ui/PageTitle";
+import { PageHeader } from "@/shared/ui/PageHeader";
 
 type UserResponse = components["schemas"]["UserResponse"];
 
@@ -106,19 +106,18 @@ export function UsersPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <PageTitle title={t("users.title")} />
-          <h1 className="text-2xl font-semibold tracking-tight">{t("users.title")}</h1>
-          <p className="text-sm text-muted-foreground">{t("users.description")}</p>
-        </div>
-        <Button asChild>
-          <Link to="/users/new">
-            <PlusIcon aria-hidden="true" />
-            {t("users.create.link")}
-          </Link>
-        </Button>
-      </div>
+      <PageHeader
+        title={t("users.title")}
+        description={t("users.description")}
+        actions={
+          <Button asChild>
+            <Link to="/users/new">
+              <PlusIcon aria-hidden="true" />
+              {t("users.create.link")}
+            </Link>
+          </Button>
+        }
+      />
       <UserFilters
         filters={filters}
         onChange={setFilters}
