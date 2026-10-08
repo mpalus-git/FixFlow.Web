@@ -88,6 +88,25 @@ describe("LoginForm", () => {
     expect(screen.queryByRole("button", { name: "Zaloguj jako dyspozytor" })).toBeNull();
   });
 
+  it("offers the demo accounts before the email form and describes each role", () => {
+    const demoAccounts = [
+      { role: "Dispatcher", email: "dispatcher@demo.test", password: "Demo-Password-1" },
+      { role: "Technician", email: "technician@demo.test", password: "Demo-Password-2" },
+    ] as const;
+    renderWithProviders(<LoginForm onLoggedIn={vi.fn()} demoAccounts={demoAccounts} />);
+
+    const dispatcherButton = screen.getByRole("button", { name: "Zaloguj jako dyspozytor" });
+
+    expect(dispatcherButton).toHaveAccessibleDescription("Planuje i przypisuje zlecenia");
+    expect(
+      screen.getByRole("button", { name: "Zaloguj jako technik" }),
+    ).toHaveAccessibleDescription("Widzi tylko swoje zlecenia, bez edycji");
+    expect(
+      dispatcherButton.compareDocumentPosition(screen.getByLabelText("E-mail")) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
   it("logs in with the chosen demo account in one click", async () => {
     const receivedBodies: LoginRequest[] = [];
     server.use(

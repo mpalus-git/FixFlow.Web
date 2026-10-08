@@ -67,6 +67,7 @@ export function LoginForm({ onLoggedIn, demoAccounts = [] }: LoginFormProps) {
   }
 
   const submit = form.handleSubmit(logIn);
+  const hasDemoAccounts = demoAccounts.length > 0;
 
   return (
     <form noValidate onSubmit={(event) => void submit(event)} className="flex flex-col gap-4">
@@ -75,6 +76,21 @@ export function LoginForm({ onLoggedIn, demoAccounts = [] }: LoginFormProps) {
           <AlertDescription>{formError}</AlertDescription>
         </Alert>
       )}
+      <DemoLoginButtons
+        accounts={demoAccounts}
+        disabled={loginMutation.isPending}
+        onSelect={({ email, password }) => {
+          form.reset({ email, password });
+          void logIn({ email, password });
+        }}
+      />
+      {hasDemoAccounts ? (
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <span aria-hidden="true" className="h-px flex-1 bg-border" />
+          {t("auth.login.orEmail")}
+          <span aria-hidden="true" className="h-px flex-1 bg-border" />
+        </div>
+      ) : null}
       <div className="flex flex-col gap-2">
         <Label htmlFor="login-email">{t("auth.login.email")}</Label>
         <Input
@@ -99,17 +115,14 @@ export function LoginForm({ onLoggedIn, demoAccounts = [] }: LoginFormProps) {
         />
         <FieldError id="login-password-error" message={errors.password?.message} />
       </div>
-      <Button type="submit" size="lg" disabled={isSubmitting || loginMutation.isPending}>
+      <Button
+        type="submit"
+        size="lg"
+        variant={hasDemoAccounts ? "outline" : "default"}
+        disabled={isSubmitting || loginMutation.isPending}
+      >
         {isSubmitting ? t("auth.login.submitting") : t("auth.login.submit")}
       </Button>
-      <DemoLoginButtons
-        accounts={demoAccounts}
-        disabled={loginMutation.isPending}
-        onSelect={({ email, password }) => {
-          form.reset({ email, password });
-          void logIn({ email, password });
-        }}
-      />
     </form>
   );
 }
