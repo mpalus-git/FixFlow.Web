@@ -33,7 +33,12 @@ test("dispatcher creates a work order and finds it on the list", async ({ page }
   const details = page.getByRole("definition");
   await expect(details.filter({ hasText: description })).toBeVisible();
   await expect(details.filter({ hasText: client.name })).toBeVisible();
-  await expect(details.filter({ hasText: formatDateTime(toUtcIso(dueDate), "pl") })).toBeVisible();
+  const formattedDueDate = formatDateTime(toUtcIso(dueDate), "pl");
+  await expect(details.filter({ hasText: formattedDueDate }).first()).toBeVisible();
+  const history = page.getByRole("list", { name: "Historia zmian zlecenia" });
+  await expect(history.getByRole("listitem")).toHaveCount(1);
+  await expect(history).toContainText("Utworzono zlecenie");
+  await expect(history).toContainText(formattedDueDate);
 
   await page.getByRole("link", { name: "Wróć" }).click();
   await page.getByLabel("Szukaj zleceń").fill(number);
