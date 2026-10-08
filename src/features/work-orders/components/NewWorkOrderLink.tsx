@@ -9,14 +9,16 @@ import { Button } from "@/shared/ui/button";
 
 export type NewWorkOrderLinkProps = {
   clientId: string;
-  deviceId: string;
+  deviceId?: string;
 };
 
 export function NewWorkOrderLink({ clientId, deviceId }: NewWorkOrderLinkProps) {
   const { t } = useTranslation();
   const { pathname, search } = useLocation();
   const returnPathState: ReturnPathState = { returnTo: `${pathname}${search}` };
-  const query = new URLSearchParams({ clientId, deviceId }).toString();
+  const query = new URLSearchParams(
+    deviceId === undefined ? { clientId } : { clientId, deviceId },
+  ).toString();
 
   return (
     <Button variant="outline" asChild>

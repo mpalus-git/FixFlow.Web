@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { orderedStatuses, type WorkOrderStatus } from "@/features/work-orders/workOrderRules";
+import {
+  hasSameStatuses,
+  orderedStatuses,
+  type WorkOrderStatus,
+} from "@/features/work-orders/workOrderRules";
 import type { operations } from "@/shared/api/schema";
 import { isCalendarDate } from "@/shared/lib/dateTime";
 import { pageValue, readPageParam, useSearchParamsUpdate } from "@/shared/lib/useListSearchParams";
@@ -46,6 +50,8 @@ const emptyFilters: WorkOrderListFilters = {
   overdueOnly: false,
 };
 
+const allStatusesParam = "all";
+
 const sortBySchema = z.enum(workOrderSortFields);
 const sortDirectionSchema = z.enum(["Asc", "Desc"]);
 const technicianIdSchema = z.uuid();
@@ -59,7 +65,20 @@ function readCalendarDate(value: string | null): string | null {
   return value !== null && isCalendarDate(value) ? value : null;
 }
 
-export function readWorkOrderListParams(searchParams: URLSearchParams): WorkOrderListParams {
+function readStatus(
+  values: readonly string[],
+  defaultStatus: readonly WorkOrderStatus[],
+): WorkOrderStatus[] {
+  if (values.length === 0) {
+    return [...defaultStatus];
+  }
+  return values.includes(allStatusesParam) ? [] : orderedStatuses(values);
+}
+
+export function readWorkOrderListParams(
+  searchParams: URLSearchParams,
+  defaultStatus: readonly WorkOrderStatus[] = [],
+): WorkOrderListParams {
   const dueFrom = readCalendarDate(searchParams.get("dueFrom"));
   const dueTo = readCalendarDate(searchParams.get("dueTo"));
 
@@ -67,7 +86,7 @@ export function readWorkOrderListParams(searchParams: URLSearchParams): WorkOrde
     page: readPageParam(searchParams.get("page")),
     search: searchParams.get("search") ?? "",
     filters: {
-      status: orderedStatuses(searchParams.getAll("status")),
+      status: readStatus(searchParams.getAll("status"), defaultStatus),
       technicianId: parseParam(technicianIdSchema, searchParams.get("technician")),
       dueFrom,
       dueTo: dueFrom !== null && dueTo !== null && dueTo < dueFrom ? null : dueTo,
@@ -82,10 +101,13 @@ export function readWorkOrderListParams(searchParams: URLSearchParams): WorkOrde
   };
 }
 
-export function hasActiveFilters({ search, filters }: WorkOrderListParams): boolean {
+export function hasActiveFilters(
+  { search, filters }: WorkOrderListParams,
+  defaultStatus: readonly WorkOrderStatus[] = [],
+): boolean {
   return (
     search !== "" ||
-    filters.status.length > 0 ||
+    !hasSameStatuses(filters.status, defaultStatus) ||
     filters.technicianId !== null ||
     filters.dueFrom !== null ||
     filters.dueTo !== null ||
@@ -93,12 +115,23 @@ export function hasActiveFilters({ search, filters }: WorkOrderListParams): bool
   );
 }
 
+function statusValue(
+  status: readonly WorkOrderStatus[],
+  defaultStatus: readonly WorkOrderStatus[],
+): string | readonly string[] | null {
+  if (hasSameStatuses(status, defaultStatus)) {
+    return null;
+  }
+  return status.length === 0 ? allStatusesParam : status;
+}
+
 function filterValues(
   filters: Partial<WorkOrderListFilters>,
+  defaultStatus: readonly WorkOrderStatus[],
 ): Record<string, string | readonly string[] | null> {
   const values: Record<string, string | readonly string[] | null> = {};
   if (filters.status !== undefined) {
-    values.status = filters.status;
+    values.status = statusValue(filters.status, defaultStatus);
   }
   if (filters.technicianId !== undefined) {
     values.technician = filters.technicianId;
@@ -115,11 +148,11 @@ function filterValues(
   return values;
 }
 
-export function useWorkOrderListSearchParams() {
+export function useWorkOrderListSearchParams(defaultStatus: readonly WorkOrderStatus[] = []) {
   const [searchParams, update] = useSearchParamsUpdate();
 
   return {
-    ...readWorkOrderListParams(searchParams),
+    ...readWorkOrderListParams(searchParams, defaultStatus),
     setPage: (page: number) => {
       update({ page: pageValue(page) });
     },
@@ -127,10 +160,14 @@ export function useWorkOrderListSearchParams() {
       update({ search, page: null });
     },
     setFilters: (filters: Partial<WorkOrderListFilters>) => {
-      update({ ...filterValues(filters), page: null });
+      update({ ...filterValues(filters, defaultStatus), page: null });
     },
     clearFilters: () => {
-      update({ ...filterValues(emptyFilters), search: null, page: null });
+      update({
+        ...filterValues({ ...emptyFilters, status: defaultStatus }, defaultStatus),
+        search: null,
+        page: null,
+      });
     },
     setSort: (sort: WorkOrderSort) => {
       const isDefault =
