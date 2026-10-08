@@ -134,12 +134,15 @@
       "submitting": "Signing in…",
       "invalidCredentials": "Invalid email or password.",
       "rateLimited": "Too many sign-in attempts. Try again in a moment.",
-      "rateLimitedWithDelay": "Too many sign-in attempts. Try again in {{seconds}} s."
+      "rateLimitedWithDelay": "Too many sign-in attempts. Try again in {{seconds}} s.",
+      "orEmail": "or sign in with email"
     },
     "demo": {
       "heading": "Try it without an account",
       "dispatcher": "Sign in as dispatcher",
       "technician": "Sign in as technician",
+      "dispatcherHint": "Plans and assigns work orders",
+      "technicianHint": "Sees only own work orders, read-only",
       "resetNotice": "Demo data is restored every day at {{time}}."
     }
   },

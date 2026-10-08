@@ -134,12 +134,15 @@
       "submitting": "Logowanie…",
       "invalidCredentials": "Nieprawidłowy e-mail lub hasło.",
       "rateLimited": "Zbyt wiele prób logowania. Spróbuj ponownie za chwilę.",
-      "rateLimitedWithDelay": "Zbyt wiele prób logowania. Spróbuj ponownie za {{seconds}} s."
+      "rateLimitedWithDelay": "Zbyt wiele prób logowania. Spróbuj ponownie za {{seconds}} s.",
+      "orEmail": "lub zaloguj się e-mailem"
     },
     "demo": {
       "heading": "Wypróbuj bez zakładania konta",
       "dispatcher": "Zaloguj jako dyspozytor",
       "technician": "Zaloguj jako technik",
+      "dispatcherHint": "Planuje i przypisuje zlecenia",
+      "technicianHint": "Widzi tylko swoje zlecenia, bez edycji",
       "resetNotice": "Dane demo są przywracane codziennie o {{time}}."
     }
   },
