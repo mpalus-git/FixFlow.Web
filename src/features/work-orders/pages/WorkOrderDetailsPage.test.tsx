@@ -6,7 +6,11 @@ import { endSession } from "@/shared/session/sessionStore";
 import { renderApp } from "@/test/renderApp";
 import { server } from "@/test/server";
 import { createUser, signInAs } from "@/test/signedInUser";
-import { createServiceEntryResponse, createWorkOrderResponse } from "@/test/workOrderFixtures";
+import {
+  createServiceEntryResponse,
+  createWorkOrderEventResponse,
+  createWorkOrderResponse,
+} from "@/test/workOrderFixtures";
 
 type WorkOrderResponse = components["schemas"]["WorkOrderResponse"];
 type UserPage = components["schemas"]["PagedResponseOfUserResponse"];
@@ -39,6 +43,9 @@ function mockDetails(workOrder: WorkOrderResponse) {
       HttpResponse.json([
         createServiceEntryResponse({ technicianId: workOrder.technicianId ?? "" }),
       ]),
+    ),
+    http.get(`${apiBaseUrl}/api/v1/work-orders/${workOrder.id}/events`, () =>
+      HttpResponse.json([createWorkOrderEventResponse()]),
     ),
     ...["devices", "clients", "parts"].map((resource) =>
       http.get(`${apiBaseUrl}/api/v1/${resource}/:id`, ({ request }) => {
@@ -93,6 +100,8 @@ describe("WorkOrderDetailsPage", () => {
     expect(screen.getByText("05.10.2026 10:00")).toBeInTheDocument();
     expect(screen.getByRole("listitem", { current: "step" })).toHaveTextContent("Przypisane");
     expect(screen.getByText("Wymieniono czujnik ciśnienia")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Historia zmian", level: 2 })).toBeInTheDocument();
+    expect(await screen.findByText("Utworzono zlecenie")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Edytuj" })).toHaveAttribute(
       "href",
       `/work-orders/${workOrder.id}/edit`,
@@ -150,6 +159,7 @@ describe("WorkOrderDetailsPage", () => {
     expect(screen.getByText("Długa 12, 00-950 Warszawa")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "+48 600 100 200" })).toBeInTheDocument();
     expect(await screen.findByText("Wymieniono czujnik ciśnienia")).toBeInTheDocument();
+    expect(await screen.findByText("Utworzono zlecenie")).toBeInTheDocument();
     expect(screen.getAllByText("Jan Kowalski")).toHaveLength(2);
     expect(screen.queryByRole("link", { name: "Edytuj" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Wróć" })).toHaveAttribute("href", "/my-work-orders");

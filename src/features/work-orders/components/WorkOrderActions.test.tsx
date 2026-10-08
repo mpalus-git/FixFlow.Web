@@ -49,6 +49,7 @@ function mockWorkOrder(initial: WorkOrderResponse, entries: ServiceEntryResponse
   server.use(
     http.get(workOrderUrl, respond),
     http.get(`${workOrderUrl}/service-entries`, () => HttpResponse.json(entries)),
+    http.get(`${workOrderUrl}/events`, () => HttpResponse.json([])),
     http.post(`${workOrderUrl}/unassign`, () => change({ status: "New", technicianId: null })),
     http.post(`${workOrderUrl}/invoice`, () =>
       change({ status: "Invoiced", invoicedAt: "2026-10-01T10:00:00Z" }),
