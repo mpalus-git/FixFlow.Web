@@ -8,6 +8,7 @@ import {
   createRequireRole,
   createRequireSession,
 } from "@/app/sessionMiddleware";
+import { createResourceLoader } from "@/shared/api/resourceLoader";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 
 export function createRoutes(queryClient: QueryClient): RouteObject[] {
@@ -57,10 +58,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":workOrderId",
               lazy: {
-                loader: async () =>
-                  (
-                    await import("@/features/work-orders/api/workOrderLoader")
-                  ).createWorkOrderLoader(queryClient),
+                loader: async () => {
+                  const { workOrderQueryOptions } =
+                    await import("@/features/work-orders/api/workOrderQueries");
+                  return createResourceLoader("workOrderId", (id) =>
+                    queryClient.query(workOrderQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/work-orders/pages/WorkOrderDetailsPage"))
                     .WorkOrderDetailsPage,
@@ -90,10 +94,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":workOrderId",
               lazy: {
-                loader: async () =>
-                  (
-                    await import("@/features/work-orders/api/workOrderLoader")
-                  ).createWorkOrderLoader(queryClient),
+                loader: async () => {
+                  const { workOrderQueryOptions } =
+                    await import("@/features/work-orders/api/workOrderQueries");
+                  return createResourceLoader("workOrderId", (id) =>
+                    queryClient.query(workOrderQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/work-orders/pages/WorkOrderDetailsPage"))
                     .WorkOrderDetailsPage,
@@ -102,10 +109,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":workOrderId/edit",
               lazy: {
-                loader: async () =>
-                  (
-                    await import("@/features/work-orders/api/workOrderLoader")
-                  ).createWorkOrderLoader(queryClient),
+                loader: async () => {
+                  const { workOrderQueryOptions } =
+                    await import("@/features/work-orders/api/workOrderQueries");
+                  return createResourceLoader("workOrderId", (id) =>
+                    queryClient.query(workOrderQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/work-orders/pages/EditWorkOrderPage"))
                     .EditWorkOrderPage,
@@ -142,10 +152,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":clientId",
               lazy: {
-                loader: async () =>
-                  (await import("@/features/clients/api/clientLoader")).createClientLoader(
-                    queryClient,
-                  ),
+                loader: async () => {
+                  const { clientQueryOptions } =
+                    await import("@/features/clients/api/clientQueries");
+                  return createResourceLoader("clientId", (id) =>
+                    queryClient.query(clientQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/clients/pages/ClientCardPage")).ClientCardPage,
               },
@@ -153,10 +166,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":clientId/devices/new",
               lazy: {
-                loader: async () =>
-                  (await import("@/features/clients/api/clientLoader")).createClientLoader(
-                    queryClient,
-                  ),
+                loader: async () => {
+                  const { clientQueryOptions } =
+                    await import("@/features/clients/api/clientQueries");
+                  return createResourceLoader("clientId", (id) =>
+                    queryClient.query(clientQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/devices/pages/CreateDevicePage")).CreateDevicePage,
               },
@@ -164,10 +180,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":clientId/edit",
               lazy: {
-                loader: async () =>
-                  (await import("@/features/clients/api/clientLoader")).createClientLoader(
-                    queryClient,
-                  ),
+                loader: async () => {
+                  const { clientQueryOptions } =
+                    await import("@/features/clients/api/clientQueries");
+                  return createResourceLoader("clientId", (id) =>
+                    queryClient.query(clientQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/clients/pages/EditClientPage")).EditClientPage,
               },
@@ -188,10 +207,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":deviceId",
               lazy: {
-                loader: async () =>
-                  (await import("@/features/devices/api/deviceLoader")).createDeviceLoader(
-                    queryClient,
-                  ),
+                loader: async () => {
+                  const { deviceQueryOptions } =
+                    await import("@/features/devices/api/deviceQueries");
+                  return createResourceLoader("deviceId", (id) =>
+                    queryClient.query(deviceQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/devices/pages/DeviceCardPage")).DeviceCardPage,
               },
@@ -199,10 +221,13 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":deviceId/edit",
               lazy: {
-                loader: async () =>
-                  (await import("@/features/devices/api/deviceLoader")).createDeviceLoader(
-                    queryClient,
-                  ),
+                loader: async () => {
+                  const { deviceQueryOptions } =
+                    await import("@/features/devices/api/deviceQueries");
+                  return createResourceLoader("deviceId", (id) =>
+                    queryClient.query(deviceQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/devices/pages/EditDevicePage")).EditDevicePage,
               },
@@ -229,8 +254,12 @@ export function createRoutes(queryClient: QueryClient): RouteObject[] {
             {
               path: ":partId/edit",
               lazy: {
-                loader: async () =>
-                  (await import("@/features/parts/api/partLoader")).createPartLoader(queryClient),
+                loader: async () => {
+                  const { partQueryOptions } = await import("@/features/parts/api/partQueries");
+                  return createResourceLoader("partId", (id) =>
+                    queryClient.query(partQueryOptions(id)),
+                  );
+                },
                 Component: async () =>
                   (await import("@/features/parts/pages/EditPartPage")).EditPartPage,
               },
