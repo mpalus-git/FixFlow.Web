@@ -2,6 +2,7 @@ import { cn } from "cn";
 import {
   ClipboardPlusIcon,
   type LucideIcon,
+  PackageXIcon,
   ReceiptTextIcon,
   TriangleAlertIcon,
   WrenchIcon,
@@ -48,7 +49,7 @@ export function DashboardStatTiles({ summary }: DashboardStatTilesProps) {
   const { t } = useTranslation();
 
   return (
-    <ul aria-label={t("dashboard.tiles.label")} className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+    <ul aria-label={t("dashboard.tiles.label")} className="grid grid-cols-2 gap-3 xl:grid-cols-5">
       <StatTile
         label={t("dashboard.tiles.unassigned")}
         description={t("dashboard.tiles.unassignedHint")}
@@ -77,6 +78,16 @@ export function DashboardStatTiles({ summary }: DashboardStatTilesProps) {
         to="/work-orders?overdue=true"
         icon={TriangleAlertIcon}
         {...(summary.overdueCount > 0
+          ? { iconClassName: "text-amber-600 dark:text-amber-400" }
+          : {})}
+      />
+      <StatTile
+        label={t("dashboard.tiles.outOfStock")}
+        description={t("dashboard.tiles.outOfStockHint")}
+        value={summary.outOfStockPartCount}
+        to="/parts?stock=out"
+        icon={PackageXIcon}
+        {...(summary.outOfStockPartCount > 0
           ? { iconClassName: "text-amber-600 dark:text-amber-400" }
           : {})}
       />

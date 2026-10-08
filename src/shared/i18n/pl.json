@@ -51,7 +51,7 @@
     "generatedAt": "Stan na {{time}}",
     "refresh": "Odśwież",
     "tiles": {
-      "label": "Zlecenia wymagające uwagi",
+      "label": "Wymaga uwagi",
       "unassigned": "Do przypisania",
       "unassignedHint": "Nowe zlecenia bez technika",
       "inProgress": "W realizacji",
@@ -59,7 +59,9 @@
       "toInvoice": "Do zafakturowania",
       "toInvoiceHint": "Zakończone, czekają na fakturę",
       "overdue": "Opóźnione",
-      "overdueHint": "Termin minął przed zakończeniem"
+      "overdueHint": "Termin minął przed zakończeniem",
+      "outOfStock": "Części bez stanu",
+      "outOfStockHint": "Do uzupełnienia w magazynie"
     },
     "statusChart": {
       "title": "Zlecenia według statusu",
