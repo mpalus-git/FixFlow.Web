@@ -3,7 +3,10 @@ import { CalendarRangeIcon, ClipboardListIcon, RefreshCwIcon, UsersIcon } from "
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { dashboardSummaryQueryOptions } from "@/features/dashboard/api/dashboardQueries";
-import { DashboardStatTiles } from "@/features/dashboard/components/DashboardStatTiles";
+import {
+  DashboardStatTiles,
+  DashboardStatTilesSkeleton,
+} from "@/features/dashboard/components/DashboardStatTiles";
 import { StatusChart } from "@/features/dashboard/components/StatusChart";
 import { TechnicianWorkloadChart } from "@/features/dashboard/components/TechnicianWorkloadChart";
 import { TechnicianWorkloadTable } from "@/features/dashboard/components/TechnicianWorkloadTable";
@@ -28,11 +31,7 @@ function DashboardSkeleton() {
 
   return (
     <div role="status" aria-label={t("states.loading")} className="flex flex-col gap-6">
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {Array.from({ length: 4 }, (_, index) => (
-          <Skeleton key={index} className="h-28 w-full rounded-xl" />
-        ))}
-      </div>
+      <DashboardStatTilesSkeleton />
       <div className="grid gap-6 lg:grid-cols-2">
         <Skeleton className="h-72 w-full rounded-xl" />
         <Skeleton className="h-72 w-full rounded-xl" />
