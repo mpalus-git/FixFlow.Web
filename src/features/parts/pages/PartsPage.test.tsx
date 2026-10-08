@@ -47,8 +47,11 @@ function mockPartList() {
       const params = new URL(request.url).searchParams;
       requests.push(params);
       const search = params.get("search")?.toLowerCase() ?? "";
-      const matching = parts.filter((part) =>
-        `${part.name} ${part.catalogNumber}`.toLowerCase().includes(search),
+      const outOfStockOnly = params.get("inStock") === "false";
+      const matching = parts.filter(
+        (part) =>
+          `${part.name} ${part.catalogNumber}`.toLowerCase().includes(search) &&
+          (!outOfStockOnly || part.stockQuantity === 0),
       );
       const partPage: PartPage = {
         items: matching,
@@ -113,6 +116,34 @@ describe("PartsPage", () => {
     expect(router.state.location.search).toBe("?search=flt");
     expect(await screen.findByText("Filtr powietrza")).toBeInTheDocument();
     expect(screen.queryByText("Kondensator rozruchowy")).not.toBeInTheDocument();
+  });
+
+  it("shows only parts out of stock and keeps the filter in the address", async () => {
+    const requests = mockPartList();
+    const user = userEvent.setup();
+    const router = renderApp("/parts");
+
+    await user.click(await screen.findByLabelText("Tylko brakujące"));
+
+    await vi.waitFor(() => {
+      expect(requests.at(-1)?.get("inStock")).toBe("false");
+    }, 5000);
+    expect(router.state.location.search).toBe("?stock=out");
+    await vi.waitFor(() => {
+      expect(screen.queryByText("Filtr powietrza")).not.toBeInTheDocument();
+    }, 5000);
+    expect(screen.getByText("Kondensator rozruchowy")).toBeInTheDocument();
+  });
+
+  it("explains when no part is out of stock", async () => {
+    const emptyPage: PartPage = { items: [], page: 1, pageSize: 20, totalCount: 0 };
+    server.use(http.get(partsUrl, () => HttpResponse.json(emptyPage)));
+    renderApp("/parts?stock=out");
+
+    expect(
+      await screen.findByRole("heading", { name: "Wszystkie części są na stanie" }),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Tylko brakujące")).toBeChecked();
   });
 
   it("explains when the catalog is empty", async () => {

@@ -17,7 +17,7 @@ import { signInAs } from "@/test/signedInUser";
 type ProblemDetails = components["schemas"]["ProblemDetails"];
 
 function tile(name: RegExp) {
-  return within(screen.getByRole("list", { name: "Zlecenia wymagające uwagi" })).getByRole("link", {
+  return within(screen.getByRole("list", { name: "Wymaga uwagi" })).getByRole("link", {
     name,
   });
 }
@@ -33,11 +33,11 @@ describe("DashboardPage", () => {
     localStorage.clear();
   });
 
-  it("shows the work order queues with links to the matching lists", async () => {
+  it("shows the work order queues and missing parts with links to the matching lists", async () => {
     mockDashboardSummary();
     renderApp("/");
 
-    await screen.findByRole("list", { name: "Zlecenia wymagające uwagi" });
+    await screen.findByRole("list", { name: "Wymaga uwagi" });
 
     expect(tile(/Do przypisania/)).toHaveTextContent("3");
     expect(tile(/Do przypisania/)).toHaveAttribute("href", "/work-orders?status=New");
@@ -45,6 +45,8 @@ describe("DashboardPage", () => {
     expect(tile(/Do zafakturowania/)).toHaveAttribute("href", "/work-orders?status=Completed");
     expect(tile(/Opóźnione/)).toHaveTextContent("1");
     expect(tile(/Opóźnione/)).toHaveAttribute("href", "/work-orders?overdue=true");
+    expect(tile(/Części bez stanu/)).toHaveTextContent("1");
+    expect(tile(/Części bez stanu/)).toHaveAttribute("href", "/parts?stock=out");
     expect(
       screen.getByText(`Stan na ${formatDateTime("2026-10-01T08:30:00Z", "pl")}`),
     ).toBeInTheDocument();
@@ -122,7 +124,7 @@ describe("DashboardPage", () => {
     const requestCount = mockDashboardSummary();
     renderApp("/");
 
-    await screen.findByRole("list", { name: "Zlecenia wymagające uwagi" });
+    await screen.findByRole("list", { name: "Wymaga uwagi" });
     await userEvent.setup().click(screen.getByRole("button", { name: "Odśwież" }));
 
     await vi.waitFor(() => {
@@ -137,7 +139,7 @@ describe("DashboardPage", () => {
     });
     const requestCount = mockDashboardSummary();
     renderApp("/");
-    await screen.findByRole("list", { name: "Zlecenia wymagające uwagi" });
+    await screen.findByRole("list", { name: "Wymaga uwagi" });
     expect(requestCount()).toBe(1);
 
     await vi.advanceTimersByTimeAsync(dashboardRefreshIntervalMs);
@@ -156,8 +158,6 @@ describe("DashboardPage", () => {
     mockDashboardSummary();
     await userEvent.setup().click(screen.getByRole("button", { name: "Spróbuj ponownie" }));
 
-    expect(
-      await screen.findByRole("list", { name: "Zlecenia wymagające uwagi" }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole("list", { name: "Wymaga uwagi" })).toBeInTheDocument();
   });
 });

@@ -1,19 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { PackageIcon, PlusIcon, SearchXIcon } from "lucide-react";
-import { useState } from "react";
+import { PackageCheckIcon, PackageIcon, PlusIcon, SearchXIcon } from "lucide-react";
+import { useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { partListQueryOptions, partsPageSize } from "@/features/parts/api/partQueries";
 import { ArchivePartDialog } from "@/features/parts/components/ArchivePartDialog";
 import { PartsTable } from "@/features/parts/components/PartsTable";
 import { RestockPartDialog } from "@/features/parts/components/RestockPartDialog";
+import { usePartListSearchParams } from "@/features/parts/hooks/usePartListSearchParams";
 import { lowStockThreshold } from "@/features/parts/partStock";
 import type { components } from "@/shared/api/schema";
 import { useKeepPageInRange } from "@/shared/lib/useKeepPageInRange";
-import { useListSearchParams } from "@/shared/lib/useListSearchParams";
 import { Button } from "@/shared/ui/button";
 import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
+import { Label } from "@/shared/ui/label";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 import { SearchInput } from "@/shared/ui/SearchInput";
@@ -23,8 +24,10 @@ type PartResponse = components["schemas"]["PartResponse"];
 
 export function PartsPage() {
   const { t } = useTranslation();
-  const { page, search, setPage, setSearch } = useListSearchParams();
-  const partsQuery = useQuery(partListQueryOptions({ page, search }));
+  const { page, search, outOfStockOnly, setPage, setSearch, setOutOfStockOnly } =
+    usePartListSearchParams();
+  const outOfStockId = useId();
+  const partsQuery = useQuery(partListQueryOptions({ page, search, outOfStockOnly }));
   const partPage = partsQuery.data;
   const [partToRestock, setPartToRestock] = useState<PartResponse | null>(null);
   const [partToArchive, setPartToArchive] = useState<PartResponse | null>(null);
@@ -53,18 +56,27 @@ export function PartsPage() {
       return <ListSkeleton />;
     }
     if (partPage.totalCount === 0) {
-      return search === "" ? (
+      if (search !== "") {
+        return (
+          <EmptyState
+            icon={SearchXIcon}
+            title={t("parts.noResults.title")}
+            description={t("parts.noResults.description", { search })}
+          />
+        );
+      }
+      return outOfStockOnly ? (
+        <EmptyState
+          icon={PackageCheckIcon}
+          title={t("parts.allInStock.title")}
+          description={t("parts.allInStock.description")}
+        />
+      ) : (
         <EmptyState
           icon={PackageIcon}
           title={t("parts.empty.title")}
           description={t("parts.empty.description")}
           action={addPartButton}
-        />
-      ) : (
-        <EmptyState
-          icon={SearchXIcon}
-          title={t("parts.noResults.title")}
-          description={t("parts.noResults.description", { search })}
         />
       );
     }
@@ -98,13 +110,27 @@ export function PartsPage() {
         </div>
         {addPartButton}
       </div>
-      <SearchInput
-        label={t("parts.search.label")}
-        placeholder={t("parts.search.placeholder")}
-        value={search}
-        maxLength={100}
-        onSearch={setSearch}
-      />
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+        <SearchInput
+          label={t("parts.search.label")}
+          placeholder={t("parts.search.placeholder")}
+          value={search}
+          maxLength={100}
+          onSearch={setSearch}
+        />
+        <div className="flex items-center gap-2">
+          <input
+            id={outOfStockId}
+            type="checkbox"
+            className="size-4 accent-primary"
+            checked={outOfStockOnly}
+            onChange={(event) => {
+              setOutOfStockOnly(event.target.checked);
+            }}
+          />
+          <Label htmlFor={outOfStockId}>{t("parts.filters.outOfStockOnly")}</Label>
+        </div>
+      </div>
       {renderContent()}
       <RestockPartDialog
         part={partToRestock}

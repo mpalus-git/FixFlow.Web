@@ -51,7 +51,7 @@
     "generatedAt": "As of {{time}}",
     "refresh": "Refresh",
     "tiles": {
-      "label": "Work orders that need attention",
+      "label": "Needs attention",
       "unassigned": "To assign",
       "unassignedHint": "New work orders without a technician",
       "inProgress": "In progress",
@@ -59,7 +59,9 @@
       "toInvoice": "To invoice",
       "toInvoiceHint": "Completed, waiting for an invoice",
       "overdue": "Overdue",
-      "overdueHint": "Due date passed before completion"
+      "overdueHint": "Due date passed before completion",
+      "outOfStock": "Parts out of stock",
+      "outOfStockHint": "To restock in the warehouse"
     },
     "statusChart": {
       "title": "Work orders by status",
@@ -548,6 +550,13 @@
     "noResults": {
       "title": "No results",
       "description": "No part matches “{{search}}”."
+    },
+    "filters": {
+      "outOfStockOnly": "Out of stock only"
+    },
+    "allInStock": {
+      "title": "All parts are in stock",
+      "description": "No part in the catalog has zero units in stock."
     },
     "stock": {
       "low": "Low stock",
