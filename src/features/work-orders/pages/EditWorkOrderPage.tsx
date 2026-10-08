@@ -1,5 +1,3 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -19,6 +17,7 @@ import { Alert, AlertDescription } from "@/shared/ui/alert";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
+import { useVersionedResource } from "@/shared/api/useVersionedResource";
 import { VersionConflictDialog } from "@/shared/ui/VersionConflictDialog";
 import { PageTitle } from "@/shared/ui/PageTitle";
 
@@ -27,12 +26,13 @@ export function EditWorkOrderPage() {
   const { workOrderId = "" } = useParams();
   const navigate = useNavigate();
   const returnPath = useReturnPath(`/work-orders/${workOrderId}`);
-  const queryClient = useQueryClient();
-  const workOrderQuery = useQuery(workOrderQueryOptions(workOrderId));
+  const {
+    query: workOrderQuery,
+    editedVersion,
+    conflictDialogProps,
+    openConflict,
+  } = useVersionedResource(workOrderQueryOptions(workOrderId));
   const updateWorkOrderMutation = useUpdateWorkOrderMutation();
-  const [loadedVersion, setLoadedVersion] = useState(workOrderQuery.data);
-  const [isConflictOpen, setIsConflictOpen] = useState(false);
-  const editedVersion = loadedVersion ?? workOrderQuery.data;
 
   if (editedVersion === undefined) {
     return workOrderQuery.isError ? (
@@ -40,16 +40,6 @@ export function EditWorkOrderPage() {
     ) : (
       <ListSkeleton rows={4} />
     );
-  }
-
-  async function loadCurrentVersion() {
-    try {
-      setLoadedVersion(
-        await queryClient.query({ ...workOrderQueryOptions(workOrderId), staleTime: 0 }),
-      );
-    } catch {
-      toast.error(t("states.errorTitle"));
-    }
   }
 
   const workOrder = editedVersion.data;
@@ -89,17 +79,11 @@ export function EditWorkOrderPage() {
               toast.success(t("workOrders.edit.saved"));
               await navigate(returnPath);
             }}
-            onVersionConflict={() => {
-              setIsConflictOpen(true);
-            }}
+            onVersionConflict={openConflict}
           />
         </CardContent>
       </Card>
-      <VersionConflictDialog
-        open={isConflictOpen}
-        onOpenChange={setIsConflictOpen}
-        onReload={() => void loadCurrentVersion()}
-      />
+      <VersionConflictDialog {...conflictDialogProps} />
     </div>
   );
 }

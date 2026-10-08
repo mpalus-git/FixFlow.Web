@@ -1,5 +1,3 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -12,6 +10,7 @@ import { Alert, AlertDescription } from "@/shared/ui/alert";
 import { Card, CardContent } from "@/shared/ui/card";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { ListSkeleton } from "@/shared/ui/ListSkeleton";
+import { useVersionedResource } from "@/shared/api/useVersionedResource";
 import { VersionConflictDialog } from "@/shared/ui/VersionConflictDialog";
 import { PageTitle } from "@/shared/ui/PageTitle";
 
@@ -20,12 +19,13 @@ export function EditPartPage() {
   const language = useLanguage();
   const { partId = "" } = useParams();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const partQuery = useQuery(partQueryOptions(partId));
+  const {
+    query: partQuery,
+    editedVersion,
+    conflictDialogProps,
+    openConflict,
+  } = useVersionedResource(partQueryOptions(partId));
   const updatePartMutation = useUpdatePartMutation();
-  const [loadedVersion, setLoadedVersion] = useState(partQuery.data);
-  const [isConflictOpen, setIsConflictOpen] = useState(false);
-  const editedVersion = loadedVersion ?? partQuery.data;
 
   if (editedVersion === undefined) {
     return partQuery.isError ? (
@@ -33,14 +33,6 @@ export function EditPartPage() {
     ) : (
       <ListSkeleton rows={4} />
     );
-  }
-
-  async function loadCurrentVersion() {
-    try {
-      setLoadedVersion(await queryClient.query({ ...partQueryOptions(partId), staleTime: 0 }));
-    } catch {
-      toast.error(t("states.errorTitle"));
-    }
   }
 
   const part = editedVersion.data;
@@ -75,17 +67,11 @@ export function EditPartPage() {
               toast.success(t("parts.edit.saved"));
               await navigate("/parts");
             }}
-            onVersionConflict={() => {
-              setIsConflictOpen(true);
-            }}
+            onVersionConflict={openConflict}
           />
         </CardContent>
       </Card>
-      <VersionConflictDialog
-        open={isConflictOpen}
-        onOpenChange={setIsConflictOpen}
-        onReload={() => void loadCurrentVersion()}
-      />
+      <VersionConflictDialog {...conflictDialogProps} />
     </div>
   );
 }
