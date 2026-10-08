@@ -11,6 +11,11 @@ import {
   hasActiveFilters,
   useWorkOrderListSearchParams,
 } from "@/features/work-orders/hooks/useWorkOrderListSearchParams";
+import {
+  hasSameStatuses,
+  openWorkOrderStatuses,
+  type WorkOrderStatus,
+} from "@/features/work-orders/workOrderRules";
 import { useKeepPageInRange } from "@/shared/lib/useKeepPageInRange";
 import { EmptyState } from "@/shared/ui/EmptyState";
 import { ErrorState } from "@/shared/ui/ErrorState";
@@ -18,19 +23,22 @@ import { ListSkeleton } from "@/shared/ui/ListSkeleton";
 import { PaginationControls } from "@/shared/ui/PaginationControls";
 import { SearchInput } from "@/shared/ui/SearchInput";
 
+const noDefaultStatus: readonly WorkOrderStatus[] = [];
+
 export type WorkOrderListProps = {
   scope: "all" | "assignedToMe";
 };
 
 export function WorkOrderList({ scope }: WorkOrderListProps) {
   const { t } = useTranslation();
+  const isDispatcherScope = scope === "all";
+  const defaultStatus = isDispatcherScope ? noDefaultStatus : openWorkOrderStatuses;
   const { page, search, filters, sort, setPage, setSearch, setFilters, clearFilters, setSort } =
-    useWorkOrderListSearchParams();
+    useWorkOrderListSearchParams(defaultStatus);
   const listParams = { page, search, filters, sort };
   const workOrdersQuery = useQuery(workOrderListQueryOptions(listParams));
   const workOrderPage = workOrdersQuery.data;
-  const isFiltered = hasActiveFilters(listParams);
-  const isDispatcherScope = scope === "all";
+  const isFiltered = hasActiveFilters(listParams, defaultStatus);
   useKeepPageInRange({
     page,
     pageSize: workOrderListPageSize,
@@ -49,6 +57,20 @@ export function WorkOrderList({ scope }: WorkOrderListProps) {
       return <ListSkeleton />;
     }
     if (workOrderPage.totalCount === 0) {
+      const isFilteredOnlyByStatus = !hasActiveFilters({
+        ...listParams,
+        filters: { ...filters, status: [] },
+      });
+      if (!isDispatcherScope && isFilteredOnlyByStatus) {
+        if (filters.status.length === 0) {
+          return <EmptyState icon={ClipboardListIcon} title={t("workOrders.empty.assignedToMe")} />;
+        }
+        if (hasSameStatuses(filters.status, openWorkOrderStatuses)) {
+          return (
+            <EmptyState icon={ClipboardListIcon} title={t("workOrders.empty.noOpenAssigned")} />
+          );
+        }
+      }
       return isFiltered ? (
         <EmptyState
           icon={SearchXIcon}
@@ -56,10 +78,7 @@ export function WorkOrderList({ scope }: WorkOrderListProps) {
           description={t("workOrders.noResults.description")}
         />
       ) : (
-        <EmptyState
-          icon={ClipboardListIcon}
-          title={t(scope === "all" ? "workOrders.empty.title" : "workOrders.empty.assignedToMe")}
-        />
+        <EmptyState icon={ClipboardListIcon} title={t("workOrders.empty.title")} />
       );
     }
     return (

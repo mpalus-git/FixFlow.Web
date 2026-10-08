@@ -378,7 +378,8 @@
     },
     "empty": {
       "title": "No work orders",
-      "assignedToMe": "You have no assigned work orders"
+      "assignedToMe": "You have no assigned work orders",
+      "noOpenAssigned": "You have no open work orders"
     },
     "noResults": {
       "title": "No results",

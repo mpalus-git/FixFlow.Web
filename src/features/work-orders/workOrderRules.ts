@@ -30,6 +30,13 @@ export function latestAssignmentTime(events: readonly WorkOrderEventResponse[]):
   return latest;
 }
 
+export function hasSameStatuses(
+  first: readonly WorkOrderStatus[],
+  second: readonly WorkOrderStatus[],
+): boolean {
+  return first.length === second.length && first.every((status) => second.includes(status));
+}
+
 export function orderedStatuses(values: readonly string[]): WorkOrderStatus[] {
   return workOrderStatuses.filter((status) => values.includes(status));
 }

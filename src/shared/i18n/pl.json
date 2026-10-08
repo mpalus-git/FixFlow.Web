@@ -380,7 +380,8 @@
     },
     "empty": {
       "title": "Brak zleceń",
-      "assignedToMe": "Nie masz przypisanych zleceń"
+      "assignedToMe": "Nie masz przypisanych zleceń",
+      "noOpenAssigned": "Nie masz otwartych zleceń"
     },
     "noResults": {
       "title": "Brak wyników",

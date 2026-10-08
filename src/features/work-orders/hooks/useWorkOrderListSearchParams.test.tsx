@@ -65,6 +65,20 @@ describe("readWorkOrderListParams", () => {
   });
 });
 
+describe("readWorkOrderListParams with a default status", () => {
+  it("uses the default statuses without a status parameter and none for all", () => {
+    const openStatuses = ["New", "Assigned", "InProgress"] as const;
+
+    expect(readWorkOrderListParams(new URLSearchParams(""), openStatuses).filters.status).toEqual(
+      openStatuses,
+    );
+    expect(
+      readWorkOrderListParams(new URLSearchParams("status=all"), openStatuses).filters.status,
+    ).toEqual([]);
+    expect(readWorkOrderListParams(new URLSearchParams("status=all")).filters.status).toEqual([]);
+  });
+});
+
 describe("useWorkOrderListSearchParams", () => {
   function renderListParams(initialEntry: string) {
     const wrapper = ({ children }: { children: ReactNode }) => (
@@ -95,6 +109,29 @@ describe("useWorkOrderListSearchParams", () => {
     });
 
     expect(result.current.location.search).toBe("?sort=Status");
+  });
+
+  it("writes all statuses as all and drops the parameter for the default statuses", () => {
+    const wrapper = ({ children }: { children: ReactNode }) => (
+      <MemoryRouter initialEntries={["/my-work-orders"]}>{children}</MemoryRouter>
+    );
+    const { result } = renderHook(
+      () => ({
+        list: useWorkOrderListSearchParams(["New", "Assigned", "InProgress"]),
+        location: useLocation(),
+      }),
+      { wrapper },
+    );
+
+    act(() => {
+      result.current.list.setFilters({ status: [] });
+    });
+    expect(result.current.location.search).toBe("?status=all");
+
+    act(() => {
+      result.current.list.clearFilters();
+    });
+    expect(result.current.location.search).toBe("");
   });
 
   it("does not write the default sorting to the URL", () => {
