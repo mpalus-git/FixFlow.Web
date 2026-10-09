@@ -46,7 +46,10 @@ export function LoginPage() {
         <ul className="flex flex-col gap-3">
           {demoHighlights.map((highlight) => (
             <li key={highlight} className="flex gap-2">
-              <CircleCheckIcon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-primary" />
+              <CircleCheckIcon
+                aria-hidden="true"
+                className="mt-0.5 size-4 shrink-0 text-primary-text"
+              />
               <span className="flex flex-col gap-0.5">
                 <span className="text-sm font-medium">{t(`auth.intro.${highlight}.title`)}</span>
                 <span className="text-xs text-muted-foreground">
