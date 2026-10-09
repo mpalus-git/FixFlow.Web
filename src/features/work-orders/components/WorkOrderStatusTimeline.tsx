@@ -61,7 +61,7 @@ export function WorkOrderStatusTimeline({
               className={cn(
                 "flex size-7 shrink-0 items-center justify-center rounded-full border text-xs font-medium",
                 isReached
-                  ? "border-primary-fill bg-primary-fill text-primary-fill-foreground"
+                  ? "border-primary bg-primary text-primary-foreground"
                   : "border-border text-muted-foreground",
                 isCurrent && "ring-3 ring-primary/30",
               )}
