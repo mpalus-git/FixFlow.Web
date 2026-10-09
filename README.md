@@ -17,7 +17,11 @@ Na ekranie logowania są przyciski szybkiego logowania kontami demo dyspozytora 
 
 ## Zrzuty ekranu
 
-Pulpit z kolejkami zleceń wymagających uwagi i obłożeniem techników:
+Ekran logowania z przyciskami kont demo i listą tego, co warto sprawdzić:
+
+![Ekran logowania](docs/screenshots/login.png)
+
+Pulpit: kolejki zleceń wymagających uwagi z linkami do przefiltrowanej listy, zlecenia według statusu i obłożenie techników:
 
 ![Pulpit](docs/screenshots/dashboard.png)
 
@@ -27,11 +31,11 @@ Tablica dispatch: tydzień w układzie technik x dzień, kolumna nieprzypisanych
 
 ![Tablica dispatch](docs/screenshots/dispatch.png)
 
-Lista zleceń z filtrowaniem, sortowaniem i paginacją po stronie serwera, ze stanem zapisanym w adresie strony:
+Lista zleceń z filtrowaniem (kilka statusów naraz, technik, zakres terminów, opóźnione, wyszukiwanie), sortowaniem i paginacją po stronie serwera, ze stanem zapisanym w adresie strony. Na zrzucie filtr „Tylko otwarte”:
 
 ![Lista zleceń](docs/screenshots/work-orders.png)
 
-Szczegóły zlecenia: przebieg statusów, akcje zależne od roli i statusu, wpisy serwisowe z częściami w cenie z chwili zużycia i protokół PDF:
+Szczegóły zlecenia: dane klienta z osobą kontaktową, przebieg statusów, historia zmian, akcje zależne od roli i statusu, wpisy serwisowe z częściami w cenie z chwili zużycia, zdjęciami i miejscem pracy na mapie oraz protokół PDF:
 
 ![Szczegóły zlecenia](docs/screenshots/work-order-details.png)
 
@@ -53,11 +57,11 @@ FixFlow to system obsługi zleceń serwisowych w terenie dla firmy naprawiające
 
 Panel obsługuje trzy role:
 
-| Rola       | Co widzi i robi                                                                                                                                                     |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dispatcher | pulpit, zlecenia (tworzenie, edycja, przypisywanie, zakończenie awaryjne, fakturowanie), tablica dispatch, klienci, urządzenia, katalog części z przyjęciem dostawy |
-| Admin      | to samo co dyspozytor oraz zarządzanie użytkownikami: zakładanie kont z rolą, dezaktywacja, aktywacja, reset hasła                                                  |
-| Technician | „Moje zlecenia” tylko do odczytu, ze szczegółami i wpisami serwisowymi; praca w terenie odbywa się w aplikacji mobilnej                                             |
+| Rola       | Co widzi i robi                                                                                                                                                                                 |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dispatcher | pulpit, zlecenia (tworzenie, edycja, przypisywanie, zakończenie awaryjne, fakturowanie), tablica dispatch, klienci, urządzenia, katalog części z przyjęciem dostawy i filtrem braków            |
+| Admin      | to samo co dyspozytor oraz zarządzanie użytkownikami: zakładanie kont z rolą, dezaktywacja, aktywacja, reset hasła                                                                              |
+| Technician | „Moje zlecenia” tylko do odczytu (domyślnie otwarte, z możliwością pokazania wszystkich), ze szczegółami, wpisami serwisowymi i historią zmian; praca w terenie odbywa się w aplikacji mobilnej |
 
 Zlecenie przechodzi przez statusy Nowe -> Przypisane -> W realizacji -> Zakończone -> Zafakturowane. Panel pokazuje tylko akcje dozwolone dla roli i bieżącego statusu, ale ostatnie słowo zawsze ma API.
 
@@ -205,24 +209,29 @@ Jedno miejsce mapuje odpowiedzi ProblemDetails na błąd aplikacji: błędy wali
 - Stan filtrów, sortowania i paginacji list jest w adresie strony, więc odświeżenie i udostępniony link zachowują widok.
 - Optimistic update tylko tam, gdzie wycofanie jest proste: przeciąganie na tablicy dispatch i archiwizacja. Formularze czekają na odpowiedź serwera.
 - Akcje niedozwolone dla roli lub statusu są ukryte albo wyłączone z podpowiedzią.
+- Klienta i urządzenie w formularzu zlecenia wybiera się polem z wyszukiwaniem po stronie serwera (wzorzec combobox z ARIA 1.2 na Popoverze Radix, bez dodatkowej biblioteki).
+- Po przejściu na inną stronę fokus trafia na jej nagłówek, powrót przywraca pozycję przewinięcia listy, a trwające przejście sygnalizuje cienki pasek postępu.
+- Po zalogowaniu panel pobiera w tle, w czasie bezczynności przeglądarki, kod stron z nawigacji danej roli, więc kolejne przejścia nie czekają na moduł.
+- Wykresy pulpitu to tabele z paskami w HTML i CSS. Bez biblioteki wykresów kod strony pulpitu zmalał ze 102 kB do niecałych 3 kB (gzip).
+- Jeden kolor marki i kolory statusów są tokenami CSS z kontrastem AA w obu motywach, a czcionka jest systemowa, więc panel nie pobiera żadnych fontów.
 - Kod nie zawiera komentarzy, co pilnują własna reguła ESLint i skrypt dla CSS, HTML, YAML i tsconfig.
 
 ## Testy
 
 | Rodzaj                    | Narzędzia                                      | Co obejmuje                                                                                                                                                                                                                                                                                                    |
 | ------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Jednostkowe i komponentów | Vitest, React Testing Library, user-event, MSW | ok. 580 testów: sesja i równoległe odświeżanie (także między kartami), mapowanie ProblemDetails, daty i strefy, schematy Zod, widoczność akcji według roli i statusu, formularze z błędami z serwera i konfliktem 412, tablica dispatch z obsługą klawiatury                                                   |
+| Jednostkowe i komponentów | Vitest, React Testing Library, user-event, MSW | sesja i równoległe odświeżanie (także między kartami), mapowanie ProblemDetails, daty i strefy, schematy Zod, widoczność akcji według roli i statusu, formularze z błędami z serwera i konfliktem 412, tablica dispatch z obsługą klawiatury                                                                   |
 | E2E                       | Playwright, axe-core                           | prawdziwe API z obrazu Docker: logowanie, utworzenie zlecenia, przypisanie technika przeciągnięciem, konflikt 412 w dwóch kontekstach przeglądarki, uśpiony serwer, brak naruszeń dostępności poziomu serious i critical na głównych ekranach w obu motywach, działanie aplikacji pod produkcyjną polityką CSP |
 
 CI uruchamia lint, kontrolę typów, kontrolę wygenerowanych typów, build, testy w trzech shardach z raportem pokrycia w podsumowaniu joba oraz testy e2e na obrazie `ghcr.io/mpalus-git/fixflow.api` z PostgreSQL 18 i losowymi sekretami.
 
 ## Lighthouse
 
-Pomiar strony logowania na produkcji (Lighthouse 13.5.0, Chromium 153, domyślna symulacja sieci i procesora, mediana z kilku przebiegów, 2026-10-04):
+Pomiar strony logowania na produkcji (Lighthouse 13.5.0, Chromium 156, domyślna symulacja sieci i procesora, mediana z trzech przebiegów, 2026-10-09):
 
 | Urządzenie | Wydajność | Dostępność | Dobre praktyki | SEO | FCP   | LCP   | TBT   | CLS | Speed Index |
 | ---------- | --------- | ---------- | -------------- | --- | ----- | ----- | ----- | --- | ----------- |
-| Mobile     | 100       | 100        | 100            | 100 | 1,0 s | 1,0 s | 10 ms | 0   | 1,0 s       |
+| Mobile     | 100       | 100        | 100            | 100 | 1,0 s | 1,0 s | 50 ms | 0   | 1,0 s       |
 | Desktop    | 100       | 100        | 100            | 100 | 0,3 s | 0,3 s | 0 ms  | 0   | 0,3 s       |
 
 Arkusz stylów jest wbudowany w `index.html`, a obok `#root` stoi statyczny ekran startowy z nazwą aplikacji. Przeglądarka maluje go zaraz po pobraniu dokumentu, zanim dotrą skrypty, a znika on regułą CSS, gdy React wyrenderuje pierwszą treść. To ten ekran jest elementem LCP. Formularz logowania pojawia się po pobraniu skryptów i odpowiedzi API, czyli w symulacji wolnego 4G po ok. 3 s (tyle wynosiło LCP, zanim powstał ekran startowy).
