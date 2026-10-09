@@ -4,6 +4,11 @@
 
 Działający panel: **[fix-flow-web.vercel.app](https://fix-flow-web.vercel.app)**
 
+Pozostałe części systemu FixFlow:
+
+- [FixFlow.Api](https://github.com/mpalus-git/FixFlow.Api) - backend .NET 10 z PostgreSQL, źródło reguł biznesowych i kontraktu OpenAPI ([dokumentacja API na żywo](https://fixflow-api-us2p.onrender.com/scalar)).
+- [FixFlow.Mobile](https://github.com/mpalus-git/FixFlow.Mobile) - aplikacja technika (.NET MAUI 10, Android i Windows) działająca bez zasięgu ([najnowsze wydanie](https://github.com/mpalus-git/FixFlow.Mobile/releases/latest)).
+
 Na ekranie logowania są przyciski szybkiego logowania kontami demo dyspozytora i technika, więc nie trzeba znać haseł (są też jawne w [README FixFlow.Api](https://github.com/mpalus-git/FixFlow.Api#readme)). Kilka rzeczy, które warto wiedzieć przed pierwszym wejściem:
 
 - API działa na darmowym planie Render i usypia po 15 minutach bezczynności. Pierwsze wejście może potrwać do minuty, a panel pokazuje w tym czasie ekran z postępem uruchamiania zamiast zablokowanego formularza.
@@ -44,7 +49,7 @@ FixFlow to system obsługi zleceń serwisowych w terenie dla firmy naprawiające
 
 - [FixFlow.Api](https://github.com/mpalus-git/FixFlow.Api) - backend ASP.NET Core z PostgreSQL, źródło prawdy dla reguł biznesowych i kontraktu OpenAPI.
 - FixFlow.Web (to repozytorium) - panel webowy dla dyspozytora i administratora.
-- Aplikacja mobilna technika (.NET MAUI) - powstanie osobno; technik rozpoczyna w niej pracę, dodaje wpisy serwisowe ze zdjęciami, lokalizacją GPS i zużytymi częściami oraz zamyka zlecenie.
+- [FixFlow.Mobile](https://github.com/mpalus-git/FixFlow.Mobile) - aplikacja mobilna technika (.NET MAUI 10); technik rozpoczyna w niej pracę, dodaje wpisy serwisowe ze zdjęciami, lokalizacją GPS i zużytymi częściami oraz zamyka zlecenie, także bez zasięgu (zmiany czekają w kolejce na połączenie).
 
 Panel obsługuje trzy role:
 
@@ -230,7 +235,7 @@ Arkusz stylów jest wbudowany w `index.html`, a obok `#root` stoi statyczny ekra
 - Licznik opóźnionych na pulpicie opiera się na fladze `IsOverdue` odświeżanej co godzinę (dłużej, gdy Render śpi) i może chwilowo różnić się od podsumowania techników, które liczy opóźnienie na bieżąco.
 - Lista techników oraz tablica dispatch pobierają najwyżej 100 pozycji (limit strony w API). Przy większej skali potrzebne byłoby wyszukiwanie po stronie serwera; tablica pokazuje wtedy ostrzeżenie.
 - Brak aktualizacji na żywo: tablica dispatch odświeża się w tle co 30 s, a pulpit co minutę (tylko w widocznej karcie, tablica nie w trakcie przeciągania), pozostałe widoki przy akcjach i po powrocie do karty. Zmianę innego dyspozytora, która pojawi się między odświeżeniami, wykrywa ETag albo porównanie stanu przed zapisem.
-- Panel technika jest tylko do odczytu. Wpisy serwisowe dodaje aplikacja mobilna, która jeszcze nie powstała, więc w demo pochodzą z danych startowych.
+- Panel technika jest tylko do odczytu: wpisy serwisowe ze zdjęciami dodaje aplikacja mobilna. Panel pokazuje podpis klienta, jeśli zlecenie zostało zamknięte z podpisem, ale dane demo podpisów nie zawierają.
 - Lista użytkowników nie ma wyszukiwania ani sortowania, bo API ich nie udostępnia.
 
 ## Co zrobiłbym inaczej
