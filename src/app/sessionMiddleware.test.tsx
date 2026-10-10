@@ -22,6 +22,15 @@ describe("session middleware", () => {
     expect(router.state.location.search).toBe("?returnTo=%2Fmy-work-orders%3Fpage%3D2");
   });
 
+  it("replaces the history entry instead of adding one when redirecting on the first visit", async () => {
+    const router = renderApp("/");
+
+    await screen.findByRole("heading", { name: "Zaloguj się" });
+
+    expect(router.state.location.pathname).toBe("/login");
+    expect(router.state.historyAction).toBe("REPLACE");
+  });
+
   it("restores the session from the stored refresh token", async () => {
     localStorage.setItem(refreshTokenStorageKey, "refresh-previous-visit");
     server.use(
