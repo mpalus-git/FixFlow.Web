@@ -1,6 +1,8 @@
 # FixFlow.Web
 
 [![CI](https://github.com/mpalus-git/FixFlow.Web/actions/workflows/ci.yml/badge.svg)](https://github.com/mpalus-git/FixFlow.Web/actions/workflows/ci.yml)
+[![React](https://img.shields.io/github/package-json/dependency-version/mpalus-git/FixFlow.Web/react?label=React&logo=react&logoColor=white&color=0d736a)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7-0d736a?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
 Działający panel: **[fix-flow-web.vercel.app](https://fix-flow-web.vercel.app)**
 
@@ -9,9 +11,9 @@ Pozostałe części systemu FixFlow:
 - [FixFlow.Api](https://github.com/mpalus-git/FixFlow.Api) - backend .NET 10 z PostgreSQL, źródło reguł biznesowych i kontraktu OpenAPI ([dokumentacja API na żywo](https://fixflow-api-us2p.onrender.com/scalar)).
 - [FixFlow.Mobile](https://github.com/mpalus-git/FixFlow.Mobile) - aplikacja technika (.NET MAUI 10, Android i Windows) działająca bez zasięgu ([najnowsze wydanie](https://github.com/mpalus-git/FixFlow.Mobile/releases/latest)).
 
-Na ekranie logowania są przyciski szybkiego logowania kontami demo dyspozytora i technika, więc nie trzeba znać haseł (są też jawne w [README FixFlow.Api](https://github.com/mpalus-git/FixFlow.Api#readme)). Kilka rzeczy, które warto wiedzieć przed pierwszym wejściem:
+Na ekranie logowania są przyciski szybkiego logowania kontami demo dyspozytora i technika, więc nie trzeba znać haseł (są też jawne w [README FixFlow.Api](https://github.com/mpalus-git/FixFlow.Api#readme)). Uwagi do wersji demo:
 
-- API działa na darmowym planie Render i usypia po 15 minutach bezczynności. Pierwsze wejście może potrwać do minuty, a panel pokazuje w tym czasie ekran z postępem uruchamiania zamiast zablokowanego formularza.
+- API działa na darmowym planie Render i usypia po 15 minutach bezczynności. Pierwsze wejście może potrwać do minuty, a panel pokazuje w tym czasie ekran z postępem uruchamiania.
 - Dane demonstracyjne są wspólne dla wszystkich odwiedzających i są przywracane codziennie o 2:00 UTC.
 - Konto administratora demo nie ma publicznego hasła. Widoki administratora (zarządzanie użytkownikami) są opisane niżej.
 
@@ -63,7 +65,7 @@ Panel obsługuje trzy role:
 | Admin      | to samo co dyspozytor oraz zarządzanie użytkownikami: zakładanie kont z rolą, dezaktywacja, aktywacja, reset hasła                                                                              |
 | Technician | „Moje zlecenia” tylko do odczytu (domyślnie otwarte, z możliwością pokazania wszystkich), ze szczegółami, wpisami serwisowymi i historią zmian; praca w terenie odbywa się w aplikacji mobilnej |
 
-Zlecenie przechodzi przez statusy Nowe -> Przypisane -> W realizacji -> Zakończone -> Zafakturowane. Panel pokazuje tylko akcje dozwolone dla roli i bieżącego statusu, ale ostatnie słowo zawsze ma API.
+Zlecenie przechodzi przez statusy Nowe -> Przypisane -> W realizacji -> Zakończone -> Zafakturowane. Panel pokazuje tylko akcje dozwolone dla roli i bieżącego statusu, a każdą operację i tak sprawdza API.
 
 ## Stack
 
@@ -192,7 +194,7 @@ Uśpiony Render nie zwraca błędu, tylko trzyma żądanie bez odpowiedzi do cza
 
 ### Przechowywanie tokenów
 
-Access token jest trzymany wyłącznie w pamięci. Refresh token trafia do `localStorage`, bo API zwraca go w treści odpowiedzi i ciasteczko `httpOnly` nie jest możliwe bez zmian po stronie serwera. To świadomy kompromis: token w `localStorage` może odczytać skrypt wstrzyknięty przez XSS. Ryzyko ogranicza:
+Access token jest trzymany wyłącznie w pamięci. Refresh token trafia do `localStorage`, bo API zwraca go w treści odpowiedzi i ciasteczko `httpOnly` nie jest możliwe bez zmian po stronie serwera. Token w `localStorage` może odczytać skrypt wstrzyknięty przez XSS. Ryzyko ogranicza:
 
 - Content Security Policy z `script-src 'self'` (bez skryptów inline, `eval` i zewnętrznych domen; Zod działa w trybie `jitless`, żeby nie próbował `eval`);
 - brak `dangerouslySetInnerHTML` i skryptów zewnętrznych;
@@ -202,19 +204,17 @@ Każdy dostęp do `localStorage` jest w `try/catch`: gdy magazyn jest niedostęp
 
 ### Błędy z API
 
-Jedno miejsce mapuje odpowiedzi ProblemDetails na błąd aplikacji: błędy walidacji (400) trafiają do pól formularza po kluczu z API, konflikty unikalności (409) do właściwego pola, 404 kończy się stroną „nie znaleziono”, a błędy serwera i brak sieci powiadomieniem z możliwością ponowienia. Komunikaty są tłumaczone po kodzie błędu z API, a gdy tłumaczenia brak, panel pokazuje opis z serwera. Walidacja w formularzach odwzorowuje reguły API, ale nie zastępuje ich.
+Jedno miejsce mapuje odpowiedzi ProblemDetails na błąd aplikacji: błędy walidacji (400) trafiają do pól formularza po kluczu z API, konflikty unikalności (409) do właściwego pola, 404 kończy się stroną „nie znaleziono”, a błędy serwera i brak sieci powiadomieniem z możliwością ponowienia. Komunikaty są tłumaczone po kodzie błędu z API, a gdy tłumaczenia brak, panel pokazuje opis z serwera. Schematy Zod w formularzach mają te same reguły co walidacja API.
 
 ### Pozostałe
 
 - Stan filtrów, sortowania i paginacji list jest w adresie strony, więc odświeżenie i udostępniony link zachowują widok.
 - Optimistic update tylko tam, gdzie wycofanie jest proste: przeciąganie na tablicy dispatch i archiwizacja. Formularze czekają na odpowiedź serwera.
-- Akcje niedozwolone dla roli lub statusu są ukryte albo wyłączone z podpowiedzią.
 - Klienta i urządzenie w formularzu zlecenia wybiera się polem z wyszukiwaniem po stronie serwera (wzorzec combobox z ARIA 1.2 na Popoverze Radix, bez dodatkowej biblioteki).
 - Po przejściu na inną stronę fokus trafia na jej nagłówek, powrót przywraca pozycję przewinięcia listy, a trwające przejście sygnalizuje cienki pasek postępu.
 - Po zalogowaniu panel pobiera w tle, w czasie bezczynności przeglądarki, kod stron z nawigacji danej roli, więc kolejne przejścia nie czekają na moduł.
 - Wykresy pulpitu to tabele z paskami w HTML i CSS. Bez biblioteki wykresów kod strony pulpitu zmalał ze 102 kB do niecałych 3 kB (gzip).
 - Jeden kolor marki i kolory statusów są tokenami CSS z kontrastem AA w obu motywach, a czcionka jest systemowa, więc panel nie pobiera żadnych fontów.
-- Kod nie zawiera komentarzy, co pilnują własna reguła ESLint i skrypt dla CSS, HTML, YAML i tsconfig.
 
 ## Testy
 
@@ -238,7 +238,7 @@ Arkusz stylów jest wbudowany w `index.html`, a obok `#root` stoi statyczny ekra
 
 ## Ograniczenia
 
-- Refresh token w `localStorage` może odczytać skrypt wstrzyknięty przez XSS. CSP ogranicza to ryzyko, ale go nie usuwa; wynika ono z tego, że API zwraca token w treści odpowiedzi.
+- Refresh token w `localStorage` może odczytać skrypt wstrzyknięty przez XSS. Opis i zabezpieczenia w sekcji Przechowywanie tokenów.
 - Darmowy plan Render: zimny start do minuty oraz limit 10 logowań i odświeżeń sesji na minutę z jednego adresu IP, wspólny dla wszystkich użytkowników za tym samym NAT. Każde przeładowanie strony zużywa jedno odświeżenie.
 - Dane demo są wspólne, więc zmiany innych odwiedzających są widoczne do nocnego resetu.
 - Licznik opóźnionych na pulpicie opiera się na fladze `IsOverdue` odświeżanej co godzinę (dłużej, gdy Render śpi) i może chwilowo różnić się od podsumowania techników, które liczy opóźnienie na bieżąco.
@@ -249,7 +249,7 @@ Arkusz stylów jest wbudowany w `index.html`, a obok `#root` stoi statyczny ekra
 
 ## Co zrobiłbym inaczej
 
-- Refresh token w ciasteczku `httpOnly`, ustawianym przez API albo przez cienki BFF na tej samej domenie. Usunęłoby to największe ryzyko opisane wyżej.
+- Refresh token w ciasteczku `httpOnly`, ustawianym przez API albo przez cienki BFF na tej samej domenie.
 - Aktualizacje tablicy dispatch na żywo (SSE albo SignalR), gdy pracuje na niej kilku dyspozytorów naraz.
 - Testy regresji wizualnej w obu motywach, obok obecnych testów zachowania i dostępności.
 
